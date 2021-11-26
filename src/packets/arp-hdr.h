@@ -18,9 +18,9 @@ struct arp_hdr{
   uint8_t       protoln;
   uint16_t      opcode;
   uint8_t       src_mac[6];
-  uint32_t      src_ip;
+  uint8_t      src_ip[4];
   uint8_t       dst_mac[6];
-  uint32_t      dst_ip;
+  uint8_t      dst_ip[4];
 };
 
 #endif /* ARP_HDR */

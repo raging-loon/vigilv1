@@ -12,7 +12,7 @@ void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsign
   struct ethhdr * ethernet_header = (struct ethhdr*)pkt;
   switch(ethernet_header->h_proto){
     case L2_ARP:
-      // arpdecode(pkt, pkt_hdr);
+      arpdecode(pkt, pkt_hdr);
       break;
     case L3_IPV6:
       ipv6pktmgr(pkt, pkt_hdr);

@@ -21,7 +21,12 @@ void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
   // printf("src=%p dst=%p",ipv6_hdr->srcaddr,ipv6_hdr->dstaddr);
   printf("src=%s dst=%s\n", 
                       src_ip6,dest_ip6);
-  
+  switch(ipv6_hdr->n_hdr){
+    case 58:{
+      ip6_icmp_decode(pkt);
+      break;
+    }
+  }
 }
 
 void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
@@ -37,4 +42,10 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
     strncpy(src_ip, inet_ntoa(src.sin_addr),sizeof(src_ip));
   printf("IPv4 %s -> %s\n",
                   src_ip, dest_ip);
+  switch(ip_header->protocol){
+    case 1:{
+      ip4_icmp_decode(pkt);
+      break;
+    }
+  }
 }

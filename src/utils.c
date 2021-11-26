@@ -6,19 +6,27 @@
 #include <uchar.h>
 static __thread char buffer[128];
 
-char * mac_ntoa( uint8_t  hwaddr){
-  printf("mac_ntoa\n");
-  char *__hwaddr;
+char * mac_ntoa( uint8_t * hwaddr){
+  // printf("mac_ntoa\n");
+  // char *__hwaddr;
+  unsigned char * __hwaddr = (unsigned char *)hwaddr;
   snprintf(buffer, sizeof(buffer), "%02x:%02x:%02x:%02x:%02x:%02x",
       __hwaddr[0], __hwaddr[1], __hwaddr[2], __hwaddr[3], __hwaddr[4], __hwaddr[5]
   );
   return buffer;
 
 }
+char * u8_ipv4_ntoa(uint8_t * ip_addr){
 
+  unsigned char * __ip_addr = (unsigned char *)ip_addr;
+  snprintf(buffer,sizeof(buffer),"%d.%d.%d.%d",
+    __ip_addr[0],__ip_addr[1],__ip_addr[2],__ip_addr[3]
+  );
+  return buffer;
+}
 char * ipv4_ntoa( uint32_t * ip_addr){
   // char buffer[18];
-  unsigned char * __ip_addr;
+  unsigned char * __ip_addr = (unsigned char *)ip_addr;
   snprintf(buffer,sizeof(buffer),"%d.%d.%d.%d",
     __ip_addr[0],__ip_addr[1],__ip_addr[2],__ip_addr[3]
   );
