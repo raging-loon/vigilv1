@@ -11,6 +11,7 @@
 #include "../packets/ip6hdr.h"
 #include "../utils.h"
 #include "tcpmgr.h"
+#include "udpmgr.h"
 #include "icmpdsct.h"
 void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
   struct ip6hdr * ipv6_hdr = (struct ip6hdr *)(pkt + sizeof(struct ethhdr) );
@@ -41,15 +42,19 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   dest.sin_addr.s_addr = ip_header->daddr;
   strncpy(dest_ip, inet_ntoa(dest.sin_addr),sizeof(dest_ip));
     strncpy(src_ip, inet_ntoa(src.sin_addr),sizeof(src_ip));
-  printf("IPv4 %s -> %s\n",
-                  src_ip, dest_ip);
+  
   switch(ip_header->protocol){
     case 1:{
+        printf("IPv4 %s -> %s\n",
+                  src_ip, dest_ip);
       ip4_icmp_decode(pkt);
       break;
     }
     case 6:
-      ip4_tcp_decode(pkt);
+      ip4_tcp_decode(pkt,src_ip,dest_ip);
+      break;
+    case 17:
+      ip4_udp_decode(pkt, src_ip, dest_ip);
       break;
   }
 }
