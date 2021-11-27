@@ -10,6 +10,7 @@
 #include "protocols.h"
 #include "../packets/ip6hdr.h"
 #include "../utils.h"
+#include "tcpmgr.h"
 #include "icmpdsct.h"
 void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
   struct ip6hdr * ipv6_hdr = (struct ip6hdr *)(pkt + sizeof(struct ethhdr) );
@@ -47,5 +48,8 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       ip4_icmp_decode(pkt);
       break;
     }
+    case 6:
+      ip4_tcp_decode(pkt);
+      break;
   }
 }

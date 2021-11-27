@@ -12,7 +12,10 @@ main.o:
 	gcc -c main.c -l pcap
 utils.o:
 	gcc -c src/utils.c
-npsi: main.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o
+tcpmgr.o:
+	gcc -c src/capture/tcpmgr.o
+npsi: main.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
+			tcpmgr.o
 	gcc -o npsi.exe $^ -l pcap
 
 clean:
