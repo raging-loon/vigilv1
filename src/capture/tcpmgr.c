@@ -13,7 +13,7 @@ void ip4_tcp_decode(const unsigned char * pkt,const char* src_ip,const char* des
   src_port = (unsigned int)ntohs(tcp_hdr->source);
   printf("IPv4 %s:%d -> %s:%d\n",
                   src_ip, src_port, dest_ip, dest_port);
-  printf("\tTCP [ ");
+  printf("\tTCP [");
   // printf("[");
   if((uint16_t)ntohs(tcp_hdr->syn) != 0)
     printf(" SYN ");

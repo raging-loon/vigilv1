@@ -3,6 +3,7 @@
 #include "../packets/icmp6.h"
 #include "../packets/ip6hdr.h"
 #include <netinet/ip.h>
+#include <netinet/icmp6.h>
 #include "../packets/icmp4.h"
 #include "protocols.h"
 #include "../utils.h"
@@ -17,6 +18,12 @@ void ip6_icmp_decode(const unsigned char * pkt){
       printf(" Router Solicitation from %s\n",src_mac);
       break;
     }
+    case 143:
+      printf("Multicast Listener Report Message v2\n");
+      break;
+    case 135:
+      printf("Neighbor Solicitation\n"); 
+      break;
   }
 }
 
