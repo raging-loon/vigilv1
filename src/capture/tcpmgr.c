@@ -5,13 +5,20 @@
 #include "protocols.h"
 #include "../packets/tcp.h"
 #include <stdint.h>
+#include <stdbool.h>
+#include "../packets/ip_hdr.h"
 void ip4_tcp_decode(const unsigned char * pkt,const char* src_ip,const char* dest_ip){
-  struct __tcp * tcp_hdr = (struct __tcp *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
+  struct __tcp * tcp_hdr = (struct __tcp *)(pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr));
   unsigned int dest_port,  src_port;
+  
+    bool syn_set;
+    bool ack_set;
+
+  
   // uint16_t syn, ack, rst, fin, psh, urg;
   dest_port = (unsigned int)ntohs(tcp_hdr->dest);
   src_port = (unsigned int)ntohs(tcp_hdr->source);
-  printf("IPv4 %s:%d -> %s:%d\n",
+  printf("%s:%d -> %s:%d\n",
                   src_ip, src_port, dest_ip, dest_port);
   printf("\tTCP [");
   // printf("[");

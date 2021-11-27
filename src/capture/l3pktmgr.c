@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <netinet/ip.h>
+#include "../packets/ip_hdr.h"
 #include "l3pktmgr.h"
 #include "protocols.h"
 #include "../packets/ip6hdr.h"
@@ -34,20 +35,27 @@ void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
 }
 
 void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
-  struct iphdr * ip_header = (struct iphdr * )(pkt + ETH_HDR_SZ);
+  struct ip_hdr * ip_header = (struct ip_hdr * )(pkt + ETH_HDR_SZ);
   struct sockaddr_in src, dest;
   char dest_ip[128];
   char src_ip[128];
   memset(&src,0,sizeof(src));
   memset(&dest,0,sizeof(dest));
+  
   src.sin_addr.s_addr = ip_header->saddr;
   dest.sin_addr.s_addr = ip_header->daddr;
   strncpy(dest_ip, inet_ntoa(dest.sin_addr),sizeof(dest_ip));
-    strncpy(src_ip, inet_ntoa(src.sin_addr),sizeof(src_ip));
-  
+  strncpy(src_ip, inet_ntoa(src.sin_addr),sizeof(src_ip));
+  // printf("");
+  // if(ip_header->frag_off)
+  // printf("%d\n",ip_header->flags);
+  if(ip_header->flags == 0x0020 || ip_header->flags == 0x0102)
+    printf("IPv4 Fragmented ");
+  else
+    printf("IPv4 ");
   switch(ip_header->protocol){
     case 1:{
-        printf("IPv4 %s -> %s\n",
+        printf("%s -> %s\n",
                   src_ip, dest_ip);
       ip4_icmp_decode(pkt);
       break;
