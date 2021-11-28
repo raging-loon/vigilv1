@@ -7,8 +7,10 @@
 #include "l2pktmgr.h"
 #include "protocols.h"
 #include "../utils.h"
+#include "../colors.h"
 #include "../packets/arp-hdr.h"
 void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
+  printf("%s",__ARP_BOTH);
 
   struct arp_hdr * arp = (struct arp_hdr *)(pkt + ETH_HDR_SZ);
 
@@ -46,5 +48,6 @@ void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
       break;
     }
   }
-  
+  printf("%s",__END_COLOR_STREAM);
+
 }

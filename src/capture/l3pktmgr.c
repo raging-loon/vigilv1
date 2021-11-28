@@ -8,6 +8,7 @@
 #include <netinet/ip.h>
 #include "../packets/ip_hdr.h"
 #include "l3pktmgr.h"
+#include "../colors.h"
 #include "protocols.h"
 #include "../packets/ip6hdr.h"
 #include "../utils.h"
@@ -21,14 +22,14 @@ void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
   char src_ip6[134];
   strncpy(src_ip6,inet6_ntoa(ipv6_hdr->srcaddr),sizeof(src_ip6));
   strncpy(dest_ip6,inet6_ntoa(ipv6_hdr->dstaddr),sizeof(dest_ip6));
-  printf("IPv6 ");
+  // printf("IPv6 ");
   // printf("src=%p dst=%p",ipv6_hdr->srcaddr,ipv6_hdr->dstaddr);
-  printf("src=%s dst=%s\n", 
-                      src_ip6,dest_ip6);
+  // printf("src=%s dst=%s\n", 
+                      // src_ip6,dest_ip6);
   switch(ipv6_hdr->n_hdr){
     case 58:
     case 0:{
-      ip6_icmp_decode(pkt);
+      ip6_icmp_decode(pkt,src_ip6,dest_ip6);
       break;
     }
   }
@@ -50,14 +51,12 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   // if(ip_header->frag_off)
   // printf("%d\n",ip_header->flags);
   if(ip_header->flags == 0x0020 || ip_header->flags == 0x0102)
-    printf("IPv4 Fragmented ");
-  else
-    printf("IPv4 ");
+    printf("%sFragmented%s ",__FRAGMENTED,__END_COLOR_STREAM);
   switch(ip_header->protocol){
     case 1:{
-        printf("%s -> %s\n",
-                  src_ip, dest_ip);
-      ip4_icmp_decode(pkt);
+        // printf("IPv4 %s -> %s\n",
+                  // src_ip, dest_ip);
+      ip4_icmp_decode(pkt,src_ip,dest_ip);
       break;
     }
     case 6:
