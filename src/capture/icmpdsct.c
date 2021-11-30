@@ -95,13 +95,34 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
         case 15:
           printf(" Precedence Cutoff in Effect )\n");
           break;
+        default:
+          printf(" Unknown Code=%d )\n",icmp4->code);
+          break;
       };
       break;
     case 4:
       printf(" Source Quench( flow control )\n");
       break;
     case 5:
-      printf(" Redirect\n");
+      printf(" Redirect (");
+      switch(icmp4->code){
+        case 0:
+          printf(" Redirect for Network )\n");
+          break;
+        case 1:
+          printf(" Redirect for Host )\n");
+          break;
+        case 2:
+          printf(" Redirect for TOS and Network )\n");
+          break;
+        case 3:
+          printf(" Redirect for TOS and Host )\n");
+          break;
+        default:
+          printf(" Unknown Code=%d )\n",icmp4->code);
+          break;
+      }
+
       break;
     case 8:
       printf(" echo request\n");
