@@ -127,8 +127,23 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
     case 8:
       printf(" echo request\n");
       break;
+    case 9:
+      if(icmp4->code == 0)
+        printf(" Mobile IP Advertisement (Normal Router Advertisement ) )\n ");
+      else
+        printf(" Router Advertisement (Unknown Code: %d ) )\n",icmp4->code);
+      break;
+    case 10:
+      printf(" Router Solicitation )\n");
+      break;
     case 11:
-      printf(" Time To Live exceeded\n");
+      printf(" Time To Live exceeded");
+      if(icmp4->code == 0)
+        printf(" ( ttl exceeded in transit )\n");
+      else if(icmp4->code == 1)
+        printf(" ( Fragment Reassembly time exceeded )\n");
+      else
+        printf(" ( Unknown Code: %d)\n");
       break;
     case 13:
       printf(" timestamp request\n");
