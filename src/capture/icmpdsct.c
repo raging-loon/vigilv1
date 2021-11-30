@@ -45,14 +45,75 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
       printf(" echo reply\n");
       break;
     case 3:
-      printf(" destination unreachable\n");
+      printf(" destination unreachable(");
+      switch(icmp4->code){
+        case 0:
+          printf(" Network Unreachable )\n");
+          break;
+        case 1:
+          printf(" Host Unreachable )\n");
+          break;
+        case 2:
+          printf(" Protocol Unreachable )\n");
+          break;
+        case 3:
+          printf(" Port Unreachable )\n");
+          break;
+        case 4:
+          printf(" Fragmentation Needed )\n");
+          break;
+        case 5:
+          printf(" Source Route Failed )\n");
+          break;
+        case 6:
+          printf(" Destination Network Unreachable )\n");
+          break;
+        case 7:
+          printf(" Destination Host Unreachable )\n");
+          break;
+        case 8:
+          printf(" Source Host Isolated )\n");
+          break;
+        case 9:
+          printf(" Network Administratively Prohibited )\n");
+          break;
+        case 10:
+          printf(" Host Administratively Prohibited )\n");
+          break;
+        case 11:
+          printf(" Network Unreachable for TOS )\n");
+          break;
+        case 12:
+          printf(" Host Unreachable for TOS )\n");
+          break;
+        case 13:
+          printf(" Communication Administratively Prohibited )\n");
+          break;
+        case 14:
+          printf(" Host Precedence Violation )\n");
+          break;
+        case 15:
+          printf(" Precedence Cutoff in Effect )\n");
+          break;
+      };
+      break;
+    case 4:
+      printf(" Source Quench( flow control )\n");
+      break;
+    case 5:
+      printf(" Redirect\n");
       break;
     case 8:
       printf(" echo request\n");
       break;
-    
+    case 11:
+      printf(" Time To Live exceeded\n");
+      break;
     case 13:
       printf(" timestamp request\n");
+      break;
+    case 14:
+      printf(" timestamp reply\n");
       break;
     default:
       printf(" unknown icmp type=%d",icmp4->type);
