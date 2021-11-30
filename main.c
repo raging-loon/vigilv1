@@ -9,7 +9,7 @@
 #include "src/statistics/ip_addr_stat.h"
 struct ip_addr_counter ip_stats[256] = {0};
 int ip_addr_stat_counter_len = 0;
-char * ip_addr;
+char ip_addr[32];
 int main(int argc, char **argv){
   signal(SIGINT,sigint_processor);
   if(argc == 1){
