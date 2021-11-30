@@ -5,8 +5,9 @@
 #include "../protocols.h"
 #include <netinet/ip.h>
 #include "../../utils.h"
+#include <netinet/ether.h>
 void ip4_igmp_decode(const unsigned char * pkt, const char * src_ip, const char * dest_ip){
-  struct main_igmp * type_decode = (struct main_igmp *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
+  struct main_igmp * type_decode = (struct main_igmp *)(pkt + sizeof(struct ethhdr) + sizeof(struct iphdr));
   printf("IPv4 IGMP %s -> %s [", src_ip ,dest_ip);
   switch(type_decode->type){
     case 0x11:{
