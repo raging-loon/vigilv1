@@ -59,6 +59,10 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       ip4_icmp_decode(pkt,src_ip,dest_ip);
       break;
     }
+    case 2:
+      printf("IPv4 IGMP %s -> %s\n",src_ip,dest_ip);
+      break;
+    
     case 6:
       ip4_tcp_decode(pkt,src_ip,dest_ip);
       break;
