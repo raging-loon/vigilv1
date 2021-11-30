@@ -18,7 +18,7 @@ void ip4_igmp_decode(const unsigned char * pkt, const char * src_ip, const char 
       struct igmp_member_report * igmp_mem_rep = (struct igmp_member_report *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
 
       char multicast_ip[32];
-      strcpy(multicast_ip,ipv4_ntoa((uint32_t*)igmp_mem_rep->multicast_address));
+      strcpy(multicast_ip,ipv4_ntoa((uint32_t*)&igmp_mem_rep->multicast_address));
       printf(" Membership Report / Join group %s for any sources ]\n",multicast_ip);
       break;
     } 
