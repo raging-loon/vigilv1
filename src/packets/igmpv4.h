@@ -4,7 +4,7 @@
 
 struct main_igmp{
   uint8_t type;
-}
+};
 
 struct igmpv4_member_qry{
   uint8_t type;
