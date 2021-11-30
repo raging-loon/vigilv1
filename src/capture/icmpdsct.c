@@ -24,6 +24,9 @@ void ip6_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
     case 143:
       printf("Multicast Listener Report Message v2\n");
       break;
+    case 130:
+      printf("Multicast  Listener Query");
+      break;
     case 135:
       printf("Neighbor Solicitation\n"); 
       break;
