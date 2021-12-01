@@ -33,7 +33,7 @@ static void* verify_ip_addr(void * args){
   
   strcpy(ip_stats[ip_addr_stat_counter_len].ip_addr,temp_info->__ip_addr);
   ip_stats[ip_addr_stat_counter_len].count++;
-  printf("[DEBUG] temp_info->__ip_addr = %s ip_stats[ip_addr_stat_counter_len].ip_addr = %s ",temp_info->__ip_addr,ip_stats[ip_addr_stat_counter_len].ip_addr);
+  printf("[DEBUG] temp_info->__ip_addr = %s ip_stats[ip_addr_stat_counter_len].ip_addr = %s\n",temp_info->__ip_addr,ip_stats[ip_addr_stat_counter_len].ip_addr);
   // free(temp_info);
 end:;
 }
