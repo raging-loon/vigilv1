@@ -39,5 +39,9 @@ int main(int argc, char **argv){
 
 void sigint_processor(int signal){
   printf("Caught signal 2, exiting...\n");
+  printf("Statistics\nIp address    Count\n-----------------");
+  for(int i = 0; i <= ip_addr_stat_counter_len; i++){
+    printf("%s        %d\n",ip_stats[i].ip_addr, ip_stats[i].count);
+  }
   exit(EXIT_SUCCESS);
 }
