@@ -23,9 +23,10 @@ static void *verify_ip_addr(void * args){
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){
     if(strcmp(temp_info->__ip_addr ,  ip_stats[ip_addr_stat_counter_len].ip_addr)){
       ip_stats[i].count++;
-      return;
+      goto end; 
     }
   }
   strcpy(temp_info->__ip_addr,ip_stats[++ip_addr_stat_counter_len].ip_addr);
   // ip_stats[++ip_addr_stat_counter_len].ip_addr = (const char *)&
+end:;
 }
