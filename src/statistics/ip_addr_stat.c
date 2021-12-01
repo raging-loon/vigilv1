@@ -26,8 +26,9 @@ static void *verify_ip_addr(void * args){
       goto end; 
     }
   }
-  
-  strcpy(ip_stats[++ip_addr_stat_counter_len].ip_addr,temp_info->__ip_addr);
-  // ip_stats[++ip_addr_stat_counter_len].ip_addr = (const char *)&
+  struct ip_addr_stat temp_stat;
+  ip_stats[++ip_addr_stat_counter_len] = temp_stat;
+  strcpy(ip_stats[ip_addr_stat_counter_len].ip_addr,temp_info->__ip_addr);
+  ip_stats[ip_addr_stat_counter_len].count++;
 end:;
 }
