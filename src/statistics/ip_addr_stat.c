@@ -24,7 +24,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
 static void* verify_ip_addr(void * args){
   // const char * ip_addr = ((struct aiaoic_args*)&args)->__ip_addr;
   aiaoic_args * temp_info = args;
-  printf("[DEBUG] aiaoic_args = %s\n",(temp_info->__ip_addr);
+  printf("[DEBUG] aiaoic_args = %s\n",temp_info->__ip_addr);
 
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){
     if(strcmp(temp_info->__ip_addr , ip_stats[ip_addr_stat_counter_len].ip_addr) == 0){
