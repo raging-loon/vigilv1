@@ -4,6 +4,8 @@
 #include "udpmgr.h"
 #include <netinet/udp.h>
 #include "protocols.h"
+#include "../statistics/ip_addr_stat.h"
+
 #include "../colors.h"
 #include <arpa/inet.h>
 #include "../packets/ip_hdr.h"
