@@ -14,7 +14,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
   // int ip_addr_sz = strlen(ip_addr);
   // memcpy(cpy_ip_addr,)
   args->__ip_addr = (char *)&cpy_ip_addr;
-  printf("[DEBUG] aiaoic = &p\n",args->__ip_addr);
+  printf("[DEBUG] aiaoic = %p\n",args->__ip_addr);
   printf("[DEBUG] aiaoic = %s\n",args->__ip_addr);
 
   pthread_create(&pthrd, NULL, &verify_ip_addr, &args);
@@ -28,7 +28,7 @@ static void* verify_ip_addr(void * args){
   aiaoic_args * temp_info = (aiaoic_args*) malloc(sizeof(aiaoic_args));
   temp_info = args;
   printf("[DEBUG] aiaoic_args = %s\n",temp_info->__ip_addr);
-  printf("[DEBUG] aiaoic_args = &p\n",temp_info->__ip_addr);
+  printf("[DEBUG] aiaoic_args = %p\n",temp_info->__ip_addr);
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){
     if(strcmp(temp_info->__ip_addr , ip_stats[ip_addr_stat_counter_len].ip_addr) == 0){
       ip_stats[i].count++;
