@@ -7,7 +7,7 @@
 #include "globals.h"
 #include "main.h"
 #include "src/statistics/ip_addr_stat.h"
-struct ip_addr_counter * ip_stats;
+struct ip_addr_counter ip_stats[256];
 int ip_addr_stat_counter_len = 0;
 char ip_addr[32];
 int main(int argc, char **argv){
@@ -41,7 +41,7 @@ void sigint_processor(int signal){
   printf("Caught signal 2, exiting...\n");
   printf("Statistics\nIp address    Count\n-----------------");
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){
-    printf("%s   |   %d\n",ip_stats[i]->ip_addr, ip_stats[i]->count);
+    printf("%s   |   %d\n",ip_stats[i].ip_addr, ip_stats[i].count);
   }
   exit(EXIT_SUCCESS);
 }
