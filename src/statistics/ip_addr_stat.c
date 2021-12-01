@@ -9,7 +9,7 @@
 void add_ip_addr_or_inc_counter(const char * ip_addr){
   pthread_t pthrd;
   aiaoic_args * args = (aiaoic_args*)malloc(sizeof(aiaoic_args));
-  args->__ip_addr = *ip_addr;
+  args->__ip_addr = ip_addr;
   // strncpy((char *)&args->__ip_addr,ip_addr,sizeof(ip_addr));
   printf("[DEBUG] aiaoic = %s\n",ip_addr);
 
