@@ -26,8 +26,8 @@ static void *verify_ip_addr(void * args){
       goto end; 
     }
   }
-  struct ip_addr_counter * temp_stat = (struct ip_addr_counter*)malloc(sizeof(struct ip_addr_counter)));
-  ip_stats[++ip_addr_stat_counter_len] = temp_stat;
+  struct ip_addr_counter * temp_stat = (struct ip_addr_counter*)malloc(sizeof(struct ip_addr_counter));
+  ip_stats[++ip_addr_stat_counter_len] = (struct ip_addr_counter)temp_stat;
   strcpy(ip_stats[ip_addr_stat_counter_len].ip_addr,temp_info->__ip_addr);
   ip_stats[ip_addr_stat_counter_len].count++;
 end:;
