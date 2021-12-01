@@ -24,7 +24,7 @@ static void* verify_ip_addr(void * args){
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){
     if(strcmp(temp_info->__ip_addr , ip_stats[ip_addr_stat_counter_len].ip_addr) == 0){
       ip_stats[i].count++;
-      free(temp_info);
+      // free(temp_info);
       goto end; 
     }
   }
@@ -36,6 +36,6 @@ static void* verify_ip_addr(void * args){
   strcpy(ip_stats[ip_addr_stat_counter_len].ip_addr,temp_info->__ip_addr);
   printf("|%s    |\n",ip_stats[ip_addr_stat_counter_len].ip_addr);
   ip_stats[ip_addr_stat_counter_len].count++;
-  free(temp_info);
+  // free(temp_info);
 end:;
 }
