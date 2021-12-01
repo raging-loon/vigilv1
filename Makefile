@@ -1,6 +1,7 @@
 all: npsi clean
 
-
+main.o:
+	gcc -c main.c -l pcap
 ip_addr_stat.o:
 	gcc -c src/statistics/ip_addr_stat.c -l pthread
 igmp_dsct.o:
@@ -13,8 +14,7 @@ l3pktmgr.o:
 	gcc -c src/capture/l3pktmgr.c
 pktmgr.o:
 	gcc -c src/capture/pktmgr.c -l pcap
-main.o:
-	gcc -c main.c -l pcap
+
 utils.o:
 	gcc -c src/utils.c
 tcpmgr.o:
