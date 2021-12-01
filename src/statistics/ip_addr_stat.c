@@ -22,7 +22,7 @@ static void *verify_ip_addr(void * args){
   // const char * ip_addr = ((struct aiaoic_args*)&args)->__ip_addr;
   aiaoic_args * temp_info = args;
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){
-    if(strcmp(temp_info->__ip_addr , ip_stats[ip_addr_stat_counter_len].ip_addr)){
+    if(strcmp(temp_info->__ip_addr , ip_stats[ip_addr_stat_counter_len].ip_addr) == 0){
       ip_stats[i].count++;
       goto end; 
     }
