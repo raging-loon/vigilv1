@@ -9,9 +9,9 @@
 void add_ip_addr_or_inc_counter(const char * ip_addr){
 
   pthread_t pthrd;
-  struct aiaoic_args * args = malloc(sizeof(aiaoic_args));
-  // aiaoic_args->__ip_addr = ip_addr;
-  strcpy(args->__ip_addr,ip_addr);
+  aiaoic_args * args = malloc(sizeof(aiaoic_args));
+  args->__ip_addr = ip_addr;
+  // strcpy(args->__ip_addr,ip_addr);
   pthread_create(&pthrd, NULL, &verify_ip_addr, &args);
 
 }
