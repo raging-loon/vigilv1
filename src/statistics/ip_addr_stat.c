@@ -10,7 +10,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
 
   pthread_t pthrd;
   struct aiaoic_args * args = malloc(sizeof(aiaoic_args));
-
+  aiaoic_args->__ip_addr = ip_addr;
   pthread_create(&pthrd, NULL, &verify_ip_addr, &args);
 
 }
@@ -28,11 +28,11 @@ static void *verify_ip_addr(void * args){
   }
   struct ip_addr_counter * temp_stat = (struct ip_addr_counter*)malloc(sizeof(struct ip_addr_counter));
   ip_stats[++ip_addr_stat_counter_len] = (struct ip_addr_counter)*temp_stat;
-  printf("--[DEBUG]--");
-  printf("|%s    |\n",temp_info->__ip_addr);
+  // printf("--[DEBUG]--");
+  // printf("|%s    |\n",temp_info->__ip_addr);
   
   strcpy(ip_stats[ip_addr_stat_counter_len].ip_addr,temp_info->__ip_addr);
-  printf("|%s    |\n",ip_stats[ip_addr_stat_counter_len].ip_addr);
+  // printf("|%s    |\n",ip_stats[ip_addr_stat_counter_len].ip_addr);
   ip_stats[ip_addr_stat_counter_len].count++;
 end:;
 }
