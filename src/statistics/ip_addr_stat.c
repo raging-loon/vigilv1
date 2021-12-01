@@ -7,7 +7,7 @@
 #include "../../globals.h"
 #include <stdlib.h>
 void add_ip_addr_or_inc_counter(const char * ip_addr){
-
+  printf("[DEBUG] aiaoic = %s\n",ip_addr);
   pthread_t pthrd;
   aiaoic_args * args = malloc(sizeof(aiaoic_args));
   // args->__ip_addr = (char *)ip_addr;
