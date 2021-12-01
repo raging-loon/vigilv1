@@ -22,7 +22,7 @@ tcpmgr.o:
 udpmgr.o:
 	gcc -c src/capture/udpmgr.c
 npsi: main.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
-			tcpmgr.o udpmgr.o igmp_dsct.o #ip_addr_stat.o
+			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o
 	gcc -o npsi.exe $^ -l pcap
 
 clean:
