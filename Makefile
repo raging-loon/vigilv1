@@ -1,8 +1,8 @@
 all: npsi clean
 
 
-#ip_addr_stat.o:
-#	gcc -c src/statistics/ip_addr_stat.c
+ip_addr_stat.o:
+	gcc -c src/statistics/ip_addr_stat.c
 igmp_dsct.o:
 	gcc -c src/capture/protocols/igmp_dsct.c
 icmpdsct.o:

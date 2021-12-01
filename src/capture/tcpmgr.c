@@ -6,6 +6,7 @@
 #include "../packets/tcp.h"
 #include "../colors.h"
 #include <stdint.h>
+#include "../statistics/ip_addr_stat.h"
 #include <stdbool.h>
 #include "../packets/ip_hdr.h"
 void ip4_tcp_decode(const unsigned char * pkt,const char* src_ip,const char* dest_ip){
@@ -41,6 +42,8 @@ void ip4_tcp_decode(const unsigned char * pkt,const char* src_ip,const char* des
   printf("]\n");
   
   printf("%s",__END_COLOR_STREAM);
+  add_ip_addr_or_inc_counter(src_ip);
+  add_ip_addr_or_inc_counter(dest_ip);
   //+
   
 }

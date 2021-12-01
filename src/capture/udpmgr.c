@@ -16,4 +16,6 @@ void ip4_udp_decode(const unsigned char * pkt, const char * src_ip, const char *
   printf("IPv4 %s:%d -> %s:%d UDP\n",
       src_ip,src_port,dest_ip,dest_port);
   printf("%s",__END_COLOR_STREAM);
+    add_ip_addr_or_inc_counter(src_ip);
+  add_ip_addr_or_inc_counter(dest_ip);
 }

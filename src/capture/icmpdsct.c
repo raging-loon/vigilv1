@@ -156,4 +156,6 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
       break;
   }
   printf("%s",__END_COLOR_STREAM);
+    add_ip_addr_or_inc_counter(src_ip);
+  add_ip_addr_or_inc_counter(dest_ip);
 }
