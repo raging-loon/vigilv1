@@ -10,7 +10,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
 
   pthread_t pthrd;
   aiaoic_args * args = malloc(sizeof(aiaoic_args));
-  args->__ip_addr = ip_addr;
+  args->__ip_addr = (char *)ip_addr;
   // strcpy(args->__ip_addr,ip_addr);
   pthread_create(&pthrd, NULL, &verify_ip_addr, &args);
 
