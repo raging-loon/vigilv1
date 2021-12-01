@@ -8,7 +8,7 @@ struct ip_addr_counter{
 void add_ip_addr_or_inc_counter(const char *);
 static void *verify_ip_addr(void *);
 typedef struct {
-  const char * __ip_addr;
+  char * __ip_addr;
 } aiaoic_args;
 
 
