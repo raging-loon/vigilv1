@@ -13,7 +13,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
   strncpy(cpy_ip_addr,ip_addr,strlen(ip_addr));
   // int ip_addr_sz = strlen(ip_addr);
   // memcpy(cpy_ip_addr,)
-  strcpy((char*)&args->__ip_addr,(char*)&cpy_ip_addr);
+  strncpy((char*)&args->__ip_addr,(char*)&cpy_ip_addr,strlen(ip_addr));
   printf("[DEBUG] aiaoic = %p\n",args->__ip_addr);
   printf("[DEBUG] aiaoic = %s\n",args->__ip_addr);
 
