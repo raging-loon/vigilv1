@@ -57,8 +57,8 @@ void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
 void loopback_ctp_decode(const unsigned char * pkt){
   struct config_test_proto * ctp_data = (struct config_test_proto *)(pkt + ETH_HDR_SZ);
   struct ethhdr * ethernet_hdr = (struct ethhdr *)(pkt);
-  char src_mac[16];
-  char dest_mac[16];
+  char src_mac[24];
+  char dest_mac[24];
   strncpy(src_mac, uc_mac_ntoa(ethernet_hdr->h_source), sizeof(src_mac));
   strncpy(dest_mac, uc_mac_ntoa(ethernet_hdr->h_dest),sizeof(dest_mac));
   printf("LOOP %s -> %s\n",src_mac,dest_mac);
