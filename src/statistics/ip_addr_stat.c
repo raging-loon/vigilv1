@@ -10,7 +10,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
   char cpy_ip_addr[24];
   pthread_t pthrd;
   aiaoic_args * args = (aiaoic_args*)malloc(sizeof(aiaoic_args));
-  args->__ip_addr = "";
+  args->__ip_addr = (char *)malloc(sizeof(cpy_ip_addr));
   memset(args->__ip_addr,0,sizeof(args->__ip_addr));
   strncpy(cpy_ip_addr,ip_addr,strlen(ip_addr));
   // int ip_addr_sz = strlen(ip_addr);
@@ -21,6 +21,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
 
   pthread_create(&pthrd, NULL, &verify_ip_addr, (aiaoic_args *)&args);
   pthread_join(pthrd, NULL);
+  free(args->__ip_addr);
 
 }
 
