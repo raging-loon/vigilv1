@@ -20,7 +20,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
   // printf("[DEBUG] aiaoic = %p\n",args->__ip_addr);
   printf("[DEBUG] aiaoic = %s\n",args->__ip_addr);
 
-  pthread_create(&pthrd, NULL, &verify_ip_addr, (void *)&args->__ip_addr));
+  pthread_create(&pthrd, NULL, &verify_ip_addr, (void *)&args->__ip_addr);
   // pthread_join(pthrd, NULL);
 
 }
