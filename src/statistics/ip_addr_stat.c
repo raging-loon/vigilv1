@@ -10,14 +10,13 @@
 static __thread char stat_buffer[24];
 
 void add_ip_addr_or_inc_counter(const char * ip_addr){
-  // char cpy_ip_addr[24];
-  // memset(&cpy_ip_addr,0,sizeof(cpy_ip_addr));
-  
+  strcpy(stat_buffer,ip_addr);
+  printf("[DEBUG] stat_buffer = %s\n",stat_buffer);
   pthread_t pthrd;
   aiaoic_args * args = (aiaoic_args*)malloc(sizeof(aiaoic_args));
   memset(args->__ip_addr,0,sizeof(args->__ip_addr));
-  strncpy(stat_buffer,ip_addr,strlen(ip_addr));
-  // printf("[DEBUG] cpy_ip_addr = %s\n",cpy_ip_addr);
+  
+
   
   // strncat((char*)&args->__ip_addr,(char*)&stat_buffer,strlen((char *)&cpy_ip_addr));
   args->__ip_addr = stat_buffer;
