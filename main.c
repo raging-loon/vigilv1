@@ -39,7 +39,7 @@ int main(int argc, char **argv){
 }
 
 void sigint_processor(int signal){
-  printf("Caught signal 2, exiting...\n");
+  printf("\nCaught signal 2, exiting...\n");
   printf("Total Packets Caught: %d\n",total_pkt_captured);
   printf("Statistics\nIp address    Count\n-----------------\n");
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){

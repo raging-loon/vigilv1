@@ -33,6 +33,9 @@ void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
       ip6_icmp_decode(pkt,src_ip6,dest_ip6);
       break;
     }
+    default:
+      printf("IPv6 %s -> %s Protocol Number = %d\n",src_ip6,dest_ip6,ipv6_hdr->n_hdr);
+      break;
   }
 }
 
@@ -70,6 +73,9 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       break;
     case 17:
       ip4_udp_decode(pkt, src_ip, dest_ip);
+      break;
+    default:
+      printf("IPv4 %s -> %s Protocol Number = %d\n",src_ip,dest_ip,ip_header->protocol);
       break;
   }
 }
