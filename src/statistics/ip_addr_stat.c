@@ -14,11 +14,6 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
   printf("[DEBUG] stat_buffer = %s\n",stat_buffer);
   pthread_t pthrd;
   aiaoic_args * args = (aiaoic_args*)malloc(sizeof(aiaoic_args));
-  memset(args->__ip_addr,0,sizeof(args->__ip_addr));
-  
-
-  
-  // strncat((char*)&args->__ip_addr,(char*)&stat_buffer,strlen((char *)&cpy_ip_addr));
   args->__ip_addr = (char *)&stat_buffer;
   // printf("[DEBUG] aiaoic = %s\n",args->__ip_addr);
 
