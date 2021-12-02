@@ -25,6 +25,9 @@ void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsign
     case L3_IPV4:
       ipv4pktmgr(pkt, pkt_hdr);
       break;
+    case 0x0090:
+      loopback_ctp_decode(pkt);
+      break;
     default:
       printf("Unknown frame protocol number: %d\n",ethernet_header->h_proto);
       break;
