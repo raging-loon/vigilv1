@@ -30,7 +30,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
 static void* verify_ip_addr(void * args){
   // aiaoic_args * temp_info = args;//(aiaoic_args*)malloc(sizeof(aiaoic_args));
   const char * ip_addr = args;
-  printf("[DEBUG] aiaoic_args = %s\n",temp_info->__ip_addr);
+  // printf("[DEBUG] aiaoic_args = %s\n",temp_info->__ip_addr);
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){
     if(strcmp(ip_addr , ip_stats[ip_addr_stat_counter_len].ip_addr) == 0){
       ip_stats[i].count++;
