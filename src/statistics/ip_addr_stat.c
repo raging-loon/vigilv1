@@ -16,7 +16,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
   memset(args->__ip_addr,0,sizeof(args->__ip_addr));
   args->__ip_addr = "";
   strncpy(cpy_ip_addr,ip_addr,strlen(ip_addr));
-  printf("[DEBUG] cpy_ip_addr = %s\n",cpy_ip_addr);
+  printf("[DEBUG] cpy_ip_addr = %s\n",cpy_ip_addr); 
   // int ip_addr_sz = strlen(ip_addr);
   // memcpy(cpy_ip_addr,)
   strncat((char*)&args->__ip_addr,(char*)&cpy_ip_addr,strlen((char *)&cpy_ip_addr));
