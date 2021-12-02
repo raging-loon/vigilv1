@@ -10,6 +10,7 @@
 struct ip_addr_counter ip_stats[256];
 int ip_addr_stat_counter_len = 0;
 char ip_addr[32];
+int total_pkt_captured = 0;
 int main(int argc, char **argv){
   signal(SIGINT,sigint_processor);
   if(argc == 1){
@@ -39,6 +40,7 @@ int main(int argc, char **argv){
 
 void sigint_processor(int signal){
   printf("Caught signal 2, exiting...\n");
+  printf("Total Packets Caught: %d\n",total_pkt_captured);
   printf("Statistics\nIp address    Count\n-----------------\n");
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){
     printf("%s   |   %d\n",ip_stats[i].ip_addr, ip_stats[i].count);
