@@ -21,7 +21,6 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
 
   pthread_create(&pthrd, NULL, &verify_ip_addr, (aiaoic_args *)&args);
   pthread_join(pthrd, NULL);
-  free(args->__ip_addr);
 
 }
 
@@ -47,5 +46,7 @@ static void* verify_ip_addr(void * args){
   ip_stats[ip_addr_stat_counter_len].count++;
   // printf("[DEBUG] temp_info->__ip_addr = %s ip_stats[ip_addr_stat_counter_len].ip_addr = %s\n",temp_info->__ip_addr,ip_stats[ip_addr_stat_counter_len].ip_addr);
   // free(temp_info);
-end:;
+end:
+  if(temp_info->__ip_addr)
+    free(temp_info->__ip_addr);
 }
