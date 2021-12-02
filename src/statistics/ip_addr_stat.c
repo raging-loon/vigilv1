@@ -15,9 +15,9 @@ void add_ip_addr_or_inc_counter(const char * ip_addr){
   strncpy(cpy_ip_addr,ip_addr,strlen(ip_addr));
   // int ip_addr_sz = strlen(ip_addr);
   // memcpy(cpy_ip_addr,)
-  strncat((char*)&args->__ip_addr,(char*)&cpy_ip_addr,strlen((char*)&cpy_ip_addr));
-  printf("[DEBUG] aiaoic = %p\n",args->__ip_addr);
-  // printf("[DEBUG] aiaoic = %s\n",args->__ip_addr);
+  strncat((char*)&args->__ip_addr,(char*)&cpy_ip_addr,strlen((char*)&cpy_ip_addr)-2);
+  // printf("[DEBUG] aiaoic = %p\n",args->__ip_addr);
+  printf("[DEBUG] aiaoic = %s\n",args->__ip_addr);
 
   pthread_create(&pthrd, NULL, &verify_ip_addr, (aiaoic_args *)&args);
   pthread_join(pthrd, NULL);
