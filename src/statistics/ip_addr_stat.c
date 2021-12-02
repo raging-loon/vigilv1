@@ -6,20 +6,21 @@
 #include <string.h>
 #include "../../globals.h"
 #include <stdlib.h>
+
+static __thread char stat_buffer[24];
+
 void add_ip_addr_or_inc_counter(const char * ip_addr){
-  char cpy_ip_addr[24];
-  memset(&cpy_ip_addr,0,sizeof(cpy_ip_addr));
+  // char cpy_ip_addr[24];
+  // memset(&cpy_ip_addr,0,sizeof(cpy_ip_addr));
   
   pthread_t pthrd;
   aiaoic_args * args = (aiaoic_args*)malloc(sizeof(aiaoic_args));
-  // args->__ip_addr = (char *)malloc(sizeof(cpy_ip_addr));
   memset(args->__ip_addr,0,sizeof(args->__ip_addr));
-  args->__ip_addr = "";
-  strncpy(cpy_ip_addr,ip_addr,strlen(ip_addr));
-  printf("[DEBUG] cpy_ip_addr = %s\n",cpy_ip_addr);
-  // int ip_addr_sz = strlen(ip_addr);
-  // memcpy(cpy_ip_addr,)
-  strncat((char*)&args->__ip_addr,(char*)&cpy_ip_addr,strlen((char *)&cpy_ip_addr));
+  strncpy(stat_buffer,ip_addr,strlen(ip_addr));
+  // printf("[DEBUG] cpy_ip_addr = %s\n",cpy_ip_addr);
+  
+  // strncat((char*)&args->__ip_addr,(char*)&stat_buffer,strlen((char *)&cpy_ip_addr));
+  args->__ip_addr = stat_buffer;
   // printf("[DEBUG] aiaoic = %p\n",args->__ip_addr);
   // printf("[DEBUG] aiaoic = %s\n",args->__ip_addr);
 

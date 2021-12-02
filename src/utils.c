@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <uchar.h>
-static __thread char buffer[128];
+static __thread char stat_buffer[24];
 
 char * mac_ntoa( uint8_t * hwaddr){
   // printf("mac_ntoa\n");
