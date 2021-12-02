@@ -4,7 +4,7 @@
 #include "protocols.h"
 #include "l2pktmgr.h"
 #include <stdio.h>
-#include "../globals.h"
+#include "../../globals.h"
 #include "l3pktmgr.h"
 void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsigned char *pkt){
   printf("\033[90m-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\033[m\n");
