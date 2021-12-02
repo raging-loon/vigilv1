@@ -13,4 +13,5 @@
 #define __FRAGMENTED                "\033[4m"
 #define __REG_ICMP_v4_v6            "\033[35m"
 #define __UDP_REG                   "\033[96m"
+#define __STP                       "\033[94m"
 #endif /* __COLORS_H */

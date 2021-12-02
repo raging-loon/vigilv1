@@ -12,5 +12,7 @@
 void arpdecode(const unsigned char*, const struct pcap_pkthdr *);
 
 
+void loopback_ctp_decode(const unsigned char *);
+
 
 #endif /* L2_PKT_MGR */
