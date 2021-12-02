@@ -61,7 +61,14 @@ void loopback_ctp_decode(const unsigned char * pkt){
   char dest_mac[24];
   strncpy(src_mac, uc_mac_ntoa(ethernet_hdr->h_source), sizeof(src_mac));
   strncpy(dest_mac, uc_mac_ntoa(ethernet_hdr->h_dest),sizeof(dest_mac));
-  printf("LOOP %s -> %s\n",src_mac,dest_mac);
+  printf("LOOP %s -> %s",src_mac,dest_mac);
   
-  // switch(config_test_proto->relevant_func){}
+  switch(config_test_proto->relevant_func){
+    case 0x0010:
+      printf(" REPLY \n");
+      break;
+    default:
+      printf(" UNKNOWN LOOP FUNCTION:%d \n",config_test_proto->relevant_func);
+      break;
+  }
 }
