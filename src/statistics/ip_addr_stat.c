@@ -30,7 +30,7 @@ static void* verify_ip_addr(void * args){
   // const char * ip_addr = ((struct aiaoic_args*)&args)->__ip_addr;
   aiaoic_args * temp_info = (aiaoic_args*)malloc(sizeof(aiaoic_args));
   temp_info = args;
-  // printf("[DEBUG] aiaoic_args = %s\n",temp_info->__ip_addr);
+  printf("[DEBUG] aiaoic_args = %s\n",temp_info->__ip_addr);
   // printf("[DEBUG] aiaoic_args = %p\n",temp_info->__ip_addr);
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){
     if(strcmp(temp_info->__ip_addr , ip_stats[ip_addr_stat_counter_len].ip_addr) == 0){
@@ -41,7 +41,7 @@ static void* verify_ip_addr(void * args){
   }
   struct ip_addr_counter * temp_stat = (struct ip_addr_counter*)malloc(sizeof(struct ip_addr_counter));
   ip_stats[++ip_addr_stat_counter_len] = (struct ip_addr_counter)*temp_stat;
-  
+  memset(temp_stat->__ip_addr,0,sizeof(temp_info->__ip_addr));
   strcpy(ip_stats[ip_addr_stat_counter_len].ip_addr,temp_info->__ip_addr);
   ip_stats[ip_addr_stat_counter_len].count++;
   // printf("[DEBUG] temp_info->__ip_addr = %s ip_stats[ip_addr_stat_counter_len].ip_addr = %s\n",temp_info->__ip_addr,ip_stats[ip_addr_stat_counter_len].ip_addr);
