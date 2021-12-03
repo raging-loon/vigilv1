@@ -6,12 +6,13 @@
 #include "../packets/tcp.h"
 #include "../colors.h"
 #include <stdint.h>
+#include "../statistics/ip_addr_stat.h"
 #include <stdbool.h>
 #include "../statistics/ip_addr_stat.h"
 #include "../packets/ip_hdr.h"
 void ip4_tcp_decode(const unsigned char * pkt,const char* src_ip,const char* dest_ip){
-  add_ip_addr_or_inc_counter(dest_ip);
   add_ip_addr_or_inc_counter(src_ip);
+  add_ip_addr_or_inc_counter(dest_ip);
   printf("%s",__TCP_COLOR_NS);
   struct __tcp * tcp_hdr = (struct __tcp *)(pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr));
   unsigned int dest_port,  src_port;
@@ -42,6 +43,7 @@ void ip4_tcp_decode(const unsigned char * pkt,const char* src_ip,const char* des
     printf("%s ACK ",__TCP_ACK);
   printf("%s",__TCP_COLOR_NS);
   printf("]\n");
+  
   printf("%s",__END_COLOR_STREAM);
 
   //+

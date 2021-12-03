@@ -16,6 +16,11 @@ char * mac_ntoa( uint8_t * hwaddr){
   return buffer;
 
 }
+char * uc_mac_ntoa(unsigned char * __hwaddr){
+  snprintf(buffer, sizeof(buffer), "%02x:%02x:%02x:%02x:%02x:%02x",  __hwaddr[0], __hwaddr[1], __hwaddr[2], __hwaddr[3], __hwaddr[4], __hwaddr[5]
+  );
+  return buffer;
+}
 char * u8_ipv4_ntoa(uint8_t * ip_addr){
 
   unsigned char * __ip_addr = (unsigned char *)ip_addr;

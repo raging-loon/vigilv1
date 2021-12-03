@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <pcap.h>
 #include <stdlib.h>
+#include <string.h>
 #include "src/capture/pktmgr.h"
 #include <signal.h>
 #include "globals.h"
 #include "main.h"
 #include "src/statistics/ip_addr_stat.h"
-struct ip_addr_counter ip_stats[256] = {0};
-int ip_addr_stat_counter_len = 0;
-
+struct ip_addr_counter ip_stats[256];
+int ip_addr_stat_counter_len = -1;
+char ip_addr[32];
+int total_pkt_captured = 0;
 int main(int argc, char **argv){
   signal(SIGINT,sigint_processor);
   signal(SIGSEGV,sigint_processor);
@@ -17,6 +19,9 @@ int main(int argc, char **argv){
     printf("dev: add help stuff here\n");
     exit(0);
   }
+  // char * ip_addr = ""
+  printf("Note to developer, remove hard coded IP address\n");
+  strcpy(ip_addr,"10.108.32.227");
   char * iface_name = argv[1];
   char *dev = pcap_lookupdev(iface_name);
   pcap_t *pcap_mgr;
@@ -35,12 +40,11 @@ int main(int argc, char **argv){
 }
 
 void sigint_processor(int signal){
-  printf("Caught signal 2, exiting...\n");
-  printf("IP Address    Count\n");
-  for(int i = 0; i < ip_addr_stat_counter_len; i++)
-    printf("%s    |     %d\n",
-          ip_stats[ip_addr_stat_counter_len].ip_addr,
-          ip_stats[ip_addr_stat_counter_len].count);
-  
+  printf("\nCaught signal 2, exiting...\n");
+  printf("Total Packets Caught: %d\n",total_pkt_captured);
+  printf("Statistics\nIp address    Count\n-----------------\n");
+  for(int i = 0; i <= ip_addr_stat_counter_len; i++){
+    printf("%s   |   %d\n",ip_stats[i].ip_addr, ip_stats[i].count);
+  }
   exit(EXIT_SUCCESS);
 }

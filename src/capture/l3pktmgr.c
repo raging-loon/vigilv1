@@ -9,6 +9,7 @@
 #include "../packets/ip_hdr.h"
 #include "l3pktmgr.h"
 #include "../colors.h"
+#include "protocols/igmp_dsct.h"
 #include "protocols.h"
 #include "../packets/ip6hdr.h"
 #include "../utils.h"
@@ -32,6 +33,9 @@ void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
       ip6_icmp_decode(pkt,src_ip6,dest_ip6);
       break;
     }
+    default:
+      printf("IPv6 %s -> %s Protocol Number = %d\n",src_ip6,dest_ip6,ipv6_hdr->n_hdr);
+      break;
   }
 }
 
@@ -59,11 +63,19 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       ip4_icmp_decode(pkt,src_ip,dest_ip);
       break;
     }
+    case 2:
+      // printf("IPv4 IGMP %s -> %s\n",src_ip,dest_ip);
+      ip4_igmp_decode(pkt, src_ip, dest_ip);
+      break;
+    
     case 6:
       ip4_tcp_decode(pkt,src_ip,dest_ip);
       break;
     case 17:
       ip4_udp_decode(pkt, src_ip, dest_ip);
+      break;
+    default:
+      printf("IPv4 %s -> %s Protocol Number = %d\n",src_ip,dest_ip,ip_header->protocol);
       break;
   }
 }
