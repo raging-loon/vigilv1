@@ -2,7 +2,7 @@ all: npsi clean
 
 
 ip_addr_stat.o:
-	gcc -c src/statistics/ip_addr_stat.c
+	gcc -c src/statistics/ip_addr_stat.c -l pthread
 icmpdsct.o:
 	gcc -c src/capture/icmpdsct.c 
 l2pktmgr.o:
@@ -21,7 +21,7 @@ udpmgr.o:
 	gcc -c src/capture/udpmgr.c
 npsi: main.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
 			tcpmgr.o udpmgr.o ip_addr_stat.o
-	gcc -o npsi.exe $^ -l pcap
+	gcc -o npsi.exe $^ -l pcap -l pthread
 
 clean:
 	rm *.o

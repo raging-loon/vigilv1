@@ -11,6 +11,7 @@ int ip_addr_stat_counter_len = 0;
 
 int main(int argc, char **argv){
   signal(SIGINT,sigint_processor);
+  signal(SIGSEGV,sigint_processor);
   if(argc == 1){
     printf("Need interface name\n");
     printf("dev: add help stuff here\n");
@@ -35,5 +36,11 @@ int main(int argc, char **argv){
 
 void sigint_processor(int signal){
   printf("Caught signal 2, exiting...\n");
+  printf("IP Address    Count\n");
+  for(int i = 0; i < ip_addr_stat_counter_len; i++)
+    printf("%s    |     %d\n",
+          ip_stats[ip_addr_stat_counter_len].ip_addr,
+          ip_stats[ip_addr_stat_counter_len].count);
+  
   exit(EXIT_SUCCESS);
 }
