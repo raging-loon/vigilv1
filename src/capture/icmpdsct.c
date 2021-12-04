@@ -37,8 +37,8 @@ void ip6_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
 }
 
 void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * dest_ip){
-  add_ip_addr_or_inc_counter(src_ip);
-  add_ip_addr_or_inc_counter(dest_ip);
+  add_ip_addr_or_inc_counter(src_ip,true,ICMP);
+  add_ip_addr_or_inc_counter(dest_ip,false,ICMP);
   printf("%s",__REG_ICMP_v4_v6);
   struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
   // printf("IPv4 ");
