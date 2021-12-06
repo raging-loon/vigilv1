@@ -24,6 +24,6 @@ udpmgr.o:
 npsi: main.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
 			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o
 	gcc -o npsi.exe $^ -l pcap -l pthread
-  strip npsi.exe
+	strip npsi.exe
 clean:
 	rm *.o
