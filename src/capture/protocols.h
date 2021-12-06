@@ -15,6 +15,6 @@ const enum {
   TCP,
   UDP,
   ICMP,
-} traffic_type;
+} traffic_class;
 
 #endif /* PROTOCOLS_H */
