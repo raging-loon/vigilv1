@@ -15,7 +15,7 @@
 #include "../utils.h"
 #include "tcpmgr.h"
 #include "udpmgr.h"
-#include ".../packets/icmp4.h"
+#include "../packets/icmp4.h"
 #include "icmpdsct.h"
 #include "../print_utils.h"
 void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
