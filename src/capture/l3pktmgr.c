@@ -65,7 +65,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       ip4_icmp_decode(pkt,src_ip,dest_ip);
       data_size = pkt_hdr->len 
                 - ETH_HDR_SZ
-                - ip_header->ihl * 4
+                - sizeof(ip_header)
                 - sizeof(struct __icmp4);
       ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
