@@ -4,6 +4,8 @@
 #include <netinet/ether.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <netinet/ip_icmp.h>
+
 #include <string.h>
 #include <netinet/ip.h>
 #include "../packets/ip_hdr.h"
@@ -65,8 +67,8 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       ip4_icmp_decode(pkt,src_ip,dest_ip);
       data_size = pkt_hdr->len 
                 - ETH_HDR_SZ
-                - sizeof(ip_header)
-                - sizeof(struct __icmp4);
+                - (((struct iphdr *)(pkt + ETH_HDR_SZ))->ihl * 4)
+                - sizeof(struct icmphdr);
       ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     }

@@ -5,4 +5,4 @@
 void ascii_hexdump(unsigned char *, int );
 
 
-#endif PRINT_UTILS_H
+#endif /* PRINT_UTILS_H */
