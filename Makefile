@@ -1,5 +1,7 @@
 all: npsi clean
 
+print_utils.o:
+	gcc -c src/print_utils.c
 main.o:
 	gcc -c main.c -l pcap
 ip_addr_stat.o:
@@ -22,8 +24,8 @@ tcpmgr.o:
 udpmgr.o:
 	gcc -c src/capture/udpmgr.c
 npsi: main.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
-			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o
+			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o print_utils.o
 	gcc -o npsi.exe $^ -l pcap -l pthread
-
+	strip npsi.exe
 clean:
 	rm *.o

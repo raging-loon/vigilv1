@@ -4,8 +4,12 @@
 #include <netinet/ether.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <netinet/ip_icmp.h>
+
 #include <string.h>
 #include <netinet/ip.h>
+#include <netinet/udp.h>
+#include <netinet/tcp.h>
 #include "../packets/ip_hdr.h"
 #include "l3pktmgr.h"
 #include "../colors.h"
@@ -15,8 +19,9 @@
 #include "../utils.h"
 #include "tcpmgr.h"
 #include "udpmgr.h"
-
+#include "../packets/icmp4.h"
 #include "icmpdsct.h"
+#include "../print_utils.h"
 void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
   struct ip6hdr * ipv6_hdr = (struct ip6hdr *)(pkt + sizeof(struct ethhdr) );
   char dest_ip6[134];
@@ -44,6 +49,9 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   struct sockaddr_in src, dest;
   char dest_ip[128];
   char src_ip[128];
+  int base_data_size = pkt_hdr->len 
+                     - ETH_HDR_SZ
+                     - (((struct iphdr *)(pkt + ETH_HDR_SZ))->ihl * 4);
   memset(&src,0,sizeof(src));
   memset(&dest,0,sizeof(dest));
   
@@ -56,23 +64,31 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   // printf("%d\n",ip_header->flags);
   if(ip_header->flags == 0x0020 || ip_header->flags == 0x0102)
     printf("%sFragmented%s ",__FRAGMENTED,__END_COLOR_STREAM);
+  int data_size;
   switch(ip_header->protocol){
     case 1:{
         // printf("IPv4 %s -> %s\n",
                   // src_ip, dest_ip);
       ip4_icmp_decode(pkt,src_ip,dest_ip);
+      data_size = base_data_size - sizeof(struct icmphdr);
+      ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     }
     case 2:
       // printf("IPv4 IGMP %s -> %s\n",src_ip,dest_ip);
       ip4_igmp_decode(pkt, src_ip, dest_ip);
+      
       break;
     
     case 6:
       ip4_tcp_decode(pkt,src_ip,dest_ip);
+      data_size = base_data_size - sizeof(struct tcphdr);
+      ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     case 17:
       ip4_udp_decode(pkt, src_ip, dest_ip);
+      data_size = base_data_size - sizeof(struct udphdr);
+      ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     default:
       printf("IPv4 %s -> %s Protocol Number = %d\n",src_ip,dest_ip,ip_header->protocol);

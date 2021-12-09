@@ -64,7 +64,7 @@ void loopback_ctp_decode(const unsigned char * pkt){
   printf("LOOP %s -> %s",src_mac,dest_mac);
   
   switch(ctp_data->relevant_func){
-    case 0x0010:
+    case 1:
       printf(" REPLY \n");
       break;
     default:

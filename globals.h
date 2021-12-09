@@ -9,13 +9,6 @@ extern char ip_addr[32];
 extern int total_pkt_captured;
 
 extern int npsi_mode;
-const enum {
-  ACTIVE_CAPTURE = 10,
-  BKGROUND_LOGGING
-  // IDS_MODE
-  // IPS_MODE
-  // STAT_MODE
-} modes;
 
 
 #endif /* GLOBALS_H */

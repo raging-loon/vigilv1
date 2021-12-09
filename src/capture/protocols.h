@@ -9,12 +9,12 @@
 
 #define ETH_HDR_SZ     sizeof(struct ethhdr)
 #define IPv4_HDR_LN    sizeof(struct iphdr)
-const enum {
+typedef enum {
   RAW_ETHERNET = 90,
   RAW_IPv4,
   TCP,
   UDP,
   ICMP,
-} traffic_type;
+} traffic_class;
 
 #endif /* PROTOCOLS_H */
