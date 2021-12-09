@@ -47,11 +47,11 @@ void sigint_processor(int signal){
   printf("Total Packets Caught: %d\n",total_pkt_captured);
   printf("Statistics\nIp address    Count\n-----------------\n");
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){
-    printf("%s\n\t\ttotal sent = %d\n\t\ttotal recv = %d"
+    printf("%s\n\t\ttotal packets = %d\n\t\ttotal sent = %d\n\t\ttotal recv = %d"
           "\n\t\tTCP sent = %d\n\t\tTCP recv = %d\n\t\t"
           "UDP sent = %d\n\t\tUDP recv = %d\n\t\t"
           "ICMP sent = %d\n\t\tICMP recv = %d\n\n",
-          ip_stats[i].ip_addr, ip_stats[i].total_sent,ip_stats[i].total_recv,
+          ip_stats[i].ip_addr,ip_stats[i].count,ip_stats[i].total_sent,ip_stats[i].total_recv,
           ip_stats[i].tcp_sent, ip_stats[i].tcp_recv,ip_stats[i].udp_sent, ip_stats[i].udp_recv,
           ip_stats[i].icmp_sent,ip_stats[i].icmp_recv);
   }
