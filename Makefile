@@ -16,7 +16,8 @@ l3pktmgr.o:
 	gcc -c src/capture/l3pktmgr.c
 pktmgr.o:
 	gcc -c src/capture/pktmgr.c -l pcap
-
+rule_parser.o:
+	gcc -c src/filter/parser/rule_parser.c
 utils.o:
 	gcc -c src/utils.c
 tcpmgr.o:

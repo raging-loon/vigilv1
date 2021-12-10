@@ -1,0 +1,14 @@
+# this is a comment
+RULE_START{
+  name="nops"
+  type=bit_match
+  target_contents="\x90" * 10
+  action=alert
+}
+
+RULE_START{
+  name="NOPS"
+  type=bit_match
+  target_contents="\x90"*10
+  action=block
+}
