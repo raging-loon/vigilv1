@@ -24,7 +24,10 @@ struct rule_data{
   int dest_port;
   int __protocol;
   const unsigned char * pkt;
+  int pkt_len;
 };
+
+void rulemgr(const struct rule_data *);
 /* rule parsing -----> packet capture -----> packet ----> iterate through all rule -----> apply rule parser function pointer -----> apply rule action function pointer */
 
 
@@ -33,7 +36,7 @@ struct rule{
   int rule_type;
   char rule_target[128];
   bool(*pkt_parser)(const struct rule_data *, const struct rule *);
-  void(*action)(const struct rule_data **, const struct rule **, int);
+  void(*action)(const struct rule_data *, const struct rule *, int);
 };
 
 
