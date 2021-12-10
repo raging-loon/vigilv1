@@ -24,6 +24,15 @@ tcpmgr.o:
 	gcc -c src/capture/tcpmgr.c
 udpmgr.o:
 	gcc -c src/capture/udpmgr.c
+
+alerts.o:
+	gcc -c src/filter/actions/alerts.c
+
+packet_parser.o:
+	gcc -c src/filter/parsing/packet_parser.c
+rule_parser.o:
+	gcc -c src/filter/packet_parser/rule_parser.c
+
 npsi: main.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
 			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o print_utils.o
 	gcc -o npsi.exe $^ -l pcap -l pthread

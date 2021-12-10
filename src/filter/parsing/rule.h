@@ -1,6 +1,9 @@
 #ifndef RULE_H
 #define RULE_H
 #include <stdbool.h>
+
+
+
 const enum{
   BIT_MATCH,
   // ANOMALY
@@ -28,7 +31,7 @@ struct rule_data{
 struct rule{
   char rulename[16];
   int rule_type;
-  
+  char rule_target[128];
   bool(*pkt_parser)(const struct rule_data *, const struct rule *);
   void(*action)(const struct rule_data **, const struct rule **, int);
 };
