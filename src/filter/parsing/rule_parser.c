@@ -60,6 +60,3 @@ static void rule_parser(const char * __filename){
 
 
 
-int main(){
-  rule_library_parser("../../npsi.conf");
-}

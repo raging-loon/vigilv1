@@ -30,7 +30,7 @@ struct rule{
   int rule_type;
   
   bool(*pkt_parser)(const struct rule_data *, const struct rule *);
-  void(*action)(const struct rule_data **, const struct rule **);
+  void(*action)(const struct rule_data **, const struct rule **, int);
 };
 
 
