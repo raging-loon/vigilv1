@@ -81,12 +81,12 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       break;
     
     case 6:
-      ip4_tcp_decode(pkt,src_ip,dest_ip);
+      ip4_tcp_decode(pkt,src_ip,dest_ip,pkt_hdr);
       // data_size = base_data_size - sizeof(struct tcphdr);
       // ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     case 17:
-      ip4_udp_decode(pkt, src_ip, dest_ip);
+      ip4_udp_decode(pkt, src_ip, dest_ip,pkt_hdr);
       // data_size = base_data_size - sizeof(struct udphdr);
       // ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;

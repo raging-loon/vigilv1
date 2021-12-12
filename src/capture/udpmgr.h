@@ -1,7 +1,7 @@
 #ifndef UDPMGR_H
 #define UDPMGR_H
-
-void ip4_udp_decode(const unsigned char *, const char *, const char *);
+#include <pcap.h>
+void ip4_udp_decode(const unsigned char *, const char *, const char *,const struct pcap_pkthdr *);
 
 
 #endif /* UDPMGR_H */

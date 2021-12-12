@@ -12,7 +12,7 @@ struct ip_addr_counter ip_stats[256];
 int ip_addr_stat_counter_len = -1;
 char ip_addr[32];
 int total_pkt_captured = 0;
-struct rule * rules = 0;
+struct rule rules[128];
 int num_rules = 0;
 
 int main(int argc, char **argv){

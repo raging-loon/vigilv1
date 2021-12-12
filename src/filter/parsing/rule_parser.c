@@ -116,6 +116,7 @@ static void rule_parser(const char * __filename){
     printf("Please end your rule with a closing } on a newline\n");
     exit(EXIT_FAILURE);
   }
+  
   rules[num_rules++] = *(struct rule *)__rule;
 }
 

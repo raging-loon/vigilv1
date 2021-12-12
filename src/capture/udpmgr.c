@@ -8,7 +8,7 @@
 #include "../colors.h"
 #include <arpa/inet.h>
 #include "../packets/ip_hdr.h"
-void ip4_udp_decode(const unsigned char * pkt, const char * src_ip, const char * dest_ip){
+void ip4_udp_decode(const unsigned char * pkt, const char * src_ip, const char * dest_ip,const struct pcap_pkthdr * pkt_hdr){
 
   struct udphdr * udp_header = (struct udphdr*)(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr));
   add_ip_addr_or_inc_counter(src_ip,true,UDP);

@@ -2,6 +2,6 @@
 RULE_START{
   name="nmap_ua"
   type=bit_match
-  target_contents=Nmap Scripting Engine
+  target_contents=Nmap
   action=stdout_alert
 }
