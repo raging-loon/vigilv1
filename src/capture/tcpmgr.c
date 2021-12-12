@@ -48,12 +48,20 @@ void ip4_tcp_decode(const unsigned char * pkt,const char* src_ip,const char* des
   printf("]\n");
   
   printf("%s",__END_COLOR_STREAM);
-  __rule_data->dest_port = dest_port;
-  __rule_data->dest_ip_addr = dest_ip;
-  __rule_data->src_ip_addr = src_ip;
+  printf("sdf\n");
+  __rule_data->dest_port = (unsigned int )ntohs(tcp_hdr->dest);
+  // perror("");
+  printf("dsetp\n");
+  __rule_data->dest_ip_addr = (char *)dest_ip;
+  printf("desti\n");
+  __rule_data->src_ip_addr = (char *)src_ip;
+  printf("srci\n");
   __rule_data->src_port = src_port;
-  __rule_data->pkt = pkt;
+  printf("srcp\n");
+  __rule_data->pkt = (unsigned char *)pkt;
+  printf("pkt\n");
   __rule_data->pkt_len = pkt_hdr->len;
+  printf("stfxf\n");
   rulemgr(__rule_data);
   //+
   

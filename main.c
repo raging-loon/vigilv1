@@ -6,17 +6,19 @@
 #include <signal.h>
 #include "globals.h"
 #include "main.h"
+
+#include "src/filter/parsing/rule_parser.h"
 #include "src/statistics/ip_addr_stat.h"
 
 struct ip_addr_counter ip_stats[256];
 int ip_addr_stat_counter_len = -1;
 char ip_addr[32];
 int total_pkt_captured = 0;
-struct rule rules[128];
-int num_rules = 0;
+struct rule *rules;// = (struct rule *)malloc(sizeof(struct rule) * 128);
+int num_rules = -1;
 
 int main(int argc, char **argv){
-  
+  rules  = (struct rule *)malloc(sizeof(struct rule) * 128);
   signal(SIGINT,sigint_processor);
   signal(SIGSEGV,sigint_processor);
   if(argc == 1){
@@ -25,6 +27,9 @@ int main(int argc, char **argv){
     exit(0);
   }
   // char * ip_addr = ""
+  
+
+  rule_library_parser("/etc/npsi/npsi.conf");
   printf("Note to developer, remove hard coded IP address\n");
   strcpy(ip_addr,"10.108.32.227");
   char * iface_name = argv[1];

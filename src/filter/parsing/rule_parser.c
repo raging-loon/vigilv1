@@ -29,7 +29,7 @@ void rule_library_parser(const char * alt_file){
   while((pos = getline(&line,&len,fp)) != -1){
     line[strcspn(line,"\n")] = 0;
     if(is_rule(line)){
-      printf("Parsing: %s\n",line);
+      // printf("Parsing: %s\n",line);
       rule_parser(line);
     } 
   }
@@ -53,13 +53,16 @@ static void syntax_error(const char * line, int line_no){
 
 static void rule_parser(const char * __filename){
   // + 1 for the $ at the beggining
-  char * filename = __filename + 1;
-  struct rule*  __rule;
+  const char * filename = __filename + 1;
+  num_rules++;
+  struct rule*  __rule = &rules[num_rules];
   FILE * fp = fopen(filename,"r");
   if(fp == NULL){
     printf("Error opening rule file: %s. Refusing to continue\n",filename);
+
     exit(EXIT_FAILURE);
   }
+  printf("Parsing file %s\n",filename);
   bool parsing_rule = false;
   size_t pos;
   size_t len = 0;
@@ -70,6 +73,7 @@ static void rule_parser(const char * __filename){
     if(is_comment(line))
       continue;
     rstrip(line);
+    // printf("helclos\n");
     if(strcmp("\x00",line) == 0) continue;
     // printf("%s\n",line);
     if(strstr(line,"RULE_START{")){
@@ -79,9 +83,12 @@ static void rule_parser(const char * __filename){
     else if(strstr(line,"name=\"") != NULL){
       if(!parsing_rule) syntax_error(line,lines);
       // maybe add more flexibility with tabbing and stuff
-      char * name = line + 8;
+      char name[strlen(line + 8) + 2];// = line + 8;
+      strcpy(name,line+8);
       name[strcspn(name,"\"")] = 0;
-      strcpy(__rule->rulename,name);
+      strcpy((char *)&__rule->rulename,(char *)&name);
+      // printf("%s\n",name);
+      // printf("he");
     }
 
     else if(strstr(line,"type=") != NULL){
@@ -116,8 +123,7 @@ static void rule_parser(const char * __filename){
     printf("Please end your rule with a closing } on a newline\n");
     exit(EXIT_FAILURE);
   }
-  
-  rules[num_rules++] = *(struct rule *)__rule;
+  // rules[num_rules++] = __rule;
 }
 
 

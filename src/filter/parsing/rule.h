@@ -20,10 +20,10 @@ const enum{
 struct rule_data{
   char * src_ip_addr;
   char * dest_ip_addr;
-  int src_port;
-  int dest_port;
+  unsigned int src_port;
+  unsigned int dest_port;
   int __protocol;
-  const unsigned char * pkt;
+  unsigned char * pkt;
   int pkt_len;
 };
 
