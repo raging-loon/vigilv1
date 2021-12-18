@@ -5,7 +5,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/ip_icmp.h>
-
+#include <stdlib.h>
 #include <string.h>
 #include <netinet/ip.h>
 #include <netinet/udp.h>
@@ -48,27 +48,29 @@ void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
 void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   struct ip_hdr * ip_header = (struct ip_hdr * )(pkt + ETH_HDR_SZ);
   struct sockaddr_in src, dest;
-  struct rule_data * rdata;
-  char * src_ip;
-  char * dest_ip;
-
-  memset(&rdata,0,sizeof(rdata));
-  int base_data_size = pkt_hdr->len 
-                     - ETH_HDR_SZ
-                     - (((struct iphdr *)(pkt + ETH_HDR_SZ))->ihl * 4);
+  struct rule_data rdata;
+  char src_ip[32];
+  char dest_ip[32];
   memset(&src,0,sizeof(src));
   memset(&dest,0,sizeof(dest));
   
-  src.sin_addr.s_addr = ip_header->saddr;
   dest.sin_addr.s_addr = ip_header->daddr;
-  strncpy(dest_ip, inet_ntoa(dest.sin_addr),sizeof(rdata->dest_ip_addr));
-  printf("IPv4 packet\n");
-  strncpy(src_ip, inet_ntoa(src.sin_addr),sizeof(rdata->src_ip_addr));
+  src.sin_addr.s_addr = ip_header->saddr;
+
+  memset(&rdata,0,sizeof(rdata));
+  // memset(rdata->pkt,0,sizeof(rdata->pkt));
+  // rdata->pkt = (unsigned char **)&pkt;
+  rdata.pkt_len = pkt_hdr->len;
   
-  rdata->pkt = pkt;
-  rdata->src_ip_addr = src_ip;
-  rdata->dest_ip_addr = dest_ip;
-  rdata->pkt_len = pkt_hdr->len;
+  int base_data_size = pkt_hdr->len 
+                     - ETH_HDR_SZ
+                     - (((struct iphdr *)(pkt + ETH_HDR_SZ))->ihl * 4);
+
+  strncpy(dest_ip, inet_ntoa(dest.sin_addr),sizeof(dest_ip));
+  strncpy(src_ip, inet_ntoa(src.sin_addr),sizeof(src_ip));
+  
+  rdata.src_ip_addr = (char *)&src_ip;
+  rdata.dest_ip_addr = (char *)&dest_ip;
 
 
   if(ip_header->flags == 0x0020 || ip_header->flags == 0x0102)
@@ -76,27 +78,29 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   int data_size;
   switch(ip_header->protocol){
     case 1:{
-      ip4_icmp_decode(pkt,rdata->src_ip_addr,rdata->dest_ip_addr);
+      ip4_icmp_decode(pkt,rdata.src_ip_addr,rdata.dest_ip_addr);
       break;
     }
     case 2:
       // printf("IPv4 IGMP %s -> %s\n",src_ip,dest_ip);
-      ip4_igmp_decode(pkt,rdata->src_ip_addr,rdata->dest_ip_addr);
+      ip4_igmp_decode(pkt,rdata.src_ip_addr,rdata.dest_ip_addr);
       
       break;
     
     case 6:
-      ip4_tcp_decode(pkt,rdata,pkt_hdr);
+      ip4_tcp_decode(pkt,&rdata,pkt_hdr);
       // data_size = base_data_size - sizeof(struct tcphdr);
       // ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     case 17:
-      ip4_udp_decode(pkt,rdata->src_ip_addr,rdata->dest_ip_addr,pkt_hdr);
+      ip4_udp_decode(pkt,rdata.src_ip_addr,rdata.dest_ip_addr,pkt_hdr);
       // data_size = base_data_size - sizeof(struct udphdr);
       // ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     default:
-      printf("IPv4 %s -> %s Protocol Number = %d\n",rdata->src_ip_addr,rdata->dest_ip_addr,ip_header->protocol);
+      printf("IPv4 %s -> %s Protocol Number = %d\n",rdata.src_ip_addr,rdata.dest_ip_addr,ip_header->protocol);
       break;
   }
+  // free(rdata.pkt);
+  // free(rdata);
 }

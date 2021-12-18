@@ -17,6 +17,8 @@
 void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr *pkt_hdr){
   
   struct __tcp * tcp_hdr = (struct __tcp *)(pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr));
+  // printf("56\n");
+  rdata->pkt = pkt;
   const char * src_ip = rdata->src_ip_addr;
   const char * dest_ip = rdata->dest_ip_addr;
   add_ip_addr_or_inc_counter(src_ip,true,TCP);
@@ -52,13 +54,13 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   printf("]\n");
   
   printf("%s",__END_COLOR_STREAM);
-  printf("dsetp\n");
+  // printf("dsetp\n");
   rdata->dest_port = (unsigned int )ntohs(tcp_hdr->dest);
   // perror("");
-  printf("sdf\n");
+  // printf("sdf\n");
   
   rdata->src_port = src_port;
-  printf("srcp\n");
+  // printf("srcp\n");
   
   rulemgr(rdata);
   //+

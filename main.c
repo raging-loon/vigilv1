@@ -14,11 +14,11 @@ struct ip_addr_counter ip_stats[256];
 int ip_addr_stat_counter_len = -1;
 char ip_addr[32];
 int total_pkt_captured = 0;
-struct rule *rules;// = (struct rule *)malloc(sizeof(struct rule) * 128);
+struct rule rules[128] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
 int num_rules = -1;
 
 int main(int argc, char **argv){
-  rules  = (struct rule *)malloc(sizeof(struct rule) * 128);
+  // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   signal(SIGINT,sigint_processor);
   signal(SIGSEGV,sigint_processor);
   if(argc == 1){
@@ -50,7 +50,8 @@ int main(int argc, char **argv){
 }
 
 void sigint_processor(int signal){
-  printf("\nCaught signal 2, exiting...\n");
+  printf("\nCaught signal %d, exiting...\n",signal);
+  perror("");
   printf("Total Packets Caught: %d\n",total_pkt_captured);
   printf("Statistics\nIp address    Count\n-----------------\n");
   for(int i = 0; i <= ip_addr_stat_counter_len; i++){

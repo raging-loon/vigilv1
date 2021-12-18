@@ -18,12 +18,12 @@ const enum{
 } severity;
 
 struct rule_data{
+  unsigned char *pkt;
   char *src_ip_addr;
   char *dest_ip_addr;
   unsigned int src_port;
   unsigned int dest_port;
   int __protocol;
-  unsigned char * pkt;
   int pkt_len;
 };
 

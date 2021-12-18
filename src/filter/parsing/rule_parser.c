@@ -54,8 +54,8 @@ static void syntax_error(const char * line, int line_no){
 static void rule_parser(const char * __filename){
   // + 1 for the $ at the beggining
   const char * filename = __filename + 1;
-  num_rules++;
-  struct rule*  __rule = &rules[num_rules];
+  num_rules = num_rules + 1;
+  struct rule *  __rule = &rules[num_rules];
   FILE * fp = fopen(filename,"r");
   if(fp == NULL){
     printf("Error opening rule file: %s. Refusing to continue\n",filename);
