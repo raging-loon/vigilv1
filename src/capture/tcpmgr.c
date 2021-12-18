@@ -12,9 +12,13 @@
 #include <stdbool.h>
 #include "../statistics/ip_addr_stat.h"
 #include "../packets/ip_hdr.h"
-void ip4_tcp_decode(const unsigned char * pkt,const char* src_ip,const char* dest_ip,const struct pcap_pkthdr *pkt_hdr){
-  struct rule_data * __rule_data;
+#include <string.h>
+#include "../filter/parsing/rule.h"
+void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr *pkt_hdr){
+  
   struct __tcp * tcp_hdr = (struct __tcp *)(pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr));
+  const char * src_ip = rdata->src_ip_addr;
+  const char * dest_ip = rdata->dest_ip_addr;
   add_ip_addr_or_inc_counter(src_ip,true,TCP);
   add_ip_addr_or_inc_counter(dest_ip,false, TCP);
   printf("%s",__TCP_COLOR_NS);
@@ -48,21 +52,15 @@ void ip4_tcp_decode(const unsigned char * pkt,const char* src_ip,const char* des
   printf("]\n");
   
   printf("%s",__END_COLOR_STREAM);
-  printf("sdf\n");
-  __rule_data->dest_port = (unsigned int )ntohs(tcp_hdr->dest);
-  // perror("");
   printf("dsetp\n");
-  __rule_data->dest_ip_addr = (char *)dest_ip;
-  printf("desti\n");
-  __rule_data->src_ip_addr = (char *)src_ip;
-  printf("srci\n");
-  __rule_data->src_port = src_port;
+  rdata->dest_port = (unsigned int )ntohs(tcp_hdr->dest);
+  // perror("");
+  printf("sdf\n");
+  
+  rdata->src_port = src_port;
   printf("srcp\n");
-  __rule_data->pkt = (unsigned char *)pkt;
-  printf("pkt\n");
-  __rule_data->pkt_len = pkt_hdr->len;
-  printf("stfxf\n");
-  rulemgr(__rule_data);
+  
+  rulemgr(rdata);
   //+
   
 }
