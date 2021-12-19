@@ -11,6 +11,7 @@ extern int total_pkt_captured;
 extern struct rule rules[128];
 extern int num_rules;
 extern int npsi_mode;
-
+extern char * default_config;
+extern char * def_log_file;
 
 #endif /* GLOBALS_H */

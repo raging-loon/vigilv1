@@ -1,0 +1,6 @@
+RULE_START{
+  name="bin/sh"
+  type=bit_match
+  action=stdout_alert
+  target_contents=/bin/sh
+}

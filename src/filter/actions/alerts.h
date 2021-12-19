@@ -8,4 +8,5 @@
 
 void stdout_alert(const struct rule_data*, const struct rule *, int);
 
+
 #endif /* ALERTS_H */

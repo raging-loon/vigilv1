@@ -1,0 +1,7 @@
+# this is a comment
+RULE_START{
+  name="log4jbasic"
+  type=bit_match
+  target_contents=jndi:ldap://
+  action=stdout_alert
+}

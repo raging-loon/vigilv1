@@ -16,7 +16,8 @@ char ip_addr[32];
 int total_pkt_captured = 0;
 struct rule rules[128] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
 int num_rules = -1;
-
+char * default_config = "/etc/npsi/npsi.conf";
+char * def_log_file = "/var/log/npsi/siglog.log";
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   signal(SIGINT,sigint_processor);
