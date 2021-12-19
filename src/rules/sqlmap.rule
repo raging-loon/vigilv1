@@ -1,5 +1,5 @@
 RULE_START{
-  name="sqlmap rule"
+  name="sqlmap"
   type=bit_match
   target_contents=sqlmap
   action=stdout_alert
