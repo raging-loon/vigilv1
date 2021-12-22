@@ -10,14 +10,24 @@
 #include "src/filter/parsing/rule_parser.h"
 #include "src/statistics/ip_addr_stat.h"
 
-struct ip_addr_counter ip_stats[256];
-int ip_addr_stat_counter_len = -1;
-char ip_addr[32];
+// globals defined in @globals.h
+// counters
 int total_pkt_captured = 0;
-struct rule rules[128] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
+int ip_addr_stat_counter_len = -1;
+int blk_ipv4_len = -1;
 int num_rules = -1;
+
+
+// info objects
+struct ip_addr_counter ip_stats[256];
+struct rule rules[128] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
+struct blocked_ipv4 blocked_ipv4_addrs[32];
+char ip_addr[32];
+
+// default files
 char * default_config = "/etc/npsi/npsi.conf";
 char * def_log_file = "/var/log/npsi/siglog.log";
+
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   signal(SIGINT,sigint_processor);
@@ -28,7 +38,7 @@ int main(int argc, char **argv){
     exit(0);
   }
   // char * ip_addr = ""
-  
+  deny_conf_parser("/etc/npsi/deny.conf");
 
   rule_library_parser("/etc/npsi/npsi.conf");
   printf("Note to developer, remove hard coded IP address\n");
@@ -66,3 +76,5 @@ void sigint_processor(int signal){
   }
   exit(EXIT_SUCCESS);
 }
+
+

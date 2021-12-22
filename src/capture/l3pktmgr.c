@@ -23,6 +23,9 @@
 #include "icmpdsct.h"
 #include "../print_utils.h"
 #include "../filter/parsing/rule.h"
+#include "../filter/parsing/packet_parser.h"
+
+
 void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
   struct ip6hdr * ipv6_hdr = (struct ip6hdr *)(pkt + sizeof(struct ethhdr) );
   char dest_ip6[134];
@@ -51,6 +54,10 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   struct rule_data rdata;
   char src_ip[32];
   char dest_ip[32];
+  
+  
+
+
   memset(&src,0,sizeof(src));
   memset(&dest,0,sizeof(dest));
   
@@ -68,7 +75,12 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
 
   strncpy(dest_ip, inet_ntoa(dest.sin_addr),sizeof(dest_ip));
   strncpy(src_ip, inet_ntoa(src.sin_addr),sizeof(src_ip));
-  
+  if(is_blocked_ipv4((const char *)&dest_ip)){
+    printf("%s Found blocked ipv4 address(dest): %s%s\n",BLOCKED_IP_FOUND,dest_ip,__END_COLOR_STREAM);
+  }
+  if(is_blocked_ipv4((const char *)&src_ip)){
+    printf("%s Found blocked ipv4 address(src): %s%s\n",BLOCKED_IP_FOUND,src_ip,__END_COLOR_STREAM);
+  }
   rdata.src_ip_addr = (char *)&src_ip;
   rdata.dest_ip_addr = (char *)&dest_ip;
 

@@ -27,6 +27,11 @@ struct rule_data{
   int pkt_len;
 };
 
+struct blocked_ipv4{
+  char ipv4_addr[18];
+};
+
+
 void rulemgr(const struct rule_data *);
 /* rule parsing -----> packet capture -----> packet ----> iterate through all rule -----> apply rule parser function pointer -----> apply rule action function pointer */
 

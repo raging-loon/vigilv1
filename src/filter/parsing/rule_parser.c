@@ -153,3 +153,35 @@ static void get_action(const char * __line, struct rule * __rule){
   }
 
 }
+
+
+void deny_conf_parser(char * file){
+  FILE * fp = fopen(file,"r");
+  if(fp == NULL){
+    printf("Error opening %s for expl/implicit deny parsing\n",file);
+    exit(EXIT_FAILURE);
+  }
+  char * line = NULL;
+  size_t pos, len = 0;
+  while((pos = getline(&line,&len,fp)) != -1){
+    rstrip(line);
+    if(is_comment(line)) continue;
+    
+    if(strcmp("\x00",line) == 0) continue;
+    if(strstr(line,"ipv4")){
+      struct blocked_ipv4 * temp = &blocked_ipv4_addrs[++blk_ipv4_len];
+      char * ipv4_addr = line + 5;
+      printf("%s\n",ipv4_addr);
+      // temp[blk_ipv4_len];
+      strcpy(temp->ipv4_addr ,ipv4_addr);
+    } 
+  }
+  
+  if(line) free(line);
+  
+  /*
+  for(int i = 0; i < blk_ipv4_len+1; i++){
+    printf("Blocked IP address: %s\n",blocked_ipv4_addrs[i].ipv4_addr);
+  }
+  */
+}
