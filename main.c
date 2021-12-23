@@ -57,13 +57,8 @@ int main(int argc, char **argv){
     exit(EXIT_FAILURE);
   }
   start_nsh_server();
-  // pcap_loop(pcap_mgr,-1, pktmgr, NULL);
-    args_t argus;
-    argus.pkap = pcap_mgr;
-    pthread_t pthrd;
-    pthread_create(&pthrd,NULL,&start_pcap_loop,&argus);
-    pthread_join(pthrd,NULL);
-
+  pcap_loop(pcap_mgr,-1, pktmgr, NULL);
+    
 }
 
 void sigint_processor(int signal){
@@ -83,9 +78,5 @@ void sigint_processor(int signal){
   exit(EXIT_SUCCESS);
 }
 
-void * start_pcap_loop(void * args){
-  args_t * temp = args;
-  pcap_loop(temp->pkap,-1, pktmgr, NULL);
 
-}
 

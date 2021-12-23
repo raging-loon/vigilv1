@@ -9,6 +9,7 @@
 #include <time.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include "cmd/interpreter.h"
 
 void start_nsh_server(){
 		// fork();
@@ -17,7 +18,10 @@ void start_nsh_server(){
     // pthread_join(pthrd,NULL);
 }
 
-
+void rnstrip(char * input){
+  input[strcspn(input,"\n")] = 0;
+  input[strcspn(input,"\r")] = 0;
+}
 
 static void *actually_start_nsh_server(){
 	// fork();
@@ -66,9 +70,16 @@ static void *actually_start_nsh_server(){
   		        __time.tm_sec);
 			printf("Failure to accept a client at %s\n",time);
 
-		} else {
-			
-			printf("new connection at %s\n",inet_ntoa(addr.sin_addr));
+		} else {			
+			printf("new connection at %s:%d\n",inet_ntoa(addr.sin_addr),htons(addr.sin_port));
+			char buffer[128] = {0};
+			char * nsh_str = "nsh# ";
+			while(strncmp(buffer,"exit",4) !=0){
+				send(client_sock,nsh_str,strlen(nsh_str),0);
+				int len_read = read(client_sock,buffer,1024);
+				rnstrip(buffer);
+				nsh_cmd_interpret(buffer,client_sock);
+			}
 		}
 	}
 
