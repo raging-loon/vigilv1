@@ -14,7 +14,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr,bool __is_src,int __traffic
   
   pthread_t pthrd;
   aiaoic_args args;// = (aiaoic_args*)malloc(sizeof(aiaoic_args));
-
+  memset(&args,0,sizeof(aiaoic_args));
   strncpy(cpy_ip_addr,ip_addr,sizeof(cpy_ip_addr));
   memset(&args,0,sizeof(args));
   strcpy((char*)&args.__ip_addr,(char*)&cpy_ip_addr);//,sizeof(cpy_ip_addr));

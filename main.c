@@ -6,10 +6,10 @@
 #include <signal.h>
 #include "globals.h"
 #include "main.h"
-
 #include "src/filter/parsing/rule_parser.h"
 #include "src/statistics/ip_addr_stat.h"
-
+#include "src/rpc/nsh_server.h"
+#include <pthread.h>
 // globals defined in @globals.h
 // counters
 int total_pkt_captured = 0;
@@ -56,7 +56,13 @@ int main(int argc, char **argv){
     perror("pcap_mgr in pcap_open_live");
     exit(EXIT_FAILURE);
   }
-  pcap_loop(pcap_mgr,-1, pktmgr, NULL);
+  start_nsh_server();
+  // pcap_loop(pcap_mgr,-1, pktmgr, NULL);
+    args_t argus;
+    argus.pkap = pcap_mgr;
+    pthread_t pthrd;
+    pthread_create(&pthrd,NULL,&start_pcap_loop,&argus);
+    pthread_join(pthrd,NULL);
 
 }
 
@@ -77,4 +83,9 @@ void sigint_processor(int signal){
   exit(EXIT_SUCCESS);
 }
 
+void * start_pcap_loop(void * args){
+  args_t * temp = args;
+  pcap_loop(temp->pkap,-1, pktmgr, NULL);
+
+}
 
