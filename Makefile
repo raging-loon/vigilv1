@@ -39,12 +39,13 @@ nsh_server.o:
 interpreter.o:
 	gcc -c src/rpc/cmd/interpreter.c
 
-
+nsh_commands.o:
+	gcc -c src/rpc/cmd/nsh_commands.c
 
 npsi: pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
 			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o print_utils.o\
 			alerts.o packet_parser.o rule_parser.o rule.o main.o nsh_server.o\
-			interpreter.o
+			interpreter.o nsh_commands.o
 	gcc -o npsi.exe $^ -l pcap -l pthread
 	strip npsi.exe
 clean:
