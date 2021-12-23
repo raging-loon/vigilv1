@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use Digest::SHA qw(sha256_hex);
+
+print "Enter username: ";
+my $username = <>;
+print "Enter password: ";
+my $password = <>;
+print "Re-enter password: ";
+my $repass = <>;
+if($password ne $repass){
+  print "Error, passwords do not match\n";
+  exit;
+}
+$username =~ s/\R//g;
+$password =~ s/\R//g;
+
+my $passwdfile = "/etc/npsi/passwd";
+open(FH,">>",$passwdfile) or die $!;
+
+my $passwdhash = sha256_hex($password);
+print FH $username.":";
+print FH $passwdhash."\n";
+
+close(FH);
