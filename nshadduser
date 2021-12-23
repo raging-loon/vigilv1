@@ -1,11 +1,28 @@
 #!/usr/bin/perl
 
 use warnings;
-use strict;
+# use strict;
 use Digest::SHA qw(sha256_hex);
+use Data::Dumper qw(Dumper);
+my $passwdfile = "/etc/npsi/passwd";
+my $info;
 
 print "Enter username: ";
 my $username = <>;
+
+open $info, $passwdfile or die "Could not open $passwdfile, this is a serious issue\n";
+while( my $line = <$info>){
+  if(length($line) le 3){
+  } else {
+    my ($user,$hash) = split /:/, $line;
+    if($user cmp $username ){
+      print "User already exists\n";
+      exit;
+    }
+    last if $. == 2;
+  }
+}
+close $info;
 print "Enter password: ";
 my $password = <>;
 print "Re-enter password: ";
@@ -17,8 +34,9 @@ if($password ne $repass){
 $username =~ s/\R//g;
 $password =~ s/\R//g;
 
-my $passwdfile = "/etc/npsi/passwd";
 open(FH,">>",$passwdfile) or die $!;
+
+
 
 my $passwdhash = sha256_hex($password);
 print FH $username.":";
