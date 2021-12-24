@@ -73,73 +73,110 @@ static void *actually_start_nsh_server(){
 		} else {			
 			printf("new connection at %s:%d\n",inet_ntoa(addr.sin_addr),htons(addr.sin_port));
 			char buffer[128] = {0};
-			if(nsh_do_login(client_sock) == false){
+
+			if(nsh_do_login(client_sock, inet_ntoa(addr.sin_addr)) == false){
 				send(client_sock,"Invalid login\r\n",16,0);
-				continue;
+				close(client_sock);
 			}
-			char * nsh_str = "nsh# ";
-			while(strncmp(buffer,"exit",4) !=0){
-				send(client_sock,nsh_str,strlen(nsh_str),0);
-				int len_read = read(client_sock,buffer,1024);
-				rnstrip(buffer);
-				nsh_cmd_interpret(buffer,client_sock);
+			else {
+				char * nsh_str = "nsh# ";
+				while(strncmp(buffer,"exit",4) !=0){
+					send(client_sock,nsh_str,strlen(nsh_str),0);
+					int len_read = read(client_sock,buffer,1024);
+					rnstrip(buffer);
+					nsh_cmd_interpret(buffer,client_sock);
+				}
+				close(client_sock);
 			}
 		}
 	}
 
 }
 
-static bool nsh_do_login(int fd){
+static bool nsh_do_login(int fd,const char * rhost){
 	const char * del = ":";
 	char username[32];
 	char password[32];
+	char * passwd_ptr;
 	send(fd,"NPSI Login Shell\r\n",19,0);
 	send(fd,"Username: ",11,0);
 	int len_read = read(fd,username,16);
 	send(fd,"Password: ",11,0);
-	
 	rnstrip((char *)&username);
+	len_read = read(fd,&password,16);
 	rnstrip((char *)&password);
-	len_read = read(fd,password,16);
-	password[strcspn(password,"\n")] = 0;
-	password[strcspn(password,"\r")] = 0;
-	printf("%s\n",password);
+	passwd_ptr = &password;
+	// printf("%s:%s\n",username,password);
 	FILE * fp = fopen("/etc/npsi/passwd","r");
 	if(fp == NULL){
 		printf("Failed to open password file\n");
-		// exit(EXIT_FAILURE);
 		return false;
 	}
 	char * line = NULL;
 	size_t pos, len = 0;
+	time_t t = time(NULL);
+  struct tm __time = *localtime(&t);
+  char nowtime[64];
 	
+  sprintf(nowtime,"%d-%02d-%02d %02d:%02d:%02d",
+          __time.tm_year + 1900,
+          __time.tm_mon + 1,
+          __time.tm_mday,
+          __time.tm_hour,
+          __time.tm_min,
+          __time.tm_sec);
+						
 	while((pos = getline(&line,&len,fp)) != -1){
+		SHA256_CTX ctx;
+		unsigned char real_hash[65];
 		char temp_password[65];
 		unsigned char temp_username[16];
+		unsigned char hash[SHA256_DIGEST_LENGTH];
+		memset(&hash,0,sizeof(hash));
+		memset(&ctx,0,sizeof(ctx));
+		memset(&real_hash,0,sizeof(real_hash));
+		
 		rnstrip(line);
 		char * ptr = strtok(line,del);
 		strcpy(temp_username,ptr);
-		ptr = strtok(NULL,del);
-		strcpy(temp_password,ptr);
-		printf("%s\n",temp_password);
-		unsigned char hash[32];
-		unsigned char real_hash[32];
-		SHA256_CTX ctx;
-		memset(&ctx,0,sizeof(ctx));
-		memset(&hash,0,sizeof(hash));
-		SHA256_Init(&ctx);
-		SHA256_Update(&ctx,(void *)&password,sizeof(password));
-		SHA256_Final((unsigned char *)&hash,&ctx);
 		
-		for(int i = 0; i < 32; i++){
-			sprintf(real_hash + i * 2,"%02x",hash[i]);
-		}
-		printf("%s\n",real_hash);
-		if(strcmp(real_hash,temp_password) == 0){
-			return true;
+		if(strcmp(username,temp_username) != 0){
+			continue;
 		}
 
+		ptr = strtok(NULL,del);
+		strcpy(temp_password,ptr);
+		// printf("%s\n",passwd_ptr);
+		printf("%s\n",temp_password);
+		SHA256_Init(&ctx);
+		SHA256_Update(&ctx,passwd_ptr,sizeof(passwd_ptr));
+		SHA256_Final((unsigned char *)&hash,&ctx);
+		
+		for(int i = 0; i < SHA256_DIGEST_LENGTH; i++){
+			sprintf(real_hash + (i * 2),"%02x",hash[i]);
+		}
+
+		printf("%s\n",real_hash);
+
+		if(strncmp(real_hash,temp_password,64) == 0){
+			FILE * loginfp = fopen("/var/log/npsi/login.log","a");
+			
+			char logmessage[128];
+			sprintf(logmessage,"Successful login for %s at %s from %s\n",username,nowtime,rhost);
+			fputs(logmessage,loginfp);
+			fclose(loginfp);
+			if(line) free(line);
+			fclose(fp);
+			return true;
+		}
 	}
+	FILE * loginfp = fopen("/var/log/npsi/login.log","a");
+	char logmessage[128];
+	sprintf(logmessage,"Failed login for %s at %s from %s\n",username,nowtime,rhost);
+	fputs(logmessage,loginfp);
+	if(line) free(line);
+	fclose(fp);
+	fclose(loginfp);
 	return false;
 
 }

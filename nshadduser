@@ -1,45 +1,18 @@
-#!/usr/bin/perl
+#!/bin/python3
 
-use warnings;
-# use strict;
-use Digest::SHA qw(sha256_hex);
-use Data::Dumper qw(Dumper);
-my $passwdfile = "/etc/npsi/passwd";
-my $info;
-
-print "Enter username: ";
-my $username = <>;
-
-open $info, $passwdfile or die "Could not open $passwdfile, this is a serious issue\n";
-while( my $line = <$info>){
-  if(length($line) le 3){
-  } else {
-    my ($user,$hash) = split /:/, $line;
-    if($user cmp $username ){
-      print "User already exists\n";
-      exit;
-    }
-    last if $. == 2;
-  }
-}
-close $info;
-print "Enter password: ";
-my $password = <>;
-print "Re-enter password: ";
-my $repass = <>;
-if($password ne $repass){
-  print "Error, passwords do not match\n";
-  exit;
-}
-$username =~ s/\R//g;
-$password =~ s/\R//g;
-
-open(FH,">>",$passwdfile) or die $!;
-
-
-
-my $passwdhash = sha256_hex($password);
-print FH $username.":";
-print FH $passwdhash."\n";
-
-close(FH);
+from hashlib import sha256
+username = input("Username: ").strip("\n")
+file = open("/etc/npsi/passwd","r")
+for line in file:
+  if(line.split(":")[0] == username):
+    print("User already exists")
+    exit(-1)
+password = input("Password: ").strip("\n");
+repass = input("Re-enter password: ").strip("\n");
+if(password != repass):
+  print("Passwords do not match")
+  exit(-1)
+file.close()
+appendfile = open("/etc/npsi/passwd","a")
+appendfile.write("{}:{}\n".format(username,sha256(password.encode()).hexdigest()));
+appendfile.close();

@@ -11,6 +11,7 @@ void nsh_cmd_interpret(const char * input, int fd){
     send(fd,"hello\r\n",7,0);
   } 
   else if(strncmp(input,"exit",4) == 0){
+    
     return;
   }
   else if(strncmp(input,"get",3) == 0){

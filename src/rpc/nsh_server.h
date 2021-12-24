@@ -16,5 +16,5 @@ void start_nsh_server();
 static void *actually_start_nsh_server();
 
 
-static bool nsh_do_login(int);
+static bool nsh_do_login(int,const char *);
 #endif /* NSH_SERVER_H */ 
