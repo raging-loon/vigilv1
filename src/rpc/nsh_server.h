@@ -2,8 +2,7 @@
 #define NSH_SERVER_H
 #include <sys/socket.h>
 #include <stdbool.h>
-#define NSH_RPC_PORT            111
-#define NSH_LOOPBACK            "127.0.0.1"
+#define NSH_RPC_PORT            23
 
 typedef struct{
   int file_desc;

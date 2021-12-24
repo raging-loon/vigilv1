@@ -22,7 +22,12 @@ void nsh_cmd_interpret(const char * input, int fd){
     else if(strcmp(input + 4,"blacklist") == 0){
       send_blacklist(fd);
     } 
-  
+    else if(strcmp(input + 4, "rules") == 0){
+      get_loaded_rules(fd);
+    }
+    else{
+      send(fd,get_cmd_help,strlen(get_cmd_help),0);
+    }
   }
   else if(strncmp(input,"add",3) == 0){
     if(strlen(input) < 4){
@@ -30,6 +35,9 @@ void nsh_cmd_interpret(const char * input, int fd){
     }
     else if(strncmp(input + 4,"blacklist",9) == 0){
       add_to_blacklist(fd,input + 4);
+    }
+    else if(strncmp(input + 4,"rule",4) ==0){
+      load_new_rule(fd, input + 8);
     }
   }
 

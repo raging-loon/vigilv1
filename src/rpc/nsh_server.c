@@ -38,7 +38,7 @@ static void *actually_start_nsh_server(){
 	}
 	char * lb = "127.0.0.1";
 	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	// strcpy(&addr.sin_addr.s_addr,NSH_LOOPBACK);
 	addr.sin_port = htons(NSH_RPC_PORT);
 

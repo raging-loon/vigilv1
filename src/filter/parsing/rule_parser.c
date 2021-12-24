@@ -28,6 +28,7 @@ void rule_library_parser(const char * alt_file){
   
   while((pos = getline(&line,&len,fp)) != -1){
     line[strcspn(line,"\n")] = 0;
+    if(is_comment(line) == true) continue;
     if(is_rule(line)){
       // printf("Parsing: %s\n",line);
       rule_parser(line);
@@ -51,7 +52,7 @@ static void syntax_error(const char * line, int line_no){
   exit(EXIT_FAILURE);
 }
 
-static void rule_parser(const char * __filename){
+void rule_parser(const char * __filename){
   // + 1 for the $ at the beggining
   const char * filename = __filename + 1;
   num_rules = num_rules + 1;

@@ -4,7 +4,7 @@
 // find paths for rules in the config file
 void rule_library_parser(const char *);
 // find rules in the rule file
-static void rule_parser(const char *);
+void rule_parser(const char *);
 void deny_conf_parser(char *);
 
 // void test_main();
