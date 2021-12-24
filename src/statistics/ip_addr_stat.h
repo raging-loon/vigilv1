@@ -14,8 +14,8 @@ struct ip_addr_counter{
   int unknown_recv;
   int total_recv;
   int total_sent;
-  size_t sz_recv;
-  size_t sz_sent;
+  int sz_recv;
+  int sz_sent;
 };
 void add_ip_addr_or_inc_counter(const char *, bool, int );
 static void *verify_ip_addr(void *);

@@ -25,11 +25,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   add_ip_addr_or_inc_counter(dest_ip,false, TCP);
   printf("%s",__TCP_COLOR_NS);
   unsigned int dest_port,  src_port;
-  
-  bool syn_set;
-  bool ack_set;
-  bool rst_set;
-    
+  int flags_set = 0;
     
   // uint16_t syn, ack, rst, fin, psh, urg;
   dest_port = (unsigned int)ntohs(tcp_hdr->dest);
@@ -38,22 +34,37 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
                   src_ip, src_port, dest_ip, dest_port);
   printf("\tTCP [");
   // printf("[");
-  if((uint16_t)ntohs(tcp_hdr->syn) != 0)
+  if((uint16_t)ntohs(tcp_hdr->syn) != 0){
     printf("%s SYN ", __TCP_SYN);
-  if((uint16_t)ntohs(tcp_hdr->psh) != 0)
+    flags_set++;
+  }
+  if((uint16_t)ntohs(tcp_hdr->psh) != 0){
     printf("%s PSH ",__TCP_PSH);
-  if((uint16_t)ntohs(tcp_hdr->urg) != 0)
+    flags_set++;
+  }
+  if((uint16_t)ntohs(tcp_hdr->urg) != 0){
     printf("%s URG ",__TCP_URG);
-  if((uint16_t)ntohs(tcp_hdr->rst) != 0)
+    flags_set++;
+  }
+  if((uint16_t)ntohs(tcp_hdr->rst) != 0){
     printf("%s RST ",__TCP_RST);
-  if((uint16_t)ntohs(tcp_hdr->fin) != 0)
+    flags_set++;
+  }
+  if((uint16_t)ntohs(tcp_hdr->fin) != 0){
     printf("%s FIN ",__TCP_FIN);
-  if((uint16_t)ntohs(tcp_hdr->ack) != 0)
+    flags_set++;
+  }
+  if((uint16_t)ntohs(tcp_hdr->ack) != 0){
     printf("%s ACK ",__TCP_ACK);
+    flags_set++;
+  }
   printf("%s",__TCP_COLOR_NS);
   printf("]\n");
   
   printf("%s",__END_COLOR_STREAM);
+  if(flags_set > 3 || flags_set == 0){
+    printf("%sSuspicious TCP Packet recieved: %d flags%s\n",__TCP_RST,flags_set,__END_COLOR_STREAM);
+  }
   // printf("dsetp\n");
   rdata->dest_port = (unsigned int )ntohs(tcp_hdr->dest);
   // perror("");
