@@ -22,15 +22,15 @@ void nsh_cmd_interpret(const char * input, int fd){
       return;
     }
     else if(strncmp(input + 4,"blacklist",9) == 0){
-      send_blacklist(fd);
+      send_blacklist(&fd);
       return;
     } 
     else if(strcmp(input + 4, "rules") == 0){
-      get_loaded_rules(fd);
+      get_loaded_rules(&fd);
       return;
     }
     else if(strncmp(input + 4,"matches",8) == 0){
-      get_rule_matches(fd,input + 12);
+      get_rule_matches(&fd,input + 12);
       return;
     }
     else if(strncmp(input + 4, "packets",8) == 0){
@@ -50,10 +50,10 @@ void nsh_cmd_interpret(const char * input, int fd){
       send(fd,add_cmd_help,strlen(add_cmd_help),0);
     }
     else if(strncmp(input + 4,"blacklist",9) == 0){
-      add_to_blacklist(fd,input + 4);
+      add_to_blacklist(&fd,input + 4);
     }
     else if(strncmp(input + 4,"rule",4) ==0){
-      load_new_rule(fd, input + 8);
+      load_new_rule(&fd, input + 8);
     } 
     
   }

@@ -11,6 +11,7 @@ const char * get_cmd_help =
 
 const char * add_cmd_help =
         "Help for \"add\" command:\n"
-        "\tadd blacklist <ipv4|ipv6> <ip addr>\r\n";
+        "\tadd blacklist <ipv4|ipv6> <ip addr>\n"
+        "\tadd rule <rulename>\r\n";
 
 #endif /* HELPMSGS_H */
