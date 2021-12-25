@@ -5,20 +5,24 @@
 #include <stdlib.h>
 #include "../../../globals.h"
 #include "../../filter/parsing/rule_parser.h"
+
+static __thread char message_buffer[1024];
+
 void send_blacklist(int * fd){
-  char blacklist_msg[1024]; //= "Blacklist for nsh server:\n\t";
-  strcat(blacklist_msg,"Blacklist for nsh server:\n\t");
+  memset(&message_buffer,0,sizeof(message_buffer));
+  strcat(message_buffer,"Blacklist for nsh server:\n\t");
   for(int i = 0; i < blk_ipv4_len + 1; i++){
     const char * ipv4_addr = (const char *)&blocked_ipv4_addrs[i].ipv4_addr;
-    strncat(blacklist_msg,ipv4_addr,strlen(ipv4_addr));
+    strncat(message_buffer,ipv4_addr,strlen(ipv4_addr));
     // printf("got here\n");
-    strcat(blacklist_msg,"\n\t");
+    strcat(message_buffer,"\n\t");
   }
-  strcat(blacklist_msg,"\r\n");
-  send(*fd,blacklist_msg,strlen(blacklist_msg),0);
+  strcat(message_buffer,"\r\n");
+  send(*fd,message_buffer,strlen(message_buffer),0);
 }
 
 void add_to_blacklist(int * fd, const char * ro_cmd){
+  memset(&message_buffer,0,sizeof(message_buffer));
   if(strncmp(ro_cmd + 10,"ipv4",4) == 0){
     const char *ipv4_addr = ro_cmd + 15;
     char success_msg[32];
@@ -30,54 +34,54 @@ void add_to_blacklist(int * fd, const char * ro_cmd){
 }
 
 void get_loaded_rules(int * fd){
-  printf("hadsfasdf\n");
-
+  memset(&message_buffer,0,sizeof(message_buffer));
   char message[1024];
-  strcat(message,"Loaded rules for NPSI Server:\n\t");
+  strcat(message_buffer,"Loaded rules for NPSI Server:\n\t");
   for(int i = 0; i < num_rules + 1; ){
     const struct rule * tmprule = &rules[i++];
-    strncat(message,tmprule->rulename,strlen(tmprule->rulename));
-    strcat(message,"\n\t");
+    strncat(message_buffer,tmprule->rulename,strlen(tmprule->rulename));
+    strcat(message_buffer,"\n\t");
   }
-  strcat(message,"\r\n");
-  send(*fd,message,strlen(message),0);
+  strcat(message_buffer,"\r\n");
+  send(*fd,message_buffer,strlen(message_buffer),0);
 }
 
 void load_new_rule(int * fd,const char * cmd){
+  memset(&message_buffer,0,sizeof(message_buffer));
   FILE * fp = fopen(cmd + 1,"r");
-  char message[64];
+  
   if(fp == NULL){
-    sprintf(message,"Failure to open file %s\r\n",cmd);
-    send(*fd,message,strlen(message),0);
+    sprintf(message_buffer,"Failure to open file %s\r\n",cmd);
+    send(*fd,message_buffer,strlen(message_buffer),0);
     return;
   }
   rule_parser(cmd);
-  sprintf(message,"Loaded rule file %s\r\n",cmd);
-  send(*fd,message,strlen(message),0);
+  sprintf(message_buffer,"Loaded rule file %s\r\n",cmd);
+  send(*fd,message_buffer,strlen(message_buffer),0);
 }
 
 void get_rule_matches(int * fd, const char * rulename){
-  char message[1024];
+  memset(&message_buffer,0,sizeof(message_buffer));
   if(strlen(rulename) > 2){
     for(int i = 0; i < num_rules + 1; i++){
       if(strcmp(rules[i].rulename,rulename) == 0){
-        sprintf(message,"%s was matched %d times\r\n",rulename,rules[i].times_matched);
-        send(*fd,message,strlen(message),0);
+        sprintf(message_buffer,"%s was matched %d times\r\n",rulename,rules[i].times_matched);
+        send(*fd,message_buffer,strlen(message_buffer),0);
         return;
       }
     }
-    sprintf(message,"%s: rule not found\r\n",rulename);
-    send(*fd,message,strlen(message),0);
+    sprintf(message_buffer,"%s: rule not found\r\n",rulename);
+    send(*fd,message_buffer,strlen(message_buffer),0);
   } else {
-    strcat(message,"Rules and the number of times they were matched:\n");
+    strcat(message_buffer,"Rules and the number of times they were matched:\n");
     for(int i = 0; i < num_rules + 1; ){
       const struct rule * __rule = &rules[i++];
       char sub_message[64];
       sprintf(sub_message,"\t%s matched %d times\n",__rule->rulename,__rule->times_matched);
-      strcat(message,sub_message);
+      strcat(message_buffer,sub_message);
     }
-    strcat(message,"\r\n");
-    send(*fd,message,strlen(message),0);
+    strcat(message_buffer,"\r\n");
+    send(*fd,message_buffer,strlen(message_buffer),0);
   }
 }
 

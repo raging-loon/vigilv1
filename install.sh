@@ -1,4 +1,5 @@
-# the installation file
+# the installation file for the UTM 
+# the installation for the NSHclient is located in src/nshclient/
 apt install libpcap-dev libssl-dev
 mkdir /usr/share/npsi
 mkdir /usr/share/npsi/rules
@@ -6,6 +7,7 @@ cp -r src/rules /usr/share/npsi/rules
 mkdir /etc/npsi
 cp npsi.conf /etc/npsi/npsi.conf
 cp deny.conf /etc/npsi/deny.conf
+touch /etc/npsi/hosts.conf
 mkdir /var/log/npsi/
 touch /var/log/npsi/siglog.log
 touch /etc/npsi/passwd

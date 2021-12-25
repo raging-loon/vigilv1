@@ -28,13 +28,13 @@ bool debug_mode;
 // default files
 char * default_config = "/etc/npsi/npsi.conf";
 char * def_log_file = "/var/log/npsi/siglog.log";
-
+char * default_host_conf = "/etc/npsi/hosts.conf";
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   if(argc == 1){
     print_help_and_exit();
   }
-
+  char error_buf[PCAP_ERRBUF_SIZE];
   char * iface_name;
   int opt;
   while((opt = getopt(argc,argv,"dhi:")) != -1){
@@ -63,8 +63,8 @@ int main(int argc, char **argv){
   rule_library_parser("/etc/npsi/npsi.conf");
   printf("Note to developer, remove hard coded IP address\n");
   strcpy(ip_addr,"10.108.32.227");
-  printf("NPSI listening on interface %s\n",iface_name);
-  char *dev = pcap_lookupdev(iface_name);
+  char *dev = pcap_lookupdev(error_buf);
+  printf("NPSI listening on interface %s\n",dev);
   pcap_t *pcap_mgr;
   if(dev == NULL){
     printf("Failure opening interface %s\n",iface_name);

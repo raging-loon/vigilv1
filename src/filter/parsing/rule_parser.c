@@ -185,3 +185,12 @@ void deny_conf_parser(char * file){
   }
   */
 }
+
+
+void host_mon_parser(){
+  FILE * fp = fopen(default_host_conf,"r");
+  if(fp == NULL){
+    printf("Failed to open %s\n",default_host_conf);
+    exit(EXIT_FAILURE);
+  }
+}

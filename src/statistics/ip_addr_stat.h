@@ -23,6 +23,7 @@ typedef struct {
   bool is_src;
   int traffic_type;
   char __ip_addr[15];
+  int pkt_len;
 } aiaoic_args;
 
 

@@ -1,0 +1,16 @@
+#!/usr/bin/python3
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import QWidget, QApplication, QPushButton, QHBoxLayout
+import sys
+application = QApplication(sys.argv)
+window = QWidget()
+window.setWindowTitle("nshclient")
+layout = QHBoxLayout()
+connect = QPushButton("Connect")
+layout.addWidget(connect)
+window.setLayout(layout)
+
+window.resize(500,500)
+window.move(100,100)
+window.show()
+sys.exit(application.exec_())
