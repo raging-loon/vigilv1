@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include "src/filter/parsing/rule.h"
 
+//    major.minor.patch
+#define VERSION "1.0.0"
 extern struct ip_addr_counter ip_stats[256];
 extern int ip_addr_stat_counter_len;
 
@@ -20,7 +22,7 @@ extern int npsi_mode;
 extern char * default_config;
 extern char * def_log_file;
 
-
+extern bool debug_mode;
 extern struct blocked_ipv4 blocked_ipv4_addrs[32];
 extern int blk_ipv4_len;
 

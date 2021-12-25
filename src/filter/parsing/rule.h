@@ -25,6 +25,7 @@ struct rule_data{
   unsigned int dest_port;
   int __protocol;
   int pkt_len;
+
 };
 
 struct blocked_ipv4{
@@ -39,6 +40,7 @@ void rulemgr(const struct rule_data *);
 struct rule{
   char rulename[16];
   int rule_type;
+  int times_matched;
   char rule_target[128];
   bool(*pkt_parser)(const struct rule_data *, const struct rule *);
   void(*action)(const struct rule_data *, const struct rule *, int);

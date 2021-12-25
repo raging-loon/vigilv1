@@ -57,6 +57,7 @@ void rule_parser(const char * __filename){
   const char * filename = __filename + 1;
   num_rules = num_rules + 1;
   struct rule *  __rule = &rules[num_rules];
+  __rule->times_matched = 0;
   FILE * fp = fopen(filename,"r");
   if(fp == NULL){
     printf("Error opening rule file: %s. Refusing to continue\n",filename);

@@ -11,34 +11,40 @@
 #include "../utils.h"
 #include "../colors.h"
 #include "icmpdsct.h"
+#include "../../globals.h"
 void ip6_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * dest_ip){
-  printf("%s",__REG_ICMP_v4_v6);
+  
   struct __icmp6 * icmpv6 = (struct __icmp6 *)(pkt + ETH_HDR_SZ + sizeof(struct ip6hdr));
-  printf("IPv6 %s -> %s\n",src_ip, dest_ip);
-  printf("\tICMPv6 ");
-  switch(icmpv6->icmp_type){
-    case 0x85:{
-      char src_mac[64];
-      strncpy(src_mac,mac_ntoa(icmpv6->addr),sizeof(src_mac));
-      printf(" Router Solicitation from %s\n",src_mac);
-      break;
+  if(debug_mode){
+    printf("%s",__REG_ICMP_v4_v6);
+    printf("IPv6 %s -> %s\n",src_ip, dest_ip);
+    printf("\tICMPv6 ");
+    switch(icmpv6->icmp_type){
+      case 0x85:{
+        char src_mac[64];
+        strncpy(src_mac,mac_ntoa(icmpv6->addr),sizeof(src_mac));
+        printf(" Router Solicitation from %s\n",src_mac);
+        break;
+      }
+      case 143:
+        printf("Multicast Listener Report Message v2\n");
+        break;
+      case 130:
+        printf("Multicast  Listener Query");
+        break;
+      case 135:
+        printf("Neighbor Solicitation\n"); 
+        break;
     }
-    case 143:
-      printf("Multicast Listener Report Message v2\n");
-      break;
-    case 130:
-      printf("Multicast  Listener Query");
-      break;
-    case 135:
-      printf("Neighbor Solicitation\n"); 
-      break;
+    printf("%s",__END_COLOR_STREAM);
   }
-  printf("%s",__END_COLOR_STREAM);
 }
+
 
 void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * dest_ip){
   add_ip_addr_or_inc_counter(src_ip,true,ICMP);
   add_ip_addr_or_inc_counter(dest_ip,false,ICMP);
+  if(debug_mode) {
   printf("%s",__REG_ICMP_v4_v6);
   struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
   // printf("IPv4 ");
@@ -160,5 +166,5 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
       break;
   }
   printf("%s",__END_COLOR_STREAM);
-
+  }
 }

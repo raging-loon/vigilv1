@@ -24,7 +24,7 @@
 #include "../print_utils.h"
 #include "../filter/parsing/rule.h"
 #include "../filter/parsing/packet_parser.h"
-
+#include "../../globals.h"
 
 void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
   struct ip6hdr * ipv6_hdr = (struct ip6hdr *)(pkt + sizeof(struct ethhdr) );
@@ -85,8 +85,13 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   rdata.dest_ip_addr = (char *)&dest_ip;
 
 
-  if(ip_header->flags == 0x0020 || ip_header->flags == 0x0102)
-    printf("%sFragmented%s ",__FRAGMENTED,__END_COLOR_STREAM);
+  if(ip_header->flags == 0x0020 || ip_header->flags == 0x0102){
+    printf("%sFragmented ",__FRAGMENTED);
+    if(debug_mode)
+      printf("%s",__END_COLOR_STREAM);
+    else 
+      printf(" %s -> %s%s\n",src_ip,dest_ip,__END_COLOR_STREAM);
+  }
   int data_size;
   switch(ip_header->protocol){
     case 1:{

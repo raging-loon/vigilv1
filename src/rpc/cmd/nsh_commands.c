@@ -53,3 +53,17 @@ void load_new_rule(int fd,const char * cmd){
   sprintf(message,"Loaded rule file %s\r\n",cmd);
   send(fd,message,strlen(message),0);
 }
+
+void get_rule_matches(int fd){
+  char message[1024];
+  strcat(message,"Rules and the number of times they were matched:\n");
+  for(int i = 0; i < num_rules + 1; ){
+    const struct rule * __rule = &rules[i++];
+    char sub_message[64];
+    sprintf(sub_message,"\t%s matched %d times\n",__rule->rulename,__rule->times_matched);
+    strcat(message,sub_message);
+  }
+  strcat(message,"\r\n");
+  send(fd,message,strlen(message),0);
+}
+

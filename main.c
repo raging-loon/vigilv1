@@ -5,6 +5,7 @@
 #include "src/capture/pktmgr.h"
 #include <signal.h>
 #include "globals.h"
+#include <getopt.h>
 #include "main.h"
 #include "src/filter/parsing/rule_parser.h"
 #include "src/statistics/ip_addr_stat.h"
@@ -23,27 +24,46 @@ struct ip_addr_counter ip_stats[256];
 struct rule rules[128] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
 struct blocked_ipv4 blocked_ipv4_addrs[32];
 char ip_addr[32];
-
+bool debug_mode;
 // default files
 char * default_config = "/etc/npsi/npsi.conf";
 char * def_log_file = "/var/log/npsi/siglog.log";
 
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
-  signal(SIGINT,sigint_processor);
-  signal(SIGSEGV,sigint_processor);
   if(argc == 1){
-    printf("Need interface name\n");
-    printf("dev: add help stuff here\n");
-    exit(0);
+    print_help_and_exit();
   }
+
+  char * iface_name;
+  int opt;
+  while((opt = getopt(argc,argv,"dhi:")) != -1){
+    switch(opt){
+      case 'd':
+        debug_mode = true;
+        break;
+      case 'h':
+        print_help_and_exit();
+        break;
+      case 'i':
+        iface_name = optarg;
+        break;
+      default:
+        printf("Unknown argument -%c\n",opt);
+        print_help_and_exit();
+        break;
+    }
+  }
+  
+  signal(SIGINT,sigint_processor);
+  signal(SIGSEGV,sigint_processor);  
   // char * ip_addr = ""
   deny_conf_parser("/etc/npsi/deny.conf");
 
   rule_library_parser("/etc/npsi/npsi.conf");
   printf("Note to developer, remove hard coded IP address\n");
   strcpy(ip_addr,"10.108.32.227");
-  char * iface_name = argv[1];
+  printf("NPSI listening on interface %s\n",iface_name);
   char *dev = pcap_lookupdev(iface_name);
   pcap_t *pcap_mgr;
   if(dev == NULL){
@@ -80,3 +100,11 @@ void sigint_processor(int signal){
 
 
 
+
+static void print_help_and_exit(){
+  printf("NPSI UTM %s\n"
+         "\t-d: debug mode\n"
+         "\t-h: display this message\n"
+         "\t-i <iface>: set the interface to listen on\n",VERSION);
+  exit(EXIT_SUCCESS);
+}

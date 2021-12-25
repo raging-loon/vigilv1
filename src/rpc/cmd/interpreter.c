@@ -25,6 +25,9 @@ void nsh_cmd_interpret(const char * input, int fd){
     else if(strcmp(input + 4, "rules") == 0){
       get_loaded_rules(fd);
     }
+    else if(strncmp(input + 4,"matches ",9 )){
+      get_rule_matches(fd);
+    }
     else{
       send(fd,get_cmd_help,strlen(get_cmd_help),0);
     }
@@ -40,7 +43,6 @@ void nsh_cmd_interpret(const char * input, int fd){
       load_new_rule(fd, input + 8);
     }
   }
-
 
   else {
     int len = 28 + strlen(input);
