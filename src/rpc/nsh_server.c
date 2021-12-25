@@ -72,7 +72,7 @@ static void *actually_start_nsh_server(){
 
 		} else {			
 			printf("new connection at %s:%d\n",inet_ntoa(addr.sin_addr),htons(addr.sin_port));
-			char buffer[128] = {0};
+			static __thread char buffer[128] = {0};
 
 			if(nsh_do_login(client_sock, inet_ntoa(addr.sin_addr)) == false){
 				send(client_sock,"Invalid login\r\n",16,0);
@@ -82,8 +82,10 @@ static void *actually_start_nsh_server(){
 				char * nsh_str = "nsh# ";
 				while(strncmp(buffer,"exit",4) !=0){
 					send(client_sock,nsh_str,strlen(nsh_str),0);
+					memset(&buffer,0,sizeof(buffer));
 					int len_read = read(client_sock,buffer,1024);
 					rnstrip(buffer);
+					
 					nsh_cmd_interpret(buffer,client_sock);
 				}
 				close(client_sock);

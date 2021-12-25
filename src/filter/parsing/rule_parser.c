@@ -54,6 +54,7 @@ static void syntax_error(const char * line, int line_no){
 
 void rule_parser(const char * __filename){
   // + 1 for the $ at the beggining
+  // also for the " " at the beggining when filename is given over network
   const char * filename = __filename + 1;
   num_rules = num_rules + 1;
   struct rule *  __rule = &rules[num_rules];
@@ -75,9 +76,9 @@ void rule_parser(const char * __filename){
     if(is_comment(line))
       continue;
     rstrip(line);
-    // printf("helclos\n");
+
     if(strcmp("\x00",line) == 0) continue;
-    // printf("%s\n",line);
+    
     if(strstr(line,"RULE_START{")){
       parsing_rule = true;
     }
@@ -89,8 +90,7 @@ void rule_parser(const char * __filename){
       strcpy(name,line+8);
       name[strcspn(name,"\"")] = 0;
       strcpy((char *)&__rule->rulename,(char *)&name);
-      // printf("%s\n",name);
-      // printf("he");
+      
     }
 
     else if(strstr(line,"type=") != NULL){
@@ -125,7 +125,6 @@ void rule_parser(const char * __filename){
     printf("Please end your rule with a closing } on a newline\n");
     exit(EXIT_FAILURE);
   }
-  // rules[num_rules++] = __rule;
 }
 
 
@@ -173,8 +172,7 @@ void deny_conf_parser(char * file){
     if(strstr(line,"ipv4")){
       struct blocked_ipv4 * temp = &blocked_ipv4_addrs[++blk_ipv4_len];
       char * ipv4_addr = line + 5;
-      printf("%s\n",ipv4_addr);
-      // temp[blk_ipv4_len];
+      // printf("%s\n",ipv4_addr);
       strcpy(temp->ipv4_addr ,ipv4_addr);
     } 
   }

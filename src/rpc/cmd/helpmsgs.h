@@ -4,9 +4,10 @@
 
 const char * get_cmd_help = 
         "Help for \"get\" command:\n"
-        "\tblacklist -> retrieve the blacklist\n"
-        "\trules -> retrieve rules loaded in memory\n"
-        "\tmatches -> retrieve matches for all rules\r\n";
+        "\tblacklist:   retrieve the blacklist\n"
+        "\trules:   retrieve rules loaded in memory\n"
+        "\tmatches:   retrieve matches for all rules\n"
+        "\tpackets:   total packets caught\r\n";
 
 const char * add_cmd_help =
         "Help for \"add\" command:\n"

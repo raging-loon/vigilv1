@@ -54,16 +54,28 @@ void load_new_rule(int fd,const char * cmd){
   send(fd,message,strlen(message),0);
 }
 
-void get_rule_matches(int fd){
+void get_rule_matches(int fd, const char * rulename){
   char message[1024];
-  strcat(message,"Rules and the number of times they were matched:\n");
-  for(int i = 0; i < num_rules + 1; ){
-    const struct rule * __rule = &rules[i++];
-    char sub_message[64];
-    sprintf(sub_message,"\t%s matched %d times\n",__rule->rulename,__rule->times_matched);
-    strcat(message,sub_message);
+  if(strlen(rulename) > 2){
+    for(int i = 0; i < num_rules + 1; i++){
+      if(strcmp(rules[i].rulename,rulename) == 0){
+        sprintf(message,"%s was matched %d times\r\n",rulename,rules[i].times_matched);
+        send(fd,message,strlen(message),0);
+        return;
+      }
+    }
+    sprintf(message,"%s: rule not found\r\n",rulename);
+    send(fd,message,strlen(message),0);
+  } else {
+    strcat(message,"Rules and the number of times they were matched:\n");
+    for(int i = 0; i < num_rules + 1; ){
+      const struct rule * __rule = &rules[i++];
+      char sub_message[64];
+      sprintf(sub_message,"\t%s matched %d times\n",__rule->rulename,__rule->times_matched);
+      strcat(message,sub_message);
+    }
+    strcat(message,"\r\n");
+    send(fd,message,strlen(message),0);
   }
-  strcat(message,"\r\n");
-  send(fd,message,strlen(message),0);
 }
 

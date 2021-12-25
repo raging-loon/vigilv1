@@ -5,6 +5,7 @@
 #include "interpreter.h"
 #include "helpmsgs.h"
 #include "nsh_commands.h"
+#include "../../../globals.h"
 void nsh_cmd_interpret(const char * input, int fd){
   // rnstrip(input);
   if(strcmp(input,"test_echo") == 0){
@@ -16,22 +17,34 @@ void nsh_cmd_interpret(const char * input, int fd){
   }
   else if(strncmp(input,"get",3) == 0){
     
-    if(strlen(input) < 5){
+    if(strlen(input) < 3){
       send(fd,get_cmd_help,strlen(get_cmd_help),0);
+      return;
     }
-    else if(strcmp(input + 4,"blacklist") == 0){
+    else if(strncmp(input + 4,"blacklist",9) == 0){
       send_blacklist(fd);
+      return;
     } 
     else if(strcmp(input + 4, "rules") == 0){
       get_loaded_rules(fd);
+      return;
     }
-    else if(strncmp(input + 4,"matches ",9 )){
-      get_rule_matches(fd);
+    else if(strncmp(input + 4,"matches",8) == 0){
+      get_rule_matches(fd,input + 12);
+      return;
+    }
+    else if(strncmp(input + 4, "packets",8) == 0){
+      char message[32];
+      sprintf(message,"Total packets caught: %d\r\n",total_pkt_captured);
+      send(fd,message,strlen(message),0);
+    return;
     }
     else{
       send(fd,get_cmd_help,strlen(get_cmd_help),0);
     }
   }
+
+
   else if(strncmp(input,"add",3) == 0){
     if(strlen(input) < 4){
       send(fd,add_cmd_help,strlen(add_cmd_help),0);
@@ -41,7 +54,8 @@ void nsh_cmd_interpret(const char * input, int fd){
     }
     else if(strncmp(input + 4,"rule",4) ==0){
       load_new_rule(fd, input + 8);
-    }
+    } 
+    
   }
 
   else {
