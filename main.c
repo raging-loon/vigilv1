@@ -10,6 +10,7 @@
 #include "src/filter/parsing/rule_parser.h"
 #include "src/statistics/ip_addr_stat.h"
 #include "src/rpc/nsh_server.h"
+#include "src/statistics/watchlist.h"
 #include <pthread.h>
 // globals defined in @globals.h
 // counters
@@ -17,18 +18,23 @@ int total_pkt_captured = 0;
 int ip_addr_stat_counter_len = -1;
 int blk_ipv4_len = -1;
 int num_rules = -1;
+int watchlist_num = -1;
 
 
 // info objects
 struct ip_addr_counter ip_stats[256];
 struct rule rules[128] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
 struct blocked_ipv4 blocked_ipv4_addrs[32];
+struct watchlist_member watchlist[128] = {0};
 char ip_addr[32];
 bool debug_mode;
 // default files
 char * default_config = "/etc/npsi/npsi.conf";
 char * def_log_file = "/var/log/npsi/siglog.log";
 char * default_host_conf = "/etc/npsi/hosts.conf";
+
+
+
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   if(argc == 1){

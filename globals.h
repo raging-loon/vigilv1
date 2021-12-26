@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "src/filter/parsing/rule.h"
-
+#include "src/statistics/watchlist.h"
 //    major.minor.patch
 #define VERSION "1.0.0"
 extern struct ip_addr_counter ip_stats[256];
@@ -27,4 +27,6 @@ extern bool debug_mode;
 extern struct blocked_ipv4 blocked_ipv4_addrs[32];
 extern int blk_ipv4_len;
 
+extern struct watchlist_member watchlist[128];
+extern int watchlist_num;
 #endif /* GLOBALS_H */

@@ -1,7 +1,7 @@
 #ifndef RULE_H
 #define RULE_H
 #include <stdbool.h>
-
+#include <stdint.h>
 
 
 const enum{
@@ -25,6 +25,8 @@ struct rule_data{
   unsigned int dest_port;
   int __protocol;
   int pkt_len;
+  uint32_t src_raw;
+  uint32_t dest_raw;
 
 };
 

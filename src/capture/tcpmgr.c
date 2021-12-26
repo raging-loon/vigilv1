@@ -12,9 +12,12 @@
 #include <stdbool.h>
 #include "../statistics/ip_addr_stat.h"
 #include "../packets/ip_hdr.h"
+#include <time.h>
 #include <string.h>
 #include "../../globals.h"
 #include "../filter/parsing/rule.h"
+#include "../statistics/watchlist.h"
+
 void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr *pkt_hdr){
   
   struct __tcp * tcp_hdr = (struct __tcp *)(pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr));
@@ -26,7 +29,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   add_ip_addr_or_inc_counter(dest_ip,false, TCP);
   unsigned int dest_port,  src_port;
   int flags_set = 0;
-    
+  bool rst_set = false;
   // uint16_t syn, ack, rst, fin, psh, urg;
   dest_port = (unsigned int)ntohs(tcp_hdr->dest);
   src_port = (unsigned int)ntohs(tcp_hdr->source);
@@ -51,6 +54,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   }
   if((uint16_t)ntohs(tcp_hdr->rst) != 0){
     if(debug_mode) printf("%s RST ",__TCP_RST);
+    rst_set = true;
     flags_set++;
   }
   if((uint16_t)ntohs(tcp_hdr->fin) != 0){
@@ -76,6 +80,32 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
     flags_set,
     __END_COLOR_STREAM);
   }
+
+
+  if(rst_set == true){
+    int watchlist_index;
+    if((watchlist_index = member_exists(rdata->src_raw)) != -1){
+      struct watchlist_member * w = &watchlist[watchlist_index];
+      w->ip_addr = rdata->dest_raw;
+      w->last_rst_pkt_times[w->rst_pkt_recv++] = (unsigned long )time(NULL); 
+      if(w->rst_pkt_recv >= 20){
+        w->rst_pkt_recv = 20;
+        if(tcp_portscan_detect(w)){
+          w->rst_pkt_recv = 0;
+          memset(&w->last_rst_pkt_times,0,sizeof(w->last_rst_pkt_times));
+        }
+
+          // printf("PORT SCAN DETECTED ");
+      }
+    } else {
+      struct watchlist_member * w = &watchlist[++watchlist_num];
+      w->ip_addr = rdata->src_raw;
+      w->rst_pkt_recv = 0;
+      w->last_rst_pkt_times[w->rst_pkt_recv++] = (unsigned long)time(NULL);
+    }
+  }
+
+
   // printf("dsetp\n");
   rdata->dest_port = (unsigned int )ntohs(tcp_hdr->dest);
   // perror("");

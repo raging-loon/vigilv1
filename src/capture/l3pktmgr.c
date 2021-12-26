@@ -61,6 +61,8 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   memset(&src,0,sizeof(src));
   memset(&dest,0,sizeof(dest));
   
+  rdata.src_raw = ip_header->saddr;
+  rdata.dest_raw = ip_header->daddr;
   dest.sin_addr.s_addr = ip_header->daddr;
   src.sin_addr.s_addr = ip_header->saddr;
 
@@ -83,6 +85,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   }
   rdata.src_ip_addr = (char *)&src_ip;
   rdata.dest_ip_addr = (char *)&dest_ip;
+      
 
 
   if(ip_header->flags == 0x0020 || ip_header->flags == 0x0102){
