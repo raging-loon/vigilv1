@@ -7,6 +7,7 @@
 
 struct watchlist_member{
   const char * ip_addr;
+  
   int rst_pkt_recv;
   int suspect_activity;
   unsigned long last_rst_pkt_times[20];
