@@ -93,6 +93,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       if(w->rst_pkt_recv >= 20){
         w->rst_pkt_recv = 20;
         if(tcp_portscan_detect(w)){
+
           w->rst_pkt_recv = 0;
           memset(&w->last_rst_pkt_times,0,sizeof(w->last_rst_pkt_times));
         }

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <uchar.h>
+#include <time.h>
 static __thread char buffer[128];
 
 char * mac_ntoa( uint8_t * hwaddr){
@@ -52,4 +53,19 @@ unsigned char * inet6_ntoa(uint8_t * ip_bits){
     ip_bits[12] ,ip_bits[13], ip_bits[14], ip_bits[15]
   );
   return buffer;
+}
+
+
+char * get_formated_time(){
+  char * time__;
+  time_t t = time(NULL);
+  struct tm __time = *localtime(&t);
+  sprintf(time__,"%d-%02d-%02d %02d:%02d:%02d",
+          __time.tm_year + 1900,
+          __time.tm_mon + 1,
+          __time.tm_mday,
+          __time.tm_hour,
+          __time.tm_min,
+          __time.tm_sec);
+  return time__;
 }

@@ -5,7 +5,7 @@
 #include "watchlist.h"
 #include "../../globals.h"
 #include "../utils.h"
-
+#include <time.h>
 
 
 bool tcp_portscan_detect(const struct watchlist_member * w){
@@ -25,8 +25,15 @@ bool tcp_portscan_detect(const struct watchlist_member * w){
     if(subtimes[i] < 14843508) f++;
   }
   if(f > 5){
+    FILE * siglog_fp = fopen(def_log_file,"a");
     printf("Portscan Detected from IP Address %s\n",w->ip_addr);
+    char message[128];
+    sprintf(message,"Portscan detected from %s at %s\n",w->ip_addr,get_formated_time());
+    fputs(message,siglog_fp); 
+    fclose(siglog_fp);
+    return true;
   }
+  return false;
   
 }
 

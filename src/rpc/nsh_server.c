@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <arpa/inet.h>
+#include "../utils.h"
 #include <string.h>
 #include "cmd/interpreter.h"
 #include <openssl/sha.h>
@@ -58,17 +59,8 @@ static void *actually_start_nsh_server(){
 		
 		int client_sock;
 		if((client_sock = accept(nsh_fd, (struct sockaddr *)&addr,(socklen_t *)&addrlen)) <0){
-			time_t t = time(NULL);
-  		struct tm __time = *localtime(&t);
-  		char time[64];
-  		sprintf(time,"%d-%02d-%02d %02d:%02d:%02d",
-  		        __time.tm_year + 1900,
-  		        __time.tm_mon + 1,
-  		        __time.tm_mday,
-  		        __time.tm_hour,
-  		        __time.tm_min,
-  		        __time.tm_sec);
-			printf("Failure to accept a client at %s\n",time);
+							
+			printf("Failure to accept a client at %s\n",get_formated_time());
 
 		} else {			
 			connect_t connection_ptr;

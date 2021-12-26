@@ -34,7 +34,6 @@ char * def_log_file = "/var/log/npsi/siglog.log";
 char * default_host_conf = "/etc/npsi/hosts.conf";
 
 
-
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   if(argc == 1){

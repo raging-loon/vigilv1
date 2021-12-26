@@ -29,4 +29,5 @@ extern int blk_ipv4_len;
 
 extern struct watchlist_member watchlist[128];
 extern int watchlist_num;
+
 #endif /* GLOBALS_H */
