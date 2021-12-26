@@ -12,6 +12,7 @@ struct watchlist_member{
   unsigned long last_rst_pkt_times[20];
 }; 
 
+
 bool tcp_portscan_detect(const struct watchlist_member * );
 
 void member_ready_for_scan();
