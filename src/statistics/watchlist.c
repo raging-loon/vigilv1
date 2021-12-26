@@ -9,7 +9,7 @@
 
 
 bool tcp_portscan_detect(const struct watchlist_member * w){
-  printf("%s:  %d\n",ipv4_ntoa(&w->ip_addr), w->rst_pkt_recv);
+  // printf("%s:  %d\n",w->ip_addr, w->rst_pkt_recv);
   int subtimes[20];
   int subtime_t = 0;
   for(int i = w->rst_pkt_recv - 1; i !=0;  ){
@@ -25,7 +25,7 @@ bool tcp_portscan_detect(const struct watchlist_member * w){
     if(subtimes[i] < 14843508) f++;
   }
   if(f > 5){
-    printf("Portscan Detected from IP Address %s\n",ipv4_ntoa(&w->ip_addr));
+    printf("Portscan Detected from IP Address %s\n",w->ip_addr);
   }
   
 }
@@ -41,10 +41,10 @@ void member_ready_for_scan(){
   }
 }
 
-int member_exists(uint32_t ip){
+int member_exists(const char * ip){
   int i = 0;
-  for( ; i < watchlist_num + 1; i++){
-    if(watchlist[i].ip_addr == ip) return i;
+  for( ; i < watchlist_num + 1;){
+    if(strcmp(watchlist[i++].ip_addr, ip) == 0) return i;
   }
   return -1;
 }

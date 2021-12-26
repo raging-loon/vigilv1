@@ -6,7 +6,7 @@
 
 
 struct watchlist_member{
-  uint32_t ip_addr;
+  const char * ip_addr;
   int rst_pkt_recv;
   int suspect_activity;
   unsigned long last_rst_pkt_times[20];
@@ -17,5 +17,5 @@ bool tcp_portscan_detect(const struct watchlist_member * );
 void member_ready_for_scan();
 
 
-int member_exists(uint32_t);
+int member_exists(const char *);
 #endif /* WATCHLIST_H */

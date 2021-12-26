@@ -61,11 +61,10 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   memset(&src,0,sizeof(src));
   memset(&dest,0,sizeof(dest));
   
-  rdata.src_raw = ip_header->saddr;
-  rdata.dest_raw = ip_header->daddr;
   dest.sin_addr.s_addr = ip_header->daddr;
   src.sin_addr.s_addr = ip_header->saddr;
-
+  rdata.src_socket = &src;
+  rdata.dest_socket = &dest;
   memset(&rdata,0,sizeof(rdata));
   // memset(rdata->pkt,0,sizeof(rdata->pkt));
   // rdata->pkt = (unsigned char **)&pkt;

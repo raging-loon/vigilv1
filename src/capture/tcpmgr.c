@@ -1,22 +1,24 @@
-#include "tcpmgr.h"
-#include <netinet/tcp.h>
-#include <netinet/ip.h>
-#include <stdio.h>
-#include "../filter/parsing/rule.h"
-// #include "../filter/parsing/"
-#include "protocols.h"
-#include "../packets/tcp.h"
-#include "../colors.h"
-#include <stdint.h>
 #include "../statistics/ip_addr_stat.h"
-#include <stdbool.h>
 #include "../statistics/ip_addr_stat.h"
-#include "../packets/ip_hdr.h"
-#include <time.h>
-#include <string.h>
-#include "../../globals.h"
-#include "../filter/parsing/rule.h"
 #include "../statistics/watchlist.h"
+#include "../filter/parsing/rule.h"
+#include "../filter/parsing/rule.h"
+#include "../packets/ip_hdr.h"
+#include "../packets/tcp.h"
+#include "../../globals.h"
+#include <netinet/tcp.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include "protocols.h"
+#include "../colors.h"
+#include "../utils.h"
+#include <stdbool.h>
+#include <stdint.h>
+#include "tcpmgr.h"
+#include <stdint.h>
+#include <string.h>
+#include <stdio.h>
+#include <time.h>
 
 void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr *pkt_hdr){
   
@@ -84,9 +86,9 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
 
   if(rst_set == true){
     int watchlist_index;
-    if((watchlist_index = member_exists(rdata->src_raw)) != -1){
+    if((watchlist_index = member_exists(rdata->dest_ip_addr)) != -1){
       struct watchlist_member * w = &watchlist[watchlist_index];
-      w->ip_addr = rdata->dest_raw;
+      w->ip_addr = rdata->dest_ip_addr;
       w->last_rst_pkt_times[w->rst_pkt_recv++] = (unsigned long )time(NULL); 
       if(w->rst_pkt_recv >= 20){
         w->rst_pkt_recv = 20;
@@ -99,7 +101,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       }
     } else {
       struct watchlist_member * w = &watchlist[++watchlist_num];
-      w->ip_addr = rdata->src_raw;
+      w->ip_addr = rdata->dest_ip_addr;
       w->rst_pkt_recv = 0;
       w->last_rst_pkt_times[w->rst_pkt_recv++] = (unsigned long)time(NULL);
     }

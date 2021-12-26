@@ -2,7 +2,7 @@
 #define RULE_H
 #include <stdbool.h>
 #include <stdint.h>
-
+#include <sys/socket.h>
 
 const enum{
   BIT_MATCH,
@@ -25,8 +25,8 @@ struct rule_data{
   unsigned int dest_port;
   int __protocol;
   int pkt_len;
-  uint32_t src_raw;
-  uint32_t dest_raw;
+  const struct sockaddr_in * src_socket;
+  const struct sockaddr_in * dest_socket;
 
 };
 
