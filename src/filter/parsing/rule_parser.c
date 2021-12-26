@@ -14,7 +14,7 @@ static void syntax_error(const char * line, int line_no);
 static void get_ruletype(const char * , struct rule *);
 static void get_action(const char * , struct rule *);
 
-
+// also the main config parser
 void rule_library_parser(const char * alt_file){
   // alt_file will be determined elsewhere
   FILE * fp = fopen(alt_file,"r");
@@ -29,7 +29,15 @@ void rule_library_parser(const char * alt_file){
   while((pos = getline(&line,&len,fp)) != -1){
     line[strcspn(line,"\n")] = 0;
     if(is_comment(line) == true) continue;
-    if(is_rule(line)){
+    else if(strncmp(line,"strict_icmp_timestamp_req=",26) == 0){
+      if(strcmp(line + 27,"YES") == 0) strict_icmp_timestamp_req = true;
+      else strict_icmp_timestamp_req = false;
+    }
+    else if(strncmp(line,"strict_nmap_host_alive_check=",29) == 0){
+      if(strcmp(line + 29, "YES") == 0) strict_nmap_host_alive_check = true;
+      else strict_nmap_host_alive_check = false;
+    }
+    else if(is_rule(line)){
       // printf("Parsing: %s\n",line);
       rule_parser(line);
     } 

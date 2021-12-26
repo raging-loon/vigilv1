@@ -6,9 +6,11 @@
 
 #include <netinet/ip.h>
 #include <netinet/icmp6.h>
+#include "../statistics/watchlist.h"
 #include "../packets/icmp4.h"
 #include "protocols.h"
 #include "../utils.h"
+#include <time.h>
 #include "../colors.h"
 #include "icmpdsct.h"
 #include "../../globals.h"
@@ -44,9 +46,46 @@ void ip6_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
 void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * dest_ip){
   add_ip_addr_or_inc_counter(src_ip,true,ICMP);
   add_ip_addr_or_inc_counter(dest_ip,false,ICMP);
+  struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
+  if(icmp4->type == 8 && strict_nmap_host_alive_check == true){
+    int watchlist_index;
+    if((watchlist_num = member_exists(src_ip)) != -1){
+      struct watchlist_member * w = &watchlist[watchlist_index];
+      if(w->nmap_watch_host_alive_watch.num_done == 0){
+        w->nmap_watch_host_alive_watch.start_time = (unsigned long)time(NULL);
+        w->nmap_watch_host_alive_watch.icmp_echo_sent = 1;
+        w->nmap_watch_host_alive_watch.num_done++;
+      } 
+    } else {
+      struct watchlist_member * w = &watchlist[++watchlist_num];
+      w->ip_addr = src_ip;
+      w->nmap_watch_host_alive_watch.start_time = (unsigned long)time(NULL);
+      w->nmap_watch_host_alive_watch.icmp_echo_sent = 1;
+      w->nmap_watch_host_alive_watch.num_done++;
+    }
+    
+  } else if(icmp4->type == 13 && (strict_icmp_timestamp_req == true || strict_nmap_host_alive_check == true)){
+    if(strict_icmp_timestamp_req){
+      printf("Time stamp request: %s -> %s",src_ip,dest_ip);
+    }
+    if(strict_nmap_host_alive_check){
+      int watchlist_index;
+      if((watchlist_index = member_exists(src_ip)) != -1){
+        struct watchlist_member * w = &watchlist[watchlist_index];
+        if(w->nmap_watch_host_alive_watch.num_done != 3) goto stop;
+        else {
+          printf("Possible nmap host alive check %s -> %s; matched ICMP Echo, TCP SYN, TCP ACK, and ICMP Timestamp request\n",src_ip,dest_ip);
+          memset(&w->nmap_watch_host_alive_watch,0,sizeof(w->nmap_watch_host_alive_watch));
+        }
+      }
+    }
+  }
+
+  stop:;
+
+
   if(debug_mode) {
   printf("%s",__REG_ICMP_v4_v6);
-  struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
   // printf("IPv4 ");
   printf("IPv4 %s -> %s\n",src_ip, dest_ip);
   printf("\tICMP ");

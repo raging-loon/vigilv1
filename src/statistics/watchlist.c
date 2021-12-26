@@ -43,6 +43,7 @@ void member_ready_for_scan(){
   for(int i = 0; i < watchlist_num + 1;i++){
     const struct watchlist_member * w = &watchlist[i];
     if(w->rst_pkt_recv >= 20){
+      
       tcp_portscan_detect(w);
     }
   }

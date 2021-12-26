@@ -13,7 +13,12 @@
 #include "src/statistics/watchlist.h"
 #include <pthread.h>
 // globals defined in @globals.h
+// config options
+int strict_icmp_timestamp_req;
+int strict_nmap_host_alive_check;
+
 // counters
+
 int total_pkt_captured = 0;
 int ip_addr_stat_counter_len = -1;
 int blk_ipv4_len = -1;
