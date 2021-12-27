@@ -18,6 +18,7 @@
 #include <pcap.h>
 #include <stdlib.h>
 #include <string.h>
+#include "src/statistics/wclean.h"
 #include "src/capture/pktmgr.h"
 #include <signal.h>
 #include "globals.h"
@@ -42,9 +43,9 @@ int ip_addr_stat_counter_len = -1;
 int blk_ipv4_len = -1;
 int num_rules = -1;
 int watchlist_num = -1;
-
-unsigned long last_clean_time = 0;
-int clean_delay;
+int is_running;
+unsigned long last_clean_time;
+unsigned long clean_delay;
 // info objects
 struct ip_addr_counter ip_stats[256];
 struct rule rules[128] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
@@ -60,6 +61,7 @@ char * default_host_conf = "/etc/npsi/hosts.conf";
 
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
+  is_running = 1;
   last_clean_time = (unsigned long)time(NULL);
   if(argc == 1){
     print_help_and_exit();
@@ -107,11 +109,12 @@ int main(int argc, char **argv){
     exit(EXIT_FAILURE);
   }
   start_nsh_server();
+  // start_wclean();
   pcap_loop(pcap_mgr,-1, pktmgr, NULL);
-    
 }
 
 void sigint_processor(int signal){
+  int is_running = 0;
   printf("\nCaught signal %d, exiting...\n",signal);
   perror("");
   printf("Total Packets Caught: %d\n",total_pkt_captured);

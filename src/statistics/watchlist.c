@@ -78,10 +78,16 @@ int member_exists(const char * ip){
 
 void init_member(const char * ip){
   int watchlist_index;
+  struct watchlist_member * w;
   if((watchlist_index = member_exists(ip)) != -1){
     return;
   }
-  struct watchlist_member * w = &watchlist[++watchlist_num];
+  if((watchlist_index = member_exists("0.0.0.1")) != -1) 
+    w = &watchlist[watchlist_index];
+  else 
+    w = &watchlist[++watchlist_num];
+  
+  
   strcpy(w->ip_addr,ip);
   w->nmap_watch_host_alive_watch.num_done = 0;
   w->nmap_watch_host_alive_watch.start_time = 0;

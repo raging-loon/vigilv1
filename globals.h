@@ -52,4 +52,6 @@ extern int strict_nmap_host_alive_check;
 
 extern unsigned long last_clean_time;
 extern unsigned long clean_delay;
+
+extern int is_running;
 #endif /* GLOBALS_H */

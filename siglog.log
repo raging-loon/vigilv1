@@ -1958,3 +1958,4 @@ Portscan detected from 54.230.244.61 at 2021-12-27 12:03:33
 Portscan detected from 172.16.68.3 at 2021-12-27 12:03:33
 Portscan detected from 54.230.244.61 at 2021-12-27 12:03:35
 Portscan detected from 172.16.68.3 at 2021-12-27 12:03:38
+Possible nmap host alive check 172.16.68.3 -> 45.33.32.156 at 2021-12-27 13:08:14; matched ICMP Echo, TCP SYN, TCP ACK, and ICMP Timestamp request
