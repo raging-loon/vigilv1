@@ -34,6 +34,7 @@ struct nmap_watch_host_alive{
 
 
 struct watchlist_member{
+  unsigned long last_time_seen;
   char ip_addr[32];
   int rst_pkt_recv;
   int suspect_activity;

@@ -28,6 +28,8 @@
 #include "src/rpc/nsh_server.h"
 #include "src/statistics/watchlist.h"
 #include <pthread.h>
+#include <time.h>
+
 // globals defined in @globals.h
 // config options
 int strict_icmp_timestamp_req;
@@ -41,7 +43,8 @@ int blk_ipv4_len = -1;
 int num_rules = -1;
 int watchlist_num = -1;
 
-
+unsigned long last_clean_time = 0;
+int clean_delay;
 // info objects
 struct ip_addr_counter ip_stats[256];
 struct rule rules[128] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
@@ -57,6 +60,7 @@ char * default_host_conf = "/etc/npsi/hosts.conf";
 
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
+  last_clean_time = (unsigned long)time(NULL);
   if(argc == 1){
     print_help_and_exit();
   }

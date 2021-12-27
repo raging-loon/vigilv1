@@ -49,4 +49,7 @@ extern int watchlist_num;
 
 extern int strict_icmp_timestamp_req;
 extern int strict_nmap_host_alive_check;
+
+extern unsigned long last_clean_time;
+extern unsigned long clean_delay;
 #endif /* GLOBALS_H */

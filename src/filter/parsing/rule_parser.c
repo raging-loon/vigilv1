@@ -37,6 +37,13 @@ void rule_library_parser(const char * alt_file){
       if(strcmp(line + 29, "YES") == 0) strict_nmap_host_alive_check = true;
       else strict_nmap_host_alive_check = false;
     }
+    else if(strncmp(line,"clean_delay_in_mseconds=",24) == 0){
+      if(strlen(line) < 26){
+        printf("Clean delay needs a value\n");
+        exit(EXIT_FAILURE);
+      } 
+      clean_delay = atoi(line + 24);
+    }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);
       rule_parser(line);
