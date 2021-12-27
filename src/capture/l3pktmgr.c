@@ -76,6 +76,10 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
 
   strncpy(dest_ip, inet_ntoa(dest.sin_addr),sizeof(dest_ip));
   strncpy(src_ip, inet_ntoa(src.sin_addr),sizeof(src_ip));
+  // init both addresses;
+  init_member(&dest_ip);
+  init_member(&src_ip);
+  
   if(is_blocked_ipv4((const char *)&dest_ip)){
     printf("%s Found blocked ipv4 address(dest): %s%s\n",BLOCKED_IP_FOUND,dest_ip,__END_COLOR_STREAM);
   }

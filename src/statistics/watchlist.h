@@ -23,7 +23,7 @@
 
 
 struct watchlist_member{
-  const char * ip_addr;
+  char ip_addr[32];
   int rst_pkt_recv;
   int suspect_activity;
   unsigned long last_rst_pkt_times[20];
@@ -55,4 +55,7 @@ void member_ready_for_scan();
 
 
 int member_exists(const char *);
+
+void init_member(const char *);
+
 #endif /* WATCHLIST_H */

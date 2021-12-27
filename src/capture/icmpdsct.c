@@ -74,7 +74,7 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
       } 
     } else {
       struct watchlist_member * w = &watchlist[++watchlist_num];
-      w->ip_addr = src_ip;
+      strcpy(w->ip_addr,src_ip);
       w->nmap_watch_host_alive_watch.start_time = (unsigned long)time(NULL);
       w->nmap_watch_host_alive_watch.icmp_echo_sent = 1;
       w->nmap_watch_host_alive_watch.num_done++;

@@ -1,3 +1,20 @@
+/*
+ * Copyright 2021 Conner Macolley
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+
 #include "../statistics/ip_addr_stat.h"
 #include "../statistics/ip_addr_stat.h"
 #include "../statistics/watchlist.h"
@@ -32,6 +49,9 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   unsigned int dest_port,  src_port;
   int flags_set = 0;
   bool rst_set = false;
+  bool ack_set = false;
+  bool syn_set = false;
+  bool fin_set = false;
   // uint16_t syn, ack, rst, fin, psh, urg;
   dest_port = (unsigned int)ntohs(tcp_hdr->dest);
   src_port = (unsigned int)ntohs(tcp_hdr->source);
@@ -44,6 +64,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   }
   if((uint16_t)ntohs(tcp_hdr->syn) != 0){
     if(debug_mode) printf("%s SYN ", __TCP_SYN);
+    syn_set = true;
     flags_set++;
   }
   if((uint16_t)ntohs(tcp_hdr->psh) != 0){
@@ -61,10 +82,12 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   }
   if((uint16_t)ntohs(tcp_hdr->fin) != 0){
     if(debug_mode) printf("%s FIN ",__TCP_FIN);
+    fin_set = true;
     flags_set++;
   }
   if((uint16_t)ntohs(tcp_hdr->ack) != 0){
     if(debug_mode) printf("%s ACK ",__TCP_ACK);
+    ack_set = true;
     flags_set++;
   }
   if(debug_mode) {
@@ -88,7 +111,8 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
     int watchlist_index;
     if((watchlist_index = member_exists(rdata->dest_ip_addr)) != -1){
       struct watchlist_member * w = &watchlist[watchlist_index];
-      w->ip_addr = rdata->dest_ip_addr;
+      
+      strcpy(w->ip_addr,rdata->dest_ip_addr);
       w->last_rst_pkt_times[w->rst_pkt_recv++] = (unsigned long )time(NULL); 
       if(w->rst_pkt_recv >= 20){
         w->rst_pkt_recv = 20;
@@ -102,9 +126,32 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       }
     } else {
       struct watchlist_member * w = &watchlist[++watchlist_num];
-      w->ip_addr = rdata->dest_ip_addr;
+      // w->ip_addr = rdata->dest_ip_addr;
+      strcpy(w->ip_addr,rdata->dest_ip_addr);
       w->rst_pkt_recv = 0;
       w->last_rst_pkt_times[w->rst_pkt_recv++] = (unsigned long)time(NULL);
+    }
+  }
+
+  if(strict_nmap_host_alive_check == true && (ack_set || syn_set )){
+    // check which host is sending based on the port numbers
+    const char * target_ip;
+    if(dest_port > src_port) target_ip = dest_ip;
+    else target_ip = src_ip;
+    int watchlist_index;
+    if((watchlist_index = member_exists(target_ip)) != -1 ){
+      struct watchlist_member * w = &watchlist[watchlist_index];
+      if(w->nmap_watch_host_alive_watch.tcp_syn_sent == 0 && w->nmap_watch_host_alive_watch.num_done == 1){
+        w->nmap_watch_host_alive_watch.tcp_syn_sent = 1;
+        w->nmap_watch_host_alive_watch.num_done++;
+      } 
+      else if(w->nmap_watch_host_alive_watch.tcp_ack_sent == 0 && w->nmap_watch_host_alive_watch.num_done == 2){
+        w->nmap_watch_host_alive_watch.tcp_ack_sent = 1;
+        w->nmap_watch_host_alive_watch.num_done++;
+      } else {
+        // do nothing, this host isn't suspect of a nmap host alive scan yet.
+      }
+
     }
   }
 

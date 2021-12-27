@@ -73,3 +73,13 @@ int member_exists(const char * ip){
   }
   return -1;
 }
+
+
+void init_member(const char * ip){
+  int watchlist_index;
+  if((watchlist_index = member_exists(ip)) != -1){
+    return;
+  }
+  struct watchlist_member * w = &watchlist[++watchlist_num];
+  strcpy(w->ip_addr,ip);
+}
