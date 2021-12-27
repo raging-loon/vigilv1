@@ -30,7 +30,7 @@ void rule_library_parser(const char * alt_file){
     line[strcspn(line,"\n")] = 0;
     if(is_comment(line) == true) continue;
     else if(strncmp(line,"strict_icmp_timestamp_req=",26) == 0){
-      if(strcmp(line + 27,"YES") == 0) strict_icmp_timestamp_req = true;
+      if(strcmp(line + 26,"YES") == 0) strict_icmp_timestamp_req = true;
       else strict_icmp_timestamp_req = false;
     }
     else if(strncmp(line,"strict_nmap_host_alive_check=",29) == 0){

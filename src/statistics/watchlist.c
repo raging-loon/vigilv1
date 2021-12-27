@@ -29,6 +29,7 @@ bool tcp_portscan_detect(const struct watchlist_member * w){
   // printf("%s:  %d\n",w->ip_addr, w->rst_pkt_recv);
   int subtimes[20];
   int subtime_t = 0;
+  if(w->rst_pkt_recv != 20) return false;
   for(int i = w->rst_pkt_recv - 1; i !=0;  ){
     // if(w->last_rst_pkt_times[i] == w->last_rst_pkt_times[0])  break;
     int temp = i;
@@ -41,7 +42,7 @@ bool tcp_portscan_detect(const struct watchlist_member * w){
   for(int i = 0; i < subtime_t; i++){
     if(subtimes[i] < 14843508) f++;
   }
-  if(f > 5){
+  if(f == subtime_t){
     FILE * siglog_fp = fopen(def_log_file,"a");
     printf("Portscan Detected from IP Address %s\n",w->ip_addr);
     char message[128];
@@ -82,4 +83,16 @@ void init_member(const char * ip){
   }
   struct watchlist_member * w = &watchlist[++watchlist_num];
   strcpy(w->ip_addr,ip);
+  w->nmap_watch_host_alive_watch.num_done = 0;
+  w->nmap_watch_host_alive_watch.start_time = 0;
+  w->rst_pkt_recv = 0;
+  w->nmap_watch_host_alive_watch.tcp_ack_sent = 0;
+  w->nmap_watch_host_alive_watch.tcp_syn_sent = 0;
+  w->nmap_watch_host_alive_watch.num_done = 0;
+  w->nmap_watch_host_alive_watch.end_time = 0;
+  w->nmap_watch_host_alive_watch.icmp_echo_sent = 0;
+  w->nmap_watch_host_alive_watch.icmp_time_req_sent = 0;
+  w->nmap_watch_host_alive_watch.start_time = 0;
+  memset(&w->last_rst_pkt_times,0,sizeof(w->last_rst_pkt_times));
 }
+

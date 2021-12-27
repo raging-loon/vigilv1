@@ -65,7 +65,7 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
   struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
   if(icmp4->type == 8 && strict_nmap_host_alive_check == true){
     int watchlist_index;
-    if((watchlist_num = member_exists(src_ip)) != -1){
+    if((watchlist_index = member_exists(src_ip)) != -1){
       struct watchlist_member * w = &watchlist[watchlist_index];
       if(w->nmap_watch_host_alive_watch.num_done == 0){
         w->nmap_watch_host_alive_watch.start_time = (unsigned long)time(NULL);
@@ -82,7 +82,7 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
     
   } else if(icmp4->type == 13 && (strict_icmp_timestamp_req == true || strict_nmap_host_alive_check == true)){
     if(strict_icmp_timestamp_req){
-      printf("Time stamp request: %s -> %s",src_ip,dest_ip);
+      printf("Time stamp request: %s -> %s(config specifies strict timestamp alerts)\n",src_ip,dest_ip);
     }
     if(strict_nmap_host_alive_check){
       int watchlist_index;
@@ -90,8 +90,16 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
         struct watchlist_member * w = &watchlist[watchlist_index];
         if(w->nmap_watch_host_alive_watch.num_done != 3) goto stop;
         else {
-          printf("Possible nmap host alive check %s -> %s; matched ICMP Echo, TCP SYN, TCP ACK, and ICMP Timestamp request\n",src_ip,dest_ip);
-          memset(&w->nmap_watch_host_alive_watch,0,sizeof(w->nmap_watch_host_alive_watch));
+          w->nmap_watch_host_alive_watch.end_time = (unsigned long)time(NULL);
+          if(w->nmap_watch_host_alive_watch.end_time - w->nmap_watch_host_alive_watch.start_time <= 308450){  
+            printf("Possible nmap host alive check %s -> %s; matched ICMP Echo, TCP SYN, TCP ACK, and ICMP Timestamp request\n",src_ip,dest_ip);
+            FILE * fp = fopen(def_log_file,"a");
+            char logmessage[180];
+            sprintf(logmessage,"Possible nmap host alive check %s -> %s at %s; matched ICMP Echo, TCP SYN, TCP ACK, and ICMP Timestamp request\n",src_ip,dest_ip,get_formated_time());
+            fputs(logmessage,fp);
+            fclose(fp);
+            memset(&w->nmap_watch_host_alive_watch,0,sizeof(w->nmap_watch_host_alive_watch));
+          }
         }
       }
     }
@@ -208,7 +216,7 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
       else if(icmp4->code == 1)
         printf(" ( Fragment Reassembly time exceeded )\n");
       else
-        printf(" ( Unknown Code: %d)\n");
+        printf(" ( Unknown Code: %d)\n",icmp4->code);
       break;
     case 13:
       printf(" timestamp request\n");

@@ -31,9 +31,7 @@ void add_ip_addr_or_inc_counter(const char * ip_addr,bool __is_src,int __traffic
 
 
 static void* verify_ip_addr(void * args){
-  aiaoic_args * temp_info = args;//(aiaoic_args*)malloc(sizeof(args));
-  // const char * ip_addr = args;
-  // temp_info = args;
+  aiaoic_args * temp_info = args;
   // printf("[DEBUG] traffic_class = %d\n",temp_info->traffic_type);
   // printf("[DEBUG] aiaoic_args = %s\n",temp_info->__ip_addr);
   struct ip_addr_counter * temp;
@@ -63,6 +61,7 @@ end:
     case TCP:
       if(temp_info->is_src)
         temp->tcp_sent++;
+        
       else 
         temp->tcp_recv++;
       break;
