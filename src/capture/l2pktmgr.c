@@ -42,6 +42,7 @@ void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
       // char * src_mac = mac_ntoa((uint8_t)*arp->src_mac);
       strncpy(src_mac,mac_ntoa(arp->src_mac),sizeof(src_mac));
       strncpy(src_ip,u8_ipv4_ntoa((uint8_t *)&arp->src_ip),sizeof(src_ip));
+      
       if(debug_mode) printf("PROTO ARP: REPLY: %s is at %s\n",src_ip,src_mac);
       break;
     }

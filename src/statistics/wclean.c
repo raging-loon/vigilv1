@@ -24,7 +24,7 @@ void scan_for_clean(){
 }
 
 
-void is_ready_for_clean(){
+inline void is_ready_for_clean(){
   if((unsigned long)time(NULL) - last_clean_time >= clean_delay) scan_for_clean();
 }
 

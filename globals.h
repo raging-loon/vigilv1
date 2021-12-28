@@ -20,6 +20,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "src/filter/parsing/rule.h"
+#include "src/statistics/arpcache.h"
 #include "src/statistics/watchlist.h"
 //    major.minor.patch
 #define VERSION "1.0.0"
@@ -54,4 +55,10 @@ extern unsigned long last_clean_time;
 extern unsigned long clean_delay;
 
 extern int is_running;
+
+
+extern struct arp_entry arpcache[255];
+extern int arp_entries;
+
+
 #endif /* GLOBALS_H */
