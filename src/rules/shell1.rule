@@ -9,17 +9,20 @@ RULE_START{
   name="bin/bash"
   type=bit_match
   action=stdout_alert
+  protocol=ANY
   target_contents=/bin/bash
 }
 
 RULE_START{
   name="bin/dash"
   type=bit_match
+  protocol=ANY
   action=stdout_alert
   target_contents=/bin/dash
 }
 RULE_START{
   name="bin/zsh"
+  protocol=ANY
   type=bit_match
   action=stdout_alert
   target_contents=/bin/zsh

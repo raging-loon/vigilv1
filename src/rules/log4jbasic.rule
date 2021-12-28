@@ -2,6 +2,7 @@
 RULE_START{
   name="log4jbasic"
   type=bit_match
+  protocol=TCP
   target_contents=jndi:ldap://
   action=stdout_alert
 }

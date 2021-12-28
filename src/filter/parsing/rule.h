@@ -17,6 +17,14 @@ const enum{
   CRITICAL
 } severity;
 
+const enum {
+  R_TCP = 126,
+  R_UDP,
+  R_ICMP,
+  R_ALL
+} protocols_t;
+
+
 struct rule_data{
   unsigned char *pkt;
   char *src_ip_addr;
@@ -36,7 +44,7 @@ struct blocked_ipv4{
 
 
 void rulemgr(const struct rule_data *);
-/* rule parsing -----> packet capture -----> packet ----> iterate through all rule -----> apply rule parser function pointer -----> apply rule action function pointer */
+/* rule parsing -----> packet capture -----> packet ----> iterate through all rules -----> apply rule parser function pointer -----> apply rule action function pointer */
 
 
 struct rule{
@@ -44,6 +52,9 @@ struct rule{
   int rule_type;
   int times_matched;
   char rule_target[128];
+  int protocol;
+  int ports[32];
+  int total_ports;
   bool(*pkt_parser)(const struct rule_data *, const struct rule *);
   void(*action)(const struct rule_data *, const struct rule *, int);
 };

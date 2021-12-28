@@ -1,6 +1,7 @@
 RULE_START{
   name="sqlmap"
   type=bit_match
+  protocol=TCP
   target_contents=sqlmap
   action=stdout_alert
 }

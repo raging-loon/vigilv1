@@ -88,12 +88,12 @@ void rule_parser(const char * __filename){
   int rules_parsed = 0;
   while((pos = getline(&line,&len,fp)) != -1){
   struct rule *  __rule;
-  if(parsing_rule){
-    __rule = &rules[num_rules + rules_parsed];
-    __rule->times_matched = 0;
-  }
-    
-
+    if(parsing_rule){
+      __rule = &rules[num_rules + rules_parsed];
+      __rule->times_matched = 0;
+      __rule->protocol = -1;
+      __rule->total_ports = -1;
+    }
   
   
     lines++;
@@ -106,7 +106,12 @@ void rule_parser(const char * __filename){
     if(strstr(line,"RULE_START{")){
       parsing_rule = true;
     }
-    
+    else if(strstr(line,"protocol=")){
+      if(!parsing_rule) syntax_error(line,lines);
+      char protoname[8];
+      strcpy(protoname,line + 11);
+      get_protocol(protoname,__rule); 
+    }
     else if(strstr(line,"name=\"") != NULL){
       if(!parsing_rule) syntax_error(line,lines);
       // maybe add more flexibility with tabbing and stuff
@@ -154,6 +159,27 @@ void rule_parser(const char * __filename){
   num_rules += (rules_parsed - 1);
 }
 
+
+static void get_protocol(const char * __line, struct rule * __rule){
+  if(strcmp(__line,"TCP") == 0){
+    __rule->protocol = R_TCP;  
+  } 
+  else if(strcmp(__line,"UDP") == 0){
+    __rule->protocol = R_UDP;
+  } 
+  else if(strcmp(__line,"ICMP") == 0){
+    __rule->protocol = R_ICMP;
+  }
+  else if(strcmp(__line,"ANY") == 0){
+    __rule->protocol = R_ALL;
+  } 
+  else {
+    printf("Unknown protocol type: %s. If you believe this protocol should be added"
+    ", please contact me at cxmacolley@gmail.com\n"
+    "For now, the best thing to do is to modify the rule parameter to say \"ALL\"\n",__line);
+    exit(EXIT_FAILURE);
+  }
+}
 
 
 static void get_ruletype(const char * __line, struct rule * __rule){
@@ -220,4 +246,5 @@ void host_mon_parser(){
     printf("Failed to open %s\n",default_host_conf);
     exit(EXIT_FAILURE);
   }
+  fclose(fp);
 }
