@@ -4,3 +4,23 @@ RULE_START{
   action=stdout_alert
   target_contents=/bin/sh
 }
+
+RULE_START{
+  name="bin/bash"
+  type=bit_match
+  action=stdout_alert
+  target_contents=/bin/bash
+}
+
+RULE_START{
+  name="bin/dash"
+  type=bit_match
+  action=stdout_alert
+  target_contents=/bin/dash
+}
+RULE_START{
+  name="bin/zsh"
+  type=bit_match
+  action=stdout_alert
+  target_contents=/bin/zsh
+}

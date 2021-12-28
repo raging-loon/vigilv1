@@ -72,9 +72,6 @@ void rule_parser(const char * __filename){
   // + 1 for the $ at the beggining
   // also for the " " at the beggining when filename is given over network
   const char * filename = __filename + 1;
-  num_rules = num_rules + 1;
-  struct rule *  __rule = &rules[num_rules];
-  __rule->times_matched = 0;
   FILE * fp = fopen(filename,"r");
   if(fp == NULL){
     printf("Error opening rule file: %s. Refusing to continue\n",filename);
@@ -87,7 +84,18 @@ void rule_parser(const char * __filename){
   size_t len = 0;
   char * line = NULL;
   int lines = 0;
+  num_rules = num_rules + 1;
+  int rules_parsed = 0;
   while((pos = getline(&line,&len,fp)) != -1){
+  struct rule *  __rule;
+  if(parsing_rule){
+    __rule = &rules[num_rules + rules_parsed];
+    __rule->times_matched = 0;
+  }
+    
+
+  
+  
     lines++;
     if(is_comment(line))
       continue;
@@ -125,12 +133,13 @@ void rule_parser(const char * __filename){
     
     else if(strstr(line,"target_contents=") != NULL){
       if(!parsing_rule) syntax_error(line,lines);
-      char * contents = line + 19;
+      char * contents = line + 18;
       strcpy(__rule->rule_target,contents);
     }
     
     else if(strstr(line,"}") != NULL){
       parsing_rule = false;
+      rules_parsed++;
     }
     else{
       syntax_error(line,lines);
@@ -141,6 +150,8 @@ void rule_parser(const char * __filename){
     printf("Please end your rule with a closing } on a newline\n");
     exit(EXIT_FAILURE);
   }
+  // printf("Rules parsed in %s: %d\n",filename,rules_parsed);
+  num_rules += (rules_parsed - 1);
 }
 
 
