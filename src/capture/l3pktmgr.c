@@ -19,6 +19,7 @@
 #include "../utils.h"
 #include "tcpmgr.h"
 #include "udpmgr.h"
+#include "../filter/parsing/rule.h"
 #include "../packets/icmp4.h"
 #include "icmpdsct.h"
 #include "../print_utils.h"
@@ -101,21 +102,25 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   int data_size;
   switch(ip_header->protocol){
     case 1:{
+      rdata.__protocol = R_ICMP;
       ip4_icmp_decode(pkt,rdata.src_ip_addr,rdata.dest_ip_addr);
       break;
     }
     case 2:
       // printf("IPv4 IGMP %s -> %s\n",src_ip,dest_ip);
+      rdata.__protocol = R_ALL;
       ip4_igmp_decode(pkt,rdata.src_ip_addr,rdata.dest_ip_addr);
       
       break;
     
     case 6:
+      rdata.__protocol = R_TCP; 
       ip4_tcp_decode(pkt,&rdata,pkt_hdr);
       // data_size = base_data_size - sizeof(struct tcphdr);
       // ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     case 17:
+      rdata.__protocol = R_UDP;
       ip4_udp_decode(pkt,rdata.src_ip_addr,rdata.dest_ip_addr,pkt_hdr);
       // data_size = base_data_size - sizeof(struct udphdr);
       // ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);

@@ -108,9 +108,9 @@ int main(int argc, char **argv){
     perror("pcap_mgr in pcap_open_live");
     exit(EXIT_FAILURE);
   }
-  // start_nsh_server();
+  start_nsh_server();
   // start_wclean();
-  // pcap_loop(pcap_mgr,-1, pktmgr, NULL);
+  pcap_loop(pcap_mgr,-1, pktmgr, NULL);
 }
 
 void sigint_processor(int signal){

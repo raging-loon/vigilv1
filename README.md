@@ -15,18 +15,19 @@ Requires gcc, make, and libpcap-dev to run
  - [x] Add monitoring for some layer 3 protocols for IPv4
  - [ ] Add the above for IPv6
  - [ ] Add traffic size monitoring
- - [ ] Add more decoding for layer three protocols
-    - [ ] STP
-    - [ ] CDP
-    - [ ] LLDP
  - [ ] Add a background logging function[s]
  - [x] Come up with some configuration options
  - [ ] Better plan monitoring of hosts on the intranet
- - [ ] Figure out network placement for wired and wireless networks
- - [ ] Decode specific layer 3 protocols by port number
  - [x] Set up hexadecimal printing of packet data
  - [x] Figure out basic rule set up
  - [x] Reimplement the rule parser
+ - [x] Add support for more than one rule per rule file
+ - [x] Add support for protocol matching in rules
  - [x] Set up logging
  - [x] Set up alerting
  - [ ] Figure out the SNMP stuff
+ - [ ] Figure out email alerts
+ - [ ] Add everything from the ip_stats struct to the watchlist_member struct
+ - [ ] Figure out the brute force stuff
+ - [ ] Add arp cache and monitoring for it
+ - [ ]

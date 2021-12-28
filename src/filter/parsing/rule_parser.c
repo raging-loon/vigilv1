@@ -91,7 +91,7 @@ void rule_parser(const char * __filename){
     if(parsing_rule){
       __rule = &rules[num_rules + rules_parsed];
       __rule->times_matched = 0;
-      __rule->protocol = -1;
+      // __rule->protocol = -1;
       __rule->total_ports = -1;
     }
   
