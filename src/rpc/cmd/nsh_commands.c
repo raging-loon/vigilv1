@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include "../../../globals.h"
 #include "../../filter/parsing/rule_parser.h"
-
+#include "../../statistics/arpcache.h"
+#include "../../utils.h"
 static __thread char message_buffer[1024];
 
 void send_blacklist(int * fd){
@@ -85,3 +86,18 @@ void get_rule_matches(int * fd, const char * rulename){
   }
 }
 
+
+void get_arp_cache(int * fd){
+  memset(&message_buffer,0,sizeof(message_buffer));
+  strcat(message_buffer,"Current ARP cache:");
+  for(int i = 0; i < arp_entries + 1; i++){
+    char entry_msg[64];
+    printf("sdf\n");
+    sprintf(entry_msg,"\n\t%s -> %s",
+            u8_ipv4_ntoa(arpcache[i].ip_addr),
+            mac_ntoa(arpcache[i].mac_addr));
+    strcat(message_buffer,entry_msg);
+  }
+  strcat(message_buffer,"\r\n");
+  send(*fd,message_buffer,strlen(message_buffer),0);
+}

@@ -7,4 +7,7 @@ void add_to_blacklist(int *, const char *);
 void get_loaded_rules(int *);
 void load_new_rule(int *,const char *);
 void get_rule_matches(int *,const char *);
+
+void get_arp_cache(int *);
+
 #endif /* NSH_CMD_H */

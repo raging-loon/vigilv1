@@ -39,6 +39,10 @@ void nsh_cmd_interpret(const char * input, int fd){
       send(fd,message,strlen(message),0);
     return;
     }
+    else if(strncmp(input + 4, "arp",3) == 0){
+      get_arp_cache(&fd);
+      return;
+    }
     else{
       send(fd,get_cmd_help,strlen(get_cmd_help),0);
     }

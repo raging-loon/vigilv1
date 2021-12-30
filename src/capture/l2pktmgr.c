@@ -9,6 +9,7 @@
 #include "../utils.h"
 #include "../colors.h"
 #include "../packets/arp-hdr.h"
+#include "../statistics/arpcache.h"
 #include "../packets/ctp.h"
 #include "../../globals.h"
 void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
@@ -42,6 +43,16 @@ void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
       // char * src_mac = mac_ntoa((uint8_t)*arp->src_mac);
       strncpy(src_mac,mac_ntoa(arp->src_mac),sizeof(src_mac));
       strncpy(src_ip,u8_ipv4_ntoa((uint8_t *)&arp->src_ip),sizeof(src_ip));
+
+
+      if(entry_exists((uint8_t*)&arp->src_ip,(uint8_t*)&arp->src_mac) != -1){
+        printf("Hellod\n");
+        compare_entries((uint8_t)arp->src_ip, (uint8_t)arp->src_mac);
+      } else {
+        add_entry((uint8_t*)&arp->src_ip,(uint8_t*)&arp->src_mac);
+      }
+      
+      
       
       if(debug_mode) printf("PROTO ARP: REPLY: %s is at %s\n",src_ip,src_mac);
       break;

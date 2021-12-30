@@ -2,16 +2,20 @@
 #include "arpcache.h"
 #include <stdio.h>
 #include "../../globals.h"
+#include "../utils.h"
 
 
 
 void compare_entries(uint8_t ip, uint8_t mac){
   for(int i = 0; i < arp_entries + 1; i++){
-    if(compare_ip_entry(arpcache[i].ip_addr,ip)){
-      if(compare_mac_entry(arpcache[i].mac_addr,mac)){
+    if(compare_ip_entry((uint8_t*)&arpcache[i].ip_addr,&ip)){
+      if(compare_mac_entry((uint8_t*)&arpcache[i].mac_addr,&mac)){
         // do nothing its fine
       } else {
-        printf("Arp entry changed for ip address %s: was %s is now %s");
+        printf("Arp entry changed for ip address %s: was %s is now %s",
+                u8_ipv4_ntoa(&ip),
+                mac_ntoa((uint8_t*)&arpcache[i].mac_addr),
+                mac_ntoa(&mac));
       }
     }
   }
@@ -24,11 +28,11 @@ void add_entry(uint8_t *ip, uint8_t  *mac){
 } 
 
 
-int entry_exists(uint8_t ip,uint8_t mac){
+int entry_exists(uint8_t *ip,uint8_t *mac){
   for(int i = 0; i < arp_entries + 1; i++ ){
-    if(compare_ip_entry(arpcache[i].ip_addr, ip) && compare_mac_entry(arpcache[i].mac_addr, mac)) return i;
+    if(compare_ip_entry((uint8_t*)&arpcache[i].ip_addr, ip) == -1 &&
+       compare_mac_entry((uint8_t*)&arpcache[i].mac_addr, mac) == -1) return i;
   }
-  add_entry(ip,mac);
   return -1;
 }
 

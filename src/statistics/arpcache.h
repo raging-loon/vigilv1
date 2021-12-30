@@ -11,7 +11,7 @@ struct arp_entry{
 
 void compare_entries(uint8_t , uint8_t );
 void add_entry(uint8_t *, uint8_t *);
-int entry_exists(uint8_t,uint8_t);
+int entry_exists(uint8_t *,uint8_t *);
 int compare_ip_entry(uint8_t *,uint8_t *);
 int compare_mac_entry(uint8_t *,uint8_t * );
 
