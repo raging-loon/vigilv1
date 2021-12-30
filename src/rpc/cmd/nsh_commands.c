@@ -94,8 +94,8 @@ void get_arp_cache(int * fd){
     char entry_msg[64];
     printf("sdf\n");
     sprintf(entry_msg,"\n\t%s -> %s",
-            u8_ipv4_ntoa(arpcache[i].ip_addr),
-            mac_ntoa(arpcache[i].mac_addr));
+            arpcache[i].ip_addr,
+            arpcache[i].mac_addr);
     strcat(message_buffer,entry_msg);
   }
   strcat(message_buffer,"\r\n");

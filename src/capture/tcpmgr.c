@@ -114,8 +114,8 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       
       strcpy(w->ip_addr,rdata->dest_ip_addr);
       w->last_rst_pkt_times[w->rst_pkt_recv++] = (unsigned long )time(NULL); 
-      if(w->rst_pkt_recv >= 20){
-        w->rst_pkt_recv = 20;
+      if(w->rst_pkt_recv >= 30){
+        w->rst_pkt_recv = 30;
         if(tcp_portscan_detect(w)){
 
           w->rst_pkt_recv = 0;

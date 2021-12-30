@@ -45,11 +45,10 @@ void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
       strncpy(src_ip,u8_ipv4_ntoa((uint8_t *)&arp->src_ip),sizeof(src_ip));
 
 
-      if(entry_exists((uint8_t*)&arp->src_ip,(uint8_t*)&arp->src_mac) != -1){
-        printf("Hellod\n");
-        compare_entries((uint8_t)arp->src_ip, (uint8_t)arp->src_mac);
+      if(entry_exists((char *)&src_ip,(char *)&src_mac) != -1){
+        compare_entries((char *)&src_ip,(char *)&src_mac);
       } else {
-        add_entry((uint8_t*)&arp->src_ip,(uint8_t*)&arp->src_mac);
+        add_entry((char *)&src_ip,(char *)&src_mac);
       }
       
       

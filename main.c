@@ -133,6 +133,19 @@ void sigint_processor(int signal){
           ip_stats[i].tcp_sent, ip_stats[i].tcp_recv,ip_stats[i].udp_sent, ip_stats[i].udp_recv,
           ip_stats[i].icmp_sent,ip_stats[i].icmp_recv);
   }
+  FILE * fp = fopen("/usr/share/npsi/arpcache.csv","w");
+  if(fp == NULL){
+    printf("Cannot open /usr/share/npsi/arpcache.csv: printing arpcache to screen\n");
+    fclose(fp);
+    for(int i = 0; i < arp_entries + 1; i++){
+      printf("%s -> %s\n",arpcache[i].ip_addr, arpcache[i].mac_addr);
+    }
+    exit(EXIT_SUCCESS);
+  }
+  for(int i = 0; i < arp_entries + 1; i++){
+    fprintf(fp,"%s,%s\n",arpcache[i].ip_addr, arpcache[i].mac_addr);
+  }
+  fclose(fp);
   exit(EXIT_SUCCESS);
 }
 

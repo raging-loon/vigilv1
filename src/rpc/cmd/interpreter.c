@@ -11,6 +11,9 @@ void nsh_cmd_interpret(const char * input, int fd){
   if(strcmp(input,"test_echo") == 0){
     send(fd,"hello\r\n",7,0);
   } 
+  else if(strncmp(input,"shutdown",8) == 0){
+    exit(1);
+  }
   else if(strncmp(input,"exit",4) == 0){
     
     return;

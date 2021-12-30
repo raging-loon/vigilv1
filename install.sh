@@ -11,6 +11,7 @@ touch /etc/npsi/hosts.conf
 mkdir /var/log/npsi/
 touch /var/log/npsi/siglog.log
 touch /etc/npsi/passwd
+touch /usr/share/nspi/arpcache.csv
 chmod +x nshadduser
 cp nshadduser /bin
 touch /var/log/npsi/login.log
