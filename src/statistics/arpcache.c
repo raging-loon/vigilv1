@@ -27,7 +27,6 @@ void add_entry(char *ip, char  *mac){
   // for(int i = 0; i < 6; i++) entry->mac_addr[i] = mac[i];
   strcpy(entry->ip_addr,ip);
   strcpy(entry->mac_addr,mac);
-  printf("Adding entry %s ->%s\n",entry->ip_addr,entry->mac_addr);
 } 
 
 
@@ -57,9 +56,26 @@ void load_csv_arp_cache(){
   FILE * fp = fopen("/usr/share/npsi/arpcache.csv","r");
   if(fp == NULL){
     printf("Could not load arp cache from database, file nonexistant\n");
-    return;
+    goto close;
   }
   char * line = NULL;
   size_t pos, len = 0;
-  
+  while((pos = getline(&line,&len,fp)) != -1){
+    
+    printf("%s\n",line);
+    char __ipaddress[16];
+    char __macaddress[18];
+    
+    line[strcspn(line,"\n")] = 0;
+    char * ip_addr = strtok(line,",");
+    strcpy(__ipaddress,ip_addr);
+    ip_addr = strtok(NULL,",");
+    strcpy(__macaddress,ip_addr);
+    printf("%s -> %s\n",__ipaddress,__macaddress);
+
+  }
+  if(line) free(line);
+  goto close;
+close:
+  fclose(fp);
 }

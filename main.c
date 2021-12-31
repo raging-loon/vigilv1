@@ -29,6 +29,7 @@
 #include "src/rpc/nsh_server.h"
 #include "src/statistics/watchlist.h"
 #include <pthread.h>
+#include "src/statistics/arpcache.h"
 #include <time.h>
 
 // globals defined in @globals.h
@@ -96,7 +97,7 @@ int main(int argc, char **argv){
   signal(SIGSEGV,sigint_processor);  
   // char * ip_addr = ""
   deny_conf_parser("/etc/npsi/deny.conf");
-
+  load_csv_arp_cache();
   rule_library_parser("/etc/npsi/npsi.conf");
   printf("Note to developer, remove hard coded IP address\n");
   strcpy(ip_addr,"10.108.32.227");

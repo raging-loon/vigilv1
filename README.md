@@ -2,7 +2,15 @@
 Network Packet Sniffer and Inspector
 ## Notes
 Runs well on Debian based linux distributions
-Requires gcc, make, and libpcap-dev to run
+Requires the following to run:
+ - With the web interface: gcc make libpcap-dev php mysql-server any web server
+ - Without web interface: gcc make libpcap-dev
+
+Recommened stats for machine running:
+ - Recommended 8GB RAM, minimum of 4GB
+ - Fast CPU, as many cores as possible
+ - Preferably a fast network connection
+ - Large hard drive for logs if they are not outsourced
 
 ## Features
  - Packet capturing using the libpcap library
