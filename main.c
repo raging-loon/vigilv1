@@ -62,9 +62,9 @@ char * def_log_file = "/var/log/npsi/siglog.log";
 char * default_host_conf = "/etc/npsi/hosts.conf";
 
 bool use_mysql;
-char * mysql_user;
-char * mysql_password;
-
+char mysql_user[32];
+char mysql_password[32];
+char * mysql_server = "localhost";
 
 
 int main(int argc, char **argv){
@@ -99,7 +99,7 @@ int main(int argc, char **argv){
   signal(SIGSEGV,sigint_processor);  
   // char * ip_addr = ""
   deny_conf_parser("/etc/npsi/deny.conf");
-  load_csv_arp_cache();
+  // load_csv_arp_cache();
   rule_library_parser("/etc/npsi/npsi.conf");
   printf("Note to developer, remove hard coded IP address\n");
   strcpy(ip_addr,"10.108.32.227");

@@ -61,7 +61,7 @@ extern struct arp_entry arpcache[255];
 extern int arp_entries;
 
 extern bool use_mysql;
-extern char * mysql_user;
-extern char * mysql_password;
-
+extern char mysql_user[32];
+extern char mysql_password[32];
+extern char * mysql_server;
 #endif /* GLOBALS_H */

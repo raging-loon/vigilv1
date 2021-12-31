@@ -8,6 +8,7 @@
 #include "protocols.h"
 #include "../utils.h"
 #include "../colors.h"
+#include "../database/update_db.h"
 #include "../packets/arp-hdr.h"
 #include "../statistics/arpcache.h"
 #include "../packets/ctp.h"
@@ -49,6 +50,8 @@ void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
         compare_entries((char *)&src_ip,(char *)&src_mac);
       } else {
         add_entry((char *)&src_ip,(char *)&src_mac);
+        update_arp_cache((char *)&src_ip,(char *)&src_mac);
+
       }
       
       

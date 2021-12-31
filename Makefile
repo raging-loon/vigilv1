@@ -50,14 +50,18 @@ wclean.o:
 arpcache.o:
 	gcc -c src/statistics/arpcache.c
 
+update_db.o:
+	gcc `mysql_config --cflags` -c src/database/update_db.c `mysql_config --libs`
+
 
 npsi: pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
 			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o print_utils.o\
 			alerts.o packet_parser.o rule_parser.o rule.o main.o nsh_server.o\
-			interpreter.o nsh_commands.o watchlist.o wclean.o arpcache.o
+			interpreter.o nsh_commands.o watchlist.o wclean.o arpcache.o \
+			update_db.o
 
 			
-	gcc -o npsi.exe $^ -l pcap -l pthread -l ssl -l crypto
+	gcc -o npsi.exe $^ -l pcap -l pthread -l ssl -l crypto `mysql_config --libs`
 	strip npsi.exe
 
 clean:

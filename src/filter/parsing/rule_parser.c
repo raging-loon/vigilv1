@@ -50,10 +50,12 @@ void rule_library_parser(const char * alt_file){
       else use_mysql = false;
     }
     else if(strncmp(line,"mysql_user=",11) == 0){
-      mysql_user = line + 11;
+      strcpy(mysql_user,line+11);
+
     }
     else if(strncmp(line,"mysql_password=",15) == 0){
-      mysql_password = line + 15;
+      strcpy(mysql_password,line + 15);
+
     }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);

@@ -61,6 +61,8 @@ void load_csv_arp_cache(){
   char * line = NULL;
   size_t pos, len = 0;
   while((pos = getline(&line,&len,fp)) != -1){
+    if(strstr(line,"\x00") == 0)
+      break;
     
     printf("%s\n",line);
     char __ipaddress[16];
