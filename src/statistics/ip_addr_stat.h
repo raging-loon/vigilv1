@@ -16,6 +16,7 @@ struct ip_addr_counter{
   unsigned int total_sent;
   unsigned int sz_recv;
   unsigned int sz_sent;
+  bool in_db;
 };
 void add_ip_addr_or_inc_counter(const char *, bool, int );
 static void *verify_ip_addr(void *);

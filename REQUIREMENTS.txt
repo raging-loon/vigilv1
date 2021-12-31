@@ -1,0 +1,10 @@
+libpcap-dev
+# libnet-dev
+gcc
+make
+mysql-server
+mysql-client
+# any web server will do
+nginx
+php
+libmysqlclient-dev

@@ -61,7 +61,9 @@ char * default_config = "/etc/npsi/npsi.conf";
 char * def_log_file = "/var/log/npsi/siglog.log";
 char * default_host_conf = "/etc/npsi/hosts.conf";
 
-
+bool use_mysql;
+char * mysql_user;
+char * mysql_password;
 
 
 

@@ -45,6 +45,16 @@ void rule_library_parser(const char * alt_file){
       } 
       clean_delay = atoi(line + 24);
     }
+    else if(strncmp(line,"use_mysql=",10) == 0){
+      if(strcmp(line + 10,"YES") == 0) use_mysql = true;
+      else use_mysql = false;
+    }
+    else if(strncmp(line,"mysql_user=",11) == 0){
+      mysql_user = line + 11;
+    }
+    else if(strncmp(line,"mysql_password=",15) == 0){
+      mysql_password = line + 15;
+    }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);
       rule_parser(line);

@@ -60,5 +60,8 @@ extern int is_running;
 extern struct arp_entry arpcache[255];
 extern int arp_entries;
 
+extern bool use_mysql;
+extern char * mysql_user;
+extern char * mysql_password;
 
 #endif /* GLOBALS_H */

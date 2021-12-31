@@ -92,7 +92,6 @@ void get_arp_cache(int * fd){
   strcat(message_buffer,"Current ARP cache:");
   for(int i = 0; i < arp_entries + 1; i++){
     char entry_msg[64];
-    printf("sdf\n");
     sprintf(entry_msg,"\n\t%s -> %s",
             arpcache[i].ip_addr,
             arpcache[i].mac_addr);

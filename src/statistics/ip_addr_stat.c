@@ -2,6 +2,7 @@
 #include <stdbool.h>
 // #include <threads.h>
 #include <pthread.h>
+
 #include <stdio.h>
 #include <string.h>
 #include "../../globals.h"
@@ -44,6 +45,7 @@ static void* verify_ip_addr(void * args){
     }
   }
   struct ip_addr_counter * temp_stat = (struct ip_addr_counter*)malloc(sizeof(struct ip_addr_counter));
+  temp_stat->in_db = false;
   ip_stats[++ip_addr_stat_counter_len] = (struct ip_addr_counter)*temp_stat;
   
   memset(temp_stat->ip_addr,0,sizeof(temp_info->__ip_addr));
