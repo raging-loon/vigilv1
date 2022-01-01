@@ -51,6 +51,7 @@ static void* verify_ip_addr(void * args){
   memset(temp_stat->ip_addr,0,sizeof(temp_info->__ip_addr));
   strcpy(ip_stats[ip_addr_stat_counter_len].ip_addr,temp_info->__ip_addr);
   temp = &ip_stats[ip_addr_stat_counter_len];
+  goto end;
 end:  
 
   if(temp_info->is_src)

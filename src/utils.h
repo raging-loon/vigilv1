@@ -24,7 +24,7 @@
    z = target
 */
 #define IS_PORT_DEST_SRC(X,Y,Z)(X == Z || Y == Z)
-
+#define IS_PRINTABLE_ASCII(X)(X > 32 || X < 127)
 
 char * mac_ntoa(uint8_t * );
 char * uc_mac_ntoa(unsigned char *);

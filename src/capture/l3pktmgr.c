@@ -121,7 +121,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       break;
     case 17:
       rdata.__protocol = R_UDP;
-      ip4_udp_decode(pkt,rdata.src_ip_addr,rdata.dest_ip_addr,pkt_hdr);
+      ip4_udp_decode(pkt,&rdata,pkt_hdr);
       // data_size = base_data_size - sizeof(struct udphdr);
       // ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;

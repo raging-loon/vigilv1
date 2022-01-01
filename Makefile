@@ -28,6 +28,9 @@ udpmgr.o:
 http_disect.o:
 	gcc -c src/capture/protocols/http_disect.c
 
+dns_disect.o:
+	gcc -c src/capture/protocols/dns_disect.c
+
 alerts.o:
 	gcc -c src/filter/actions/alerts.c
 
@@ -61,7 +64,7 @@ npsi: pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
 			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o print_utils.o\
 			alerts.o packet_parser.o rule_parser.o rule.o main.o nsh_server.o\
 			interpreter.o nsh_commands.o watchlist.o wclean.o arpcache.o \
-			update_db.o http_disect.o
+			update_db.o http_disect.o dns_disect.o
 
 			
 	gcc -o npsi.exe $^ -l pcap -l pthread -l ssl -l crypto `mysql_config --libs`
