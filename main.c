@@ -66,7 +66,7 @@ char mysql_user[32];
 char mysql_password[32];
 char * mysql_server = "localhost";
 bool packet_print;
-
+bool quiet_exit = false;
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   is_running = 1;
@@ -77,7 +77,7 @@ int main(int argc, char **argv){
   char error_buf[PCAP_ERRBUF_SIZE];
   char * iface_name;
   int opt;
-  while((opt = getopt(argc,argv,"pdhi:")) != -1){
+  while((opt = getopt(argc,argv,"pdqhi:")) != -1){
     switch(opt){
       case 'd':
         debug_mode = true;
@@ -90,6 +90,9 @@ int main(int argc, char **argv){
         break;
       case 'p':
         packet_print = true;
+        break;
+      case 'q':
+        quiet_exit = true;
         break;
       default:
         printf("Unknown argument -%c\n",opt);
@@ -128,16 +131,19 @@ void sigint_processor(int signal){
   int is_running = 0;
   printf("\nCaught signal %d, exiting...\n",signal);
   perror("");
-  printf("Total Packets Caught: %d\n",total_pkt_captured);
-  printf("Statistics\nIp address    Count\n-----------------\n");
-  for(int i = 0; i <= ip_addr_stat_counter_len; i++){
-    printf("%s\n\t\ttotal packets = %d\n\t\ttotal sent = %d\n\t\ttotal recv = %d"
-          "\n\t\tTCP sent = %d\n\t\tTCP recv = %d\n\t\t"
-          "UDP sent = %d\n\t\tUDP recv = %d\n\t\t"
-          "ICMP sent = %d\n\t\tICMP recv = %d\n\n",
-          ip_stats[i].ip_addr,ip_stats[i].count,ip_stats[i].total_sent,ip_stats[i].total_recv,
-          ip_stats[i].tcp_sent, ip_stats[i].tcp_recv,ip_stats[i].udp_sent, ip_stats[i].udp_recv,
-          ip_stats[i].icmp_sent,ip_stats[i].icmp_recv);
+  if(!quiet_exit){
+
+    printf("Total Packets Caught: %d\n",total_pkt_captured);
+    printf("Statistics\nIp address    Count\n-----------------\n");
+    for(int i = 0; i <= ip_addr_stat_counter_len; i++){
+      printf("%s\n\t\ttotal packets = %d\n\t\ttotal sent = %d\n\t\ttotal recv = %d"
+            "\n\t\tTCP sent = %d\n\t\tTCP recv = %d\n\t\t"
+            "UDP sent = %d\n\t\tUDP recv = %d\n\t\t"
+            "ICMP sent = %d\n\t\tICMP recv = %d\n\n",
+            ip_stats[i].ip_addr,ip_stats[i].count,ip_stats[i].total_sent,ip_stats[i].total_recv,
+            ip_stats[i].tcp_sent, ip_stats[i].tcp_recv,ip_stats[i].udp_sent, ip_stats[i].udp_recv,
+            ip_stats[i].icmp_sent,ip_stats[i].icmp_recv);
+    }
   }
   FILE * fp = fopen("/usr/share/npsi/arpcache.csv","w");
   if(fp == NULL){
@@ -163,6 +169,7 @@ static void print_help_and_exit(){
          "\t-d: debug mode\n"
          "\t-h: display this message\n"
          "\t-i <iface>: set the interface to listen on\n"
-         "\t-p print packets",VERSION);
+         "\t-p print packets\n"
+         "\r-q exit quietly\n",VERSION);
   exit(EXIT_SUCCESS);
 }

@@ -67,4 +67,7 @@ extern bool use_mysql;
 extern char mysql_user[32];
 extern char mysql_password[32];
 extern char * mysql_server;
+
+
+extern bool quiet_exit;
 #endif /* GLOBALS_H */
