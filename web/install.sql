@@ -1,6 +1,6 @@
 -- created for MYSQL
 
-CREATE USER 'NPSI'@'localhost' IDENTIFIED BY 'temppassword';
+CREATE USER 'NPSI'@'localhost' IDENTIFIED BY 'Pa@@w0rD';
 GRANT ALL PRIVILEGES ON * . * TO 'NPSI'@'localhost';
 FLUSH PRIVILEGES;
 
