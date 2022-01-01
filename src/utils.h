@@ -17,6 +17,15 @@
 #ifndef UTILS_H
 #define UTILS_H
 #include <stdint.h>
+
+/* x = src
+   y = dest
+   x and y are interchangeable
+   z = target
+*/
+#define IS_PORT_DEST_SRC(X,Y,Z)(X == Z || Y == Z)
+
+
 char * mac_ntoa(uint8_t * );
 char * uc_mac_ntoa(unsigned char *);
 char * ipv4_ntoa( uint32_t *);
@@ -24,4 +33,7 @@ char * u8_ipv4_ntoa(uint8_t * );
 unsigned char * inet6_ntoa(uint8_t * );
 
 char * get_formated_time();
+
+
+
 #endif /* UTILS_H */

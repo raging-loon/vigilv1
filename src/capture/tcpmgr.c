@@ -55,7 +55,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   // uint16_t syn, ack, rst, fin, psh, urg;
   dest_port = (unsigned int)ntohs(tcp_hdr->dest);
   src_port = (unsigned int)ntohs(tcp_hdr->source);
-  if(debug_mode){
+  if(packet_print){
     printf("%s",__TCP_COLOR_NS);
     printf("IPv4 %s:%d -> %s:%d\n",
                     src_ip, src_port, dest_ip, dest_port);
@@ -63,34 +63,34 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   // printf("[");
   }
   if((uint16_t)ntohs(tcp_hdr->syn) != 0){
-    if(debug_mode) printf("%s SYN ", __TCP_SYN);
+    if(packet_print) printf("%s SYN ", __TCP_SYN);
     syn_set = true;
     flags_set++;
   }
   if((uint16_t)ntohs(tcp_hdr->psh) != 0){
-    if(debug_mode) printf("%s PSH ",__TCP_PSH);
+    if(packet_print) printf("%s PSH ",__TCP_PSH);
     flags_set++;
   }
   if((uint16_t)ntohs(tcp_hdr->urg) != 0){
-    if(debug_mode) printf("%s URG ",__TCP_URG);
+    if(packet_print) printf("%s URG ",__TCP_URG);
     flags_set++;
   }
   if((uint16_t)ntohs(tcp_hdr->rst) != 0){
-    if(debug_mode) printf("%s RST ",__TCP_RST);
+    if(packet_print) printf("%s RST ",__TCP_RST);
     rst_set = true;
     flags_set++;
   }
   if((uint16_t)ntohs(tcp_hdr->fin) != 0){
-    if(debug_mode) printf("%s FIN ",__TCP_FIN);
+    if(packet_print) printf("%s FIN ",__TCP_FIN);
     fin_set = true;
     flags_set++;
   }
   if((uint16_t)ntohs(tcp_hdr->ack) != 0){
-    if(debug_mode) printf("%s ACK ",__TCP_ACK);
+    if(packet_print) printf("%s ACK ",__TCP_ACK);
     ack_set = true;
     flags_set++;
   }
-  if(debug_mode) {
+  if(packet_print) {
     printf("%s",__TCP_COLOR_NS);
     printf("]\n");
     printf("%s",__END_COLOR_STREAM);
@@ -133,7 +133,9 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
     }
   }
 
-  if(strict_nmap_host_alive_check == true && (ack_set || syn_set )){
+  if(strict_nmap_host_alive_check == true &&
+     ((ack_set && IS_PORT_DEST_SRC(dest_port,src_port,80)) || 
+     (syn_set && IS_PORT_DEST_SRC(dest_port,src_port,443) ))){
     // check which host is sending based on the port numbers
     const char * target_ip;
     if(dest_port > src_port) target_ip = dest_ip;

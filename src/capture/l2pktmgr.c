@@ -15,7 +15,7 @@
 #include "../packets/ctp.h"
 #include "../../globals.h"
 void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
-  if(debug_mode) printf("%s",__ARP_BOTH);
+  if(packet_print) printf("%s",__ARP_BOTH);
 
   struct arp_hdr * arp = (struct arp_hdr *)(pkt + ETH_HDR_SZ);
 
@@ -29,10 +29,10 @@ void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
       strncpy(src_ip,u8_ipv4_ntoa((uint8_t *)&arp->src_ip),sizeof(src_ip));
 
       if(!strncmp(src_ip,"0.0.0.0",5) ){
-        if(debug_mode) printf("PROTO ARP: PROBE: Who has %s?\n",dest_ip);
+        if(packet_print) printf("PROTO ARP: PROBE: Who has %s?\n",dest_ip);
         // break;
       } else {
-        if(debug_mode) printf("PROTO ARP: Who is at %s? Tell %s\n",dest_ip, src_ip);
+        if(packet_print) printf("PROTO ARP: Who is at %s? Tell %s\n",dest_ip, src_ip);
       }
       break;
     }
@@ -62,7 +62,7 @@ void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
       
       
       
-      if(debug_mode) printf("PROTO ARP: REPLY: %s is at %s\n",src_ip,src_mac);
+      if(packet_print) printf("PROTO ARP: REPLY: %s is at %s\n",src_ip,src_mac);
       break;
     }
     default:{
@@ -82,14 +82,14 @@ void loopback_ctp_decode(const unsigned char * pkt){
   char dest_mac[24];
   strncpy(src_mac, uc_mac_ntoa(ethernet_hdr->h_source), sizeof(src_mac));
   strncpy(dest_mac, uc_mac_ntoa(ethernet_hdr->h_dest),sizeof(dest_mac));
-  if(debug_mode) printf("LOOP %s -> %s",src_mac,dest_mac);
+  if(packet_print) printf("LOOP %s -> %s",src_mac,dest_mac);
   
   switch(ctp_data->relevant_func){
     case 1:
-      if(debug_mode) printf(" REPLY \n");
+      if(packet_print) printf(" REPLY \n");
       break;
     default:
-      if(debug_mode) printf(" UNKNOWN LOOP FUNCTION:%d \n",ctp_data->relevant_func);
+      if(packet_print) printf(" UNKNOWN LOOP FUNCTION:%d \n",ctp_data->relevant_func);
       break;
   }
 }

@@ -33,7 +33,7 @@
 void ip6_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * dest_ip){
   
   struct __icmp6 * icmpv6 = (struct __icmp6 *)(pkt + ETH_HDR_SZ + sizeof(struct ip6hdr));
-  if(debug_mode){
+  if(packet_print){
     printf("%s",__REG_ICMP_v4_v6);
     printf("IPv6 %s -> %s\n",src_ip, dest_ip);
     printf("\tICMPv6 ");
@@ -108,7 +108,7 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
   stop:;
 
 
-  if(debug_mode) {
+  if(packet_print) {
   printf("%s",__REG_ICMP_v4_v6);
   // printf("IPv4 ");
   printf("IPv4 %s -> %s\n",src_ip, dest_ip);

@@ -21,12 +21,10 @@ void * update_db(void * args){
   char query[512];
   switch(update->update_type){
     case ARP_UP_T:
-      printf("ARP\n");
       sprintf(query,"INSERT INTO arp_cache (ip_address, mac_address) VALUES (\"%s\", \"%s\");",update->ip_addr,update->mac_addr);
       break;
   
   }
-  printf("%s\n",query);
   int status = mysql_query(&connection,query);
   if(status){
     printf("Failed to query\n");

@@ -65,7 +65,7 @@ bool use_mysql;
 char mysql_user[32];
 char mysql_password[32];
 char * mysql_server = "localhost";
-
+bool packet_print;
 
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
@@ -77,7 +77,7 @@ int main(int argc, char **argv){
   char error_buf[PCAP_ERRBUF_SIZE];
   char * iface_name;
   int opt;
-  while((opt = getopt(argc,argv,"dhi:")) != -1){
+  while((opt = getopt(argc,argv,"pdhi:")) != -1){
     switch(opt){
       case 'd':
         debug_mode = true;
@@ -87,6 +87,9 @@ int main(int argc, char **argv){
         break;
       case 'i':
         iface_name = optarg;
+        break;
+      case 'p':
+        packet_print = true;
         break;
       default:
         printf("Unknown argument -%c\n",opt);
@@ -159,6 +162,7 @@ static void print_help_and_exit(){
   printf("NPSI UTM %s\n"
          "\t-d: debug mode\n"
          "\t-h: display this message\n"
-         "\t-i <iface>: set the interface to listen on\n",VERSION);
+         "\t-i <iface>: set the interface to listen on\n"
+         "\t-p print packets",VERSION);
   exit(EXIT_SUCCESS);
 }

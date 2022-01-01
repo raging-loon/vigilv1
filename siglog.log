@@ -2292,3 +2292,5 @@ Portscan detected from 172.16.68.3 at 2021-12-30 11:40:55
 Portscan detected from 172.16.68.3 at 2021-12-30 11:41:03
 Portscan detected from 172.16.68.3 at 2021-12-30 11:41:03
 Portscan detected from 172.16.68.3 at 2021-12-30 11:41:03
+Possible nmap host alive check 172.16.68.3 -> 45.33.32.156 at 2022-01-01 12:19:23; matched ICMP Echo, TCP SYN, TCP ACK, and ICMP Timestamp request
+Possible nmap host alive check 172.16.68.3 -> 45.33.32.156 at 2022-01-01 12:35:03; matched ICMP Echo, TCP SYN, TCP ACK, and ICMP Timestamp request

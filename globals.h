@@ -41,6 +41,9 @@ extern char * def_log_file;
 extern char * default_host_conf;
 
 extern bool debug_mode;
+extern bool packet_print;
+
+
 extern struct blocked_ipv4 blocked_ipv4_addrs[32];
 extern int blk_ipv4_len;
 
