@@ -23,8 +23,8 @@ void compare_entries(char * ip, char * mac){
 
 void add_entry(char *ip, char  *mac){
   struct arp_entry * entry = &arpcache[++arp_entries];
-  // for(int i = 0; i < 4; i++) entry->ip_addr[i] = ip[i];  
-  // for(int i = 0; i < 6; i++) entry->mac_addr[i] = mac[i];
+  
+  
   strcpy(entry->ip_addr,ip);
   strcpy(entry->mac_addr,mac);
 } 

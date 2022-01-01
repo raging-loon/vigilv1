@@ -8,7 +8,6 @@ struct arp_entry{
 };
 
 
-
 void compare_entries(char *, char *);
 void add_entry(char *, char *);
 int entry_exists(char *,char *);
