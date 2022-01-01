@@ -3,7 +3,7 @@
 #include <mysql/mysql.h>
 #include "../../globals.h"
 #include "update_db.h"
-void * update_arp_cache(void * args){
+void * update_db(void * args){
   update_db_t * update = args;
   
   
@@ -21,14 +21,12 @@ void * update_arp_cache(void * args){
   char query[512];
   switch(update->update_type){
     case ARP_UP_T:
-      sprintf(query,"INSERT INTO arp_cache (ip_address, mac_address) VALUES (\"%s\", \"%s\");",update->ip_addr,update->mac);
+      printf("ARP\n");
+      sprintf(query,"INSERT INTO arp_cache (ip_address, mac_address) VALUES (\"%s\", \"%s\");",update->ip_addr,update->mac_addr);
       break;
-    case STAT_UP_T:
-      if(update->is_new){
-        sprintf(query,"");
-      }
+  
   }
-  // printf("%s\n",query);
+  printf("%s\n",query);
   int status = mysql_query(&connection,query);
   if(status){
     printf("Failed to query\n");

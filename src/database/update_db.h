@@ -17,7 +17,7 @@ const enum{
   WATCH_UP_T
 } udb_type_t;
 
-void * update_arp_cache(void *);
+void * update_db(void *);
 
 
 #endif /* UDPATE_DB_H */
