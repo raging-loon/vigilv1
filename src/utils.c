@@ -85,3 +85,13 @@ char * get_formated_time(){
           __time.tm_sec);
   return time__;
 }
+
+
+int strloc(const char * restrict haystack,const char needle){
+  for(int i = 0; haystack[i] != NULL; i++){
+    if(haystack[i] == needle){
+      return i;
+    }
+  }
+  return -1;
+}

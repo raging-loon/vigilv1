@@ -34,6 +34,6 @@ unsigned char * inet6_ntoa(uint8_t * );
 
 char * get_formated_time();
 
-
+int strloc(const char * restrict haystack,const char needle);
 
 #endif /* UTILS_H */

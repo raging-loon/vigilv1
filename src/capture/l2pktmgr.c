@@ -50,12 +50,14 @@ void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
       if(entry_exists((char *)&src_ip,(char *)&src_mac) != -1){
         compare_entries((char *)&src_ip,(char *)&src_mac);
       } else {
-        pthread_t pthrd;
-        update_db_t update;
-        update.update_type = ARP_UP_T;
-        strcpy(update.ip_addr,src_ip);
-        strcpy(update.mac_addr,src_mac);
-        pthread_create(&pthrd,NULL,update_db,&update);
+        if(use_mysql){
+          pthread_t pthrd;
+          update_db_t update;
+          update.update_type = ARP_UP_T;
+          strcpy(update.ip_addr,src_ip);
+          strcpy(update.mac_addr,src_mac);
+          pthread_create(&pthrd,NULL,update_db,&update);
+        }
         add_entry((char *)&src_ip,(char *)&src_mac);
 
       }

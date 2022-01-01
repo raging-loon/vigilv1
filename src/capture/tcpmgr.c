@@ -36,6 +36,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
+#include "protocols/http_disect.h"
 
 void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr *pkt_hdr){
   
@@ -52,6 +53,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   bool ack_set = false;
   bool syn_set = false;
   bool fin_set = false;
+  bool psh_set = false;
   // uint16_t syn, ack, rst, fin, psh, urg;
   dest_port = (unsigned int)ntohs(tcp_hdr->dest);
   src_port = (unsigned int)ntohs(tcp_hdr->source);
@@ -70,6 +72,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   if((uint16_t)ntohs(tcp_hdr->psh) != 0){
     if(packet_print) printf("%s PSH ",__TCP_PSH);
     flags_set++;
+    psh_set = true;
   }
   if((uint16_t)ntohs(tcp_hdr->urg) != 0){
     if(packet_print) printf("%s URG ",__TCP_URG);
@@ -158,15 +161,15 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   }
 
 
-  // printf("dsetp\n");
   rdata->dest_port = (unsigned int )ntohs(tcp_hdr->dest);
-  // perror("");
-  // printf("sdf\n");
-  
+
   rdata->src_port = src_port;
-  // printf("srcp\n");
-  
+  if(packet_print){
+    if((PSH_ACK_SET(psh_set,ack_set)) && IS_PORT_DEST_SRC(dest_port,src_port,80)){
+      http_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(struct __tcp) + 12,rdata);
+    
+    }
+  }
   rulemgr(rdata);
-  //+
   
 }
