@@ -5,15 +5,16 @@
 #include "../../packets/dns.h"
 #include "dns_disect.h"
 #include "../../utils.h"
+#include "../../../globals.h"
 void dns_disect(const unsigned char * pkt, const struct rule_data * rdata){
   struct dns_pkt_data * dns_data = (struct dns_pkt_data*)(pkt);
   char * query = pkt + sizeof(struct dns_pkt_data);
   if(dns_data->flags == 0){
+
     char real_query[64];
     memset(&real_query,0,sizeof(real_query));
     get_dns_name(query,&real_query);
-
-    printf("%s\n",real_query);
+    if(packet_print) printf("Query: %s\n",real_query);
   }
 }
 

@@ -1,0 +1,34 @@
+.TH "NPSI UTM Control" "1" "Jan 2 2022" ""
+.SH NAME
+NPSI \- UTM/IDS/Firewall Software
+.SH SYNOPSIS
+.sp
+\fBNPSI\fR [ \fB --help \fR]
+.sp
+.SH "DESCRIPTION"
+The
+.B NPSI
+("Network Packet Sniffer/Investigator") UTM Control software allows you to start or restart the program.
+The configuration is not done from the command line, rather the configuration file: 
+.IR /etc/npsi/npsi.conf.
+
+.SH "FILES"
+This is a list of files and a description:
+
+.BI \fB/etc/npsi/npsi.conf\fR 
+\-\- The main configuration of the program
+.PP
+.BI \fB/etc/npsi/deny.conf\fR
+\-\- Location of blacklisted IP Addresses. 
+.PP
+The format is as follows:
+.ta 
+  <protocol>:<address>
+.ta 
+e.g: ipv4:8.8.8.8 ipv6:fe80::202b:159:83d4:973
+.PP
+.BI \fB/var/log/npsi/siglog.log\fR
+\-\- Contains the logs of every signature matched
+.PP
+The format is as follows:
+"time" "src:port" -> "src:port" "protocol" "rulename"
