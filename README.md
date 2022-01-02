@@ -1,10 +1,22 @@
 # NPSI
 Network Packet Sniffer and Inspector
-## Notes
+## Requirements
 Runs well on Debian based linux distributions
 Requires the following to run:
- - With the web interface: gcc make libpcap-dev php mysql-server any web server
- - Without web interface: gcc make libpcap-dev
+ - With the web interface:
+   - gcc 
+   - make 
+   - libpcap-dev 
+   - php7.4-fpm 
+   - mysql-server 
+   - any web server
+   - php7.4-mysql
+   - libmysqlclient-dev
+ - Without web interface: 
+   - gcc 
+   - make 
+   - libpcap-dev
+   - libmysqlclient-dev(still needed to compile)
 
 Recommened stats for machine running:
  - Recommended 8GB RAM, minimum of 4GB
@@ -18,6 +30,11 @@ Recommened stats for machine running:
  - Logging 
  - Remote login shell
  - Statistics
+## Installation
+You just need to run install.sh and make
+Note that if you are not planning on using the web interface and not using a mysql database, then you need to mark "use_mysql" in the config file as "NO".
+
+
 ## Plans
  - [x] Add monitoring for total amount of packets sent and recieved
  - [x] Add monitoring for some layer 3 protocols for IPv4
