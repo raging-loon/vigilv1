@@ -16,7 +16,7 @@ void stdout_alert(const struct rule_data* __rule_data, const struct rule * __rul
           __time.tm_hour,
           __time.tm_min,
           __time.tm_sec);
-  printf("Alert, at %s packet signature matched rule %s\n",time,__rule->rulename);
+  printf("%s at %s\n",__rule->rulename,time);
   ascii_hexdump(__rule_data->pkt,__rule_data->pkt_len);
   FILE * fp = fopen(def_log_file,"a");
   char logmsg[256];

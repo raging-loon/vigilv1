@@ -49,7 +49,7 @@ void rulemgr(const struct rule_data *);
 
 
 struct rule{
-  char rulename[16];
+  char rulename[128];
   int rule_type;
   int times_matched;
   char rule_target[128];

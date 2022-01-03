@@ -1,29 +1,5 @@
-RULE_START{
-  name="bin/sh"
-  type=bit_match
-  action=stdout_alert
-  target_contents=/bin/sh
-}
 
-RULE_START{
-  name="bin/bash"
-  type=bit_match
-  action=stdout_alert
-  protocol=ANY
-  target_contents=/bin/bash
-}
-
-RULE_START{
-  name="bin/dash"
-  type=bit_match
-  protocol=ANY
-  action=stdout_alert
-  target_contents=/bin/dash
-}
-RULE_START{
-  name="bin/zsh"
-  protocol=ANY
-  type=bit_match
-  action=stdout_alert
-  target_contents=/bin/zsh
-}
+alert stdout any ANY "/bin/bash Access detected" bit_match "/bin/bash"
+alert stdout any ANY "/bin/sh Access detected" bit_match "/bin/sh"
+alert stdout any ANY "/bin/dash Access detected" bit_match "/bin/dash"
+alert stdout any ANY "/bin/zsh Access detected" bit_match "/bin/zsh"

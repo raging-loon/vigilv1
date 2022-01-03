@@ -112,17 +112,11 @@ void rule_parser(const char * __filename){
 void line_parser(const char * line){
   int filled = 0;
 	char * parser_line;
-	char ruletype[32];
-	char rulename[32];
-	char target_chars[64];
-	char alert_type[32];
-	char protocol[10];
-	char port[14];
 
 	// the first par always needs to be "alert"
 	int chars_parsed = 6;
-  struct rule * __rule = &rules[num_rules++];
-	while(filled != 5){
+  struct rule * __rule = &rules[++num_rules];
+	while(filled != 6){
 		parser_line = line + chars_parsed;
 		char target[64];
 		memset(&target,0,sizeof(target));
@@ -139,21 +133,18 @@ void line_parser(const char * line){
 		else if(filled == 2){
       get_protocol(target,__rule);
 		}
+
 		else if(filled == 3){
-			char * name = target + 1;
-			name[strcspn(name,"\"")] = 0;
-			strcpy(__rule->rulename,name);
+			strncpy(__rule->rulename,target +1 ,strlen(target) - 3);
 		}
 		else if(filled == 4){
       get_ruletype(target,__rule);
 		}
 		else if(filled == 5){
-			// memset(&target_chars,0,sizeof(target_chars));
-			strncpy(__rule->rule_target,parser_line + 1,strlen(parser_line) - 5);
+			strncpy(__rule->rule_target,parser_line + 1,strlen(parser_line) - 4);
 		}
 		filled++;
 	}
-  printf("alert %s %s\n",__rule->rulename,__rule->rule_target);
 }
 
 
