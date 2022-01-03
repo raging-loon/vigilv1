@@ -13,7 +13,7 @@ void dns_disect(const unsigned char * pkt, const struct rule_data * rdata){
 
     char real_query[64];
     memset(&real_query,0,sizeof(real_query));
-    get_dns_name(query,&real_query);
+    get_dns_name(query,real_query);
     if(packet_print) printf("Query: %s\n",real_query);
   }
 }

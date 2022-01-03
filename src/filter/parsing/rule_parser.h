@@ -8,5 +8,6 @@ void rule_parser(const char *);
 void deny_conf_parser(char *);
 void host_mon_parser();
 // void test_main();
+void line_parser(const char *);
 static void get_protocol(const char *, struct rule * );
 #endif /* RULE_PARSER_H */ 

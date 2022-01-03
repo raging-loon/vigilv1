@@ -11,7 +11,7 @@ void * update_db(void * args){
   
   mysql_init(&connection);
   if(!mysql_real_connect(&connection, "localhost", 
-                         &mysql_user,&mysql_password,"NPSIDB",3306, NULL, 0)){
+                         mysql_user,mysql_password,"NPSIDB",3306, NULL, 0)){
     //
     printf("ERROR COULD NOT CONNECT TO MYSQL SERVER: %s\n",mysql_error(&connection));
     goto close;

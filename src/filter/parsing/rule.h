@@ -32,6 +32,7 @@ struct rule_data{
   unsigned int src_port;
   unsigned int dest_port;
   int __protocol;
+  
   int pkt_len;
   const struct sockaddr_in * src_socket;
   const struct sockaddr_in * dest_socket;
@@ -53,8 +54,8 @@ struct rule{
   int times_matched;
   char rule_target[128];
   int protocol;
-  int ports[32];
-  int total_ports;
+  int port;
+  // int total_ports;
   bool(*pkt_parser)(const struct rule_data *, const struct rule *);
   void(*action)(const struct rule_data *, const struct rule *, int);
 };

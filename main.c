@@ -103,15 +103,14 @@ int main(int argc, char **argv){
   
   signal(SIGINT,sigint_processor);
   signal(SIGSEGV,sigint_processor);  
-  // char * ip_addr = ""
+  // char * ip_addr = "";
   deny_conf_parser("/etc/npsi/deny.conf");
   load_csv_arp_cache();
-  rule_library_parser("/etc/npsi/npsi.conf");
   printf("Note to developer, remove hard coded IP address\n");
-  strcpy(ip_addr,"10.108.32.227");
   char *dev = pcap_lookupdev(error_buf);
   printf("NPSI listening on interface %s\n",dev);
   pcap_t *pcap_mgr;
+  rule_library_parser("/etc/npsi/npsi.conf");
   if(dev == NULL){
     printf("Failure opening interface %s\n",iface_name);
     exit(EXIT_FAILURE);

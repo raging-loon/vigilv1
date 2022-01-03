@@ -1,10 +1,2 @@
-
-RULE_START{
-  name="nmap_ua"
-  type=bit_match
-  protocol=TCP
-  target_contents=Nmap Scripting Engine;
-  action=stdout_alert
-}
-
-#alert stdout any TCP "nmap_ua" bit_match "Nmap Scripting Engine;" 
+alert stdout any TCP "nmap_ua" bit_match "Nmap Scripting Engine;" 
+alert stdout any ANY "/bin/sh" bit_match "/bin/sh;" 
