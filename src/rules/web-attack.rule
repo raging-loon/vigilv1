@@ -1,4 +1,4 @@
-alert stdout any TCP (name:"/bin/ps-cmd-attempt"; msg:"Web Attack: *nux /bin/ps command attempt"; type:bit_match target:"/bin/ps";)
+alert stdout any TCP (name:"/bin/ps-cmd-attempt"; msg:"Web Attack: *nux /bin/ps command attempt"; type:bitmatch target:"/bin/ps";)
 alert stdout any TCP (name:"ps-cmd-attempt"; msg:"Web Attack: *nux ps command attempt"; type:bit_match target:"ps%20";) 
 alert stdout any TCP (name:"wget-cmd-attempt"; msg:"Web Attack: Linux wget command attempt"; type:bit_match target:"wget%20";)
 alert stdout any TCP (name:"uname-cmd-attempt"; msg:"Web Attack: uname -a command attempt"; type:bit_match target:"uname%20-a";)

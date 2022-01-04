@@ -130,10 +130,9 @@ void line_parser(const char * line){
 
     if(is_parse_data == false){
       strncpy(target,parser_line,strloc(parser_line,' ') + 1);
-      printf("Unline: %s\n",target);
       if(strstr(target,"(") != NULL){
         is_parse_data = true; 
-        continue;
+        goto data;
       }
       chars_parsed += strlen(target);
       printf("%s\n",target);
@@ -149,13 +148,33 @@ void line_parser(const char * line){
         get_protocol(target,__rule);
       }
     }else{
+      data:
       printf("%s\n",parser_line);
       printf("%d\n",strloc(parser_line,';'));
-      strncpy(target,parser_line,strloc(parser_line,';') + 1);
-      if(strstr(target,"\";)") != NULL) break;
+      strncpy(target,parser_line,strloc(parser_line,';')+1);
       chars_parsed += strlen(target);
+      if(strncmp(target,"(name:\"",7) == 0){
+        strncpy(__rule->rulename,target + 7, strlen(target)-10);
+        printf("%s\n",__rule->rulename);
+      } 
+      else if(strncmp(target,"msg:\"",5) == 0){
+        strncpy(__rule->message,target + 5,strlen(target) -7);
+      printf("%s\n",__rule->message);
+      break;
+      }
+      else if(strncmp(target,"type:",5) == 0){
+        printf("%s\n",target);
+        char temp[16];
+        strncpy(temp,target + 5,strlen(target) - 6);
+        get_ruletype(temp,__rule);
+      }
+      else if(strncmp(target,"target:\"",8) == 0){
+        strncpy(__rule->rule_target,target + 8, strlen(target)-11);
+        printf("%s\n",__rule->rule_target);
+        return;
+      } else{
 
-      // printf("Line: %s\n",target);
+      }
     }
 
 
