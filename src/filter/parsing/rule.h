@@ -46,12 +46,13 @@ void rulemgr(const struct rule_data *);
 
 
 struct rule{
-  char rulename[128];
+  char rulename[24];
   int rule_type;
   int times_matched;
   char rule_target[128];
   int protocol;
   int port;
+  char message[128];
   // int total_ports;
   bool(*pkt_parser)(const struct rule_data *, const struct rule *);
   void(*action)(const struct rule_data *, const struct rule *, int);

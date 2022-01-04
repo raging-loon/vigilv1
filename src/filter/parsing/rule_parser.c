@@ -109,43 +109,65 @@ void rule_parser(const char * __filename){
 }
 
 
+
+
+
+
+
 void line_parser(const char * line){
   int filled = 0;
 	char * parser_line;
-
-	// the first par always needs to be "alert"
-	int chars_parsed = 6;
+	bool is_parse_data = false;
+  // the first par always needs to be "alert"
+  int chars_parsed = 6;
   struct rule * __rule = &rules[++num_rules];
+  int len = strlen(line);
+	char target[64];
 	while(filled != 6){
-		parser_line = line + chars_parsed;
-		char target[64];
+    
+    parser_line = line + chars_parsed;
 		memset(&target,0,sizeof(target));
-		strncpy(target,parser_line ,strloc(parser_line,' ') + 1);
-		chars_parsed += strlen(target);
 
-		if(filled == 0){
-      get_action(target,__rule);
-		} 
-		else if(filled == 1){
-      if(strcmp(target,"any") == 0) __rule->port == 0;
-      else __rule->port = atoi(target);
-		} 
-		else if(filled == 2){
-      get_protocol(target,__rule);
-		}
+    if(is_parse_data == false){
+      strncpy(target,parser_line,strloc(parser_line,' ') + 1);
+      printf("Unline: %s\n",target);
+      if(strstr(target,"(") != NULL){
+        is_parse_data = true; 
+        continue;
+      }
+      chars_parsed += strlen(target);
+      printf("%s\n",target);
+      if(filled == 0){
+        get_action(target,__rule);
+        filled++;
+      }
+      else if(filled == 1){
+        if(strcmp(target,"any") == 0) __rule->port = -1;
+        else __rule->port = atoi(target);
+      }
+      else if(filled == 2){
+        get_protocol(target,__rule);
+      }
+    }else{
+      printf("%s\n",parser_line);
+      printf("%d\n",strloc(parser_line,';'));
+      strncpy(target,parser_line,strloc(parser_line,';') + 1);
+      if(strstr(target,"\";)") != NULL) break;
+      chars_parsed += strlen(target);
 
-		else if(filled == 3){
-			strncpy(__rule->rulename,target +1 ,strlen(target) - 3);
-		}
-		else if(filled == 4){
-      get_ruletype(target,__rule);
-		}
-		else if(filled == 5){
-			strncpy(__rule->rule_target,parser_line + 1,strlen(parser_line) - 4);
-		}
-		filled++;
-	}
+      // printf("Line: %s\n",target);
+    }
+
+
+   
+  }
+    
+    
+	
 }
+
+
+
 
 
 static void get_protocol(const char * __line, struct rule * __rule){
