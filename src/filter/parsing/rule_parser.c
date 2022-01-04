@@ -135,7 +135,7 @@ void line_parser(const char * line){
         goto data;
       }
       chars_parsed += strlen(target);
-      printf("%s\n",target);
+      // printf("%s\n",target);
       if(filled == 0){
         get_action(target,__rule);
         filled++;
@@ -143,36 +143,39 @@ void line_parser(const char * line){
       else if(filled == 1){
         if(strcmp(target,"any") == 0) __rule->port = -1;
         else __rule->port = atoi(target);
+        filled++;
       }
       else if(filled == 2){
+        // printf("%");
         get_protocol(target,__rule);
+        filled++;
       }
     }else{
       data:
-      printf("%s\n",parser_line);
+      // printf("%s\n",parser_line);
       strncpy(target,parser_line,strloc(parser_line,';')+1);
-      printf("%d||%d\n",len,strloc(parser_line,';'));
+      // printf("%d||%d\n",len,strloc(parser_line,';'));
       chars_parsed += strlen(target);
       if(strncmp(target,"(name:\"",7) == 0){
         strncpy(__rule->rulename,target + 7, strlen(target)-10);
-        printf("%s\n",__rule->rulename);
+        // printf("%s\n",__rule->rulename);
       } 
       else if(strncmp(target,"msg:\"",5) == 0){
         strncpy(__rule->message,target + 5,strlen(target) -7);
-        printf("%s\n",__rule->message);
+        // printf("%s\n",__rule->message);
       }
-      else if(strncmp(target," type",5) == 0){
+      else if(strncmp(target+1,"type",4) == 0){
         char temp[16];
         memset(&temp,0,sizeof(temp));
-        strncpy(temp,target + 6,strlen(target) - 7);
-        printf("type: %s\n",target + 6);
-        get_ruletype(temp,__rule);
+        strncpy(temp,target +6,strlen(target)-7);
+        // printf("type: %s\n",temp);
+        get_ruletype(&temp,__rule);
       }
       else if(strncmp(target," target:\"",9) == 0){
-        strncpy(__rule->rule_target,target + 9, strlen(target)-12);
-        printf("%s\n",__rule->rule_target);
+        strncpy(__rule->rule_target,target + 9, strlen(target)-11);
+        // printf("%s\n",__rule->rule_target);
         return;
-      } else{
+      }else{
 
       }
     }
