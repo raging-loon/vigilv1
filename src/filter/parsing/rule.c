@@ -2,7 +2,6 @@
 #include "../../../globals.h"
 #include <stdio.h>
 void rulemgr(const struct rule_data * __rule_data){
-  // printf("rulemgr\n");
   for(int i = 0; i < num_rules + 1;){
     struct rule * temp_rule = &rules[i++];
 
