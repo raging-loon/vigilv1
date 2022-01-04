@@ -123,7 +123,7 @@ void line_parser(const char * line){
   struct rule * __rule = &rules[++num_rules];
   int len = strlen(line);
 	char target[64];
-	while(filled != 6){
+	while(true){
     
     parser_line = line + chars_parsed;
 		memset(&target,0,sizeof(target));
@@ -150,8 +150,8 @@ void line_parser(const char * line){
     }else{
       data:
       printf("%s\n",parser_line);
-      printf("%d\n",strloc(parser_line,';'));
       strncpy(target,parser_line,strloc(parser_line,';')+1);
+      printf("%d||%d\n",len,strloc(parser_line,';'));
       chars_parsed += strlen(target);
       if(strncmp(target,"(name:\"",7) == 0){
         strncpy(__rule->rulename,target + 7, strlen(target)-10);
@@ -159,17 +159,17 @@ void line_parser(const char * line){
       } 
       else if(strncmp(target,"msg:\"",5) == 0){
         strncpy(__rule->message,target + 5,strlen(target) -7);
-      printf("%s\n",__rule->message);
-      break;
+        printf("%s\n",__rule->message);
       }
-      else if(strncmp(target,"type:",5) == 0){
-        printf("%s\n",target);
+      else if(strncmp(target," type",5) == 0){
         char temp[16];
-        strncpy(temp,target + 5,strlen(target) - 6);
+        memset(&temp,0,sizeof(temp));
+        strncpy(temp,target + 6,strlen(target) - 7);
+        printf("type: %s\n",target + 6);
         get_ruletype(temp,__rule);
       }
-      else if(strncmp(target,"target:\"",8) == 0){
-        strncpy(__rule->rule_target,target + 8, strlen(target)-11);
+      else if(strncmp(target," target:\"",9) == 0){
+        strncpy(__rule->rule_target,target + 9, strlen(target)-12);
         printf("%s\n",__rule->rule_target);
         return;
       } else{
