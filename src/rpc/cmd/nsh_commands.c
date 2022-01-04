@@ -77,7 +77,7 @@ void get_rule_matches(int * fd, const char * rulename){
     strcat(message_buffer,"Rules and the number of times they were matched:\n");
     for(int i = 0; i < num_rules + 1; ){
       const struct rule * __rule = &rules[i++];
-      char sub_message[64];
+      char sub_message[256];
       sprintf(sub_message,"\t%s matched %d times\n",__rule->rulename,__rule->times_matched);
       strcat(message_buffer,sub_message);
     }

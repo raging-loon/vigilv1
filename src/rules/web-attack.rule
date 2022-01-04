@@ -1,23 +1,23 @@
-alert stdout any TCP "Web Attack: *nux /bin/ps command attempt" bit_match "/bin/ps"
-alert stdout any TCP "Web Attack: *nux ps command attempt" bit_match "ps%20" 
-alert stdout any TCP "Web Attack: Linux wget command attempt" bit_match "wget%20"
-alert stdout any TCP "Web Attack: uname -a command attempt" bit_match "uname%20-a"
-alert stdout any TCP "Web Attack: /usr/bin/id command attempted" bit_match "/usr/bin/id"
-alert stdout any TCP "Web Attack: /bin/id command attempted" bit_match "/bin/id"
-alert stdout any TCP "Web Attack: echo command attempt" bit_match "/bin/echo"
-alert stdout any TCP "Web Attack: kill command attempt" bit_match "/bin/kill"
-alert stdout any TCP "Web Attack: chmod command attempt" bit_match "/bin/chmod"
-alert stdout any TCP "Web Attack: chgrp command attempt" bit_match "/chgrp"
-alert stdout any TCP "Web Attack: chown command attempt" bit_match "/chown"
-alert stdout any TCP "Web Attack: chsh command attempt" bit_match "/bin/chsh"
-alert stdout any TCP "Web Attack: tftp command attempt" bit_match "tftp%20"
-alert stdout any TCP "Web Attack: gcc command attempt" bit_match "gcc%20"
-alert stdout any TCP "Web Attack: g++ command attempt" bit_match "g++%20"
-alert stdout any TCP "Web Attack: tclsh command attempt" bit_match "bin/tclsh"
-alert stdout any TCP "Web Attack: ping command attempt" bit_match "/bin/ping"
-alert stdout any TCP "Web Attack: netcat command attempt" bit_match "nc%20"
-alert stdout any TCP "Web Attack: netcat command attempt" bit_match "netcat%20"
-alert stdout any TCP "Web Attack: traceroute command attempt" bit_match "traceroute%20"
-alert stdout any TCP "Web Attack: nmap command attempt" bit_match "nmap%20"
+alert stdout any TCP msg:"Web Attack: *nux /bin/ps command attempt" bit_match target:"/bin/ps";
+alert stdout any TCP msg:"Web Attack: *nux ps command attempt" bit_match target:"ps%20"; 
+alert stdout any TCP msg:"Web Attack: Linux wget command attempt" bit_match target:"wget%20";
+alert stdout any TCP msg:"Web Attack: uname -a command attempt" bit_match target:"uname%20-a";
+alert stdout any TCP msg:"Web Attack: /usr/bin/id command attempted" bit_match target:"/usr/bin/id";
+alert stdout any TCP msg:"Web Attack: /bin/id command attempted" bit_match target:"/bin/id";
+alert stdout any TCP msg:"Web Attack: echo command attempt" bit_match target:"/bin/echo";
+alert stdout any TCP msg:"Web Attack: kill command attempt" bit_match target:"/bin/kill";
+alert stdout any TCP msg:"Web Attack: chmod command attempt" bit_match target:"/bin/chmod";
+alert stdout any TCP msg:"Web Attack: chgrp command attempt" bit_match target:"/chgrp";
+alert stdout any TCP msg:"Web Attack: chown command attempt" bit_match target:"/chown";
+alert stdout any TCP msg:"Web Attack: chsh command attempt" bit_match target:"/bin/chsh";
+alert stdout any TCP msg:"Web Attack: tftp command attempt" bit_match target:"tftp%20";
+alert stdout any TCP msg:"Web Attack: gcc command attempt" bit_match target:"gcc%20";
+alert stdout any TCP msg:"Web Attack: g++ command attempt" bit_match target:"g++%20";
+alert stdout any TCP msg:"Web Attack: tclsh command attempt" bit_match target:"bin/tclsh";
+alert stdout any TCP msg:"Web Attack: ping command attempt" bit_match target:"/bin/ping";
+alert stdout any TCP msg:"Web Attack: netcat command attempt" bit_match target:"nc%20";
+alert stdout any TCP msg:"Web Attack: netcat command attempt" bit_match target:"netcat%20";
+alert stdout any TCP msg:"Web Attack: traceroute command attempt" bit_match target:"traceroute%20";
+alert stdout any TCP msg:"Web Attack: nmap command attempt" bit_match target:"nmap%20";
 
 

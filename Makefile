@@ -1,63 +1,66 @@
+CC = gcc
+
+
 all: npsi clean
 
 print_utils.o:
-	gcc -c src/print_utils.c
+	$(CC) -c src/print_utils.c
 main.o:
-	gcc -c main.c -l pcap
+	$(CC) -c main.c -l pcap
 ip_addr_stat.o:
-	gcc -c src/statistics/ip_addr_stat.c -l pthread
+	$(CC) -c src/statistics/ip_addr_stat.c -l pthread
 igmp_dsct.o:
-	gcc -c src/capture/protocols/igmp_dsct.c
+	$(CC) -c src/capture/protocols/igmp_dsct.c
 icmpdsct.o:
-	gcc -c src/capture/icmpdsct.c 
+	$(CC) -c src/capture/icmpdsct.c 
 l2pktmgr.o:
-	gcc -c src/capture/l2pktmgr.c
+	$(CC) -c src/capture/l2pktmgr.c
 l3pktmgr.o:
-	gcc -c src/capture/l3pktmgr.c
+	$(CC) -c src/capture/l3pktmgr.c
 pktmgr.o:
-	gcc -c src/capture/pktmgr.c -l pcap
+	$(CC) -c src/capture/pktmgr.c -l pcap
 rule_parser.o:
-	gcc -c src/filter/parsing/rule_parser.c
+	$(CC) -c src/filter/parsing/rule_parser.c
 utils.o:
-	gcc -c src/utils.c
+	$(CC) -c src/utils.c
 tcpmgr.o:
-	gcc -c src/capture/tcpmgr.c
+	$(CC) -c src/capture/tcpmgr.c
 udpmgr.o:
-	gcc -c src/capture/udpmgr.c
+	$(CC) -c src/capture/udpmgr.c
 
 http_disect.o:
-	gcc -c src/capture/protocols/http_disect.c
+	$(CC) -c src/capture/protocols/http_disect.c
 
 dns_disect.o:
-	gcc -c src/capture/protocols/dns_disect.c
+	$(CC) -c src/capture/protocols/dns_disect.c
 
 alerts.o:
-	gcc -c src/filter/actions/alerts.c
+	$(CC) -c src/filter/actions/alerts.c
 
 packet_parser.o:
-	gcc -c src/filter/parsing/packet_parser.c
+	$(CC) -c src/filter/parsing/packet_parser.c
 #rule_parser.o:
-#	gcc -c src/filter/parsing/rule_parser.c
+#	$(CC) -c src/filter/parsing/rule_parser.c
 rule.o:
-	gcc -c src/filter/parsing/rule.c
+	$(CC) -c src/filter/parsing/rule.c
 nsh_server.o:
-	gcc -c src/rpc/nsh_server.c -l pthread -l ssl -l crypto
+	$(CC) -c src/rpc/nsh_server.c -l pthread -l ssl -l crypto
 interpreter.o:
-	gcc -c src/rpc/cmd/interpreter.c
+	$(CC) -c src/rpc/cmd/interpreter.c
 
 nsh_commands.o:
-	gcc -c src/rpc/cmd/nsh_commands.c
+	$(CC) -c src/rpc/cmd/nsh_commands.c
 
 watchlist.o:
-	gcc -c src/statistics/watchlist.c
+	$(CC) -c src/statistics/watchlist.c
 wclean.o:
-	gcc -c src/statistics/wclean.c -l pthread
+	$(CC) -c src/statistics/wclean.c -l pthread
 
 arpcache.o:
-	gcc -c src/statistics/arpcache.c
+	$(CC) -c src/statistics/arpcache.c
 
 update_db.o:
-	gcc `mysql_config --cflags` -c src/database/update_db.c `mysql_config --libs`
+	$(CC) `mysql_config --cflags` -c src/database/update_db.c `mysql_config --libs`
 
 
 npsi: pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
@@ -67,7 +70,7 @@ npsi: pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
 			update_db.o http_disect.o dns_disect.o
 
 			
-	gcc -o npsi.exe $^ -l pcap -l pthread -l ssl -l crypto `mysql_config --libs`
+	$(CC) -o npsi.exe $^ -l pcap -l pthread -l ssl -l crypto `mysql_config --libs`
 	strip npsi.exe
 
 clean:

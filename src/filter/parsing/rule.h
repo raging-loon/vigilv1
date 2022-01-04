@@ -4,12 +4,9 @@
 #include <stdint.h>
 #include <sys/socket.h>
 
-const enum{
-  BIT_MATCH,
-  // ANOMALY
-} rule_type_t;
 
-const enum{
+
+enum{
   LOW,
   MODERATE,
   SEVERE,
@@ -17,7 +14,7 @@ const enum{
   CRITICAL
 } severity;
 
-const enum {
+enum {
   R_TCP = 126,
   R_UDP,
   R_ICMP,

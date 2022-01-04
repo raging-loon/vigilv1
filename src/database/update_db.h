@@ -11,7 +11,7 @@ typedef struct {
   int is_new;
 } update_db_t;
 
-const enum{
+enum{
   ARP_UP_T,
   STAT_UP_T,
   WATCH_UP_T

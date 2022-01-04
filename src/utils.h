@@ -26,14 +26,13 @@
 #define IS_PORT_DEST_SRC(X,Y,Z)(X == Z || Y == Z)
 #define IS_PRINTABLE_ASCII(X)(X > 32 || X < 127)
 
-char * mac_ntoa(uint8_t * );
-char * uc_mac_ntoa(unsigned char *);
-char * ipv4_ntoa( uint32_t *);
-char * u8_ipv4_ntoa(uint8_t * );
+
+unsigned char * mac_ntoa(uint8_t * );
+unsigned char * uc_mac_ntoa(unsigned char *);
+unsigned char * ipv4_ntoa( uint32_t *);
+unsigned char * u8_ipv4_ntoa(uint8_t * );
 unsigned char * inet6_ntoa(uint8_t * );
-
 char * get_formated_time();
-
-int strloc(const char * restrict haystack,const char needle);
+int strloc(const char *  haystack,const char needle);
 
 #endif /* UTILS_H */
