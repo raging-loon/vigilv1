@@ -35,22 +35,22 @@ static void* verify_ip_addr(void * args){
   aiaoic_args * temp_info = args;
   // printf("[DEBUG] traffic_class = %d\n",temp_info->traffic_type);
   // printf("[DEBUG] aiaoic_args = %s\n",temp_info->__ip_addr);
-  struct ip_addr_counter * temp;
-  for(int i = 0; i <= ip_addr_stat_counter_len; i++){
-    if(strcmp(temp_info->__ip_addr , ip_stats[i].ip_addr) == 0){
+  struct watchlist_member * temp;
+  for(int i = 0; i <= watchlist_num; i++){
+    if(strcmp(temp_info->__ip_addr , watchlist[i].ip_addr) == 0){
       // printf("Found match: %s == %s\n",ip_addr,ip_stats[ip_addr_stat_counter_len].);
-      ip_stats[i].count++;
-      temp = &ip_stats[i];
+      watchlist[i].count++;
+      temp = &watchlist[i];
       goto end; 
     }
   }
-  struct ip_addr_counter * temp_stat = (struct ip_addr_counter*)malloc(sizeof(struct ip_addr_counter));
-  temp_stat->in_db = false;
-  ip_stats[++ip_addr_stat_counter_len] = (struct ip_addr_counter)*temp_stat;
+  struct watchlist_member * temp_stat = (struct watchlist_member*)malloc(sizeof(struct watchlist_member));
+  // temp_stat->in_db = false;
+  watchlist[++watchlist_num] = (struct watchlist_member)*temp_stat;
   
   memset(temp_stat->ip_addr,0,sizeof(temp_info->__ip_addr));
-  strcpy(ip_stats[ip_addr_stat_counter_len].ip_addr,temp_info->__ip_addr);
-  temp = &ip_stats[ip_addr_stat_counter_len];
+  strcpy(watchlist[watchlist_num].ip_addr,temp_info->__ip_addr);
+  temp = &watchlist[watchlist_num];
   goto end;
 end:  
 

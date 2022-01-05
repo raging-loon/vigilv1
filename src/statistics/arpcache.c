@@ -52,11 +52,12 @@ int compare_mac_entry(char * mac1,char * mac2){
 
 
 
-void load_csv_arp_cache(){
+int load_csv_arp_cache(){
   FILE * fp = fopen("/usr/share/npsi/arpcache.csv","r");
   if(fp == NULL){
     printf("Could not load arp cache from database, file nonexistant\n");
-    goto close;
+    fclose(fp);
+    return -1;
   }
   char * line = NULL;
   size_t pos, len = 0;
@@ -64,7 +65,6 @@ void load_csv_arp_cache(){
     if(strstr(line,"\x00") == 0)
       break;
     
-    printf("%s\n",line);
     char __ipaddress[16];
     char __macaddress[18];
     
@@ -73,11 +73,10 @@ void load_csv_arp_cache(){
     strcpy(__ipaddress,ip_addr);
     ip_addr = strtok(NULL,",");
     strcpy(__macaddress,ip_addr);
-    printf("%s -> %s\n",__ipaddress,__macaddress);
 
   }
   if(line) free(line);
-  goto close;
-close:
+
   fclose(fp);
+  return 1;
 } 

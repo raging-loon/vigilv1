@@ -40,7 +40,6 @@ int strict_nmap_host_alive_check;
 // counters
 
 int total_pkt_captured = 0;
-int ip_addr_stat_counter_len = -1;
 int blk_ipv4_len = -1;
 int num_rules = -1;
 int watchlist_num = -1;
@@ -49,7 +48,6 @@ int is_running;
 unsigned long last_clean_time;
 unsigned long clean_delay;
 // info objects
-struct ip_addr_counter ip_stats[256];
 struct rule rules[128] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
 struct blocked_ipv4 blocked_ipv4_addrs[32];
 struct watchlist_member watchlist[128] = {0};
@@ -105,12 +103,17 @@ int main(int argc, char **argv){
   signal(SIGSEGV,sigint_processor);  
   // char * ip_addr = "";
   deny_conf_parser("/etc/npsi/deny.conf");
-  load_csv_arp_cache();
-  printf("Note to developer, remove hard coded IP address\n");
+  printf("Finsished loading explicit deny file(/etc/npsi/deny.conf)\n");
+  
+  if(load_csv_arp_cache() != -1) printf("Finished loading CSV arp cache\n");
+  else printf("Failed to load CSV arp cache(non critical error)\n");
+  
+
   char *dev = pcap_lookupdev(error_buf);
   printf("NPSI listening on interface %s\n",dev);
   pcap_t *pcap_mgr;
   rule_library_parser("/etc/npsi/npsi.conf");
+  printf("Parsed rule files\n");
   if(dev == NULL){
     printf("Failure opening interface %s\n",iface_name);
     exit(EXIT_FAILURE);
@@ -122,6 +125,7 @@ int main(int argc, char **argv){
     exit(EXIT_FAILURE);
   }
   start_nsh_server();
+  printf("Unecrypted NSH config server started: 127.0.0.1:23\n");
   // start_wclean();
   pcap_loop(pcap_mgr,-1, pktmgr, NULL);
 }
@@ -134,14 +138,14 @@ void sigint_processor(int signal){
 
     printf("Total Packets Caught: %d\n",total_pkt_captured);
     printf("Statistics\nIp address    Count\n-----------------\n");
-    for(int i = 0; i <= ip_addr_stat_counter_len; i++){
+    for(int i = 0; i <= watchlist_num; i++){
       printf("%s\n\t\ttotal packets = %d\n\t\ttotal sent = %d\n\t\ttotal recv = %d"
             "\n\t\tTCP sent = %d\n\t\tTCP recv = %d\n\t\t"
             "UDP sent = %d\n\t\tUDP recv = %d\n\t\t"
             "ICMP sent = %d\n\t\tICMP recv = %d\n\n",
-            ip_stats[i].ip_addr,ip_stats[i].count,ip_stats[i].total_sent,ip_stats[i].total_recv,
-            ip_stats[i].tcp_sent, ip_stats[i].tcp_recv,ip_stats[i].udp_sent, ip_stats[i].udp_recv,
-            ip_stats[i].icmp_sent,ip_stats[i].icmp_recv);
+            watchlist[i].ip_addr,watchlist[i].count,watchlist[i].total_sent,watchlist[i].total_recv,
+            watchlist[i].tcp_sent, watchlist[i].tcp_recv,watchlist[i].udp_sent, watchlist[i].udp_recv,
+            watchlist[i].icmp_sent,watchlist[i].icmp_recv);
     }
   }
   FILE * fp = fopen("/usr/share/npsi/arpcache.csv","w");

@@ -40,7 +40,19 @@ struct watchlist_member{
   int suspect_activity;
   unsigned long last_rst_pkt_times[30];
   struct nmap_watch_host_alive nmap_watch_host_alive_watch;
-
+  unsigned int count;
+  unsigned int tcp_sent;
+  unsigned int udp_sent;
+  unsigned int icmp_sent;
+  unsigned int tcp_recv;
+  unsigned int udp_recv;
+  unsigned int icmp_recv;
+  unsigned int unknown_sent;
+  unsigned int unknown_recv;
+  unsigned int total_recv;
+  unsigned int total_sent;
+  unsigned int sz_recv;
+  unsigned int sz_sent;
 
 }; 
 

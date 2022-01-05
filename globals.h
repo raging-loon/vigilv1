@@ -24,8 +24,8 @@
 #include "src/statistics/watchlist.h"
 //    major.minor.patch
 #define VERSION "1.0.0"
-extern struct ip_addr_counter ip_stats[256];
-extern int ip_addr_stat_counter_len;
+// extern struct ip_addr_counter ip_stats[256];
+// extern int ip_addr_stat_counter_len;
 
 extern char ip_addr[32];
 

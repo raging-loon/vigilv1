@@ -52,7 +52,7 @@ Note that if you are not planning on using the web interface and not using a mys
  - [x] Set up alerting
  - [ ] Figure out the SNMP stuff
  - [ ] Figure out email alerts
- - [ ] Add everything from the ip_stats struct to the watchlist_member struct
+ - [x] Add everything from the ip_stats struct to the watchlist_member struct
  - [ ] Figure out the brute force stuff
  - [ ] Add arp cache and monitoring for it
  - [ ] Add internal and external mode

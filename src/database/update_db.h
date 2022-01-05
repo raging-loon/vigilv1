@@ -7,7 +7,6 @@ typedef struct {
   char mac_addr[18];
   int update_type;
   struct watchlist_member w;
-  struct ip_addr_counter ip_stat;
   int is_new;
 } update_db_t;
 

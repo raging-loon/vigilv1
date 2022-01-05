@@ -14,6 +14,6 @@ int entry_exists(char *,char *);
 int compare_ip_entry(char *,char *);
 int compare_mac_entry(char *,char * );
 
-void load_csv_arp_cache();
+int load_csv_arp_cache();
 
 #endif /* ARP_CACHE_H */ 
