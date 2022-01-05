@@ -53,7 +53,8 @@ struct watchlist_member{
   unsigned int total_sent;
   unsigned int sz_recv;
   unsigned int sz_sent;
-
+  unsigned int total_sz;
+  
 }; 
 
 

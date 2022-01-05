@@ -43,7 +43,9 @@ static void* verify_ip_addr(void * args){
       temp = &watchlist[i];
       goto end; 
     }
+    
   }
+
   struct watchlist_member * temp_stat = (struct watchlist_member*)malloc(sizeof(struct watchlist_member));
   // temp_stat->in_db = false;
   watchlist[++watchlist_num] = (struct watchlist_member)*temp_stat;
@@ -51,20 +53,22 @@ static void* verify_ip_addr(void * args){
   memset(temp_stat->ip_addr,0,sizeof(temp_info->__ip_addr));
   strcpy(watchlist[watchlist_num].ip_addr,temp_info->__ip_addr);
   temp = &watchlist[watchlist_num];
-  goto end;
 end:  
-
-  if(temp_info->is_src)
+  
+  if(temp_info->is_src){
     temp->total_sent++;
-  else
+    temp->sz_sent += temp_info->pkt_len;
+  }
+  else{
     temp->total_recv++;
-
-  temp->count++;
+    temp->sz_recv += temp_info->pkt_len;
+  }
+  temp->total_sz += temp_info->pkt_len;
+  temp->count = temp->total_recv + temp->total_recv;
   switch(temp_info->traffic_type){
     case TCP:
       if(temp_info->is_src)
         temp->tcp_sent++;
-        
       else 
         temp->tcp_recv++;
       break;
@@ -89,7 +93,5 @@ end:
   }
 
   // printf("[DEBUG] temp_info->__ip_addr = %s ip_stats[ip_addr_stat_counter_len].ip_addr = %s\n",temp_info->__ip_addr,ip_stats[ip_addr_stat_counter_len].ip_addr);
-  
-
-  
+    
 }

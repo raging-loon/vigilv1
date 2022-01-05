@@ -1,8 +1,0 @@
-# this is a comment
-RULE_START{
-  name="nmap_ua"
-  type=bit_match
-  protocol=TCP
-  target_contents=Nmap Scripting Engine;
-  action=stdout_alert
-}
