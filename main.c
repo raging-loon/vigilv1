@@ -60,7 +60,7 @@ char * def_log_file = "/var/log/npsi/siglog.log";
 char * default_host_conf = "/etc/npsi/hosts.conf";
 
 bool use_sqlite;
-char * sqlite_db_path;
+char sqlite_db_path[32];
 
 
 bool packet_print;

@@ -50,7 +50,7 @@ void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
       if(entry_exists((char *)&src_ip,(char *)&src_mac) != -1){
         compare_entries((char *)&src_ip,(char *)&src_mac);
       } else {
-        if(use_mysql){
+        if(use_sqlite){
           pthread_t pthrd;
           update_db_t update;
           update.update_type = ARP_UP_T;

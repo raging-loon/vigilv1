@@ -64,7 +64,7 @@ extern struct arp_entry arpcache[255];
 extern int arp_entries;
 
 extern bool use_sqlite;
-extern char * sqlite_db_path;
+extern char sqlite_db_path[32];
 
 
 extern bool quiet_exit;
