@@ -105,8 +105,8 @@ int main(int argc, char **argv){
   deny_conf_parser("/etc/npsi/deny.conf");
   printf("Finsished loading explicit deny file(/etc/npsi/deny.conf)\n");
   
-  // if(load_csv_arp_cache() != -1) printf("Finished loading CSV arp cache\n");
-  // else printf("Failed to load CSV arp cache(non critical error)\n");
+  if(load_csv_arp_cache() != -1) printf("Finished loading CSV arp cache\n");
+  else printf("Failed to load CSV arp cache(non critical error)\n");
   
 
   char *dev = pcap_lookupdev(error_buf);

@@ -11,7 +11,7 @@ Requires the following to run:
    - sqlite3
    - libsqlite3-dev
    - any web server
-   - php7.4-sqlite
+   - php7.4-sqlite3
  - Without web interface: 
    - gcc 
    - make 
