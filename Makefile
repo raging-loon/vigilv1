@@ -60,7 +60,7 @@ arpcache.o:
 	$(CC) -c src/statistics/arpcache.c
 
 update_db.o:
-	$(CC) `mysql_config --cflags` -c src/database/update_db.c `mysql_config --libs`
+	$(CC) -c src/database/update_db.c -l sqlite3
 
 
 npsi: pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
@@ -70,7 +70,7 @@ npsi: pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
 			update_db.o http_disect.o dns_disect.o
 
 			
-	$(CC) -o npsi.exe $^ -l pcap -l pthread -l ssl -l crypto `mysql_config --libs`
+	$(CC) -o npsi.exe $^ -l pcap -l pthread -l ssl -l crypto -l sqlite3
 	strip npsi.exe
 
 clean:
