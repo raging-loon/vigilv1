@@ -59,10 +59,10 @@ char * default_config = "/etc/npsi/npsi.conf";
 char * def_log_file = "/var/log/npsi/siglog.log";
 char * default_host_conf = "/etc/npsi/hosts.conf";
 
-bool use_mysql;
-char mysql_user[32];
-char mysql_password[32];
-char * mysql_server = "localhost";
+bool use_sqlite;
+char * sqlite_db_path;
+
+
 bool packet_print;
 bool quiet_exit = false;
 int main(int argc, char **argv){

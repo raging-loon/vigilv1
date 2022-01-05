@@ -2,10 +2,9 @@ libpcap-dev
 # libnet-dev
 gcc
 make
-mysql-server
-mysql-client
+sqlite3
 # any web server will do
 nginx
 php7.4-fpm
-php7.4-mysql
-libmysqlclient-dev
+php7.4-sqlite
+libsqlite3-dev

@@ -46,17 +46,12 @@ void rule_library_parser(const char * alt_file){
       } 
       clean_delay = atoi(line + 24);
     }
-    else if(strncmp(line,"use_mysql=",10) == 0){
-      if(strcmp(line + 10,"YES") == 0) use_mysql = true;
-      else use_mysql = false;
+    else if(strncmp(line,"use_sqlite=",11) == 0){
+      if(strcmp(line + 10,"YES") == 0) use_sqlite = true;
+      else use_sqlite = false;
     }
-    else if(strncmp(line,"mysql_user=",11) == 0){
-      strcpy(mysql_user,line+11);
-
-    }
-    else if(strncmp(line,"mysql_password=",15) == 0){
-      strcpy(mysql_password,line + 15);
-
+    else if(strncmp(line,"sqlite_database_path=",21) == 0){
+      strcpy(sqlite_db_path,line + 21);
     }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);

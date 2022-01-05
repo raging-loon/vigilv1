@@ -63,10 +63,8 @@ extern int is_running;
 extern struct arp_entry arpcache[255];
 extern int arp_entries;
 
-extern bool use_mysql;
-extern char mysql_user[32];
-extern char mysql_password[32];
-extern char * mysql_server;
+extern bool use_sqlite;
+extern char * sqlite_db_path;
 
 
 extern bool quiet_exit;

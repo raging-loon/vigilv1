@@ -8,15 +8,16 @@ Requires the following to run:
    - make 
    - libpcap-dev 
    - php7.4-fpm 
-   - mysql-server 
+   - sqlite3
+   - libsqlite3-dev
    - any web server
-   - php7.4-mysql
-   - libmysqlclient-dev
+   - php7.4-sqlite
  - Without web interface: 
    - gcc 
    - make 
    - libpcap-dev
-   - libmysqlclient-dev(still needed to compile)
+   - sqlite3
+   - libsqlite3-dev
 
 Recommened stats for machine running:
  - Recommended 8GB RAM, minimum of 4GB

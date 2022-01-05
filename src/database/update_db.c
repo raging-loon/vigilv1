@@ -12,7 +12,7 @@ void * update_db(void * args){
   update_db_t * update = args;
   char * err = 0;
   sqlite3* database; 
-  int status = sqlite3_open("/usr/share/npsi/npsi.db",&database);
+  int status = sqlite3_open("/usr/share/npsi/npsi",&database);
   if(status){
     printf("SQlite error: %s\n",sqlite3_errmsg(database));
     goto close;
@@ -23,7 +23,7 @@ void * update_db(void * args){
       sprintf(query,"INSERT INTO arp_cache (ip_address, mac_address) VALUES (\"%s\", \"%s\");",update->ip_addr,update->mac_addr);
       break;
   }
-  status = sqlite3_exec(database,query,NULL,0,&err);
+  status = sqlite3_exec(database,query,NULL,NULL,&err);
   if(status != SQLITE_OK){
     printf("SQLite encountered error: %s\n",err);
     sqlite3_free(err);
