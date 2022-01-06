@@ -5,6 +5,8 @@
 
 #define PSH_ACK_SET(X,Y) (X && Y)
 
+void ip6_tcp_decode();
+
 void ip4_tcp_decode(const unsigned char *,struct rule_data *,const struct pcap_pkthdr *);
 
 

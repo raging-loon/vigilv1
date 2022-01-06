@@ -62,12 +62,14 @@ arpcache.o:
 update_db.o:
 	$(CC) -c src/database/update_db.c -l sqlite3
 
+ftp-disect.o:
+	$(CC) -c src/capture/protocols/ftp-disect.c
 
 npsi: pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o \
 			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o print_utils.o\
 			alerts.o packet_parser.o rule_parser.o rule.o main.o nsh_server.o\
 			interpreter.o nsh_commands.o watchlist.o wclean.o arpcache.o \
-			update_db.o http_disect.o dns_disect.o
+			update_db.o http_disect.o dns_disect.o ftp-disect.o
 
 			
 	$(CC) -o npsi.exe $^ -l pcap -l pthread -l ssl -l crypto -l sqlite3

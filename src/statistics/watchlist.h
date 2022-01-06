@@ -40,6 +40,12 @@ struct watchlist_member{
   int suspect_activity;
   unsigned long last_rst_pkt_times[30];
   struct nmap_watch_host_alive nmap_watch_host_alive_watch;
+  int failed_ftp_login_attempts;
+  int frag_ipv4_sent;
+
+  
+
+
   unsigned int count;
   unsigned int tcp_sent;
   unsigned int udp_sent;

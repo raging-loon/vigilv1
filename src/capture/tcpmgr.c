@@ -23,6 +23,7 @@
 #include "../packets/ip_hdr.h"
 #include "../packets/tcp.h"
 #include "../../globals.h"
+#include
 #include <netinet/tcp.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
@@ -36,6 +37,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
+#include "../print_utils.h"
 #include "protocols/http_disect.h"
 
 void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr *pkt_hdr){
@@ -166,10 +168,15 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   rdata->src_port = src_port;
   if(packet_print){
     if((PSH_ACK_SET(psh_set,ack_set)) && IS_PORT_DEST_SRC(dest_port,src_port,80)){
-      http_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(struct __tcp) + 12,rdata);
+      // http_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(struct __tcp) + 12,rdata);
     
     }
   }
+  if(IS_PORT_DEST_SRC(dest_port,src_port,21)){
+    
+  }
+  ascii_hexdump(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),
+                pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4));
   rulemgr(rdata);
   
 }
