@@ -18,19 +18,10 @@
 #ifndef WATCHLIST_H
 #define WATCHLIST_H
 #include <stdbool.h>
+#include "wldataset.h"
 #include <stdint.h>
 // max time between RST packets 7442974
 
-
-struct nmap_watch_host_alive{
-  unsigned long start_time;
-  int icmp_echo_sent;
-  int tcp_syn_sent;
-  int tcp_ack_sent;
-  int icmp_time_req_sent;
-  int num_done;
-  unsigned long end_time;
-};
 
 
 struct watchlist_member{
@@ -43,7 +34,7 @@ struct watchlist_member{
   int failed_ftp_login_attempts;
   int frag_ipv4_sent;
 
-  
+
 
 
   unsigned int count;

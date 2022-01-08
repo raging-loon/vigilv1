@@ -36,7 +36,6 @@ void add_to_blacklist(int * fd, const char * ro_cmd){
 
 void get_loaded_rules(int * fd){
   memset(&message_buffer,0,sizeof(message_buffer));
-  char message[1024];
   strcat(message_buffer,"Loaded rules for NPSI Server:\n\t");
   for(int i = 0; i < num_rules + 1; ){
     const struct rule * tmprule = &rules[i++];

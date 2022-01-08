@@ -2,17 +2,26 @@
 #define SPI_H
 
 #include <stdint.h>
+#include "watchlist.h"
 
-struct packet_seen{
-  uint32_t src_ip;
-  uint32_t dest_ip;
-  int protocol;
-  unsigned int src_port;
-  unsigned int dest_port;
-  unsigned int time_recv;
-  int is_flagged;
+struct w_tcp_session{
+  unsigned int start;
+  unsigned int end;
+  unsigned int length;
+  int progress;
+  uint16_t end_flags;
 };
 
+
+
+
+
+struct tcp_watchdog{
+  struct watchlist_member * w;
+  unsigned int twh_completed;
+  struct w_tcp_session tcp_sessions[50];
+
+};
 
 
 #endif /* SPI_H */

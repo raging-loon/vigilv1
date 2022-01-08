@@ -53,7 +53,6 @@ static void *actually_start_nsh_server(){
 		printf("nsh_server.c: failure in setsockopt\n");
 		exit(EXIT_FAILURE);
 	}
-	char * lb = "127.0.0.1";
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	// strcpy(&addr.sin_addr.s_addr,NSH_LOOPBACK);
@@ -90,13 +89,15 @@ static void *actually_start_nsh_server(){
 }
 
 static bool nsh_do_login(int fd,const char * rhost){
+	int len_read;
 	const char * del = ":";
 	char username[32];
 	char password[32];
 	char * passwd_ptr;
 	send(fd,"NPSI Login Shell\r\n",19,0);
+	
 	send(fd,"Username: ",11,0);
-	int len_read = read(fd,username,16);
+	len_read = read(fd,username,16);
 	send(fd,"Password: ",11,0);
 	rnstrip((char *)&username);
 	len_read = read(fd,&password,16);

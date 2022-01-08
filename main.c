@@ -160,7 +160,7 @@ void sigint_processor(int signal){
   for(int i = 0; i < arp_entries + 1; i++){
     fprintf(fp,"%s,%s\n",arpcache[i].ip_addr, arpcache[i].mac_addr);
   }
-  fclose(fp);
+  fclose(&fp);
   exit(EXIT_SUCCESS);
 }
 
