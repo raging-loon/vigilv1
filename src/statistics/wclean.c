@@ -7,7 +7,7 @@
 #include <time.h>
 #include <pthread.h>
 int ready_for_clean(const struct watchlist_member * w){
-  if(w->last_time_seen >= clean_delay) return 1;
+  if(w->last_time_seen >= clean_delay_pkts) return 1;
   else return -1;
 }
 
@@ -23,24 +23,3 @@ void scan_for_clean(){
   }
 }
 
-
-void is_ready_for_clean(){
-  if((unsigned long)time(NULL) - last_clean_time >= clean_delay) scan_for_clean();
-}
-
-
-void * clean_wait(){
-  printf("Running clean scheduler\n");
-  while(1){
-    if(is_running == 0)return;
-    
-    for(int i = 0; i < 100; i++){}
-    is_ready_for_clean();
-  }
-}
-
-
-void start_wclean(){
-  pthread_t pthrd;
-  pthread_create(&pthrd,NULL,&clean_wait,NULL);
-}

@@ -66,6 +66,7 @@ extern int arp_entries;
 extern bool use_sqlite;
 extern char sqlite_db_path[32];
 
+extern unsigned int clean_delay_pkts;
 
 extern bool quiet_exit;
 #endif /* GLOBALS_H */

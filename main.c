@@ -62,7 +62,7 @@ char * default_host_conf = "/etc/npsi/hosts.conf";
 bool use_sqlite;
 char sqlite_db_path[32];
 
-
+unsigned int clean_delay_pkts = 0;
 bool packet_print;
 bool quiet_exit = false;
 int main(int argc, char **argv){

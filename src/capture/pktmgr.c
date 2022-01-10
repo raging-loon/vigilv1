@@ -6,6 +6,9 @@
 #include <stdio.h>
 #include "../../globals.h"
 #include "l3pktmgr.h"
+#include "../statistics/wclean.h"
+
+
 void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsigned char *pkt){
   if(packet_print) printf("\033[90m-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\033[m\n");
   /*
@@ -13,6 +16,9 @@ void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsign
     pktmgr -> ethernet header -> protocol number -> ipv4 -> protocol number -> tcp -> data
   */
   total_pkt_captured++;
+  if(total_pkt_captured >= clean_delay_pkts){
+    scan_for_clean();
+  }
   struct ethhdr * ethernet_header = (struct ethhdr*)pkt;
   switch(ethernet_header->h_proto){
     case L2_ARP:
