@@ -10,11 +10,9 @@ typedef struct {
   int is_new;
 } update_db_t;
 
-enum{
-  ARP_UP_T,
-  STAT_UP_T,
-  WATCH_UP_T
-} udb_type_t;
+#define  ARP_UP_T     0
+#define  STAT_UP_T    1
+#define  WATCH_UP_T   2
 
 void * update_db(void *);
 

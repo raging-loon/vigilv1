@@ -5,21 +5,10 @@
 #include <sys/socket.h>
 
 
-
-enum{
-  LOW,
-  MODERATE,
-  SEVERE,
-  EXTREME,
-  CRITICAL
-} severity;
-
-enum {
-  R_TCP = 126,
-  R_UDP,
-  R_ICMP,
-  R_ALL
-} protocols_t;
+#define  R_TCP    126
+#define  R_UDP    127
+#define  R_ICMP   128
+#define  R_ALL    129
 
 
 struct rule_data{
