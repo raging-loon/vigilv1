@@ -80,6 +80,8 @@ void init_member(const char * ip){
   int watchlist_index;
   struct watchlist_member * w;
   if((watchlist_index = member_exists(ip)) != -1){
+    w = &watchlist[watchlist_index];
+    w->last_time_seen = time(NULL);
     return;
   }
   if((watchlist_index = member_exists("0.0.0.1")) != -1) 

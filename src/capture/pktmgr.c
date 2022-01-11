@@ -17,9 +17,9 @@ void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsign
   */
   total_pkt_captured++;
   pkt_counter++;
-  printf("%d\n",clean_delay_pkts);
+  // printf("%d\n",clean_delay_pkts);
   if(pkt_counter >= clean_delay_pkts){
-    printf("Here\n");
+    // printf("Here\n");
     pkt_counter = 0;
     scan_for_clean();
 

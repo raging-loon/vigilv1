@@ -45,7 +45,9 @@ void rule_library_parser(const char * alt_file){
   
   while((pos = getline(&line,&len,fp)) != -1){
     line[strcspn(line,"\n")] = 0;
+    // printf("%s\n",line);
     if(is_comment(line) == true) continue;
+  
     else if(strncmp(line,"strict_icmp_timestamp_req=",26) == 0){
       if(strcmp(line + 26,"YES") == 0) strict_icmp_timestamp_req = true;
       else strict_icmp_timestamp_req = false;
@@ -55,12 +57,11 @@ void rule_library_parser(const char * alt_file){
       else strict_nmap_host_alive_check = false;
     }
     else if(strncmp(line,"clean_delay_in_packets=",23) == 0){
-      printf("cdp");
+      
       if(strlen(line) < 24){
         printf("Clean delay needs a value\n");
         exit(EXIT_FAILURE);
       } 
-      printf("cdp: %s\n",line + 23);
       clean_delay_pkts = atoi(line + 23);
       
     }
