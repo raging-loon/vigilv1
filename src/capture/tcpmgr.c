@@ -118,13 +118,13 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       struct watchlist_member * w = &watchlist[watchlist_index];
       
       strcpy(w->ip_addr,rdata->dest_ip_addr);
-      w->last_rst_pkt_times[w->rst_pkt_recv++] = (unsigned long )time(NULL); 
-      if(w->rst_pkt_recv >= 30){
-        w->rst_pkt_recv = 30;
-        if(tcp_portscan_detect(w)){
+      w->psds.basic_ps_ds.rst_pkt_times[w->psds.basic_ps_ds.rst_pkt_recv++] = (unsigned long )time(NULL); 
+      if(w->psds.basic_ps_ds.rst_pkt_recv >= 30){
+        w->psds.basic_ps_ds.rst_pkt_recv = 30;
+        if(tcp_rst_portscan_detect(w)){
 
-          w->rst_pkt_recv = 0;
-          memset(&w->last_rst_pkt_times,0,sizeof(w->last_rst_pkt_times));
+          w->psds.basic_ps_ds.rst_pkt_recv = 0;
+          memset(&w->psds.basic_ps_ds.rst_pkt_times,0,sizeof(w->psds.basic_ps_ds.rst_pkt_times));
         }
 
           // printf("PORT SCAN DETECTED ");
@@ -133,10 +133,31 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       struct watchlist_member * w = &watchlist[++watchlist_num];
       // w->ip_addr = rdata->dest_ip_addr;
       strcpy(w->ip_addr,rdata->dest_ip_addr);
-      w->rst_pkt_recv = 0;
-      w->last_rst_pkt_times[w->rst_pkt_recv++] = (unsigned long)time(NULL);
+      w->psds.basic_ps_ds.rst_pkt_recv = 0;
+      w->psds.basic_ps_ds.rst_pkt_times[w->psds.basic_ps_ds.rst_pkt_recv++] = (unsigned long)time(NULL);
+    }
+  } else if(fin_set){
+    
+    int watchlist_index;
+    if((watchlist_index = member_exists(rdata->dest_ip_addr)) != -1){
+      struct watchlist_member * w = &watchlist[watchlist_index];
+      strcpy(w->ip_addr,rdata->dest_ip_addr);
+      w->psds.fin_data_set.fin_pkt_times[w->psds.fin_data_set.fin_pkt_recv++] = (unsigned long)time(NULL);
+      if(w->psds.fin_data_set.fin_pkt_recv >= 30){
+        w->psds.fin_data_set.fin_pkt_recv = 30;
+        if(fin_rst_portscan_detect(w)){
+          w->psds.fin_data_set.fin_pkt_recv = 0;
+          memset(&w->psds.fin_data_set.fin_pkt_times,0,sizeof(w->psds.fin_data_set.fin_pkt_times));
+        }
+      }
+    } else {
+        struct watchlist_member * w = &watchlist[++watchlist_num];
+        strcpy(w->ip_addr,rdata->dest_ip_addr);
+        w->psds.fin_data_set.fin_pkt_recv = 0;
+        w->psds.fin_data_set.fin_pkt_times[w->psds.fin_data_set.fin_pkt_recv++] = (unsigned long)time(NULL);
     }
   }
+  
 
   if(strict_nmap_host_alive_check == true &&
      ((ack_set && IS_PORT_DEST_SRC(dest_port,src_port,80)) || 

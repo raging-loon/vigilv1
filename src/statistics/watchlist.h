@@ -27,10 +27,9 @@
 struct watchlist_member{
   unsigned long last_time_seen;
   char ip_addr[32];
-  int rst_pkt_recv;
   int suspect_activity;
-  unsigned long last_rst_pkt_times[30];
   struct nmap_watch_host_alive nmap_watch_host_alive_watch;
+  struct portscan_dataset psds;
   int failed_ftp_login_attempts;
   int frag_ipv4_sent;
 
@@ -56,8 +55,8 @@ struct watchlist_member{
 
 
 
-bool tcp_portscan_detect(const struct watchlist_member * );
-
+bool tcp_rst_portscan_detect(const struct watchlist_member * );
+bool fin_rst_portscan_detect(const struct watchlist_member *);
 void member_ready_for_scan();
 
 

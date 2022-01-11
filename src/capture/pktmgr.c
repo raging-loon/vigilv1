@@ -21,7 +21,7 @@ void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsign
   if(pkt_counter >= clean_delay_pkts){
     // printf("Here\n");
     pkt_counter = 0;
-    scan_for_clean();
+    // scan_for_clean();
 
   }
   struct ethhdr * ethernet_header = (struct ethhdr*)pkt;
