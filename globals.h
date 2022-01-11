@@ -29,7 +29,7 @@
 
 extern char ip_addr[32];
 
-extern int total_pkt_captured;
+extern unsigned int total_pkt_captured;
 
 extern struct rule rules[128];
 extern int num_rules;
@@ -46,7 +46,7 @@ extern bool packet_print;
 
 extern struct blocked_ipv4 blocked_ipv4_addrs[32];
 extern int blk_ipv4_len;
-
+extern unsigned int pkt_counter;
 extern struct watchlist_member watchlist[128];
 extern int watchlist_num;
 

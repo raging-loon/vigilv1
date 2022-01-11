@@ -38,8 +38,7 @@ int strict_icmp_timestamp_req;
 int strict_nmap_host_alive_check;
 
 // counters
-
-int total_pkt_captured = 0;
+unsigned int total_pkt_captured = 0;
 int blk_ipv4_len = -1;
 int num_rules = -1;
 int watchlist_num = -1;
@@ -47,6 +46,7 @@ int arp_entries = -1;
 int is_running;
 unsigned long last_clean_time;
 unsigned long clean_delay;
+unsigned int pkt_counter;
 // info objects
 struct rule rules[128] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
 struct blocked_ipv4 blocked_ipv4_addrs[32];
