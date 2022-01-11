@@ -7,8 +7,8 @@
 #include <time.h>
 #include <pthread.h>
 int ready_for_clean(const struct watchlist_member * w){
-  if((time(NULL) - w->last_time_seen) >= clean_delay){
-    // printf("%s\n",w->ip_addr);
+  if((time(NULL) - w->last_time_seen) >= clean_delay && strcmp(w->ip_addr,"0.0.0.1") != 0){
+
     return 1;
   } 
   else return -1;

@@ -33,8 +33,8 @@ Recommened stats for machine running:
  - Statistics
 ## Installation
 You just need to run install.sh and make
-Note that if you are not planning on using the web interface and not using a mysql database, then you need to mark "use_mysql" in the config file as "NO".
-
+Note that if you are not planning on using the web interface and not using a sqlite database, then you need to mark "use_sqlite" in the config file as "NO".
+Please note that the database comes preconfigured and empty with the package. It is in the file "/npsi.db".
 
 ## Plans
  - [x] Add monitoring for total amount of packets sent and recieved
@@ -55,5 +55,5 @@ Note that if you are not planning on using the web interface and not using a mys
  - [ ] Figure out email alerts
  - [x] Add everything from the ip_stats struct to the watchlist_member struct
  - [ ] Figure out the brute force stuff
- - [ ] Add arp cache and monitoring for it
+ - [x] Add arp cache and monitoring for it
  - [ ] Add internal and external mode

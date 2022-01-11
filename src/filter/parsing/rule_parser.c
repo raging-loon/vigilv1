@@ -74,7 +74,7 @@ void rule_library_parser(const char * alt_file){
     }
 
     else if(strncmp(line,"use_sqlite=",11) == 0){
-      if(strcmp(line + 10,"YES") == 0) use_sqlite = true;
+      if(strcmp(line + 11,"YES") == 0) use_sqlite = true;
       else use_sqlite = false;
     }
     else if(strncmp(line,"sqlite_database_path=",21) == 0){

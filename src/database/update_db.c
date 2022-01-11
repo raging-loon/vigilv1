@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-// #include <mysql/mysql.h>
 #include "../../globals.h"
 #include <sqlite3.h>
 #include "update_db.h"
@@ -10,6 +9,7 @@ static int callback(void *unused, int argc, char **argv, char **colname){
 }
 void * update_db(void * args){
   update_db_t * update = args;
+  printf("Updating db\n");
   char * err = 0;
   sqlite3* database; 
   int status = sqlite3_open(sqlite_db_path,&database);
