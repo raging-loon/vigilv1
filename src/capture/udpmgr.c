@@ -12,6 +12,17 @@
 #include "../filter/parsing/rule.h"
 #include "../utils.h"
 #include "protocols/dns_disect.h"
+
+/*
+  *-*-*-*- udpmgr.c -*-*-*-*
+  @purpose Provide decoding for the UDP header
+  void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata,const struct pcap_pkthdr * pkt_hdr);
+    ==> Decode the ports and print the packets information to the screen(if cmd args permit it)
+    Apply rules via the rulemgr function(/src/filter/parsing/rule.c)
+  @TODO ADD IPV6 SUPPORT!
+*/
+
+
 void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata,const struct pcap_pkthdr * pkt_hdr){
 
   struct udphdr * udp_header = (struct udphdr*)(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr));
@@ -31,4 +42,5 @@ void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata,const st
   if(IS_PORT_DEST_SRC(src_port,dest_port,53)){
     dns_disect(pkt + 15 + sizeof(struct ip_hdr) + sizeof(udp_header),rdata); 
   }
+  rulemgr(rdata);
 }

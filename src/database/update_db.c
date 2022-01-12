@@ -4,6 +4,20 @@
 #include <sqlite3.h>
 #include "update_db.h"
 
+/*
+  *-*-*-*- update_db.c -*-*-*-*
+  @purpose Update the SQLite database located where specified in the config file.
+  void * update_db(void * args);
+    ==> This function is designed to only be run on another thread.
+    Please note that there are not functions for each type of update, that is 
+    so there aren't a bunch of update_db_t structs.
+    Instead, this is organsized and relatively fast.
+
+    @TODO Add SQL statements for other tables.   
+*/
+
+
+
 static int callback(void *unused, int argc, char **argv, char **colname){
   return 0 ;
 }

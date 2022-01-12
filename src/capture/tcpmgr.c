@@ -40,6 +40,27 @@
 #include "../print_utils.h"
 #include "protocols/http_disect.h"
 
+
+/*
+  *-*-*-*- tcpmgr.c -*-*-*-*
+  @purpose Provide decoding for TCP 
+  void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr *pkt_hdr);
+    ==> Decode the TCP header in IPv4 Packets
+    Data decoded:
+      - Ports
+      - Flags
+      - TOS 
+      - TTL 
+    In this function, rst and fin port scans will be detected. If either of these flags are set,
+    a series of instructions will figure out if the destination IP(rst) or the src(fin) should fo through the 
+    tcp_rst_portscan_detect or the fin_rst_portscan_detect functions located in /src/statistics/watchlist.c
+
+    Various part of the TCP and IP header are added to the rdata(struct rule_data) structure so rules can be 
+    adequately applied via the rulemgr function(/src/filter/parsing/rule.c)
+
+  @TODO add support for IPv6(URGENT)
+*/
+
 void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr *pkt_hdr){
   
   struct __tcp * tcp_hdr = (struct __tcp *)(pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr));

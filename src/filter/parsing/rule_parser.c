@@ -31,6 +31,47 @@ static void syntax_error(const char * line, int line_no);
 static void get_ruletype(const char * , struct rule *);
 static void get_action(const char * , struct rule *);
 
+
+/*
+  *-*-*-*- rule_parser.c -*-*-*-*
+  @purpose Parse <i>stuff</i>
+
+  void rule_library_parser(const char * alt_file);
+    ==> Parse the configuration file located in /npsi.conf(github) or /etc/npsi/npsi.conf(live system)
+    Global variables in /globals.c are declared here.
+    Rules are parsed here, any line starting with a '$' is treated like a file containing rules.
+    They are passed to rule_parser
+  void rule_parser(const char * __filename);
+    ==> parse the rules containted in a rule file
+    Calls line_parser to actually parse them
+  
+  void line_parser(const char * line);
+    ==> Parse the individual rules in a file
+    The format for these rules is as follows:
+    "alert alert_type port protocol (name:"name"; msg:"msg"; type:type; target:"target";)"
+      - alert_type is the type of alert to be called by the rule, the function pointer is assigned using 
+        the get_action function
+      - port is the port number this rule is applied to
+        @TODO add more flexibility and support here
+      - protocol is the layer 4 protocol that this rule should be applied to.
+      - name is the name of the rule.
+      - msg is the message to be printed to the screen and in logs
+      - type is the function pointer that is assigned using the get_ruletype function
+    After the line has been successfuly parsed, they rule is built and added to the "rules" struct
+    located in /src/globals.c
+
+  void deny_conf_parser(char * file);
+    ==> Parse the blacklist
+    Entries should be listed as follows:
+      protocol:address
+      i.e: ipv4:10.0.0.1
+    The ipv4 addresses will be added to the blocked_ipv4_addrs struct in /src/globals.
+    @TODO add support for MAC and IPv6 addresses
+*/
+
+
+
+
 // also the main config parser
 void rule_library_parser(const char * alt_file){
   // alt_file will be determined elsewhere
