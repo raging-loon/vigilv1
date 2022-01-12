@@ -1,2 +1,2 @@
-alert stdout any TCP (name:"nmap_ua"; msg:"Nmap User Agent Detected"; type:bit_match; target:"Nmap Scripting Engine;";) 
-#alert stdout any TCP (msg:"SQLMap User Agent Detected"; bit_match target:"Sqlmap";)
+alert stdout any TCP (name:"nmap_ua"; msg:"Nmap User Agent Detected"; type:str_match; target:"Nmap Scripting Engine;";) 
+#alert stdout any TCP (msg:"SQLMap User Agent Detected"; str_match target:"Sqlmap";)

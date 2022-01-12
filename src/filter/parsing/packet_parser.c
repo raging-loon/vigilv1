@@ -8,14 +8,14 @@
 /*
   *-*-*-*- packet_parser.c -*-*-*-*
   @purpose Provides parsing for packets so rules can be applied.
-  bool bit_match_parser(const struct rule_data * __rule_data, const struct rule * __rule);
+  bool str_match_parser(const struct rule_data * __rule_data, const struct rule * __rule);
     ==> Convert both the entire packet and __rule->target_chars into hexadecimal characters.
         __rule->target_chars is searched for within the hexadecimal representation of the packet
   
   @TODO: add a function for raw bit matching and rename bit_match_parser.  
 */
 
-bool bit_match_parser(const struct rule_data * __rule_data, const struct rule * __rule){
+bool str_match_parser(const struct rule_data * __rule_data, const struct rule * __rule){
 
   char temp_pkt[ __rule_data->pkt_len * 2];
   char temp_target[strlen(__rule->rule_target) * 2];

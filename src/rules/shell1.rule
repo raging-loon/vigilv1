@@ -1,5 +1,5 @@
 
-alert stdout any ANY "/bin/bash Access detected" bit_match "/bin/bash"
-alert stdout any ANY "/bin/sh Access detected" bit_match "/bin/sh"
-alert stdout any ANY "/bin/dash Access detected" bit_match "/bin/dash"
-alert stdout any ANY "/bin/zsh Access detected" bit_match "/bin/zsh"
+alert stdout any ANY "/bin/bash Access detected" str_match "/bin/bash"
+alert stdout any ANY "/bin/sh Access detected" str_match "/bin/sh"
+alert stdout any ANY "/bin/dash Access detected" str_match "/bin/dash"
+alert stdout any ANY "/bin/zsh Access detected" str_match "/bin/zsh"

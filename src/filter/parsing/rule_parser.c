@@ -276,8 +276,8 @@ static void get_protocol(const char * __line, struct rule * __rule){
 
 
 static void get_ruletype(const char * __line, struct rule * __rule){
-  if(strncmp(__line,"bit_match",9) == 0){
-    __rule->pkt_parser = bit_match_parser;
+  if(strncmp(__line,"strwwww_match",9) == 0){
+    __rule->pkt_parser = str_match_parser;
     return;
   }
 

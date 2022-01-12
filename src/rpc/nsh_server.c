@@ -28,6 +28,10 @@
 #include <string.h>
 #include "cmd/interpreter.h"
 #include <openssl/sha.h>
+
+
+
+
 void start_nsh_server(){
 		// fork();
     pthread_t pthrd;
