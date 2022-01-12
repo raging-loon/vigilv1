@@ -6,7 +6,7 @@ all: npsi clean
 print_utils.o:
 	$(CC) -c src/print_utils.c
 globals.o:
-	$(CC) -c globals.c
+	$(CC) -c globals.c -l pthread
 main.o:
 	$(CC) -c main.c -l pcap
 ip_addr_stat.o:

@@ -19,6 +19,7 @@
 #include "src/statistics/ip_addr_stat.h"
 #include <stdint.h>
 #include <stdbool.h>
+#include <pthread.h>
 #include "src/filter/parsing/rule.h"
 #include "src/statistics/arpcache.h"
 #include "src/statistics/watchlist.h"
@@ -67,4 +68,11 @@ extern char sqlite_db_path[32];
 extern unsigned int clean_delay_pkts;
 
 extern bool quiet_exit;
+
+
+
+extern pthread_t threads[64];
+
+
+
 #endif /* GLOBALS_H */

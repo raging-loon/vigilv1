@@ -3,11 +3,12 @@
 #include "src/statistics/arpcache.h"
 #include "src/statistics/spi.h"
 #include "src/filter/parsing/rule.h"
+#include <pthread.h>
 // globals defined in @globals.h
 // config options
 int strict_icmp_timestamp_req;
 int strict_nmap_host_alive_check;
-
+pthread_t threads[64];
 // counters
 unsigned int total_pkt_captured = 0;
 int blk_ipv4_len = -1;
