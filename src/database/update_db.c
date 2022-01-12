@@ -18,6 +18,7 @@ void * update_db(void * args){
     goto close;
   } 
   char query[512];
+  
   switch(update->update_type){
     case ARP_UP_T:
       sprintf(query,"INSERT INTO arp_cache (ip_address, mac_address) VALUES (\"%s\", \"%s\");",update->ip_addr,update->mac_addr);

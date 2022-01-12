@@ -133,9 +133,6 @@ void rule_parser(const char * __filename){
 
 
 
-
-
-
 void line_parser(const char * line){
   int filled = 0;
 	char * parser_line;

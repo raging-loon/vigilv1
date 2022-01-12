@@ -30,6 +30,21 @@
 #include "../colors.h"
 #include "icmpdsct.h"
 #include "../../globals.h"
+
+/*
+  *-*-*-*- icmpdsct.c -*-*-*-*
+  @purpose to decode ICMP packets
+  ip6_icmp_decode(const u_char * pkt, const char * src, const char * dst);
+  ip4_icmp_decode(const u_char * pkt, const char * src, const char * dst);
+    ==> Decode ICMP packets by type and code. 
+    Also will look at all hosts that have nmap_host_alive_watch and increment and detect based
+    on the number of packets sent and whether or not the packet is a TIMESTAMP REQUEST or ECHO REQUEST
+    @TODO log and report ICMP abnormalties
+    @TODO look at more type/codes combos 
+*/
+
+
+
 void ip6_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * dest_ip){
   
   struct __icmp6 * icmpv6 = (struct __icmp6 *)(pkt + ETH_HDR_SZ + sizeof(struct ip6hdr));

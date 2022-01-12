@@ -41,7 +41,7 @@ bool tcp_rst_portscan_detect(const struct watchlist_member * w){
   }
   int f = 0;
   for(int i = 0; i < subtime_t; i++){
-    if(subtimes[i] < 14843508) f++;
+    if(subtimes[i] < 11843508) f++;
   }
   if(f == subtime_t){
     FILE * siglog_fp = fopen(def_log_file,"a");
@@ -75,7 +75,7 @@ bool fin_rst_portscan_detect(const struct watchlist_member * w){
     FILE * siglog_fp = fopen(def_log_file,"a");
     printf("FIN portscan detected from IP Address %s\n",w->ip_addr);
     char message[128];
-    sprintf(message,"FIN detected from %s at %s\n",w->ip_addr,get_formated_time());
+    sprintf(message,"FIN portscan detected from %s at %s\n",w->ip_addr,get_formated_time());
     fputs(message,siglog_fp); 
     fclose(siglog_fp);
     return true;

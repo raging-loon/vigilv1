@@ -8,7 +8,17 @@
 #include "l3pktmgr.h"
 #include "../statistics/wclean.h"
 
-
+/*
+  *-*-*-*- pktmgr.c -*-*-*-*
+  @purpose Decode the ethernet header
+  void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsigned char *pkt);
+    ==> The function used in the pcap_loop function in /main.c
+    @actions:
+      1. Print the packet seperator
+      2. Scan for watchlist cleaning(not yet implemented)
+      3. Call decoding functions based on the protocol number in the ethernet header
+    @TODO fix the scan_for_clean function in /src/statistics/wclean.c
+*/
 void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsigned char *pkt){
   if(packet_print) printf("\033[90m-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\033[m\n");
   /*

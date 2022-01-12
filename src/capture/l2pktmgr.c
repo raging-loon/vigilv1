@@ -14,6 +14,25 @@
 #include "../statistics/arpcache.h"
 #include "../packets/ctp.h"
 #include "../../globals.h"
+
+
+/*
+  *-*-*-*- l2pktmgr.c -*-*-*-*
+  @purpose Decode various layer two protocols
+  @supports
+    - ARP
+    - CTP
+
+  void arpdecode(const u_char * pkt, const struct pcap_pkthdr * pkthdr);
+    ==> decode arp packets based on data in the /src/packets/arp-hdr.h struct
+    Will also interact with the sqlite database if it is specified to do so 
+    in the config file.
+  
+  @TODO Add decoding for more layer two protocols(especially distance protocols and STP)
+  
+*/
+
+
 void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
   if(packet_print) printf("%s",__ARP_BOTH);
 
