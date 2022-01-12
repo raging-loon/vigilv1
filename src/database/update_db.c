@@ -45,4 +45,5 @@ void * update_db(void * args){
   }
  close: 
   sqlite3_close(database);
+  return (void *)1; 
 }

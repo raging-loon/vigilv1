@@ -57,7 +57,6 @@
 
     Various part of the TCP and IP header are added to the rdata(struct rule_data) structure so rules can be 
     adequately applied via the rulemgr function(/src/filter/parsing/rule.c)
-
   @TODO: add support for IPv6(URGENT)
 */
 
@@ -217,9 +216,9 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   if(IS_PORT_DEST_SRC(dest_port,src_port,21)){
     ftp_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),rdata);
   }
-  if(packet_print)
-  ascii_hexdump(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),
-                pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4));
+  // if(packet_print)
+  // ascii_hexdump(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),
+                // pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4));
   rulemgr(rdata);
   
 }

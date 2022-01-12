@@ -93,5 +93,5 @@ end:
   }
 
   // printf("[DEBUG] temp_info->__ip_addr = %s ip_stats[ip_addr_stat_counter_len].ip_addr = %s\n",temp_info->__ip_addr,ip_stats[ip_addr_stat_counter_len].ip_addr);
-    
+   return (void *)1; 
 }

@@ -236,8 +236,6 @@ void line_parser(const char * line){
         strncpy(__rule->rule_target,target + 9, strlen(target)-11);
         // printf("%s\n",__rule->rule_target);
         return;
-      }else{
-
       }
     }
 
@@ -276,7 +274,7 @@ static void get_protocol(const char * __line, struct rule * __rule){
 
 
 static void get_ruletype(const char * __line, struct rule * __rule){
-  if(strncmp(__line,"strwwww_match",9) == 0){
+  if(strncmp(__line,"str_match",9) == 0){
     __rule->pkt_parser = str_match_parser;
     return;
   }

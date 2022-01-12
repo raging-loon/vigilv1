@@ -187,7 +187,7 @@ static void *nsh_shell(void * args){
 	const connect_t * connection = args;
 			printf("new connection at %s:%d\n",
 						inet_ntoa(connection->__socket->sin_addr),htons(connection->__socket->sin_port));
-			static __thread char buffer[128] = {0};
+			static __thread char buffer[1024] = {0};
 
 			if(nsh_do_login(connection->file_desc, inet_ntoa(connection->__socket->sin_addr)) == false){
 				send(connection->file_desc,"Invalid login\r\n",16,0);
@@ -205,4 +205,5 @@ static void *nsh_shell(void * args){
 				}
 				close(connection->file_desc);
 			}
+	return (void *)1;
 }
