@@ -1,6 +1,15 @@
 #include "rule.h"
 #include "../../../globals.h"
 #include <stdio.h>
+
+
+/*
+  *-*-*-*- rule.c -*-*-*-*
+  @purpose Apply rules located in "rules" in /globals.h
+  void rulemgr(const struct rule_data * __rule_data);
+    ==> Apply the rules
+    TODO: Add support for ports
+*/
 void rulemgr(const struct rule_data * __rule_data){
   for(int i = 0; i < num_rules + 1;){
     struct rule * temp_rule = &rules[i++];

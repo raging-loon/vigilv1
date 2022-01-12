@@ -3,7 +3,14 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/socket.h>
-
+/*
+  *-*-*-*- rule.h -*-*-*-*
+  @purpose define struct for rules
+  struct rule_data;
+    ==> data for rules, applications of rules and logging.
+    - u_char pkt -> the actual packet
+    - int pkt_len is required for the functions in packet_parser.c
+*/
 
 #define  R_TCP    126
 #define  R_UDP    127

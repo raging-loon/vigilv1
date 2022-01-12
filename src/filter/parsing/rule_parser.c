@@ -52,7 +52,7 @@ static void get_action(const char * , struct rule *);
       - alert_type is the type of alert to be called by the rule, the function pointer is assigned using 
         the get_action function
       - port is the port number this rule is applied to
-        @TODO add more flexibility and support here
+        @TODO: add more flexibility and support here
       - protocol is the layer 4 protocol that this rule should be applied to.
       - name is the name of the rule.
       - msg is the message to be printed to the screen and in logs
@@ -66,7 +66,8 @@ static void get_action(const char * , struct rule *);
       protocol:address
       i.e: ipv4:10.0.0.1
     The ipv4 addresses will be added to the blocked_ipv4_addrs struct in /src/globals.
-    @TODO add support for MAC and IPv6 addresses
+    @TODO: add support for MAC and IPv6 addresses
+    
 */
 
 

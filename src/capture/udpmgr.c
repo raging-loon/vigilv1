@@ -19,7 +19,7 @@
   void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata,const struct pcap_pkthdr * pkt_hdr);
     ==> Decode the ports and print the packets information to the screen(if cmd args permit it)
     Apply rules via the rulemgr function(/src/filter/parsing/rule.c)
-  @TODO ADD IPV6 SUPPORT!
+  @TODO: ADD IPV6 SUPPORT!
 */
 
 

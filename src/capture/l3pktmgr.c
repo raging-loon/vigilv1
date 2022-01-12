@@ -35,7 +35,7 @@
     ==> Decodes ipv6_hdr based on the size of the ethernet header and the 
         ipv6_hdr struct located in /src/packets/ip6hdr.h
     Can currently decode ICMPv6
-    @TODO Add support for TCP and UDP decoding and for rule_data
+    @TODO: Add support for TCP and UDP decoding and for rule_data
 
   void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr);
     ==> Decodes ipv4_hdr based on size of ethernet header and the ip_hdr located in 

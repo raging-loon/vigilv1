@@ -4,7 +4,16 @@
 #include "../../../globals.h"
 #include "../../print_utils.h"
 #include <time.h>
-
+/*
+  *-*-*-*- alerts.c -*-*-*-*
+  @purpose Alert administrators of events
+  @TODO: Add support for the following:
+    - rsyslog
+    - SNMP
+    - Monitoring systems
+    - Email
+  
+*/
 void stdout_alert(const struct rule_data* __rule_data, const struct rule * __rule, int a_level){
   time_t t = time(NULL);
   struct tm __time = *localtime(&t);

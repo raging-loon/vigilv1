@@ -58,7 +58,7 @@
     Various part of the TCP and IP header are added to the rdata(struct rule_data) structure so rules can be 
     adequately applied via the rulemgr function(/src/filter/parsing/rule.c)
 
-  @TODO add support for IPv6(URGENT)
+  @TODO: add support for IPv6(URGENT)
 */
 
 void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr *pkt_hdr){

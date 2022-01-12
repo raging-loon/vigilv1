@@ -39,8 +39,8 @@
     ==> Decode ICMP packets by type and code. 
     Also will look at all hosts that have nmap_host_alive_watch and increment and detect based
     on the number of packets sent and whether or not the packet is a TIMESTAMP REQUEST or ECHO REQUEST
-    @TODO log and report ICMP abnormalties
-    @TODO look at more type/codes combos 
+    @TODO: log and report ICMP abnormalties
+    @TODO: look at more type/codes combos 
 */
 
 

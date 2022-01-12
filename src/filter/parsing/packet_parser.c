@@ -11,8 +11,8 @@
   bool bit_match_parser(const struct rule_data * __rule_data, const struct rule * __rule);
     ==> Convert both the entire packet and __rule->target_chars into hexadecimal characters.
         __rule->target_chars is searched for within the hexadecimal representation of the packet
-
-  @TODO add a function for raw bit matching and rename bit_match_parser.  
+  
+  @TODO: add a function for raw bit matching and rename bit_match_parser.  
 */
 
 bool bit_match_parser(const struct rule_data * __rule_data, const struct rule * __rule){
