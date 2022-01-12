@@ -94,3 +94,8 @@ int strloc(const char * haystack,const char needle){
   }
   return -1;
 }
+
+
+void fail(const char * modname, const char * msg){
+  printf("%s:%s\n",modname,msg);
+}

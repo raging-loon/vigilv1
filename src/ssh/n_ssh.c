@@ -13,9 +13,12 @@ void init_ssh_server(){
 void * start_ssh_server(void * args){
   int ssh_fd,sock, input;
   struct sockaddr_in ssh_addr;
+  int addrlen = sizeof(ssh_addr);
   if((ssh_fd = socket(AF_INET,SOCK_STREAM,0)) == 0){
     printf("n_ssh.c: failed to create socket\n");
     exit(EXIT_FAILURE);
   }
-  if(setsockopt(ssh_fd,SOL))
+  if(setsockopt(ssh_fd,SOL_SOCKET,SO_REUSEADDR, &addrlen,sizeof(addrlen))){
+    printf("");
+  }
 }
