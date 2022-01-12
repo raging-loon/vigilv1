@@ -236,7 +236,7 @@ void line_parser(const char * line){
         strncpy(__rule->rule_target,target + 9, strlen(target)-11);
         // printf("%s\n",__rule->rule_target);
         return;
-      }
+      } 
     }
 
 
