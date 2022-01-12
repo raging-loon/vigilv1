@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../utils.h"
 void init_ssh_server(){
   pthread_t pthrd;
   pthread_create;
@@ -19,6 +20,9 @@ void * start_ssh_server(void * args){
     exit(EXIT_FAILURE);
   }
   if(setsockopt(ssh_fd,SOL_SOCKET,SO_REUSEADDR, &addrlen,sizeof(addrlen))){
-    printf("");
+    fail("n_ssh.c","failure in setsockopt");
+    exit(EXIT_FAILURE);
   }
+  ssh_addr.sin_family = AF_INET;
+  
 }
