@@ -128,11 +128,11 @@ static bool nsh_do_login(int fd,const char * rhost){
           __time.tm_sec);
 						
 	while((pos = getline(&line,&len,fp)) != -1){
-		SHA256_CTX ctx;
-		unsigned char real_hash[65];
+		SHA512_CTX ctx;
+		unsigned char real_hash[SHA512_DIGEST_LENGTH * 2];
 		char temp_password[65];
 		unsigned char temp_username[16];
-		unsigned char hash[SHA256_DIGEST_LENGTH];
+		unsigned char hash[SHA512_DIGEST_LENGTH];
 		memset(&hash,0,sizeof(hash));
 		memset(&ctx,0,sizeof(ctx));
 		memset(&real_hash,0,sizeof(real_hash));
@@ -149,11 +149,11 @@ static bool nsh_do_login(int fd,const char * rhost){
 		strcpy(temp_password,ptr);
 		// printf("%s\n",passwd_ptr);
 		printf("%s\n",temp_password);
-		SHA256_Init(&ctx);
-		SHA256_Update(&ctx,passwd_ptr,sizeof(passwd_ptr));
-		SHA256_Final((unsigned char *)&hash,&ctx);
+		SHA512_Init(&ctx);
+		SHA512_Update(&ctx,passwd_ptr,sizeof(passwd_ptr));
+		SHA512_Final((unsigned char *)&hash,&ctx);
 		
-		for(int i = 0; i < SHA256_DIGEST_LENGTH; i++){
+		for(int i = 0; i < SHA512_DIGEST_LENGTH * 2; i++){
 			sprintf(real_hash + (i * 2),"%02x",hash[i]);
 		}
 

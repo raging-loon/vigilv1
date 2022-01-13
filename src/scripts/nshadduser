@@ -15,7 +15,7 @@
 #    limitations under the License.
 #
 
-from hashlib import sha256
+from hashlib import sha512
 username = input("Username: ").strip("\n")
 file = open("/etc/npsi/passwd","r")
 for line in file:
@@ -29,5 +29,5 @@ if(password != repass):
   exit(-1)
 file.close()
 appendfile = open("/etc/npsi/passwd","a")
-appendfile.write("{}:{}\n".format(username,sha256(password.encode()).hexdigest()));
+appendfile.write("{}:{}\n".format(username,sha512(password.encode()).hexdigest()));
 appendfile.close();
