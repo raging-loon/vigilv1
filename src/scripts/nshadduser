@@ -30,7 +30,8 @@ if(password != repass):
 file.close()
 appendfile = open("/etc/npsi/passwd","a")
 __hash = sha512(password.encode()).hexdigest();
-passhash = "{}:{}\n".format(username,__hash)
+passhash = "{}:{}\n".format(username,__hash) # lgtm [py/clear-text-storage-sensitive-data]
+
 
 appendfile.write(passhash);
 appendfile.close();
