@@ -29,5 +29,8 @@ if(password != repass):
   exit(-1)
 file.close()
 appendfile = open("/etc/npsi/passwd","a")
-appendfile.write("{}:{}\n".format(username,sha512(password.encode()).hexdigest()));
+__hash = sha512(password.encode()).hexdigest();
+passhash = "{}:{}\n".format(username,__hash)
+
+appendfile.write(passhash);
 appendfile.close();
