@@ -18,6 +18,7 @@ void stdout_alert(const struct rule_data* __rule_data, const struct rule * __rul
   time_t t = time(NULL);
   struct tm __time = *localtime(&t);
   char time[64];
+  char message[256];
   sprintf(time,"%d-%02d-%02d %02d:%02d:%02d",
           __time.tm_year + 1900,
           __time.tm_mon + 1,
@@ -25,22 +26,15 @@ void stdout_alert(const struct rule_data* __rule_data, const struct rule * __rul
           __time.tm_hour,
           __time.tm_min,
           __time.tm_sec);
-  printf("%s at %s %s:%d -> %s:%d\n",__rule->message,
-                            time,
+  sprintf(message,"%s %s %s:%d -> %s:%d\n",time, __rule->message,
 														__rule_data->src_ip_addr,
 														__rule_data->src_port,
 														__rule_data->dest_ip_addr,
 														__rule_data->dest_port);
+  printf("%s",message);
 //   ascii_hexdump(__rule_data->pkt,__rule_data->pkt_len);
   FILE * fp = fopen(def_log_file,"a");
-  char logmsg[256];
-  sprintf(logmsg,"%s at %s %s:%d -> %s:%d\n",__rule->message,
-                            time,
-														__rule_data->src_ip_addr,
-														__rule_data->src_port,
-														__rule_data->dest_ip_addr,
-														__rule_data->dest_port);
-  fputs(logmsg,fp);
+  fputs(message,fp);
   fclose(fp);
 
 

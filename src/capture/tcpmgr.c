@@ -209,7 +209,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   rdata->src_port = src_port;
   if(packet_print){
     if((PSH_ACK_SET(psh_set,ack_set)) && IS_PORT_DEST_SRC(dest_port,src_port,80)){
-      // http_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(struct __tcp) + 12,rdata);
+      http_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(struct __tcp) + 12,rdata);
     
     }
   }
