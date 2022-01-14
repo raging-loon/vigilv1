@@ -2,8 +2,10 @@
 #define SPI_H
 
 #include <stdint.h>
-#include "watchlist.h"
-#include "wldataset.h"
+#include "../statistics/watchlist.h"
+#include "../statistics/wldataset.h"
+#include "../filter/parsing/rule.h"
+
 struct w_tcp_session{
   unsigned int start;
   unsigned int end;
@@ -13,7 +15,16 @@ struct w_tcp_session{
 };
 
 
-
+struct pkt_spi{
+  char src_ip_addr[16];
+  char dest_ip_addr[16];
+  int l3_proto;
+  int l4_proto;
+  int dest_port;
+  int src_port;
+  int is_flagged;
+  struct rule * rules[16];
+};
 
 
 struct spi_member{

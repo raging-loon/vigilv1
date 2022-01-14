@@ -1,7 +1,7 @@
 #include "globals.h"
 #include "src/statistics/watchlist.h"
 #include "src/statistics/arpcache.h"
-#include "src/statistics/spi.h"
+#include "src/engine/spi.h"
 #include "src/filter/parsing/rule.h"
 #include <pthread.h>
 // globals defined in @globals.h
@@ -37,3 +37,9 @@ char sqlite_db_path[32];
 unsigned int clean_delay_pkts = 0;
 bool packet_print;
 bool quiet_exit = false;
+
+
+unsigned int spt_max_pkt = 100;
+unsigned int spi_pkt_now;
+
+struct spi_pkt last_pkts_spi[100];

@@ -20,6 +20,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <pthread.h>
+#include "src/engine/spi.h"
 #include "src/filter/parsing/rule.h"
 #include "src/statistics/arpcache.h"
 #include "src/statistics/watchlist.h"
@@ -69,10 +70,11 @@ extern unsigned int clean_delay_pkts;
 
 extern bool quiet_exit;
 
-
-
 extern pthread_t threads[64];
 
+extern unsigned int spi_max_pkt;
+extern unsigned int spi_pkt_now;
 
+extern struct spi_pkt last_pkts_spi[100];
 
 #endif /* GLOBALS_H */
