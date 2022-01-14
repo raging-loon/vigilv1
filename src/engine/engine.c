@@ -7,3 +7,8 @@
 void nshengine(const struct rule_data * rdata){
     
 }
+
+
+void ne_portscan_bs_d(const struct rule_data * rdata){
+ 
+}

@@ -1,78 +1,16 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-void rule_parser(const char * );
-int strloc(const char * restrict haystack,const char needle);
-int main(int argc, char ** argv){
-	FILE * fp = fopen(argv[1],"r");
-	size_t pos, len = 0;
-	char * line = NULL;	
-
-	while((pos = getline(&line,&len,fp)) != -1){
-		if(strstr(line,"#") != NULL) continue;
-		rule_parser(line);
-	}
-}
-
-void rule_parser(const char * line){
-	int filled = 0;
-	
-	char * parser_line;
-	char ruletype[32];
-	char rulename[32];
-	char target_chars[64];
-	char alert_type[32];
-	char protocol[10];
-	char port[14];
-
-	// the first par always needs to be "alert"
-	int chars_parsed = 6;
-	while(filled != 6){
-		parser_line = line + chars_parsed;
-		char target[64];
-		memset(&target,0,sizeof(target));
-		strncpy(target,parser_line ,strloc(parser_line,' ') + 1);
-		chars_parsed += strlen(target);
-
-		if(filled == 0){
-			strcpy(alert_type,target);
-		} 
-		else if(filled == 1){
-			strcpy(port,target);
-		} 
-		else if(filled == 2){
-			strcpy(protocol,target);
-		}
-		else if(filled == 3){
-			char * name = target + 1;
-			name[strcspn(name,"\"")] = 0;
-			strcpy(rulename,name);
-		}
-		else if(filled == 4){
-			strcpy(ruletype,target);
-		}
-		else if(filled == 5){
-			memset(&target_chars,0,sizeof(target_chars));
-			strncpy(target_chars,parser_line + 1,strlen(parser_line) - 5);
-		}
-		filled++;
-	}
-	printf("alert_type: %s\n",alert_type);
-	printf("port: %s\n",port);
-	printf("protocol: %s\n",protocol);
-	printf("rule_name: %s\n",rulename);
-	printf("rule_type: %s\n",ruletype);
-	printf("target_chars: %s\n",target_chars);
-}
-
-
-
-
-int strloc(const char * restrict haystack,const char needle){
-  for(int i = 0; haystack[i] != NULL; i++){
-    if(haystack[i] == needle){
-      return i;
-    }
-  }
-  return -1;
+int main(){
+	const unsigned char pkt = "\x33\x33\x00\x00\x00\xfb\x00\x50\x56\xaa\xb0\x05\x86\xdd\x60\x06" \
+"\xaf\xf1\x00\x7e\x11\xff\xfe\x80\x00\x00\x00\x00\x00\x00\xc0\xd5" \
+"\x78\x05\x6a\xbd\x69\x34\xff\x02\x00\x00\x00\x00\x00\x00\x00\x00" \
+"\x00\x00\x00\x00\x00\xfb\x14\xe9\x14\xe9\x00\x7e\x4d\xc0\x00\x00" \
+"\x00\x00\x00\x07\x00\x00\x00\x00\x00\x00\x04\x5f\x66\x74\x70\x04" \
+"\x5f\x74\x63\x70\x05\x6c\x6f\x63\x61\x6c\x00\x00\x0c\x00\x01\x04" \
+"\x5f\x6e\x66\x73\xc0\x11\x00\x0c\x00\x01\x0b\x5f\x61\x66\x70\x6f" \
+"\x76\x65\x72\x74\x63\x70\xc0\x11\x00\x0c\x00\x01\x04\x5f\x73\x6d" \
+"\x62\xc0\x11\x00\x0c\x00\x01\x09\x5f\x73\x66\x74\x70\x2d\x73\x73" \
+"\x68\xc0\x11\x00\x0c\x00\x01\x08\x5f\x77\x65\x62\x64\x61\x76\x73" \
+"\xc0\x11\x00\x0c\x00\x01\x07\x5f\x77\x65\x62\x64\x61\x76\xc0\x11" \
+"\x00\x0c\x00";
+printf("%d\n",sizeof(pkt));
 }

@@ -97,5 +97,5 @@ int strloc(const char * haystack,const char needle){
 
 
 void fail(const char * modname, const char * msg){
-  printf("%s:%s\n",modname,msg);
+  printf("%s: %s\n",modname,msg);
 }
