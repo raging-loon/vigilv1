@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/socket.h>
-#include <engine/spi.h>
+#include "../../engine/spi.h"
 /*
   *-*-*-*- rule.h -*-*-*-*
   @purpose define struct for rules

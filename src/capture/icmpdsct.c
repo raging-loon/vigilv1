@@ -79,9 +79,14 @@ void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
   add_ip_addr_or_inc_counter(rdata->src_ip_addr,true,ICMP);
   add_ip_addr_or_inc_counter(rdata->dest_ip_addr,false,ICMP);
   const char * src_ip = rdata->src_ip_addr;
-  const char * dest_ip = rdata->src_ip_addr;
+  const char * dest_ip = rdata->dest_ip_addr;
+  
   struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
   
+  // rdata->spi_pkt->dest_port = 0;
+  printf("here2\n");
+  // rdata->spi_pkt->src_port = 0;
+  add_pkt_data(rdata->spi_pkt);
   if(icmp4->type == 8 && strict_nmap_host_alive_check == true){
     int watchlist_index;
     if((watchlist_index = member_exists(rdata->src_ip_addr)) != -1){
@@ -123,7 +128,6 @@ void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
       }
     }
   }
-
   stop:;
 
 
@@ -247,9 +251,7 @@ void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
       printf(" unknown icmp type=%d",icmp4->type);
       break;
   }
-  printf("%s",__END_COLOR_STREAM);
+    printf("%s",__END_COLOR_STREAM);
   }
-  rdata->spi_pkt->dest_port = -1;
-  rdata->spi_pkt->src_port = -1;
-  add_pkt_data(rdata->spi_pkt);
+
 }

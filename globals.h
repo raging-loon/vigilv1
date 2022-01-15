@@ -70,9 +70,9 @@ extern unsigned int clean_delay_pkts;
 
 extern bool quiet_exit;
 
-extern pthread_t threads[64];
+// extern pthread_t threads[64];
 
-extern unsigned int spi_max_pkt;
+extern int spi_max;
 extern unsigned int spi_pkt_now;
 
 extern struct pkt_spi last_pkts_spi[100];

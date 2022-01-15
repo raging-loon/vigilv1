@@ -36,7 +36,7 @@
         ipv6_hdr struct located in /src/packets/ip6hdr.h
     Can currently decode ICMPv6
     @TODO: Add support for TCP and UDP decoding and for rule_data
-
+    @FIXME: Fix IGMP decoding as it relates to spi_pkt
   void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr);
     ==> Decodes ipv4_hdr based on size of ethernet header and the ip_hdr located in 
         /src/packets/iphdr.h
@@ -75,8 +75,11 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   struct ip_hdr * ip_header = (struct ip_hdr * )(pkt + ETH_HDR_SZ);
   struct sockaddr_in src, dest;
   struct rule_data rdata;
-  struct pkt_spi spi_pkt;
-  spi_pkt_now++;
+  memset(&last_pkts_spi[spi_pkt_now++],0,sizeof(struct pkt_spi));
+  struct pkt_spi * spi_pkt = &last_pkts_spi[spi_pkt_now];
+  printf("ipv4pktmgr: 80\n");
+  spi_pkt->dest_port = 0;
+  spi_pkt->src_port = 0;
   char src_ip[32];
   char dest_ip[32];
   
@@ -101,8 +104,8 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
 
   strncpy(dest_ip, inet_ntoa(dest.sin_addr),sizeof(dest_ip));
   strncpy(src_ip, inet_ntoa(src.sin_addr),sizeof(src_ip));
-  strncpy(spi_pkt.dest_ip_addr,dest_ip,sizeof(dest_ip));
-  strncpy(spi_pkt.src_ip_addr,src_ip,sizeof(src_ip));
+  strncpy(spi_pkt->dest_ip_addr,dest_ip,sizeof(dest_ip));
+  strncpy(spi_pkt->src_ip_addr,src_ip,sizeof(src_ip));
   // init both addresses;
   
   init_member((const char *)&dest_ip);
@@ -129,7 +132,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   int data_size;
   switch(ip_header->protocol){
     case 1:{
-      spi_pkt.l3_proto = R_ICMP;
+      spi_pkt->l3_proto = R_ICMP;
       rdata.__protocol = R_ICMP;
       ip4_icmp_decode(pkt,&rdata);
       break;
@@ -143,14 +146,14 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       break;
     
     case 6:
-      spi_pkt.l3_proto = R_TCP;
+      spi_pkt->l3_proto = R_TCP;
       rdata.__protocol = R_TCP; 
       ip4_tcp_decode(pkt,&rdata,pkt_hdr);
       // data_size = base_data_size - sizeof(struct tcphdr);
       // ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     case 17:
-      spi_pkt.l3_proto = R_UDP;
+      spi_pkt->l3_proto = R_UDP;
       rdata.__protocol = R_UDP;
       ip4_udp_decode(pkt,&rdata,pkt_hdr);
       // data_size = base_data_size - sizeof(struct udphdr);

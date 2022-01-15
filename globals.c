@@ -8,7 +8,7 @@
 // config options
 int strict_icmp_timestamp_req;
 int strict_nmap_host_alive_check;
-pthread_t threads[64];
+// pthread_t threads[64];
 // counters
 unsigned int total_pkt_captured = 0;
 int blk_ipv4_len = -1;
@@ -16,6 +16,7 @@ int num_rules = -1;
 int watchlist_num = -1;
 int arp_entries = -1;
 int is_running;
+int spi_max = 100;
 unsigned long last_clean_time;
 unsigned long clean_delay;
 unsigned int pkt_counter;
@@ -39,7 +40,6 @@ bool packet_print;
 bool quiet_exit = false;
 
 
-unsigned int spt_max_pkt = 100;
-unsigned int spi_pkt_now;
+unsigned int spi_pkt_now = 0;
 
 struct pkt_spi last_pkts_spi[100];

@@ -16,12 +16,12 @@ struct w_tcp_session{
 
 
 struct pkt_spi{
+  int dest_port;
+  int src_port;
   char src_ip_addr[16];
   char dest_ip_addr[16];
   int l3_proto;
   int l4_proto;
-  int dest_port;
-  int src_port;
   int is_flagged;
   struct rule * rules[16];
 };
