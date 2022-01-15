@@ -75,6 +75,6 @@ extern pthread_t threads[64];
 extern unsigned int spi_max_pkt;
 extern unsigned int spi_pkt_now;
 
-extern struct spi_pkt last_pkts_spi[100];
+extern struct pkt_spi last_pkts_spi[100];
 
 #endif /* GLOBALS_H */

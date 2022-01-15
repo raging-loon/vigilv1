@@ -30,7 +30,8 @@
 #include "../colors.h"
 #include "icmpdsct.h"
 #include "../../globals.h"
-
+#include "../filter/parsing/rule.h"
+#include "../engine/spi.h"
 /*
   *-*-*-*- icmpdsct.c -*-*-*-*
   @purpose to decode ICMP packets
@@ -74,13 +75,16 @@ void ip6_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
 }
 
 
-void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * dest_ip){
-  add_ip_addr_or_inc_counter(src_ip,true,ICMP);
-  add_ip_addr_or_inc_counter(dest_ip,false,ICMP);
+void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
+  add_ip_addr_or_inc_counter(rdata->src_ip_addr,true,ICMP);
+  add_ip_addr_or_inc_counter(rdata->dest_ip_addr,false,ICMP);
+  const char * src_ip = rdata->src_ip_addr;
+  const char * dest_ip = rdata->src_ip_addr;
   struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
+  
   if(icmp4->type == 8 && strict_nmap_host_alive_check == true){
     int watchlist_index;
-    if((watchlist_index = member_exists(src_ip)) != -1){
+    if((watchlist_index = member_exists(rdata->src_ip_addr)) != -1){
       struct watchlist_member * w = &watchlist[watchlist_index];
       if(w->nmap_watch_host_alive_watch.num_done == 0){
         w->nmap_watch_host_alive_watch.start_time = (unsigned long)time(NULL);
@@ -245,4 +249,7 @@ void ip4_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
   }
   printf("%s",__END_COLOR_STREAM);
   }
+  rdata->spi_pkt->dest_port = -1;
+  rdata->spi_pkt->src_port = -1;
+  add_pkt_data(rdata->spi_pkt);
 }

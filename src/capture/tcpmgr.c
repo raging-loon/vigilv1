@@ -39,7 +39,7 @@
 #include <time.h>
 #include "../print_utils.h"
 #include "protocols/http_disect.h"
-
+#include "../engine/spi.h"
 
 /*
   *-*-*-*- tcpmgr.c -*-*-*-*
@@ -79,6 +79,8 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   // uint16_t syn, ack, rst, fin, psh, urg;
   dest_port = (unsigned int)ntohs(tcp_hdr->dest);
   src_port = (unsigned int)ntohs(tcp_hdr->source);
+  rdata->spi_pkt->dest_port = dest_port;
+  rdata->spi_pkt->src_port = src_port;
   if(packet_print){
     printf("%s",__TCP_COLOR_NS);
     printf("IPv4 %s:%d -> %s:%d\n",
@@ -220,5 +222,5 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   // ascii_hexdump(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),
                 // pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4));
   rulemgr(rdata);
-  
+  add_pkt_data(rdata->spi_pkt);
 }

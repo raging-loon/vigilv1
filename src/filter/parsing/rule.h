@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/socket.h>
+#include <engine/spi.h>
 /*
   *-*-*-*- rule.h -*-*-*-*
   @purpose define struct for rules
@@ -25,7 +26,7 @@ struct rule_data{
   unsigned int src_port;
   unsigned int dest_port;
   int __protocol;
-  
+  struct pkt_spi * spi_pkt;
   int pkt_len;
   const struct sockaddr_in * src_socket;
   const struct sockaddr_in * dest_socket;

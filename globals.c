@@ -42,4 +42,4 @@ bool quiet_exit = false;
 unsigned int spt_max_pkt = 100;
 unsigned int spi_pkt_now;
 
-struct spi_pkt last_pkts_spi[100];
+struct pkt_spi last_pkts_spi[100];

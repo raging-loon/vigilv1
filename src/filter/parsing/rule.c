@@ -19,6 +19,8 @@ void rulemgr(const struct rule_data * __rule_data){
       if(temp_rule->pkt_parser(__rule_data,temp_rule)){
         temp_rule->action(__rule_data,temp_rule,0);
         temp_rule->times_matched++;
+        __rule_data->spi_pkt->is_flagged++;
+        __rule_data->spi_pkt->rules[__rule_data->spi_pkt->is_flagged] = temp_rule;
       }
     }
   }
