@@ -40,6 +40,8 @@ struct spi_member{
 
 void add_pkt_data(const struct pkt_spi *);
 
+
+void * spi_scan();
 #endif /* SPI_H */
 
 
