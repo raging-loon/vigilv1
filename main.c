@@ -75,18 +75,18 @@ int main(int argc, char **argv){
   if(load_csv_arp_cache() != -1) printf("Finished loading CSV arp cache\n");
   else printf("Failed to load CSV arp cache(non critical error)\n");
   
+  rule_library_parser("/etc/npsi/npsi.conf");
+  printf("Parsed rule files\n");
 
   char *dev = pcap_lookupdev(error_buf);
   printf("NPSI listening on interface %s\n",dev);
   pcap_t *pcap_mgr;
-  rule_library_parser("/etc/npsi/npsi.conf");
-  printf("Parsed rule files\n");
   if(dev == NULL){
     printf("Failure opening interface %s: %s\n",iface_name, error_buf);
     exit(EXIT_FAILURE);
   }
   char pkt_buffer[2046] = {0};
-  pcap_mgr = pcap_open_live(&dev,1024,1,100,pkt_buffer);
+  pcap_mgr = pcap_open_live(iface_name,1024,1,100,pkt_buffer);
   if(pcap_mgr == NULL){
     perror("pcap_mgr in pcap_open_live");
     exit(EXIT_FAILURE);

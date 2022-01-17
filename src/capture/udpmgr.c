@@ -12,6 +12,7 @@
 #include "../filter/parsing/rule.h"
 #include "../utils.h"
 #include "protocols/dns_disect.h"
+#include "../debug.h"
 
 /*
   *-*-*-*- udpmgr.c -*-*-*-*
@@ -31,8 +32,6 @@ void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata,const st
   unsigned int src_port, dest_port;
   src_port = (unsigned int)ntohs(udp_header->uh_sport);
   dest_port = (unsigned int)ntohs(udp_header->uh_dport);
-  rdata->spi_pkt->dest_port = dest_port;
-  rdata->spi_pkt->src_port = src_port;
   if(packet_print) {
     printf("%s",__UDP_REG);
     printf("IPv4 %s:%d -> %s:%d UDP\n",
@@ -41,9 +40,12 @@ void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata,const st
   }
   rdata->src_port = src_port;
   rdata->dest_port = dest_port;
+  livedebug("udpmgr.c: 43");
+  rdata->spi_pkt->src_port = (unsigned int )ntohs(udp_header->uh_sport);
+  rdata->spi_pkt->dest_port = (unsigned int )ntohs(udp_header->uh_dport);
   if(IS_PORT_DEST_SRC(src_port,dest_port,53)){
     dns_disect(pkt + 15 + sizeof(struct ip_hdr) + sizeof(udp_header),rdata); 
   }
   rulemgr(rdata);
-    // add_pkt_data(rdata->spi_pkt);
+    add_pkt_data(rdata->spi_pkt);
 }

@@ -75,6 +75,6 @@ extern bool quiet_exit;
 extern int spi_max;
 extern unsigned int spi_pkt_now;
 
-extern struct pkt_spi last_pkts_spi[100];
+extern struct pkt_spi last_pkts_spi[200];
 
 #endif /* GLOBALS_H */

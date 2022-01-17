@@ -8,10 +8,6 @@
 
 void add_pkt_data(const struct pkt_spi * pdata){
   if(spi_max <= spi_pkt_now){  
-   
-   
-   
-   
     spi_pkt_now = 0;
   }
 }

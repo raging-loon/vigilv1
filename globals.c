@@ -16,7 +16,7 @@ int num_rules = -1;
 int watchlist_num = -1;
 int arp_entries = -1;
 int is_running;
-int spi_max = 100;
+int spi_max = 200;
 unsigned long last_clean_time;
 unsigned long clean_delay;
 unsigned int pkt_counter;
@@ -42,4 +42,4 @@ bool quiet_exit = false;
 
 unsigned int spi_pkt_now = 0;
 
-struct pkt_spi last_pkts_spi[100];
+struct pkt_spi last_pkts_spi[200];
