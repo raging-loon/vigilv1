@@ -84,7 +84,6 @@ void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
   struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
   
   // rdata->spi_pkt->dest_port = 0;
-  printf("here2\n");
   // rdata->spi_pkt->src_port = 0;
   add_pkt_data(rdata->spi_pkt);
   if(icmp4->type == 8 && strict_nmap_host_alive_check == true){

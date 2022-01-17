@@ -24,6 +24,7 @@ struct pkt_spi{
   unsigned int __time__;
   int l4_proto;
   int is_flagged;
+  uint16_t flags;
   struct rule * rules[16];
 };
 

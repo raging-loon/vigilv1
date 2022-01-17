@@ -28,6 +28,7 @@
 #include "../filter/parsing/packet_parser.h"
 #include "../../globals.h"
 #include "../debug.h"
+#include "../engine/flags.h"
 #include "../engine/spi.h"
 
 /*
@@ -85,7 +86,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   char src_ip[16];
   char dest_ip[16];
   rdata.spi_pkt->__time__ = (unsigned int)time(NULL);
-  
+  rdata.spi_pkt->flags = 0x0000;  
 
 
   memset(&src,0,sizeof(src));
@@ -125,6 +126,9 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
 
   if(ip_header->flags == 0x0020 || ip_header->flags == 0x0102){
     printf("%sFragmented ",__FRAGMENTED);
+    
+    rdata.spi_pkt->flags ^= IPv4_IS_FRAGMENT;
+
     if(packet_print)
       printf("%s",__END_COLOR_STREAM);
     else 
