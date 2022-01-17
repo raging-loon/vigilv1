@@ -45,5 +45,5 @@ void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata,const st
     dns_disect(pkt + 15 + sizeof(struct ip_hdr) + sizeof(udp_header),rdata); 
   }
   rulemgr(rdata);
-    add_pkt_data(rdata->spi_pkt);
+    // add_pkt_data(rdata->spi_pkt);
 }

@@ -77,11 +77,10 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   struct rule_data rdata;
   memset(&last_pkts_spi[spi_pkt_now++],0,sizeof(struct pkt_spi));
   struct pkt_spi * spi_pkt = &last_pkts_spi[spi_pkt_now];
-  printf("ipv4pktmgr: 80\n");
   spi_pkt->dest_port = 0;
   spi_pkt->src_port = 0;
-  char src_ip[32];
-  char dest_ip[32];
+  char src_ip[16];
+  char dest_ip[16];
   
   
 
@@ -132,6 +131,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   int data_size;
   switch(ip_header->protocol){
     case 1:{
+      // printf("ipv4pktmgr: icmp\n");
       spi_pkt->l3_proto = R_ICMP;
       rdata.__protocol = R_ICMP;
       ip4_icmp_decode(pkt,&rdata);
@@ -139,6 +139,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
     }
     case 2:
       // printf("IPv4 IGMP %s -> %s\n",src_ip,dest_ip);
+    
       rdata.__protocol = R_ALL;
       spi_pkt_now--;
       ip4_igmp_decode(pkt,rdata.src_ip_addr,rdata.dest_ip_addr);
@@ -146,6 +147,8 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       break;
     
     case 6:
+      // printf("ipv4pktmgr: tcp\n");
+
       spi_pkt->l3_proto = R_TCP;
       rdata.__protocol = R_TCP; 
       ip4_tcp_decode(pkt,&rdata,pkt_hdr);
@@ -153,6 +156,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       // ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     case 17:
+      // printf("ipv4pktmgr: udp\n");
       spi_pkt->l3_proto = R_UDP;
       rdata.__protocol = R_UDP;
       ip4_udp_decode(pkt,&rdata,pkt_hdr);

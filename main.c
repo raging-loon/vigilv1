@@ -82,11 +82,11 @@ int main(int argc, char **argv){
   rule_library_parser("/etc/npsi/npsi.conf");
   printf("Parsed rule files\n");
   if(dev == NULL){
-    printf("Failure opening interface %s\n",iface_name);
+    printf("Failure opening interface %s: %s\n",iface_name, error_buf);
     exit(EXIT_FAILURE);
   }
   char pkt_buffer[2046] = {0};
-  pcap_mgr = pcap_open_live(dev,1024,1,100,pkt_buffer);
+  pcap_mgr = pcap_open_live(&dev,1024,1,100,pkt_buffer);
   if(pcap_mgr == NULL){
     perror("pcap_mgr in pcap_open_live");
     exit(EXIT_FAILURE);
