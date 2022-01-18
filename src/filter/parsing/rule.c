@@ -1,7 +1,7 @@
 #include "rule.h"
 #include "../../../globals.h"
 #include <stdio.h>
-
+#include "../../engine/firewall/forward.h"
 
 /*
   *-*-*-*- rule.c -*-*-*-*
@@ -21,6 +21,8 @@ void rulemgr(const struct rule_data * __rule_data){
         temp_rule->times_matched++;
         __rule_data->spi_pkt->is_flagged++;
         __rule_data->spi_pkt->rules[__rule_data->spi_pkt->is_flagged] = temp_rule;
+      } else {
+        if(NPSI_MODE == IPS_ACTIVE) forward_packet(__rule_data);
       }
     }
   }

@@ -87,6 +87,7 @@ void rule_library_parser(const char * alt_file){
   char * line = NULL;
   
   while((pos = getline(&line,&len,fp)) != -1){
+    
     line[strcspn(line,"\n")] = 0;
     // printf("%s\n",line);
     if(is_comment(line) == true) continue;
@@ -136,22 +137,31 @@ void rule_library_parser(const char * alt_file){
       
     }
     else if(strncmp(line,"mode=",5) == 0){
-      livedebug("mode: %s",line + 4);
-      if(strncmp(line+5,"2",2) == 0){
+      livedebug("mode: %s",line + 5);
+      printf("Running in ");
+      if(strncmp(line+5,"2",1) == 0){
         NPSI_MODE = IPS_ACTIVE;
+        printf("IPS mode as per config\n");
       } else {
         // default to ids mode to minimize disruption if there was an mistake in the config
+
         NPSI_MODE = IDS_PASSIVE;
+        printf("IDS mode as per config\n");
       }
 
     }
     else if(strncmp(line,"localip=",8) == 0){
       strcpy(local_ip,line + 8);
+      livedebug("local_ip as per config: %s",&local_ip);
+    }
+    else if(strncmp(line,"defgw=",6) == 0){
+      strcpy(def_gw,line + 6);
     }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);
       rule_parser(line);
-    } 
+    }
+    memset(line,0,sizeof(line)); 
   }
 }
 static bool is_rule(const char * line){

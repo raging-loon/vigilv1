@@ -83,4 +83,5 @@ extern char input_adapter[10];
 extern char output_adapter[10];
 extern int NPSI_MODE;
 extern char local_ip[18];
+extern char def_gw[18];
 #endif /* GLOBALS_H */

@@ -48,3 +48,4 @@ int NPSI_MODE;
 char input_adapter[10];
 char output_adapter[10];
 char local_ip[18];
+char def_gw[18];
