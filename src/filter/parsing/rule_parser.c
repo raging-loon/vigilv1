@@ -23,6 +23,7 @@
 #include "packet_parser.h"
 #include "../actions/alerts.h"
 #include "../../../globals.h"
+#include "../../debug.h"
 #include "../../utils.h"
 static bool is_rule(const char *);
 static bool is_comment(const char * line);
@@ -121,9 +122,22 @@ void rule_library_parser(const char * alt_file){
     }
     else if(strncmp(line,"sqlite_database_path=",21) == 0){
       strcpy(sqlite_db_path,line + 21);
+      livedebug("sqlite_database_path: %s",sqlite_db_path);
     }
-    else if(strncmp(line,"mode",4) == 0){
-      if(strncmp(line+4,"2",1) == 0){
+    else if(strncmp(line,"in_adapter=",11) == 0){
+      strcpy(input_adapter,line + 11);
+      printf("%s\n",line +11);
+      livedebug("rule_parser.c: rule_library_parser: in_adapter: %s",input_adapter);
+      
+    }
+    else if(strncmp(line,"out_adapter=",12) == 0){
+      strcpy(output_adapter,line + 12);
+      livedebug("rule_parser.c: rule_library_parser: out_adapter: %s",output_adapter);
+      
+    }
+    else if(strncmp(line,"mode=",5) == 0){
+      livedebug("mode: %s",line + 4);
+      if(strncmp(line+5,"2",2) == 0){
         NPSI_MODE = IPS_ACTIVE;
       } else {
         // default to ids mode to minimize disruption if there was an mistake in the config
@@ -131,11 +145,8 @@ void rule_library_parser(const char * alt_file){
       }
 
     }
-    else if(strncmp(line,"in_adapter",10) == 0){
-      strcpy(input_adapter,line + 10);
-    }
-    else if(strncmp(line,"out_adapter",11) == 0){
-      strcpy(output_adapter,line + 11);
+    else if(strncmp(line,"localip=",8) == 0){
+      strcpy(local_ip,line + 8);
     }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);

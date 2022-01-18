@@ -7,7 +7,7 @@
 
 void livedebug( const char * msg,...){
   if(debug_mode){
-    char debug_msg[128];
+    char debug_msg[256];
     va_list args;
     va_start(args,msg);
     sprintf(debug_msg,msg,args);
