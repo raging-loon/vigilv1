@@ -41,6 +41,7 @@ void * spi_scan(){
   for(int i = 0; i < addr_len; i++){
     printf("New connection: %s\n",addrs[i].src_ip_addr);
   }
+  return (void *)1;
 }
 
 

@@ -43,3 +43,8 @@ bool quiet_exit = false;
 unsigned int spi_pkt_now = 0;
 
 struct pkt_spi last_pkts_spi[200];
+
+int NPSI_MODE;
+char input_adapter[10];
+char output_adapter[10];
+char local_ip[18];

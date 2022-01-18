@@ -26,6 +26,8 @@
 #include "src/statistics/watchlist.h"
 //    major.minor.patch
 #define VERSION "1.0.0"
+#define IDS_PASSIVE             1
+#define IPS_ACTIVE              2            
 // extern struct ip_addr_counter ip_stats[256];
 // extern int ip_addr_stat_counter_len;
 
@@ -77,4 +79,8 @@ extern unsigned int spi_pkt_now;
 
 extern struct pkt_spi last_pkts_spi[200];
 
+extern char input_adapter[10];
+extern char output_adapter[10];
+extern int NPSI_MODE;
+extern char local_ip[18];
 #endif /* GLOBALS_H */

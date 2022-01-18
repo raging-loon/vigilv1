@@ -122,6 +122,21 @@ void rule_library_parser(const char * alt_file){
     else if(strncmp(line,"sqlite_database_path=",21) == 0){
       strcpy(sqlite_db_path,line + 21);
     }
+    else if(strncmp(line,"mode",4) == 0){
+      if(strncmp(line+4,"2",1) == 0){
+        NPSI_MODE = IPS_ACTIVE;
+      } else {
+        // default to ids mode to minimize disruption if there was an mistake in the config
+        NPSI_MODE = IDS_PASSIVE;
+      }
+
+    }
+    else if(strncmp(line,"in_adapter",10) == 0){
+      strcpy(input_adapter,line + 10);
+    }
+    else if(strncmp(line,"out_adapter",11) == 0){
+      strcpy(output_adapter,line + 11);
+    }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);
       rule_parser(line);
