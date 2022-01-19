@@ -37,7 +37,8 @@ extern unsigned int total_pkt_captured;
 
 extern struct rule rules[128];
 extern int num_rules;
-
+extern pthread_t threads[64];
+extern int thread_count;
 extern int npsi_mode;
 
 extern char * default_config;
@@ -84,4 +85,9 @@ extern char output_adapter[10];
 extern int NPSI_MODE;
 extern char local_ip[18];
 extern char def_gw[18];
+
+
+extern void add_thread(pthread_t *);
+
+
 #endif /* GLOBALS_H */

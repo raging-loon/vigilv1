@@ -124,13 +124,17 @@ void sigint_processor(int signal){
     for(int i = 0; i < arp_entries + 1; i++){
       printf("%s -> %s\n",arpcache[i].ip_addr, arpcache[i].mac_addr);
     }
-    exit(EXIT_SUCCESS);
+    goto __exit;
   }
   for(int i = 0; i < arp_entries + 1; i++){
     fprintf(fp,"%s,%s\n",arpcache[i].ip_addr, arpcache[i].mac_addr);
   }
   fclose(fp);
-  exit(EXIT_SUCCESS);
+  for(int i = 0; i < thread_count; i++){
+    pthread_join(threads[i],NULL);
+  }
+  __exit:
+    exit(EXIT_SUCCESS);
 }
 
 

@@ -10,9 +10,9 @@
 void add_pkt_data(const struct pkt_spi * pdata){
   if(spi_max <= spi_pkt_now){  
    livedebug("spi.c: add_pkt_data: spi_pkt_now = %d",spi_pkt_now);
-    pthread_t pthrd;
-    pthread_create(&pthrd,NULL,&spi_scan,NULL);
-    pthread_join(&pthrd,NULL);
+    // pthread_t pthrd;
+    // pthread_create(&pthrd,NULL,&spi_scan,NULL);
+    // pthread_join(&pthrd,NULL);
     spi_pkt_now = 0;
     // return;
     
@@ -44,6 +44,11 @@ void * spi_scan(){
   return (void *)1;
 }
 
-
+void spi_set_value(struct pkt_spi * member, int value){
+  if(member->flags == 0x0000)
+    member->flags = value;
+  else 
+    member->flags ^= value;
+}
 
 

@@ -8,8 +8,8 @@
 // config options
 int strict_icmp_timestamp_req;
 int strict_nmap_host_alive_check;
-// pthread_t threads[64];
-// counters
+pthread_t threads[64];
+int thread_count = 0;
 unsigned int total_pkt_captured = 0;
 int blk_ipv4_len = -1;
 int num_rules = -1;
@@ -49,3 +49,7 @@ char input_adapter[10];
 char output_adapter[10];
 char local_ip[18];
 char def_gw[18];
+
+void add_thread(pthread_t * pthrd){
+  threads[thread_count++] = pthrd;
+}

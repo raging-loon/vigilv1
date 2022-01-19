@@ -36,7 +36,7 @@ struct spi_member{
   struct brute_force_ds bf_dataset;
 };
 
-
+void spi_set_value(struct pkt_spi *, int);
 
 void add_pkt_data(const struct pkt_spi *);
 

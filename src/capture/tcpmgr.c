@@ -135,21 +135,21 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   }
 
   if(flags_set == 0)
-    rdata->spi_pkt->flags ^= NE_TCP_NO_FLAGS;
+    spi_set_value(rdata->spi_pkt,NE_TCP_NO_FLAGS);
   else if(flags_set > 3)
-    rdata->spi_pkt->flags ^= NE_TCP_EXCESS_FLAGS;
+    spi_set_value(rdata->spi_pkt,NE_TCP_EXCESS_FLAGS);
   else if(FIN_ACK_SET(fin_set,ack_set))
-    rdata->spi_pkt->flags ^= NE_TCP_END_CONNECT_FA;
+    spi_set_value(rdata->spi_pkt,NE_TCP_END_CONNECT_FA);
   else if(RST_ACK_SET(rst_set,ack_set))
-    rdata->spi_pkt->flags ^= NE_TCP_END_CONNECT_FORCE;
+    spi_set_value(rdata->spi_pkt,NE_TCP_END_CONNECT_FORCE);
   else if(rst_set)
-    rdata->spi_pkt->flags ^= NE_TCP_RST;
+    spi_set_value(rdata->spi_pkt,NE_TCP_RST);
   else if(syn_set && flags_set == 1)
-    rdata->spi_pkt->flags ^= NE_TCP_CONNECT_INIT;
+    spi_set_value(rdata->spi_pkt,NE_TCP_CONNECT_INIT);
   else if(SYN_ACK_SET(syn_set,ack_set) && flags_set == 2)
-    rdata->spi_pkt->flags ^= NE_TCP_CONNECT_P2;
+    spi_set_value(rdata->spi_pkt,NE_TCP_CONNECT_P2);
   else if(ack_set && flags_set == 1)
-    rdata->spi_pkt->flags ^= NE_TCP_CONNECT_P3;
+    spi_set_value(rdata->spi_pkt,NE_TCP_CONNECT_P3);
   
 
   if(rst_set == true){
@@ -231,7 +231,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   if(packet_print){
     if((PSH_ACK_SET(psh_set,ack_set)) && IS_PORT_DEST_SRC(dest_port,src_port,80)){
       http_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(struct __tcp) + 12,rdata);
-      rdata->spi_pkt->flags ^= NE_TCP_SEND_DATA;
+      spi_set_value(rdata->spi_pkt,NE_TCP_SEND_DATA);
     }
   }
   if(IS_PORT_DEST_SRC(dest_port,src_port,21)){
