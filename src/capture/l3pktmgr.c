@@ -78,17 +78,11 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   struct ip_hdr * ip_header = (struct ip_hdr * )(pkt + ETH_HDR_SZ);
   struct sockaddr_in src, dest;
   struct rule_data rdata;
-  memset(&rdata,0,sizeof(rdata));
-  memset(&last_pkts_spi[++spi_pkt_now],0,sizeof(struct pkt_spi));
-  rdata.spi_pkt = &last_pkts_spi[spi_pkt_now];
-  // rdata.spi_pkt->dest_port = 0;
   // rdata.spi_pkt->src_port = 0;
   char src_ip[16];
-  char dest_ip[16];
-  rdata.spi_pkt->__time__ = (unsigned int)time(NULL);
-  rdata.spi_pkt->flags = 0x0000;  
+  char dest_ip[16]; 
 
-
+ 
   memset(&src,0,sizeof(src));
   memset(&dest,0,sizeof(dest));
   
@@ -106,9 +100,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
 
   strncpy(dest_ip, inet_ntoa(dest.sin_addr),sizeof(dest_ip));
   strncpy(src_ip, inet_ntoa(src.sin_addr),sizeof(src_ip));
-  strncpy(rdata.spi_pkt->dest_ip_addr,dest_ip,sizeof(dest_ip));
-  strncpy(rdata.spi_pkt->src_ip_addr,src_ip,sizeof(src_ip));
-  // init both addresses;
+   // init both addresses;
   
   init_member((const char *)&dest_ip);
   init_member((const char *)&src_ip);
@@ -138,7 +130,6 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   switch(ip_header->protocol){
     case 1:{
       // printf("ipv4pktmgr: icmp\n");
-      rdata.spi_pkt->l3_proto = R_ICMP;
       rdata.__protocol = R_ICMP;
       ip4_icmp_decode(pkt,&rdata);
       break;
@@ -147,7 +138,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       // printf("IPv4 IGMP %s -> %s\n",src_ip,dest_ip);
     
       rdata.__protocol = R_ALL;
-      spi_pkt_now--;
+      total_conversations--;
       ip4_igmp_decode(pkt,rdata.src_ip_addr,rdata.dest_ip_addr);
       
       break;
@@ -155,7 +146,6 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
     case 6:
       // printf("ipv4pktmgr: tcp\n");
 
-      rdata.spi_pkt->l3_proto = R_TCP;
       rdata.__protocol = R_TCP; 
       ip4_tcp_decode(pkt,&rdata,pkt_hdr);
       // data_size = base_data_size - sizeof(struct tcphdr);
@@ -163,7 +153,6 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       break;
     case 17:
       // printf("ipv4pktmgr: udp\n");
-      rdata.spi_pkt->l3_proto = R_UDP;
       rdata.__protocol = R_UDP;
       ip4_udp_decode(pkt,&rdata,pkt_hdr);
       // data_size = base_data_size - sizeof(struct udphdr);

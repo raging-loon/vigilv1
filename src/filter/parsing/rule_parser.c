@@ -163,6 +163,9 @@ void rule_library_parser(const char * alt_file){
     }
     memset(line,0,sizeof(line)); 
   }
+  if(NPSI_MODE == 0xffff){
+    NPSI_MODE = IDS_PASSIVE;
+  }
 }
 static bool is_rule(const char * line){
   return line[0] == '$' ? true : false;

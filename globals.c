@@ -40,11 +40,11 @@ bool packet_print;
 bool quiet_exit = false;
 
 
-unsigned int spi_pkt_now = 0;
+unsigned int total_conversations = 0;
 
-struct pkt_spi last_pkts_spi[200];
+struct spi_tcp_table tcp_table[200];
 
-int NPSI_MODE;
+int NPSI_MODE = 0xffff;
 char input_adapter[10];
 char output_adapter[10];
 char local_ip[18];

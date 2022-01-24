@@ -27,6 +27,7 @@
 #include "src/filter/parsing/rule_parser.h"
 #include "src/statistics/ip_addr_stat.h"
 #include "src/rpc/nsh_server.h"
+#include "src/utils.h"
 #include "src/statistics/watchlist.h"
 #include <pthread.h>
 #include "src/statistics/arpcache.h"
@@ -99,8 +100,10 @@ int main(int argc, char **argv){
 }
 
 void sigint_processor(int signal){
+
   int is_running = 0;
-  printf("\nCaught signal %d, exiting...\n",signal);
+  char * time = get_formated_time();
+  printf("\nCaught signal %d at %s, exiting...\n", signal, time );
   perror("");
   if(!quiet_exit){
 

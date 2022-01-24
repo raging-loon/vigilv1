@@ -40,12 +40,9 @@ void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata,const st
   }
   rdata->src_port = src_port;
   rdata->dest_port = dest_port;
-  livedebug("udpmgr.c: 43");
-  rdata->spi_pkt->src_port = (unsigned int )ntohs(udp_header->uh_sport);
-  rdata->spi_pkt->dest_port = (unsigned int )ntohs(udp_header->uh_dport);
-  if(IS_PORT_DEST_SRC(src_port,dest_port,53)){
+    if(IS_PORT_DEST_SRC(src_port,dest_port,53)){
     dns_disect(pkt + 15 + sizeof(struct ip_hdr) + sizeof(udp_header),rdata); 
   }
   rulemgr(rdata);
-    add_pkt_data(rdata->spi_pkt);
+  
 }

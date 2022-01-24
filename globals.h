@@ -76,9 +76,9 @@ extern bool quiet_exit;
 // extern pthread_t threads[64];
 
 extern int spi_max;
-extern unsigned int spi_pkt_now;
+extern unsigned int total_conversations;
 
-extern struct pkt_spi last_pkts_spi[200];
+extern struct spi_tcp_table tcp_table[200];
 
 extern char input_adapter[10];
 extern char output_adapter[10];

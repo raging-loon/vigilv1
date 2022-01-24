@@ -80,8 +80,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   // uint16_t syn, ack, rst, fin, psh, urg;
   dest_port = (unsigned int)ntohs(tcp_hdr->dest);
   src_port = (unsigned int)ntohs(tcp_hdr->source);
-  rdata->spi_pkt->dest_port = dest_port;
-  rdata->spi_pkt->src_port = src_port;
+  
   if(packet_print){
     printf("%s",__TCP_COLOR_NS);
     printf("IPv4 %s:%d -> %s:%d\n",
@@ -134,22 +133,30 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
     __END_COLOR_STREAM);
   }
 
-  if(flags_set == 0)
-    spi_set_value(rdata->spi_pkt,NE_TCP_NO_FLAGS);
-  else if(flags_set > 3)
-    spi_set_value(rdata->spi_pkt,NE_TCP_EXCESS_FLAGS);
-  else if(FIN_ACK_SET(fin_set,ack_set))
-    spi_set_value(rdata->spi_pkt,NE_TCP_END_CONNECT_FA);
-  else if(RST_ACK_SET(rst_set,ack_set))
-    spi_set_value(rdata->spi_pkt,NE_TCP_END_CONNECT_FORCE);
-  else if(rst_set)
-    spi_set_value(rdata->spi_pkt,NE_TCP_RST);
-  else if(syn_set && flags_set == 1)
-    spi_set_value(rdata->spi_pkt,NE_TCP_CONNECT_INIT);
-  else if(SYN_ACK_SET(syn_set,ack_set) && flags_set == 2)
-    spi_set_value(rdata->spi_pkt,NE_TCP_CONNECT_P2);
-  else if(ack_set && flags_set == 1)
-    spi_set_value(rdata->spi_pkt,NE_TCP_CONNECT_P3);
+  if(flags_set == 0){
+
+  }
+  else if(flags_set > 3){
+
+  }
+  else if(FIN_ACK_SET(fin_set,ack_set)){
+
+  }
+  else if(RST_ACK_SET(rst_set,ack_set)){
+
+  }
+  else if(rst_set){
+
+  }
+  else if(syn_set && flags_set == 1){
+
+  }
+  else if(SYN_ACK_SET(syn_set,ack_set) && flags_set == 2){
+
+  }
+  else if(ack_set && flags_set == 1){
+
+  }
   
 
   if(rst_set == true){
@@ -162,7 +169,6 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       if(w->psds.basic_ps_ds.rst_pkt_recv >= 30){
         w->psds.basic_ps_ds.rst_pkt_recv = 30;
         if(tcp_rst_portscan_detect(w)){
-          rdata->spi_pkt->is_flagged++;
           w->psds.basic_ps_ds.rst_pkt_recv = 0;
           memset(&w->psds.basic_ps_ds.rst_pkt_times,0,sizeof(w->psds.basic_ps_ds.rst_pkt_times));
         }
@@ -186,7 +192,6 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       if(w->psds.fin_data_set.fin_pkt_recv >= 30){
         w->psds.fin_data_set.fin_pkt_recv = 30;
         if(fin_rst_portscan_detect(w)){
-          rdata->spi_pkt->is_flagged++;
           w->psds.fin_data_set.fin_pkt_recv = 0;
           memset(&w->psds.fin_data_set.fin_pkt_times,0,sizeof(w->psds.fin_data_set.fin_pkt_times));
         }
@@ -231,7 +236,6 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   if(packet_print){
     if((PSH_ACK_SET(psh_set,ack_set)) && IS_PORT_DEST_SRC(dest_port,src_port,80)){
       http_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(struct __tcp) + 12,rdata);
-      spi_set_value(rdata->spi_pkt,NE_TCP_SEND_DATA);
     }
   }
   if(IS_PORT_DEST_SRC(dest_port,src_port,21)){
@@ -241,5 +245,4 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   // ascii_hexdump(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),
                 // pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4));
   rulemgr(rdata);
-  add_pkt_data(rdata->spi_pkt);
 }
