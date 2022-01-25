@@ -1,19 +1,16 @@
-#ifndef SPI_H
-#define SPI_H
+#ifndef __SPI_H
+#define __SPI_H
 
-#include <stdint.h>
-#include "../statistics/watchlist.h"
-#include "../statistics/wldataset.h"
+
+
 #include "../filter/parsing/rule.h"
-
-
-const enum{
-  LISTENING = 240,
-  ESTABLISHED,
-  FINISHED
-
-} spi_status_t;
-
+// const enum{
+  // LISTENING = 240,
+  // ESTABLISHED,
+  // FINISHED
+// 
+// } spi_status_t;
+// 
 
 
 struct spi_tcp_table{
@@ -37,9 +34,9 @@ struct spi_tcp_table{
   
 };
 
+int conversation_exists(struct rule_data *);
 
 
-int conversation_exists(const struct rule_data *);
 
 
 void add_pkt_data(const struct spi_tcp_table *);

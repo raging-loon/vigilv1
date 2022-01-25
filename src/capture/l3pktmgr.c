@@ -119,7 +119,6 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   if(ip_header->flags == 0x0020 || ip_header->flags == 0x0102){
     printf("%sFragmented ",__FRAGMENTED);
     
-    rdata.spi_pkt->flags ^= IPv4_IS_FRAGMENT;
 
     if(packet_print)
       printf("%s",__END_COLOR_STREAM);

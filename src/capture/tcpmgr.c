@@ -38,6 +38,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "../print_utils.h"
+#include "../debug.h"
 #include "protocols/http_disect.h"
 #include "../engine/spi.h"
 #include "../engine/flags.h"
@@ -152,13 +153,12 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
 
   }
   else if(SYN_ACK_SET(syn_set,ack_set) && flags_set == 2){
-
+      
   }
   else if(ack_set && flags_set == 1){
 
   }
   
-
   if(rst_set == true){
     int watchlist_index;
     if((watchlist_index = member_exists(rdata->dest_ip_addr)) != -1){
@@ -182,6 +182,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       w->psds.basic_ps_ds.rst_pkt_recv = 0;
       w->psds.basic_ps_ds.rst_pkt_times[w->psds.basic_ps_ds.rst_pkt_recv++] = (unsigned long)time(NULL);
     }
+
   } else if(fin_set){
     
     int watchlist_index;
@@ -234,7 +235,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
 
   rdata->src_port = src_port;
   if(packet_print){
-    if((PSH_ACK_SET(psh_set,ack_set)) && IS_PORT_DEST_SRC(dest_port,src_port,80)){
+    if((PSH_ACK_SET(psh_set,ack_set) && !fin_set) && IS_PORT_DEST_SRC(dest_port,src_port,80)){
       http_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(struct __tcp) + 12,rdata);
     }
   }
