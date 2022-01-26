@@ -34,7 +34,7 @@ unsigned char * u8_ipv4_ntoa(uint8_t * );
 unsigned char * inet6_ntoa(uint8_t * );
 char * get_formated_time();
 int strloc(const char *  haystack,const char needle);
-
+void cb_get_formatted_time(char * );
 
 void fail(const char * , const char *);
 

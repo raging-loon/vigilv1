@@ -15,21 +15,21 @@ int conversation_exists(struct rule_data * rdata){
 
   for(int i = 0 ; i < total_conversations; i++){
     
-//     if(rdata->dest_port > 30000){
-//       // server ----> client
-      
-//     }
-// if(rdata->dest_port == tcp_table[i].cli_port &&
-//          rdata->src_port == tcp_table[i].serv_port &&
-//          strcmp(rdata->dest_ip_addr, tcp_table[i].client_addr) == 0 &&
-//          strcmp)
-//   }
   }  
 
   return -1;
 }
 
 
-
-
-
+void add_new_conversation(struct rule_data * rdata){
+  // int c_cache = total_conversations;
+  struct spi_members * member = &spi_members[++total_conversations];
+  strcpy(member->client_addr,rdata->src_ip_addr);
+  strcpy(member->server_addr,rdata->dest_ip_addr);
+  member->cli_port = rdata->src_port;
+  member->serv_port = rdata->dest_port;
+  member->protocol = rdata->__protocol;
+  member->cli_packet_recv = &member->serv_packet_sent;
+  member->cli_packet_sent = &member->serv_packet_recv;
+  member->status = TCP_INIT;
+}

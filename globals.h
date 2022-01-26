@@ -78,7 +78,7 @@ extern bool quiet_exit;
 extern int spi_max;
 extern unsigned int total_conversations;
 
-extern struct spi_tcp_table tcp_table[200];
+extern struct spi_members spi_table[200];
 
 extern char input_adapter[10];
 extern char output_adapter[10];

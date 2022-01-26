@@ -42,7 +42,7 @@ bool quiet_exit = false;
 
 unsigned int total_conversations = 0;
 
-struct spi_tcp_table tcp_table[200];
+struct spi_members spi_table[200];
 
 int NPSI_MODE = 0xffff;
 char input_adapter[10];

@@ -102,7 +102,9 @@ int main(int argc, char **argv){
 void sigint_processor(int signal){
 
   int is_running = 0;
-  char * time = get_formated_time();
+  // char * time = get_formated_time();
+  char time[255];
+  cb_get_formatted_time(&time);
   printf("\nCaught signal %d at %s, exiting...\n", signal, time );
   perror("");
   if(!quiet_exit){

@@ -72,10 +72,10 @@ unsigned char * inet6_ntoa(uint8_t * ip_bits){
 
 
 char * get_formated_time(){
-  char * time__;
+  char time__[128];
   time_t t = time(NULL);
   struct tm __time = *localtime(&t);
-  sprintf(time__,"%d-%02d-%02d %02d:%02d:%02d",
+  sprintf(&time__,"%d-%02d-%02d %02d:%02d:%02d",
           __time.tm_year + 1900,
           __time.tm_mon + 1,
           __time.tm_mday,
@@ -83,6 +83,18 @@ char * get_formated_time(){
           __time.tm_min,
           __time.tm_sec);
   return time__;
+}
+
+void cb_get_formatted_time(char * time_buff){
+  time_t t = time(NULL);
+  struct tm __time = *localtime(&t);
+  sprintf(time_buff,"%d-%02d-%02d %02d:%02d:%02d",
+          __time.tm_year + 1900,
+          __time.tm_mon + 1,
+          __time.tm_mday,
+          __time.tm_hour,
+          __time.tm_min,
+          __time.tm_sec);
 }
 
 
