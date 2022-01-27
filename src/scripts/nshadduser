@@ -22,16 +22,16 @@ for line in file:
   if(line.split(":")[0] == username):
     print("User already exists")
     exit(-1)
-password = input("Password: ").strip("\n");
+pwr= input("Password: ").strip("\n");
 repass = input("Re-enter password: ").strip("\n");
-if(password != repass):
+if(pwr!= repass):
   print("Passwords do not match")
   exit(-1)
 file.close()
 appendfile = open("/etc/npsi/passwd","a")
-__hash = sha512(password.encode()).hexdigest();
-passhash = "{}:{}\n".format(username,__hash) # lgtm [py/clear-text-storage-sensitive-data]
+__hash = sha512(pwr.encode()).hexdigest();
+ph = "{}:{}\n".format(username,__hash) # lgtm [py/clear-text-storage-sensitive-data]
 
 
-appendfile.write(passhash);
+appendfile.write(ph);
 appendfile.close();
