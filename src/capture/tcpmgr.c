@@ -20,16 +20,21 @@
 #include "../statistics/watchlist.h"
 #include "../filter/parsing/rule.h"
 #include "../filter/parsing/rule.h"
+#include "protocols/http_disect.h"
+#include "protocols/ftp-disect.h"
 #include "../packets/ip_hdr.h"
+#include "../engine/flags.h"
+#include "../print_utils.h"
 #include "../packets/tcp.h"
 #include "../../globals.h"
-#include "protocols/ftp-disect.h"
+#include "../engine/spi.h"
 #include <netinet/tcp.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include "protocols.h"
 #include "../colors.h"
 #include "../utils.h"
+#include "../debug.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include "tcpmgr.h"
@@ -37,11 +42,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
-#include "../print_utils.h"
-#include "../debug.h"
-#include "protocols/http_disect.h"
-#include "../engine/spi.h"
-#include "../engine/flags.h"
 
 /*
   *-*-*-*- tcpmgr.c -*-*-*-*
@@ -78,10 +78,13 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   bool syn_set = false;
   bool fin_set = false;
   bool psh_set = false;
+
   // uint16_t syn, ack, rst, fin, psh, urg;
   dest_port = (unsigned int)ntohs(tcp_hdr->dest);
   src_port = (unsigned int)ntohs(tcp_hdr->source);
-  
+  rdata->dest_port = (unsigned int )ntohs(tcp_hdr->dest);
+
+  rdata->src_port = src_port;
   if(packet_print){
     printf("%s",__TCP_COLOR_NS);
     printf("IPv4 %s:%d -> %s:%d\n",
@@ -151,9 +154,9 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   }
   else if(syn_set && flags_set == 1){
 
+    add_new_conversation(rdata);
   }
   else if(SYN_ACK_SET(syn_set,ack_set) && flags_set == 2){
-      
   }
   else if(ack_set && flags_set == 1){
 
@@ -231,9 +234,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   }
 
 
-  rdata->dest_port = (unsigned int )ntohs(tcp_hdr->dest);
-
-  rdata->src_port = src_port;
+  
   if(packet_print){
     if((PSH_ACK_SET(psh_set,ack_set) && !fin_set) && IS_PORT_DEST_SRC(dest_port,src_port,80)){
       http_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(struct __tcp) + 12,rdata);
@@ -242,6 +243,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   if(IS_PORT_DEST_SRC(dest_port,src_port,21)){
     ftp_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),rdata);
   }
+
   // if(packet_print)
   // ascii_hexdump(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),
                 // pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4));

@@ -4,20 +4,24 @@
 
 
 #include "../filter/parsing/rule.h"
+#include "engine.h"
+
 const enum{
-  TCP_LISTENING = 240,
-  TCP_ESTABLISHED,
-  TCP_FINISHED,
-  TCP_INIT
+  __TCP_LISTENING = 240,
+  __TCP_ESTABLISHED,
+  __TCP_FINISHED,
+  __TCP_INIT,
+  __UDP_FIRST_SEEN,
+  __ICMP_FIRST_SEEN,
+
 
 } spi_status_t;
 
 
 
 struct spi_members{
-  
-  char server_addr[18];
-  char client_addr[18];
+  struct net_addr server_addr;
+  struct net_addr client_addr;
   unsigned int serv_port;
   unsigned int cli_port;
   int serv_packet_sent;
@@ -32,9 +36,13 @@ struct spi_members{
   struct rule * cli_rules[32];
   int num_cli_rules;
   int num_srv_rules;
-  int status;
+  unsigned int status;
   unsigned int start_time;
-  int protocol;
+  unsigned int end_time;
+  unsigned int total_packets;
+  unsigned int pps; 
+  unsigned int protocol;
+  int possible_retransmissions;
 };
 
 int conversation_exists(struct rule_data *);
