@@ -96,7 +96,7 @@ void update_table(struct rule_data * rdata){
     printf("Suspect packet recv\n");
   } 
 }
-
+// use for sn ack
 void spi_ud_thw(struct rule_data * rdata){
   spi_info info = conversation_exists(rdata);
   if(info.table_location != -1){
@@ -106,5 +106,15 @@ void spi_ud_thw(struct rule_data * rdata){
     } 
   } else {
     printf("Suspect packet recvd\n");
+  }
+}
+
+
+void end_connection(struct rule_data * rdata){
+  spi_info info = conversation_exists(rdata);
+  if(info.table_location != -1){
+
+  } else {
+    printf("Possible FIN Portscan detected from %s:%d");
   }
 }

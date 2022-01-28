@@ -136,19 +136,14 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
     flags_set,
     __END_COLOR_STREAM);
   }
-
-  if(flags_set == 0){
-
-  }
-  else if(flags_set > 3){
-
+  if(PSH_ACK_SET(psh_set,ack_set) && flags_set == 2){
+    update_table(rdata);
   }
   else if(FIN_ACK_SET(fin_set,ack_set)){
-
+    
   }
 
   else if(syn_set && flags_set == 1){
-
     add_new_conversation(rdata);
   }
   else if(SYN_ACK_SET(syn_set,ack_set) && flags_set == 2){
