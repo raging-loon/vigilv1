@@ -40,7 +40,7 @@ bool packet_print;
 bool quiet_exit = false;
 
 
-unsigned int total_conversations = 0;
+unsigned int total_conversations = -1;
 
 struct spi_members spi_table[200];
 

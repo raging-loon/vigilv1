@@ -32,6 +32,7 @@
 #include <pthread.h>
 #include "src/statistics/arpcache.h"
 #include <time.h>
+#include "src/debug.h"
 
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
@@ -52,6 +53,7 @@ int main(int argc, char **argv){
         print_help_and_exit();
         break;
       case 'i':
+        printf("GETOPT: main.c: iface_name = %s\n",optarg);
         iface_name = optarg;
         break;
       case 'p':
@@ -79,13 +81,10 @@ int main(int argc, char **argv){
   rule_library_parser("/etc/npsi/npsi.conf");
   printf("Parsed rule files\n");
 
-  char *dev = pcap_lookupdev(error_buf);
-  printf("NPSI listening on interface %s\n",dev);
+  
+  printf("NPSI listening on interface %s\n",iface_name);
   pcap_t *pcap_mgr;
-  if(dev == NULL){
-    printf("Failure opening interface %s: %s\n",iface_name, error_buf);
-    exit(EXIT_FAILURE);
-  }
+  
   char pkt_buffer[2046] = {0};
   pcap_mgr = pcap_open_live(iface_name,1024,1,100,pkt_buffer);
   if(pcap_mgr == NULL){

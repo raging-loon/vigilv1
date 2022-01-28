@@ -8,9 +8,10 @@
 
 const enum{
   __TCP_LISTENING = 240,
-  __TCP_ESTABLISHED,
+  __TCP_ESTABLISHED, /* ACK */ 
   __TCP_FINISHED,
-  __TCP_INIT,
+  __TCP_INIT,  /* SYN */
+  __TCP_ACK_W, /* SYN/ACK */
   __UDP_FIRST_SEEN,
   __ICMP_FIRST_SEEN,
 
@@ -37,21 +38,31 @@ struct spi_members{
   int num_cli_rules;
   int num_srv_rules;
   unsigned int status;
-  unsigned int start_time;
-  unsigned int end_time;
+  unsigned long start_time;
+  unsigned long end_time;
   unsigned int total_packets;
   unsigned int pps; 
   unsigned int protocol;
   int possible_retransmissions;
 };
 
-int conversation_exists(struct rule_data *);
+
+typedef struct{
+  int table_location;
+  int direction;
+#define DIR_CLIENT_TO_SERVER        100
+#define DIR_SERVER_TO_CLIENT        101
+} spi_info;
+
+
+
+spi_info conversation_exists(struct rule_data *);
 
 void add_new_conversation(struct rule_data *);
 
-
+void update_table(struct rule_data *);
 // void add_pkt_data(const struct spi_tcp_table *);
-
+void spi_ud_thw(struct rule_data *);
 
 void * spi_scan();
 #endif /* SPI_H */
