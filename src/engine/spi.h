@@ -17,6 +17,8 @@ const enum{
   __TCP_RST_COMP,
   __TCP_RST_INIT,
   __TCP_RST_INIT2,
+  __TCP_CLOSED_FIN,
+  __TCP_CLOSED_RST,
   __UDP_FIRST_SEEN,
   __ICMP_FIRST_SEEN,
 
@@ -68,6 +70,8 @@ void add_new_conversation(struct rule_data *);
 void update_table(struct rule_data *);
 // void add_pkt_data(const struct spi_tcp_table *);
 void spi_ud_thw(struct rule_data *);
+
+void update_information(struct spi_members *, spi_info *);
 
 void end_connection(struct rule_data *);
 void * spi_scan();

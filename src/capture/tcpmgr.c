@@ -140,7 +140,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
     update_table(rdata);
   }
   else if(FIN_ACK_SET(fin_set,ack_set)){
-    
+    end_connection(rdata);
   }
 
   else if(syn_set && flags_set == 1){
