@@ -65,7 +65,7 @@ void add_new_conversation(struct rule_data * rdata){
     member->cli_packet_sent = &member->serv_packet_recv;
     member->status = __TCP_INIT;
     member->start_time = (unsigned long )time(NULL);
-    printf("SPI TABLE ENTRY %d: %s:%d -> %s:%d %d\n",
+    livedebug("SPI TABLE ENTRY %d: %s:%d -> %s:%d %d\n",
               total_conversations,
               member->client_addr.netaddr,
               member->cli_port,
@@ -92,7 +92,7 @@ void update_table(struct rule_data * rdata){
     } else {
       if(sm->status == __TCP_FIN_INIT2){
         sm->status == __TCP_CLOSED_FIN;
-        printf("SPI CONNECTION CLOSED %d: %s:%d -> %s:%d\n", 
+        livedebug("SPI CONNECTION CLOSED %d: %s:%d -> %s:%d\n", 
                   info.table_location,sm->client_addr.netaddr, sm->cli_port,
                   sm->server_addr.netaddr, sm->serv_port);
       }
