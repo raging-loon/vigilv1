@@ -10,7 +10,7 @@
 #include <time.h>
 #include "../filter/parsing/rule.h"
 #include <pthread.h>
-
+#include <string.h>
 spi_info conversation_exists(struct rule_data * rdata){
   spi_info info;
   // printf("%s:%d -> %s:%d | ",rdata->src_ip_addr,rdata->src_port, rdata->dest_ip_addr,rdata->dest_port);
@@ -47,15 +47,17 @@ void add_new_conversation(struct rule_data * rdata){
   int location;
   spi_info info = conversation_exists(rdata);
   if(info.table_location != -1){
+
     struct spi_members * sm = &spi_table[info.table_location];
     sm->possible_retransmissions++;
     if(debug_mode) printf("SPI TABLE RETRAN %d: %s:%d -> %s:%d\n",
-                                  location,sm->client_addr.netaddr,
+                                  info.table_location,sm->client_addr.netaddr,
                                   sm->cli_port, sm->server_addr.netaddr,
                                   sm->serv_port);
   }
   else{
     struct spi_members * member = &spi_table[++total_conversations];
+    memset(member,0,sizeof(member));
     strcpy(member->client_addr.netaddr,rdata->src_ip_addr);
     strcpy(member->server_addr.netaddr,rdata->dest_ip_addr);
     member->cli_port = rdata->src_port;
@@ -72,7 +74,13 @@ void add_new_conversation(struct rule_data * rdata){
               member->server_addr.netaddr,
               member->serv_port,
               member->status);
+  if(total_conversations == 1024){
+    livedebug("SPI TABLE: ROLLING OVER\n");
+    total_conversations = 0;
+    info.table_location = 0;  
   }
+  }
+  
 }
 
 void update_table(struct rule_data * rdata){
@@ -143,4 +151,9 @@ void end_connection(struct rule_data * rdata){
                     rdata->dest_ip_addr,rdata->dest_port);
     fclose(fp);
   }
+}
+
+
+void table_roll_over(){
+  total_conversations = 0;
 }
