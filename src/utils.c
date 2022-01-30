@@ -72,10 +72,10 @@ unsigned char * inet6_ntoa(uint8_t * ip_bits){
 
 
 char * get_formated_time(){
-  char time__[128];
+  char *time__ = (char *)malloc(255);
   time_t t = time(NULL);
   struct tm __time = *localtime(&t);
-  sprintf(&time__,"%d-%02d-%02d %02d:%02d:%02d",
+  sprintf(time__,"%d-%02d-%02d %02d:%02d:%02d",
           __time.tm_year + 1900,
           __time.tm_mon + 1,
           __time.tm_mday,

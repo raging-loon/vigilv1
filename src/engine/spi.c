@@ -99,7 +99,7 @@ void update_table(struct rule_data * rdata){
               sm->status);
     } else {
       if(sm->status == __TCP_FIN_INIT2){
-        sm->status == __TCP_CLOSED_FIN;
+        sm->status = __TCP_CLOSED_FIN;
         if(debug_mode) printf("SPI CONNECTION CLOSED %d: %s:%d -> %s:%d\n", 
                   info.table_location,sm->client_addr.netaddr, sm->cli_port,
                   sm->server_addr.netaddr, sm->serv_port);

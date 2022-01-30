@@ -177,7 +177,8 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       w->psds.basic_ps_ds.rst_pkt_times[w->psds.basic_ps_ds.rst_pkt_recv++] = (unsigned long)time(NULL);
     }
 
-  } else if(fin_set){
+  }
+  /* else if(fin_set){
     
     int watchlist_index;
     if((watchlist_index = member_exists(rdata->dest_ip_addr)) != -1){
@@ -198,7 +199,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
         w->psds.fin_data_set.fin_pkt_times[w->psds.fin_data_set.fin_pkt_recv++] = (unsigned long)time(NULL);
     }
   }
-  
+  */
 
   if(strict_nmap_host_alive_check == true &&
      ((ack_set && IS_PORT_DEST_SRC(dest_port,src_port,80)) || 
