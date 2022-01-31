@@ -26,11 +26,16 @@ void stdout_alert(const struct rule_data* __rule_data, const struct rule * __rul
           __time.tm_hour,
           __time.tm_min,
           __time.tm_sec);
-  sprintf(message,"%s %s %s:%d -> %s:%d\n",time, __rule->message,
-														__rule_data->src_ip_addr,
-														__rule_data->src_port,
-														__rule_data->dest_ip_addr,
-														__rule_data->dest_port);
+  if(__rule_data->__protocol == R_ICMP){
+    sprintf(message,"%s %s %s -> %s\n", time, __rule->message, __rule_data->src_ip_addr, __rule_data->dest_ip_addr);
+  } else {
+
+    sprintf(message,"%s %s %s:%d -> %s:%d\n",time, __rule->message,
+	  													__rule_data->src_ip_addr,
+	  													__rule_data->src_port,
+	  													__rule_data->dest_ip_addr,
+	  													__rule_data->dest_port);
+  }
   printf("%s",message);
 //   ascii_hexdump(__rule_data->pkt,__rule_data->pkt_len);
   FILE * fp = fopen(def_log_file,"a");

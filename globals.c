@@ -21,7 +21,7 @@ unsigned long last_clean_time;
 unsigned long clean_delay;
 unsigned int pkt_counter;
 // info objects
-struct rule rules[128] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
+struct rule rules[MAX_RULES] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
 struct blocked_ipv4 blocked_ipv4_addrs[32];
 struct watchlist_member watchlist[128] = {0};
 struct arp_entry arpcache[255];

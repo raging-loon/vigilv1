@@ -27,7 +27,8 @@
 //    major.minor.patch
 #define VERSION "1.0.0"
 #define IDS_PASSIVE             1
-#define IPS_ACTIVE              2            
+#define IPS_ACTIVE              2    
+#define MAX_RULES               1024        
 // extern struct ip_addr_counter ip_stats[256];
 // extern int ip_addr_stat_counter_len;
 
@@ -35,7 +36,7 @@ extern char ip_addr[32];
 
 extern unsigned int total_pkt_captured;
 
-extern struct rule rules[128];
+extern struct rule rules[MAX_RULES];
 extern int num_rules;
 extern pthread_t threads[64];
 extern int thread_count;

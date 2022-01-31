@@ -18,6 +18,8 @@ void dns_disect(const unsigned char * pkt, const struct rule_data * rdata){
   }
 }
 
+
+
 void get_dns_name(const char * qry, char * output){
   
   for(int i = 0; i < strlen(qry); i++){

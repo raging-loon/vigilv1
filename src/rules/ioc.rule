@@ -1,0 +1,5 @@
+# alert stdout any TCP (name:"ping-cmd-attempt"; msg:"Web Attack: ping command attempt"; type:str_match; target:"/bin/ping";)
+alert stdout any TCP (name:"ioc-dir-list"; msg:"IOC directory listing"; type:str_match; target:"Volume Serial Number";)
+alert stdout any TCP (name:"ioc-cmd-comp"; msg:"IOC Command completed"; type:str_match; target:"Command completed";)
+alert stdout any TCP (name:"ioc-cmd-err1"; msg:"IOC Command Error"; type:str_match; target:"Bad command or filename";)
+alert stdout any TCP (name:"ioc-root-uid"; msg:"IOC Root UID returned"; type:str_match; target:"uid=0(root)";)

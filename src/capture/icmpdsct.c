@@ -82,7 +82,7 @@ void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
   const char * dest_ip = rdata->dest_ip_addr;
   
   struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
-  
+  rdata->pkt = (pkt + ETH_HDR_SZ + sizeof(struct iphdr));
   if(icmp4->type == 8 && strict_nmap_host_alive_check == true){
     int watchlist_index;
     if((watchlist_index = member_exists(rdata->src_ip_addr)) != -1){
@@ -125,7 +125,8 @@ void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
     }
   }
   stop:;
-
+  rdata->__protocol = R_ICMP;
+  rulemgr(rdata);
 
   if(packet_print) {
   printf("%s",__REG_ICMP_v4_v6);
