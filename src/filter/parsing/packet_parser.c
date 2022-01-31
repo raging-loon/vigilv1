@@ -22,9 +22,27 @@ bool str_match_parser(const struct rule_data * __rule_data, const struct rule * 
   for(int i = 0; i < __rule_data->pkt_len; i++){
     sprintf(temp_pkt + i * 2, "%02x",__rule_data->pkt[i]);
   }
+  int parsing_byte = 0;
   for(int i = 0; i < strlen(__rule->rule_target); i++){
-    sprintf(temp_target +i * 2, "%02x",__rule->rule_target[i]);
+    if(__rule->rule_target[i] == '|') {
+      if(parsing_byte == 1) parsing_byte = 0;
+      else {
+
+        parsing_byte = 1;
+        printf("Parsing byte\n");
+      }
+        continue;
+    }
+    if(parsing_byte == 1){
+        sprintf(temp_target +i-1, "%c", __rule->rule_target[i]);
+        printf("%s\n",temp_target);
+        printf("%c\n", __rule->rule_target[i]);
+
+        
+      
+    } else sprintf(temp_target +i * 2, "%02x",__rule->rule_target[i]);
   }
+  printf("Temp target= %s\n",temp_target);
   if(strstr(temp_pkt,temp_target) != NULL) return true;
   return false;
 }
