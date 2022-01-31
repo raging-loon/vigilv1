@@ -29,20 +29,16 @@ bool str_match_parser(const struct rule_data * __rule_data, const struct rule * 
       else {
 
         parsing_byte = 1;
-        printf("Parsing byte\n");
       }
         continue;
     }
     if(parsing_byte == 1){
         sprintf(temp_target +i-1, "%c", __rule->rule_target[i]);
-        printf("%s\n",temp_target);
-        printf("%c\n", __rule->rule_target[i]);
-
         
       
     } else sprintf(temp_target +i * 2, "%02x",__rule->rule_target[i]);
   }
-  printf("Temp target= %s\n",temp_target);
+  // printf("Temp target= %s\n",temp_target);
   if(strstr(temp_pkt,temp_target) != NULL) return true;
   return false;
 }
