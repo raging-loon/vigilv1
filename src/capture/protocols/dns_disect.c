@@ -11,11 +11,13 @@ void dns_disect(const unsigned char * pkt, const struct rule_data * rdata){
   char * query = pkt + sizeof(struct dns_pkt_data);
   if(dns_data->flags == 0){
 
-    char real_query[64];
-    memset(&real_query,0,sizeof(real_query));
+    char * real_query = (char *)malloc(1024);
+    memset(real_query,0,sizeof(real_query));
     get_dns_name(query,real_query);
     if(packet_print) printf("Query: %s\n",real_query);
+    if(real_query) free(real_query);
   }
+  
 }
 
 

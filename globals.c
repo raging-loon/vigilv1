@@ -49,7 +49,7 @@ char input_adapter[10];
 char output_adapter[10];
 char local_ip[18];
 char def_gw[18];
-
+bool use_spi;
 void add_thread(pthread_t * pthrd){
   threads[thread_count++] = pthrd;
 }

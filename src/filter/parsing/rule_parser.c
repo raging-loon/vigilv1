@@ -157,6 +157,10 @@ void rule_library_parser(const char * alt_file){
     else if(strncmp(line,"defgw=",6) == 0){
       strcpy(def_gw,line + 6);
     }
+    else if(strncmp(line,"use_spi=",8)  == 0){
+      if(strcmp(line + 6,"YES") == 0) use_spi = true;
+      else use_spi = false;
+    }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);
       rule_parser(line);
