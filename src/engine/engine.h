@@ -11,7 +11,7 @@
 const enum{
   NA_IPv4 = 220,
   NA_IPv6 
-} net_addr_t;
+};
 
 struct net_addr{
   char netaddr[40];
