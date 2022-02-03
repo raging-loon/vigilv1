@@ -1,0 +1,1 @@
+alert stdout 0 ANY (name:"port0-traffic"; msg"BAD-TRAFFIC port 0 traffic"; type:str_match; target:"";)

@@ -1,0 +1,5 @@
+alert stdout 23 TCP (name:"info-telnet-inc-login"; msg:"INFO TELNET login incorrect"; type:str_match; target:"Login incorrect";)
+alert stdout 80 TCP (name:"p80-conn-close"; msg:"INFO Connection Closed MSG from Port 80"; type:str_match; target:"Connection closed by foreign host";)
+alert stdout 25 TCP (name:"smtp-battle-mail"; msg:"INFO battle-mail traffic"; type:str_match; target:"BattleMail";)
+alert stdout 23 TCP (name:"info-telnet-fail-login"; msg:"INFO TELNET login failed"; type:str_match; target:"Login failed";)
+alert stdout any ANY (name:"info-psybnc-bouncer"; msg:"INFO psyBNC access"; type:str_match; target:"Welcome!psyBNC@lam3rz.de";)
