@@ -8,10 +8,9 @@
   TODO: 
 */
 
-const enum{
-  NA_IPv4 = 220,
-  NA_IPv6 
-};
+
+#define NA_IPv4         220
+#define NA_IPv6         221
 
 struct net_addr{
   char netaddr[40];
@@ -21,10 +20,6 @@ struct net_addr{
 
 
 
-typedef struct{
-  const struct rule_data * rdata;
-  
-} tu_engine_data_t;
 #include "../filter/parsing/rule.h"
 
 

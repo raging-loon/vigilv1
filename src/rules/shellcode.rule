@@ -1,0 +1,1 @@
+alert stdout any ANY (name:"setgid-shell"; msg:"SHELLCODE x86 setgid 0"; type:str_match; target:"|B0B5CD80|";)

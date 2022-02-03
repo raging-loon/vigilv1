@@ -23,7 +23,7 @@ const enum{
   __ICMP_FIRST_SEEN,
 
 
-};
+} spi_status_t;
 
 
 
