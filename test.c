@@ -6,10 +6,7 @@
 // Returns 'true' if the character is a DELIMITER.
 bool isDelimiter(char ch)
 {
-	if (ch == ' ' || ch == '+' || ch == '-' || ch == '*' ||
-		ch == '/' || ch == ',' || ch == ';' || ch == '>' ||
-		ch == '<' || ch == '=' || ch == '(' || ch == ')' ||
-		ch == '[' || ch == ']' || ch == '{' || ch == '}')
+	if (ch == ' ')
 		return (true);
 	return (false);
 }
@@ -17,9 +14,7 @@ bool isDelimiter(char ch)
 // Returns 'true' if the character is an OPERATOR.
 bool isOperator(char ch)
 {
-	if (ch == '+' || ch == '-' || ch == '*' ||
-		ch == '/' || ch == '>' || ch == '<' ||
-		ch == '=')
+	if (ch == ':')
 		return (true);
 	return (false);
 }
@@ -38,18 +33,10 @@ bool validIdentifier(char* str)
 // Returns 'true' if the string is a KEYWORD.
 bool isKeyword(char* str)
 {
-	if (!strcmp(str, "if") || !strcmp(str, "else") ||
-		!strcmp(str, "while") || !strcmp(str, "do") ||
-		!strcmp(str, "break") ||
-		!strcmp(str, "continue") || !strcmp(str, "int")
-		|| !strcmp(str, "double") || !strcmp(str, "float")
-		|| !strcmp(str, "return") || !strcmp(str, "char")
-		|| !strcmp(str, "case") || !strcmp(str, "char")
-		|| !strcmp(str, "sizeof") || !strcmp(str, "long")
-		|| !strcmp(str, "short") || !strcmp(str, "typedef")
-		|| !strcmp(str, "switch") || !strcmp(str, "unsigned")
-		|| !strcmp(str, "void") || !strcmp(str, "static")
-		|| !strcmp(str, "struct") || !strcmp(str, "goto"))
+	if (!strcmp(str, "msg") || !strcmp(str, "name") ||
+		!strcmp(str, "type") || !strcmp(str, "itype") ||
+		!strcmp(str, "target") ||
+		!strcmp(str, "icode") || !strcmp(str,"alert") || !strcmp(str,"any"))
 		return (true);
 	return (false);
 }
@@ -101,7 +88,7 @@ char* subString(char* str, int left, int right)
 	for (i = left; i <= right; i++)
 		subStr[i - left] = str[i];
 	subStr[right - left + 1] = '\0';
-	printf("%s\n",subStr);
+	// printf("%s\n",subStr);
 	return (subStr);
 }
 
@@ -112,16 +99,17 @@ void parse(char* str)
 	int len = strlen(str);
 
 	while (right <= len && left <= right) {
-		printf("%d:%d\n",left,right);
+		// printf("%d:%d\n",left,right);
 		if (isDelimiter(str[right]) == false){
-			printf("%c\n",str[right]);
+			// printf("%c\n",str[right]);
 			right++;
 		}
 
 		if (isDelimiter(str[right]) == true && left == right) {
 			
-			if (isOperator(str[right]) == true)
+			if (isOperator(str[right]) == true){
 				printf("'%c' IS AN OPERATOR\n", str[right]);
+			}
 
 			right++;
 			left = right;
@@ -155,7 +143,7 @@ void parse(char* str)
 int main()
 {
 	// maximum length of string is 100 here
-	char str[100] = "int a = b + 1c; ";
+	char str[1000] = "alert stdout any TCP (name:\"ioc-root-uid\"; msg:\"IOC Root UID returned\"; type:str_match; target:\"uid=0(root)\";)";
 
 	parse(str); // calling the parse function
 
