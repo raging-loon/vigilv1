@@ -24,6 +24,7 @@
 #include "../actions/alerts.h"
 #include "../../../globals.h"
 #include "../../debug.h"
+#include "line_parser.h"
 #include "../../utils.h"
 static bool is_rule(const char *);
 static bool is_comment(const char * line);
@@ -216,97 +217,6 @@ void rule_parser(const char * __filename){
 }
 
 
-
-
-void line_parser(const char * line){
-  int filled = 0;
-	char * parser_line;
-	bool is_parse_data = false;
-  // the first par always needs to be "alert"
-  int chars_parsed = 6;
-  struct rule * __rule = &rules[++num_rules];
-  int len = strlen(line);
-	char target[64];
-	while(true){
-    
-    parser_line = line + chars_parsed;
-		memset(&target,0,sizeof(target));
-
-    if(is_parse_data == false){
-      strncpy(target,parser_line,strloc(parser_line,' ') + 1);
-      if(strstr(target,"(") != NULL){
-        is_parse_data = true; 
-        goto data;
-      }
-      chars_parsed += strlen(target);
-      // printf("%s\n",target);
-      if(filled == 0){
-        get_action(target,__rule);
-        filled++;
-      }
-      else if(filled == 1){
-        if(strcmp(target,"any") == 0) __rule->port = -1;
-        else __rule->port = atoi(target);
-        filled++;
-      }
-      else if(filled == 2){
-        // printf("%");
-        get_protocol(target,__rule);
-        filled++;
-      }
-    }else{
-      data:
-      // printf("%s\n",parser_line);
-      strncpy(target,parser_line,strloc(parser_line,';')+1);
-      // printf("%d||%d\n",len,strloc(parser_line,';'));
-      chars_parsed += strlen(target);
-      
-      if(strncmp(target,"(name:\"",7) == 0){
-        strncpy(__rule->rulename,target + 7, strlen(target)-10);
-        // printf("%s\n",__rule->rulename);
-      } 
-      
-      else if(strncmp(target,"msg:\"",5) == 0){
-        strncpy(__rule->message,target + 5,strlen(target) -7);
-        // printf("%s\n",__rule->message);
-      }
-      
-      else if(strncmp(target+1,"type",4) == 0){
-        char temp[16];
-        memset(&temp,0,sizeof(temp));
-        strncpy(temp,target +6,strlen(target)-7);
-        // printf("type: %s\n",temp);
-        get_ruletype(&temp,__rule);
-      }
-
-      else if(strncmp(target,"icode:",6) == 0){
-        if(__rule->rule_type == R_ICMP){
-          __rule->icmp_data.code = atoi(target + 6);
-        } else {
-          printf("Error in %s. At %d: rule protocol not icmp\n",__rule->rulename,chars_parsed);
-          exit(-1);
-        }
-      }
-
-      else if(strncmp(target,"itype:",6) == 0){
-        
-      }
-      
-      
-      else if(strncmp(target," target:\"",9) == 0){
-        strncpy(__rule->rule_target,target + 9, strlen(target)-11);
-        // printf("%s\n",__rule->rule_target);
-        return;
-      } 
-    }
-
-
-   
-  }
-    
-    
-	
-}
 
 
 

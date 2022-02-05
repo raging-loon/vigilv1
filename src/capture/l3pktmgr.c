@@ -4,13 +4,13 @@
 #include <netinet/ether.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-#include <netinet/ip_icmp.h>
 #include <stdlib.h>
 #include <string.h>
 #include <netinet/ip.h>
 #include <netinet/udp.h>
 #include <netinet/tcp.h>
 #include "../packets/ip_hdr.h"
+// #include <netinet/ip_icmp.h>
 #include "l3pktmgr.h"
 #include <time.h>
 #include "../colors.h"
@@ -20,7 +20,6 @@
 #include "../utils.h"
 #include "tcpmgr.h"
 #include "udpmgr.h"
-#include "../filter/parsing/rule.h"
 #include "../packets/icmp4.h"
 #include "icmpdsct.h"
 #include "../print_utils.h"

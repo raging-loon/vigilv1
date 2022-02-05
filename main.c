@@ -95,7 +95,7 @@ int main(int argc, char **argv){
   start_nsh_server();
   printf("Unecrypted NSH config server started: 127.0.0.1:23\n");
   // start_wclean();
-  pcap_loop(pcap_mgr,-1, pktmgr, NULL);
+  // pcap_loop(pcap_mgr,-1, pktmgr, NULL);
 }
 
 void sigint_processor(int signal){

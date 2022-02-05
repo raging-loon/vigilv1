@@ -1,8 +1,10 @@
 #ifndef RULE_H
 #define RULE_H
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/socket.h>
+
 /*
   *-*-*-*- rule.h -*-*-*-*
   @purpose define struct for rules
@@ -30,15 +32,15 @@ struct rule_data{
   const struct sockaddr_in * dest_socket;
 
 };
+void rulemgr(const struct rule_data *);
 
 struct blocked_ipv4{
   char ipv4_addr[18];
 };
 
 
-void rulemgr(const struct rule_data *);
 /* rule parsing -----> packet capture -----> packet ----> iterate through all rules -----> apply rule parser function pointer -----> apply rule action function pointer */
-struct r_icmp_data{
+struct r_icmp_dataset{
   uint8_t type;
   uint8_t code;
   uint16_t seq;
@@ -55,6 +57,8 @@ struct r_tcp_data{
 
 struct r_raw_ip_data{
   uint8_t tos;
+  
+
   uint8_t ttl;
   uint8_t proto;
 };
@@ -69,11 +73,13 @@ struct rule{
   int severity;
   char message[128];
   // int total_ports;
-  bool(*pkt_parser)(const struct rule_data *, const struct rule *);
-  void(*action)(const struct rule_data *, const struct rule *, int);
-  struct r_icmp_data icmp_data;
   struct r_tcp_data tcp_data;
   struct r_raw_ip_data ip_data;
+  struct r_icmp_dataset icmp_data;
+
+  
+  bool(*pkt_parser)(const struct rule_data *, const struct rule *);
+  void(*action)(const struct rule_data *, const struct rule *, int);
 };
 
 
