@@ -22,8 +22,8 @@ const enum{
   __UDP_FIRST_SEEN,
   __ICMP_FIRST_SEEN,
 
-};
-// } spi_status_t;
+// };
+} spi_status_t;
 
 
 

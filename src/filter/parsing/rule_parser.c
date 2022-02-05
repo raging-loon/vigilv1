@@ -260,14 +260,17 @@ void line_parser(const char * line){
       strncpy(target,parser_line,strloc(parser_line,';')+1);
       // printf("%d||%d\n",len,strloc(parser_line,';'));
       chars_parsed += strlen(target);
+      
       if(strncmp(target,"(name:\"",7) == 0){
         strncpy(__rule->rulename,target + 7, strlen(target)-10);
         // printf("%s\n",__rule->rulename);
       } 
+      
       else if(strncmp(target,"msg:\"",5) == 0){
         strncpy(__rule->message,target + 5,strlen(target) -7);
         // printf("%s\n",__rule->message);
       }
+      
       else if(strncmp(target+1,"type",4) == 0){
         char temp[16];
         memset(&temp,0,sizeof(temp));
@@ -275,6 +278,21 @@ void line_parser(const char * line){
         // printf("type: %s\n",temp);
         get_ruletype(&temp,__rule);
       }
+
+      else if(strncmp(target,"icode:",6) == 0){
+        if(__rule->rule_type == R_ICMP){
+          __rule->icmp_data.code = atoi(target + 6);
+        } else {
+          printf("Error in %s. At %d: rule protocol not icmp\n",__rule->rulename,chars_parsed);
+          exit(-1);
+        }
+      }
+
+      else if(strncmp(target,"itype:",6) == 0){
+        
+      }
+      
+      
       else if(strncmp(target," target:\"",9) == 0){
         strncpy(__rule->rule_target,target + 9, strlen(target)-11);
         // printf("%s\n",__rule->rule_target);

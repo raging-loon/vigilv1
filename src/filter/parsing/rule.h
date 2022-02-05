@@ -38,7 +38,26 @@ struct blocked_ipv4{
 
 void rulemgr(const struct rule_data *);
 /* rule parsing -----> packet capture -----> packet ----> iterate through all rules -----> apply rule parser function pointer -----> apply rule action function pointer */
+struct r_icmp_data{
+  uint8_t type;
+  uint8_t code;
+  uint16_t seq;
+  uint16_t id;
+};
 
+struct r_tcp_data{
+  unsigned char * flags;
+  uint16_t ack;
+  uint32_t seq;
+  uint16_t res1;
+
+};
+
+struct r_raw_ip_data{
+  uint8_t tos;
+  uint8_t ttl;
+  uint8_t proto;
+};
 
 struct rule{
   char rulename[24];
@@ -47,11 +66,17 @@ struct rule{
   char rule_target[128];
   int protocol;
   int port;
+  int severity;
   char message[128];
   // int total_ports;
   bool(*pkt_parser)(const struct rule_data *, const struct rule *);
   void(*action)(const struct rule_data *, const struct rule *, int);
+  struct r_icmp_data icmp_data;
+  struct r_tcp_data tcp_data;
+  struct r_raw_ip_data ip_data;
 };
+
+
 
 
 #endif /* RULE_H */
