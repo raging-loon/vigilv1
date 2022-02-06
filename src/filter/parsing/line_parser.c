@@ -48,6 +48,7 @@ static void assign_protocol(const char * sub, struct rule * r){
     r->protocol = R_ALL;
   else if(strcmp(sub,"ICMP") == 0)
     r->protocol = R_ICMP;
+
   else if(strcmp(sub,"TCP") == 0)
     r->protocol = R_TCP;
   else if(strcmp(sub,"UDP") == 0)
@@ -69,22 +70,22 @@ static void get_ruletype(const char * __line, struct rule * __rule){
 static int numeric_check(char * sub,int min, int max){
   if(isdigit(sub)){
     int tval = atoi(sub);
-    if(tval > min && tval <= max)
+    if(tval >= min && tval <= max)
       return tval;
   }
   return -1;
 }
 // semicolon strip
 static void sc_strip(char * sub){
-  sub[strcspn(sub,";")] == 0;
+  sub[strcspn(sub,";")] = 0;
 }
 
 
 
 static void void_rule(struct rule * r){
-  memset(r->icmp_data,-1,sizeof(r->icmp_data));
-  memset(r->ip_data,-1,sizeof(r->ip_data));
-  memset(r->tcp_data,-1,sizeof(r->tcp_data));
+  memset(&r->icmp_data,-1,sizeof(r->icmp_data));
+  memset(&r->ip_data,-1,sizeof(r->ip_data));
+  memset(&r->tcp_data,-1,sizeof(r->tcp_data));
 }
 
 
@@ -95,6 +96,7 @@ void line_parser(const char * line){
   struct rule * rdata = &rules[++num_rules];
   rdata->port = -1;
   rdata->protocol = -1;
+  void_rule(rdata);
   int chars_parsed = 0;
   char * parser;
   char * content;
@@ -211,7 +213,8 @@ void line_parser(const char * line){
           }
           else if(strncmp(keysub,"itype:",6) == 0){
             sc_strip(keysub);
-            if(rdata->rule_type == R_ICMP){
+            if(rdata->protocol == R_ICMP){
+              printf("%s\n",keysub+6);
               int itype = numeric_check(keysub + 6,0,255);
               if(itype == -1){
                 printf("Invalid icmp type value\n");
@@ -228,7 +231,8 @@ void line_parser(const char * line){
 
           else if(strncmp(keysub,"icode:",6) == 0){
             sc_strip(keysub);
-            if(rdata->rule_type == R_ICMP){
+            if(rdata->protocol == R_ICMP){
+              printf("%s\n",keysub+6);
               int icode = numeric_check(keysub + 6,0,255);
               if(icode == -1){
                 printf("Invalide icmp code value\n");
@@ -236,7 +240,7 @@ void line_parser(const char * line){
               } 
               rdata->icmp_data.code = icode;
             } else {
-              pritnf("icode only applies to rules with ICMP as protocol\n");
+              printf("icode only applies to rules with ICMP as protocol\n");
             }
           }
 

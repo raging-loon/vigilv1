@@ -215,50 +215,6 @@ void rule_parser(const char * __filename){
   }
 }
 
-
-
-
-
-
-
-static void get_protocol(const char * __line, struct rule * __rule){
-  if(strncmp(__line,"TCP",3) == 0){
-    __rule->protocol = R_TCP;  
-  } 
-  else if(strncmp(__line,"UDP",3) == 0){
-    __rule->protocol = R_UDP;
-  } 
-  else if(strncmp(__line,"ICMP",4) == 0){
-    __rule->protocol = R_ICMP;
-  }
-  else if(strncmp(__line,"ANY",3) == 0){
-    __rule->protocol = R_ALL;
-  } 
-  else {
-    printf("Unknown protocol type: %s. If you believe this protocol should be added"
-    ", please contact me at cxmacolley@gmail.com\n"
-    "For now, the best thing to do is to modify the rule parameter to say \"ALL\"\n",__line);
-    exit(EXIT_FAILURE);
-  }
-}
-
-
-
-
-
-static void get_action(const char * __line, struct rule * __rule){
-  if(strncmp(__line,"stdout",6) == 0){
-    __rule->action = stdout_alert; 
-    return;
-  } 
-  else {
-    printf("Unknown action: %s\n",__line);
-    exit(EXIT_FAILURE);
-  }
-
-}
-
-
 void deny_conf_parser(char * file){
   FILE * fp = fopen(file,"r");
   if(fp == NULL){
