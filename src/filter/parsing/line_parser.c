@@ -66,6 +66,30 @@ static void get_ruletype(const char * __line, struct rule * __rule){
   }
   
 }
+static int numeric_check(char * sub,int min, int max){
+  if(isdigit(sub)){
+    int tval = atoi(sub);
+    if(tval > min && tval <= max)
+      return tval;
+  }
+  return -1;
+}
+// semicolon strip
+static void sc_strip(char * sub){
+  sub[strcspn(sub,";")] == 0;
+}
+
+
+
+static void void_rule(struct rule * r){
+  memset(r->icmp_data,-1,sizeof(r->icmp_data));
+  memset(r->ip_data,-1,sizeof(r->ip_data));
+  memset(r->tcp_data,-1,sizeof(r->tcp_data));
+}
+
+
+
+
 
 void line_parser(const char * line){
   struct rule * rdata = &rules[++num_rules];
@@ -167,12 +191,59 @@ void line_parser(const char * line){
                 strcat(rdata->rule_target, partial_target);
                 strcat(rdata->rule_target,"\x20");
               }
+            
             }
+          else if(strncmp(keysub,"sev:",4) == 0){
+            // remove semicolon
+            keysub[strcspn(keysub,";")] == 0x00;
+            if(isdigit(keysub + 4)){
+              int r_sev = atoi(keysub + 4);
+              if(r_sev > 0 && r_sev <= 10){
+                rdata->severity = r_sev;
+              } else {
+                printf("Rule severity should be > 0 and <= 10\n");
+                exit(-1);
+              }
+            } else {
+              printf("Rule severity should be a numeric value\n");
+              exit(-1);
+            }
+          }
+          else if(strncmp(keysub,"itype:",6) == 0){
+            sc_strip(keysub);
+            if(rdata->rule_type == R_ICMP){
+              int itype = numeric_check(keysub + 6,0,255);
+              if(itype == -1){
+                printf("Invalid icmp type value\n");
+                exit(-1);
+              } else {
+                rdata->icmp_data.type = itype;
+              }
+
+            } else {
+              printf("%s: itype only applies to rules with ICMP as protocol\n",rdata->rulename);
+              exit(-1);
+            }
+          }
+
+          else if(strncmp(keysub,"icode:",6) == 0){
+            sc_strip(keysub);
+            if(rdata->rule_type == R_ICMP){
+              int icode = numeric_check(keysub + 6,0,255);
+              if(icode == -1){
+                printf("Invalide icmp code value\n");
+                exit(-1);
+              } 
+              rdata->icmp_data.code = icode;
+            } else {
+              pritnf("icode only applies to rules with ICMP as protocol\n");
+            }
+          }
+
 
           }
 
-        
-
+    
       }
 
       left = right;
