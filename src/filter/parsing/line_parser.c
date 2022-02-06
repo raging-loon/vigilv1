@@ -103,33 +103,35 @@ void line_parser(const char * line){
 
 
       } else {
-        char * keysub;
-        if(sub[0] == '(') 
-          keysub = sub + 1;
-        else 
-          keysub = sub;
-        if(parsing_msg_str){
-          if(keysub[strlen(keysub)] == ';' && keysub[strlen(keysub) - 1] == '\"'){
-            strncat(rdata->message,keysub,strlen(keysub) -2);
-            printf("Complete message: %s\n",rdata->message);
-            parsing_msg_str = false;
-            continue;
+          char * keysub;
+          if(sub[0] == '(') 
+            keysub = sub + 1;
+          else 
+            keysub = sub;
+
+
+          if(parsing_msg_str){
+            if(keysub[strlen(keysub)] == ';'){
+              strncat(rdata->message,keysub,strlen(keysub) -2);
+              printf("Complete message: %s\n",rdata->message);
+              parsing_msg_str = false;
+              continue;
+            }
+            strcat(rdata->message,keysub);
+            strcat(rdata->message," ");
+            printf("Added to message: %s\n",rdata->message);
+          } else {
+
+            if(strncmp(keysub,"name:\"",6) == 0){
+              strncpy(rdata->rulename,keysub + 7,strlen(keysub) - 9);
+            }
+            else if(strncmp(keysub,"msg:\"",5) == 0){
+              parsing_msg_str = true;
+              char * partial_msg = keysub + 5;
+              strcat(rdata->message, partial_msg);
+            } 
+
           }
-          strcat(rdata->message,keysub);
-          strcat(rdata->message," ");
-        }
-
-
-        if(strncmp(keysub,"name:\"",6) == 0){
-          strncpy(rdata->rulename,keysub + 7,strlen(keysub) - 9);
-        }
-        else if(strncmp(keysub,"msg:\"",5) == 0){
-          parsing_msg_str = true;
-          char * partial_msg = keysub + 5;
-          strcat(rdata->message, partial_msg);
-          
-        } 
-
 
         
 
