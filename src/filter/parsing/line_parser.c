@@ -248,7 +248,7 @@ void line_parser(const char * line){
             sc_strip(keysub);
             if(rdata->protocol = R_ICMP){
               int iid = numeric_check(keysub + 8,0,65535);
-              if(icode == -1){
+              if(iid == -1){
                 printf("Invalid icmp id value\n");
                 exit(-1);
               }
