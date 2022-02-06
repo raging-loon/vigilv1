@@ -94,13 +94,13 @@ void line_parser(const char * line){
     
     } else if(delimit(line[right]) && left != right || (right == len && left != right)){
       char * sub = substr(line, left, right -1);
-      printf("%s\n",sub);
+      // printf("%s\n",sub);
       entry:
       
       if(data == false){
 
         if(strcmp(sub,NKEY_ALERT) == 0)
-            printf("Found Alert\n");
+            ;
         else if(strcmp(sub,"stdout") == 0 && !parsing_msg_str && !parsing_target_str)
           rdata->action = stdout_alert;
         else if((strcmp(sub,"ICMP") == 0 || strcmp(sub,"ANY") == 0 || 
@@ -133,24 +133,24 @@ void line_parser(const char * line){
             strcat(rdata->message," ");
 
           } else if(parsing_target_str){
-              if(keysub[strlen(keysub) - 1] == ';'){
-                strncat(rdata->rule_target,keysub,strlen(keysub) - 2);
+              if(strstr(keysub,"\";") != NULL){
+                strncat(rdata->rule_target,keysub,strlen(keysub) - 3);
                 parsing_target_str = false;
-                printf("Com[lete target: %s\n",rdata->rule_target);
                 continue;
               }
               strcat(rdata->rule_target,keysub);
-              strcat(rdata->rule_target," ");
-              printf("Added to tagret: %s\n",rdata->rule_target);
+              strcat(rdata->rule_target,"\x20");
+
           } else {
 
             if(strncmp(keysub,"name:\"",6) == 0){
-              strncpy(rdata->rulename,keysub + 7,strlen(keysub) - 9);
+              strncpy(rdata->rulename,keysub + 6,strlen(keysub) - 9);
             }
             else if(strncmp(keysub,"msg:\"",5) == 0){
               parsing_msg_str = true;
               char * partial_msg = keysub + 5;
               strcat(rdata->message, partial_msg);
+              strcat(rdata->message,"\x20");
             } 
             else if(strncmp(keysub,"type:",5) == 0){
               char rtype[10];
@@ -159,9 +159,14 @@ void line_parser(const char * line){
               get_ruletype(rtype,rdata);
             }
             else if(strncmp(keysub,"target:\"",8) == 0){
-              parsing_target_str = true;
               char * partial_target = keysub + 8;
-              strcat(rdata->rule_target, partial_target);
+              if(strstr(partial_target,"\";") != NULL){
+                strncpy(rdata->rule_target, keysub + 8,strlen(keysub) - 11);
+              } else {
+                parsing_target_str = true;
+                strcat(rdata->rule_target, partial_target);
+                strcat(rdata->rule_target,"\x20");
+              }
             }
 
           }
