@@ -54,6 +54,18 @@ static void assign_protocol(const char * sub, struct rule * r){
     r->protocol = R_UDP;
 }
 
+static void get_ruletype(const char * __line, struct rule * __rule){
+  if(strncmp(__line,"str_match",9) == 0){
+    __rule->pkt_parser = str_match_parser;
+    return;
+  }
+
+  else {
+    printf("Unknown rule type: %s\n",__line);
+    exit(EXIT_FAILURE);
+  }
+  
+}
 
 void line_parser(const char * line){
   struct rule * rdata = &rules[++num_rules];
@@ -111,15 +123,25 @@ void line_parser(const char * line){
 
 
           if(parsing_msg_str){
-            if(keysub[strlen(keysub)] == ';'){
+
+            if(keysub[strlen(keysub)- 1] == ';'){
               strncat(rdata->message,keysub,strlen(keysub) -2);
-              printf("Complete message: %s\n",rdata->message);
               parsing_msg_str = false;
               continue;
             }
             strcat(rdata->message,keysub);
             strcat(rdata->message," ");
-            printf("Added to message: %s\n",rdata->message);
+
+          } else if(parsing_target_str){
+              if(keysub[strlen(keysub) - 1] == ';'){
+                strncat(rdata->rule_target,keysub,strlen(keysub) - 2);
+                parsing_target_str = false;
+                printf("Com[lete target: %s\n",rdata->rule_target);
+                continue;
+              }
+              strcat(rdata->rule_target,keysub);
+              strcat(rdata->rule_target," ");
+              printf("Added to tagret: %s\n",rdata->rule_target);
           } else {
 
             if(strncmp(keysub,"name:\"",6) == 0){
@@ -130,6 +152,17 @@ void line_parser(const char * line){
               char * partial_msg = keysub + 5;
               strcat(rdata->message, partial_msg);
             } 
+            else if(strncmp(keysub,"type:",5) == 0){
+              char rtype[10];
+              strncpy(rtype,keysub + 5, strlen(keysub) -6);
+
+              get_ruletype(rtype,rdata);
+            }
+            else if(strncmp(keysub,"target:\"",8) == 0){
+              parsing_target_str = true;
+              char * partial_target = keysub + 8;
+              strcat(rdata->rule_target, partial_target);
+            }
 
           }
 
@@ -138,7 +171,7 @@ void line_parser(const char * line){
       }
 
       left = right;
-      if(sub[strlen(sub)] == ';' && sub[strlen(sub) - 1] == ')') return;
+      if(sub[strlen(sub) - 1] == ')') return;
     }
 
 

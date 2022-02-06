@@ -30,7 +30,6 @@ static bool is_rule(const char *);
 static bool is_comment(const char * line);
 static void rstrip(char * );
 static void syntax_error(const char * line, int line_no);
-static void get_ruletype(const char * , struct rule *);
 static void get_action(const char * , struct rule *);
 
 
@@ -244,18 +243,7 @@ static void get_protocol(const char * __line, struct rule * __rule){
 }
 
 
-static void get_ruletype(const char * __line, struct rule * __rule){
-  if(strncmp(__line,"str_match",9) == 0){
-    __rule->pkt_parser = str_match_parser;
-    return;
-  }
 
-  else {
-    printf("Unknown rule type: %s\n",__line);
-    exit(EXIT_FAILURE);
-  }
-  
-}
 
 
 static void get_action(const char * __line, struct rule * __rule){
