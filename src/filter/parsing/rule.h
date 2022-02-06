@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/socket.h>
+#include "../../packets/ip_hdr.h"
+#include "../../packets/tcp.h"
+#include "../../packets/icmp4.h"
 
 /*
   *-*-*-*- rule.h -*-*-*-*
@@ -30,7 +33,11 @@ struct rule_data{
   int pkt_len;
   const struct sockaddr_in * src_socket;
   const struct sockaddr_in * dest_socket;
-
+  const struct ip_hdr * ip_header;
+  const struct __tcp * tcp_header;
+  const struct __icmp4 * icmp_header;
+  unsigned char * tcp_flags; 
+  // ^ needs to be seperate since it's not part of the __tcp 
 };
 void rulemgr(const struct rule_data *);
 
@@ -83,6 +90,7 @@ struct rule{
 };
 
 
+bool r_engine(const struct rule *, const struct rule_data *);
 
 
 #endif /* RULE_H */

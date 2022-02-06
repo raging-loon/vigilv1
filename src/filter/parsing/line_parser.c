@@ -83,9 +83,9 @@ static void sc_strip(char * sub){
 
 
 static void void_rule(struct rule * r){
-  memset(&r->icmp_data,-1,sizeof(r->icmp_data));
-  memset(&r->ip_data,-1,sizeof(r->ip_data));
-  memset(&r->tcp_data,-1,sizeof(r->tcp_data));
+  memset(&r->icmp_data, -1,sizeof(r->icmp_data));
+  memset(&r->ip_data,   -1,sizeof(r->ip_data));
+  memset(&r->tcp_data,  -1,sizeof(r->tcp_data));
 }
 
 
@@ -170,7 +170,7 @@ void line_parser(const char * line){
           } else {
 
             if(strncmp(keysub,"name:\"",6) == 0){
-              strncpy(rdata->rulename,keysub + 6,strlen(keysub) - 9);
+              strncpy(rdata->rulename,keysub + 6,strlen(keysub) - 8);
             }
             else if(strncmp(keysub,"msg:\"",5) == 0){
               parsing_msg_str = true;
@@ -214,7 +214,6 @@ void line_parser(const char * line){
           else if(strncmp(keysub,"itype:",6) == 0){
             sc_strip(keysub);
             if(rdata->protocol == R_ICMP){
-              printf("%s\n",keysub+6);
               int itype = numeric_check(keysub + 6,0,255);
               if(itype == -1){
                 printf("Invalid icmp type value\n");
