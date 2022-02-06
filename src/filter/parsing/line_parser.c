@@ -83,9 +83,9 @@ static void sc_strip(char * sub){
 
 
 static void void_rule(struct rule * r){
-  memset(&r->icmp_data, -1,sizeof(r->icmp_data));
-  memset(&r->ip_data,   -1,sizeof(r->ip_data));
-  memset(&r->tcp_data,  -1,sizeof(r->tcp_data));
+  memset(&r->icmp_data, NULL,sizeof(r->icmp_data));
+  memset(&r->ip_data,   NULL,sizeof(r->ip_data));
+  memset(&r->tcp_data,  NULL,sizeof(r->tcp_data));
 }
 
 

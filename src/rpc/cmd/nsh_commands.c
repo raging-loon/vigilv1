@@ -7,7 +7,7 @@
 #include "../../filter/parsing/rule_parser.h"
 #include "../../statistics/arpcache.h"
 #include "../../utils.h"
-static __thread char message_buffer[1024];
+static __thread char message_buffer[4096];
 
 void send_blacklist(int * fd){
   memset(&message_buffer,0,sizeof(message_buffer));
@@ -40,6 +40,9 @@ void get_loaded_rules(int * fd){
   for(int i = 0; i < num_rules + 1; ){
     const struct rule * tmprule = &rules[i++];
     strncat(message_buffer,tmprule->rulename,strlen(tmprule->rulename));
+    char submsg[200];
+    sprintf(submsg,"\t\t\t\t\t\t[ %d | %d | %s ]",tmprule->port, tmprule->protocol, tmprule->rule_target);
+    strcat(message_buffer,submsg);
     strcat(message_buffer,"\n\t");
   }
   strcat(message_buffer,"\r\n");

@@ -43,7 +43,7 @@ bool str_match_parser(const struct rule_data * __rule_data, const struct rule * 
       sprintf(temp_target +i * 2, "%02x",__rule->rule_target[i]);
     }
   }
-  if(debug_mode) printf("%s = %s\n",__rule->rulename, temp_target);
+  // if(debug_mode) printf("%s = %s\n",__rule->rulename, temp_target);
   if(strstr(temp_pkt,temp_target) != NULL) return true;
   return false;
 }

@@ -142,19 +142,13 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
       break;
     
     case 6:
-      // printf("ipv4pktmgr: tcp\n");
 
       rdata.__protocol = R_TCP; 
       ip4_tcp_decode(pkt,&rdata,pkt_hdr);
-      // data_size = base_data_size - sizeof(struct tcphdr);
-      // ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     case 17:
-      // printf("ipv4pktmgr: udp\n");
       rdata.__protocol = R_UDP;
       ip4_udp_decode(pkt,&rdata,pkt_hdr);
-      // data_size = base_data_size - sizeof(struct udphdr);
-      // ascii_hexdump((pkt + data_size),pkt_hdr->len - data_size);
       break;
     default:
       printf("IPv4 %s -> %s Protocol Number = %d\n",rdata.src_ip_addr,rdata.dest_ip_addr,ip_header->protocol);
