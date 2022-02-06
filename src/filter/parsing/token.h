@@ -26,7 +26,7 @@ alert stdout 22 TCP (name:"nmap_ssh_probe"; msg:"NMap SSH Probing detected"; typ
 /* type can be str_match or regex */
 #define NKEY_R_TYPE               "type"        
 #define NKEY_SEVERITY             "sev"
-#define NKEY_ALERT                "alert " // start of rule
+#define NKEY_ALERT                "alert" // start of rule
 /* PROTOCOL SPECIFIC KEYWORDS */
 
 /* TCP */

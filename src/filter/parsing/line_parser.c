@@ -11,7 +11,7 @@
 #include <string.h>
 /* alert stdout any TCP (name:"ioc-root-uid"; msg:"IOC Root UID returned"; type:str_match; target:"uid=0(root)";); */
 static char * substr(char * str, int left, int right){
-  char sub = (char *)malloc(sizeof(char) * (right - left + 2));
+  char * sub = (char *)malloc(sizeof(char) * (right - left + 2));
   for(int i = left; i <= right; i++){
     sub[i - left] = str[i];
   }
@@ -20,36 +20,6 @@ static char * substr(char * str, int left, int right){
 }
 static bool delimit(char c){
   return c == ' ';
-}
-
-void line_parser(const char * line){
-  struct rule * rdata = &rules[++num_rules];
-  rdata->port = -1;
-  rdata->protocol = -1;
-  int chars_parsed = 0;
-  char * parser;
-  char * content;
-  bool data = false;
-  int left = 0, right = 0;
-  int len = strlen(line);
-  bool parsing_msg_str = false;
-  while(right <= len && left <= right){
-    if(!delimit(line[right])) right++;
-
-    if(delimit(line[right]) && right == left){
-      if(line[right] == ':'){
-        printf("Found operator");
-      }
-      right++;
-      left = right;
-    
-    
-    } else if(delimit(line[right]) && left != right || (right == len && left != right)){
-      char * sub = substr(line, left, right -1);
-
-    }
-
-  }
 }
 
 
@@ -82,4 +52,93 @@ static void assign_protocol(const char * sub, struct rule * r){
     r->protocol = R_TCP;
   else if(strcmp(sub,"UDP") == 0)
     r->protocol = R_UDP;
+}
+
+
+void line_parser(const char * line){
+  struct rule * rdata = &rules[++num_rules];
+  rdata->port = -1;
+  rdata->protocol = -1;
+  int chars_parsed = 0;
+  char * parser;
+  char * content;
+  bool data = false;
+  int left = 0, right = 0;
+  int len = strlen(line);
+  bool parsing_msg_str = false;
+  bool parsing_target_str = false;
+  while(right <= len && left <= right){
+    if(!delimit(line[right])) {
+      right++;
+    
+    }
+    if(delimit(line[right]) && right == left){
+      if(line[right] == ':'){
+        printf("Found operator");
+      }
+      right++;
+      left = right;
+    
+    
+    } else if(delimit(line[right]) && left != right || (right == len && left != right)){
+      char * sub = substr(line, left, right -1);
+      printf("%s\n",sub);
+      entry:
+      
+      if(data == false){
+
+        if(strcmp(sub,NKEY_ALERT) == 0)
+            printf("Found Alert\n");
+        else if(strcmp(sub,"stdout") == 0 && !parsing_msg_str && !parsing_target_str)
+          rdata->action = stdout_alert;
+        else if((strcmp(sub,"ICMP") == 0 || strcmp(sub,"ANY") == 0 || 
+                 strcmp(sub,"TCP") == 0 || strcmp(sub,"UDP") == 0) && !parsing_target_str && !parsing_msg_str)
+          assign_protocol(sub,rdata);
+        else if((isdigit(sub) || strcmp(sub,"any") == 0) && !parsing_msg_str && !parsing_target_str)
+          assign_port_number(sub,rdata);
+        else if(sub[0] == '('){
+          data = true;
+          continue;
+        }
+
+
+      } else {
+        char * keysub;
+        if(sub[0] == '(') 
+          keysub = sub + 1;
+        else 
+          keysub = sub;
+        if(parsing_msg_str){
+          if(keysub[strlen(keysub)] == ';' && keysub[strlen(keysub) - 1] == '\"'){
+            strncat(rdata->message,keysub,strlen(keysub) -2);
+            printf("Complete message: %s\n",rdata->message);
+            parsing_msg_str = false;
+            continue;
+          }
+          strcat(rdata->message,keysub);
+          strcat(rdata->message," ");
+        }
+
+
+        if(strncmp(keysub,"name:\"",6) == 0){
+          strncpy(rdata->rulename,keysub + 7,strlen(keysub) - 9);
+        }
+        else if(strncmp(keysub,"msg:\"",5) == 0){
+          parsing_msg_str = true;
+          char * partial_msg = keysub + 5;
+          strcat(rdata->message, partial_msg);
+          
+        } 
+
+
+        
+
+      }
+
+      left = right;
+      if(sub[strlen(sub)] == ';' && sub[strlen(sub) - 1] == ')') return;
+    }
+
+
+  }
 }
