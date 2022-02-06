@@ -48,6 +48,7 @@ struct blocked_ipv4{
 
 /* rule parsing -----> packet capture -----> packet ----> iterate through all rules -----> apply rule parser function pointer -----> apply rule action function pointer */
 struct r_icmp_dataset{
+  bool typeset,codeset,seqset,idset;
   uint8_t type;
   uint8_t code;
   uint16_t seq;

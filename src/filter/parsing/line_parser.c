@@ -220,6 +220,7 @@ void line_parser(const char * line){
                 exit(-1);
               } else {
                 rdata->icmp_data.type = itype;
+                rdata->icmp_data.typeset = true;
               }
 
             } else {
@@ -231,20 +232,35 @@ void line_parser(const char * line){
           else if(strncmp(keysub,"icode:",6) == 0){
             sc_strip(keysub);
             if(rdata->protocol == R_ICMP){
-              printf("%s\n",keysub+6);
               int icode = numeric_check(keysub + 6,0,255);
               if(icode == -1){
                 printf("Invalide icmp code value\n");
                 exit(-1);
               } 
               rdata->icmp_data.code = icode;
+              rdata->icmp_data.codeset = true;
             } else {
               printf("icode only applies to rules with ICMP as protocol\n");
             }
           }
 
-
+          else if(strncmp(keysub,"icmp_id:",8) == 0){
+            sc_strip(keysub);
+            if(rdata->protocol = R_ICMP){
+              int iid = numeric_check(keysub + 8,0,65535);
+              if(icode == -1){
+                printf("Invalid icmp id value\n");
+                exit(-1);
+              }
+              rdata->icmp_data.id = iid;
+              rdata->icmp_data.idset = true;
+            }
+          } else {
+            printf("icmp_id only applies to rules with ICMP as protocol\n");
+            exit(-1);
           }
+
+        }
 
     
       }

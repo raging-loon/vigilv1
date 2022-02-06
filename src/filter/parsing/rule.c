@@ -32,18 +32,16 @@ void rulemgr(const struct rule_data * __rule_data){
 bool r_engine(const struct rule * r, const struct rule_data * rdata){
   if(debug_mode) printf("in r_engine\n");
   if(rdata->__protocol == R_ICMP){
-    printf("ICMP\n");
-    if(r->icmp_data.code != NULL){
-      printf("Code\n");
+    if(r->icmp_data.codeset){
       if(rdata->icmp_header->code != r->icmp_data.code) return false;
     }
-    if(r->icmp_data.id != NULL){
+    if(r->icmp_data.idset){
       if(rdata->icmp_header->id != r->icmp_data.id) return false;
     }
-    if(r->icmp_data.seq != NULL){
+    if(r->icmp_data.seqset){
       if(rdata->icmp_header->seq != r->icmp_data.seq) return false;
     }
-    if(r->icmp_data.type != NULL){
+    if(r->icmp_data.typeset){
       if(rdata->icmp_header->type != r->icmp_data.type) return false;
     }
   } 
