@@ -60,7 +60,9 @@ static void get_ruletype(const char * __line, struct rule * __rule){
     __rule->pkt_parser = str_match_parser;
     return;
   }
-
+  else if(strncmp(__line,"none",4) == 0){
+    __rule->pkt_parser = none;
+  }
   else {
     printf("Unknown rule type: %s\n",__line);
     exit(EXIT_FAILURE);

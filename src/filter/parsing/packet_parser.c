@@ -57,3 +57,8 @@ bool is_blocked_ipv4(const char * ipv4_addr){
   }
   return false;
 }
+
+
+bool none(const struct rule_data * __rule_data, const struct rule * __rule){
+  return true;
+}
