@@ -56,6 +56,7 @@ struct r_icmp_dataset{
 };
 
 struct r_tcp_data{
+  bool flagset, ackset,seqset;
   unsigned char * flags;
   uint16_t ack;
   uint32_t seq;
@@ -64,6 +65,7 @@ struct r_tcp_data{
 };
 
 struct r_raw_ip_data{
+  bool tosset, ttlset, protoset;
   uint8_t tos;
   
 

@@ -246,7 +246,7 @@ void line_parser(const char * line){
 
           else if(strncmp(keysub,"icmp_id:",8) == 0){
             sc_strip(keysub);
-            if(rdata->protocol = R_ICMP){
+            if(rdata->protocol == R_ICMP){
               int iid = numeric_check(keysub + 8,0,65535);
               if(iid == -1){
                 printf("Invalid icmp id value\n");
@@ -255,7 +255,33 @@ void line_parser(const char * line){
               rdata->icmp_data.id = iid;
               rdata->icmp_data.idset = true;
             }
-          } else {
+          }
+          else if(strncmp(keysub,"icmp_seq:",9) == 0){
+            sc_strip(keysub);
+            if(rdata->protocol == R_ICMP){
+              int icmp_seq = numeric_check(keysub + 9, 0, 65535);
+              if(icmp_seq == -1){
+                printf("Invalid icmp sequence value\n");
+                exit(-1);
+              }
+              rdata->icmp_data.seq = icmp_seq;
+              rdata->icmp_data.seqset = true;
+            }
+          }
+          
+          else if(strncmp(keysub,"ttl:",4) == 0){
+            sc_strip(keysub);
+            int ttl_val = numeric_check(keysub + 4, 0, 255);
+            if(ttl_val == 1){
+              printf("Invalid ttl value\n");
+              exit(-1);
+            }
+            rdata->ip_data.ttl = ttl_val;
+            rdata->ip_data.ttlset = true;
+          }
+
+          
+           else {
             printf("icmp_id only applies to rules with ICMP as protocol\n");
             exit(-1);
           }
