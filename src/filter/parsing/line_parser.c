@@ -199,7 +199,7 @@ void line_parser(const char * line){
             }
           else if(strncmp(keysub,"sev:",4) == 0){
             // remove semicolon
-            keysub[strcspn(keysub,";")] == 0x00;
+            keysub[strcspn(keysub,";")] = 0x00;
             if(isdigit(keysub + 4)){
               int r_sev = atoi(keysub + 4);
               if(r_sev > 0 && r_sev <= 10){
