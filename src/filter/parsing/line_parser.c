@@ -256,7 +256,11 @@ void line_parser(const char * line){
               }
               rdata->icmp_data.id = iid;
               rdata->icmp_data.idset = true;
+            } else {
+              printf("ICMP ID only applies to rules with ICMP as protocol\n");
+              exit(-1);
             }
+
           }
           else if(strncmp(keysub,"icmp_seq:",9) == 0){
             sc_strip(keysub);
@@ -280,12 +284,6 @@ void line_parser(const char * line){
             }
             rdata->ip_data.ttl = ttl_val;
             rdata->ip_data.ttlset = true;
-          }
-
-          
-           else {
-            printf("icmp_id only applies to rules with ICMP as protocol\n");
-            exit(-1);
           }
 
         }

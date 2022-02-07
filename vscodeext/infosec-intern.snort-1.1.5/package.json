@@ -1,0 +1,62 @@
+{
+	"name": "NPSI",
+	"displayName": "NPSI",
+	"description": "Syntax highlighting for NPSI rules",
+	"license": "SEE LICENSE IN LICENSE.md",
+	"icon": "images/logo.png",
+	"publisher": "raging-lon",
+	"version": "1.1.5",
+	"engines": {
+		"vscode": "^1.0.0"
+	},
+	"categories": [
+		"Programming Languages"
+	],
+	"keywords": [
+		"snort",
+		"ids",
+		"pattern",
+		"security"
+	],
+	"galleryBanner": {
+		"color": "#B00029",
+		"theme": "dark"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/infosec-intern/textmate-snort"
+	},
+	"bugs": {
+		"url": "https://github.com/infosec-intern/textmate-snort/issues"
+	},
+	"contributes": {
+		"languages": [
+			{
+				"id": "snort",
+				"aliases": [
+					"Snort",
+					"snort"
+				],
+				"extensions": [
+					".rule"
+				],
+				"configuration": "snort.configuration.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "snort",
+				"scopeName": "source.snort",
+				"path": "syntaxes/snort.tmLanguage"
+			}
+		]
+	},
+	"__metadata": {
+		"id": "2fa0f251-2483-4316-b615-1d68aadda9e3",
+		"publisherId": "5210dfe8-0f53-4642-bfef-ce7bda6141cb",
+		"publisherDisplayName": "infosec-intern",
+		"isPreReleaseVersion": false,
+		"preRelease": false,
+		"installedTimestamp": 1644262435654
+	}
+}
