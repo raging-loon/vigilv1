@@ -7,7 +7,7 @@ void http_disect(const unsigned char * pkt, const struct rule_data * rdata){
   // printf("%s\n",pkt);
   int loc = strloc(pkt,0x0d);
   printf("Strloc successful\n");
-  char request_hdr[255];
+  char request_hdr[1024];
   strncpy(request_hdr,pkt,loc );
   printf("%s\n",request_hdr);
   
