@@ -3,3 +3,8 @@ alert stdout any TCP (name:"ioc-dir-list"; msg:"IOC directory listing"; type:str
 alert stdout any TCP (name:"ioc-cmd-comp"; msg:"IOC Command completed"; type:str_match; target:"Command completed";)
 alert stdout any TCP (name:"ioc-cmd-err1"; msg:"IOC Command Error"; type:str_match; target:"Bad command or filename";)
 alert stdout any TCP (name:"ioc-root-uid"; msg:"IOC Root UID returned"; type:str_match; target:"uid=0(root)";)
+alert stdout any ANY (name:"ioc-zsh-shell"; msg:"IOC ZSH Access"; type:str_match; target:"/bin/zsh";)
+alert stdout any ANY (name:"ioc-sh-shell"; msg:"IOC SH Access"; type:str_match; target:"/bin/sh";)
+alert stdout any ANY (name:"ioc-bash-shell"; msg:"IOC BASH Access"; type:str_match; target:"/bin/bash";)
+alert stdout any ANY (name:"ioc-ash-shell"; msg:"IOC ASH Access"; type:str_match; target:"/bin/ash";)
+alert stdout any ANY (name:"ioc-dash-shell"; msg:"IOC DASH Access"; type:str_match; target:"/bin/dash";)
