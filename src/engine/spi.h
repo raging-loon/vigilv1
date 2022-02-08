@@ -6,24 +6,21 @@
 #include "../filter/parsing/rule.h"
 #include "engine.h"
 
-const enum{
-  __TCP_LISTENING = 240,
-  __TCP_ESTABLISHED, /* ACK */ 
-  __TCP_FINISHED,
-  __TCP_INIT,  /* SYN */
-  __TCP_ACK_W, /* SYN/ACK */
-  __TCP_FIN_INIT,
-  __TCP_FIN_INIT2,
-  __TCP_RST_COMP,
-  __TCP_RST_INIT,
-  __TCP_RST_INIT2,
-  __TCP_CLOSED_FIN,
-  __TCP_CLOSED_RST,
-  __UDP_FIRST_SEEN,
-  __ICMP_FIRST_SEEN,
 
-};
-// } spi_status_t;
+#define __TCP_LISTENING       240
+#define  __TCP_ESTABLISHED    241 
+#define  __TCP_FINISHED       242      
+#define  __TCP_INIT           243
+#define  __TCP_ACK_W          244
+#define  __TCP_FIN_INIT       245
+#define  __TCP_FIN_INIT2      246
+#define  __TCP_RST_COMP       247
+#define  __TCP_RST_INIT       248
+#define  __TCP_RST_INIT2      249
+#define  __TCP_CLOSED_FIN     250
+#define  __TCP_CLOSED_RST     251
+#define  __UDP_FIRST_SEEN     252
+#define  __ICMP_FIRST_SEEN    253
 
 
 

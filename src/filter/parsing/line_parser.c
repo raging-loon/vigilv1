@@ -69,7 +69,7 @@ static void get_ruletype(const char * __line, struct rule * __rule){
   }
   
 }
-static int numeric_check(char * sub,int min, int max){
+static int numeric_check(char * sub,unsigned int min,unsigned long  max){
   if(isdigit(sub)){
     int tval = atoi(sub);
     if(tval >= min && tval <= max)
@@ -85,9 +85,9 @@ static void sc_strip(char * sub){
 
 
 static void void_rule(struct rule * r){
-  memset(&r->icmp_data, NULL,sizeof(r->icmp_data));
-  memset(&r->ip_data,   NULL,sizeof(r->ip_data));
-  memset(&r->tcp_data,  NULL,sizeof(r->tcp_data));
+  memset(&r->icmp_data, 0,sizeof(r->icmp_data));
+  memset(&r->ip_data,   0,sizeof(r->ip_data));
+  memset(&r->tcp_data,  0,sizeof(r->tcp_data));
 }
 
 
@@ -278,7 +278,7 @@ void line_parser(const char * line){
           else if(strncmp(keysub,"ttl:",4) == 0){
             sc_strip(keysub);
             int ttl_val = numeric_check(keysub + 4, 0, 255);
-            if(ttl_val == 1){
+            if(ttl_val == -1){
               printf("Invalid ttl value\n");
               exit(-1);
             }
@@ -287,9 +287,26 @@ void line_parser(const char * line){
           }
           else if(strncmp(keysub,"flags:\"",7) == 0){
             sc_strip(keysub);
-            strncpy(rdata->tcp_data.flags, keysub + 7, strlen(keysub) - 10);
-            printf("DEBUG tcp flags %s\n",rdata->tcp_data.flags);
-            rdata->tcp_data.flagset = true;
+            if(rdata->protocol == R_TCP){
+              strncpy(rdata->tcp_data.flags, keysub + 7, strlen(keysub) - 8);
+              rdata->tcp_data.flagset = true;
+            } else {
+              printf("flags only applies to rules with tcp as protocol\n");
+              exit(-1);
+            }
+              
+          }
+          else if(strncmp(keysub,"ack:",4) == 0){
+            sc_strip(keysub);
+            if(rdata->protocol == R_TCP){
+              int ackval = numeric_check(keysub + 4, 0 ,4294967295);
+              if(ackval == -1){
+                printf("Invalid ack value\n");
+                exit(-1);
+              } 
+              rdata->tcp_data.ack = ackval;
+              rdata->tcp_data.ackset = true;
+            }
           }
 
         }

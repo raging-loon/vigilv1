@@ -78,7 +78,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   bool syn_set = false;
   bool fin_set = false;
   bool psh_set = false;
-
+  memset(&rdata->tcp_flags,0,sizeof(rdata->tcp_flags));
   // uint16_t syn, ack, rst, fin, psh, urg;
   dest_port = (unsigned int)ntohs(tcp_hdr->dest);
   src_port = (unsigned int)ntohs(tcp_hdr->source);
@@ -130,6 +130,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   }
   if(packet_print) {
     printf("%s",__TCP_COLOR_NS);
+    printf(" ack = %d seq = %d ", tcp_hdr->ack_seq,((unsigned int)tcp_hdr->seq));
     printf("]\n");
     printf("%s",__END_COLOR_STREAM);
   }
