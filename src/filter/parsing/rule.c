@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <arpa/inet.h>
 #include "../../engine/firewall/forward.h"
 
 /*
@@ -49,18 +50,22 @@ bool r_engine(const struct rule * r, const struct rule_data * rdata){
     }
   } 
   else if(rdata->__protocol == R_TCP){
-    if(r->tcp_data.ack != NULL){
+    if(r->tcp_data.ackset){
       if(rdata->tcp_header->ack != r->tcp_data.ack) return false;
     }
-    if(r->tcp_data.flags != NULL){
+    if(r->tcp_data.flagset){
       if(strcmp(rdata->tcp_flags, r->tcp_data.flags) != 0) return false;
     }
-    if(r->tcp_data.seq != NULL){
+    if(r->tcp_data.seqset){
       if(rdata->tcp_header->seq != r->tcp_data.seq) return false;
     }
-  } else if(rdata->ip_header != NULL){
-    if(r->ip_data.ttl != NULL){
-      if(rdata->ip_header->ttl != r->ip_data.ttl) return false;
+  } 
+  if(rdata->ip_header != NULL){
+    if(r->ip_data.ttlset){
+      if(rdata->ip_header->ttl != r->ip_data.ttl){
+        return false;
+
+      } 
     }
   }
   return true;
