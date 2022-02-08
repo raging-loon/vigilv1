@@ -82,6 +82,7 @@ struct rule{
   int port;
   int severity;
   char message[128];
+
   // int total_ports;
   struct r_tcp_data tcp_data;
   struct r_raw_ip_data ip_data;

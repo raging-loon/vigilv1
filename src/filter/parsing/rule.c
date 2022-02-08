@@ -62,10 +62,7 @@ bool r_engine(const struct rule * r, const struct rule_data * rdata){
   } 
   if(rdata->ip_header != NULL){
     if(r->ip_data.ttlset){
-      if(rdata->ip_header->ttl != r->ip_data.ttl){
-        return false;
-
-      } 
+      if(rdata->ip_header->ttl != r->ip_data.ttl) return false;
     }
   }
   return true;

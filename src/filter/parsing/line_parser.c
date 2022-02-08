@@ -285,6 +285,12 @@ void line_parser(const char * line){
             rdata->ip_data.ttl = ttl_val;
             rdata->ip_data.ttlset = true;
           }
+          else if(strncmp(keysub,"flags:\"",7) == 0){
+            sc_strip(keysub);
+            strncpy(rdata->tcp_data.flags, keysub + 7, strlen(keysub) - 10);
+            printf("DEBUG tcp flags %s\n",rdata->tcp_data.flags);
+            rdata->tcp_data.flagset = true;
+          }
 
         }
 
