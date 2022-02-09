@@ -27,7 +27,15 @@ def rm_lead_zero(addr):
   return shortenedipv6
 
 def groupzeros(addr):
-  
+  realaddr = ""
+  groups_zeros = 0;
+  hextexts_comp = 0
+  for i in addr.split(":"):
+    if i != '0':
+      realaddr += i
+    else:
+      pass
+
 
 
 addr = rm_lead_zero(ipv6addr)
