@@ -32,6 +32,7 @@
 #include <pthread.h>
 #include "src/statistics/arpcache.h"
 #include <time.h>
+#include "src/filter/parsing/rule_init.h"
 #include "src/debug.h"
 
 int main(int argc, char **argv){
@@ -80,7 +81,7 @@ int main(int argc, char **argv){
   
   rule_library_parser("/etc/npsi/npsi.conf");
   printf("Parsed rule files\n");
-
+  rule_processor();
   
   printf("NPSI listening on interface %s\n",iface_name);
   pcap_t *pcap_mgr;

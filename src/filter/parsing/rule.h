@@ -84,8 +84,8 @@ struct rule{
   int port;
   int severity;
   char message[128];
-
-
+  char pcretarget[128];
+  bool uses_pcre;
   unsigned int num_targets[4];
   char * targets[4];
   

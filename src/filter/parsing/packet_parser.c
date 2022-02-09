@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../../../globals.h"
+#include <regex.h>
 
 /*
   *-*-*-*- packet_parser.c -*-*-*-*
@@ -18,34 +19,13 @@
 bool str_match_parser(const struct rule_data * __rule_data, const struct rule * __rule){
 
   char temp_pkt[ (__rule_data->pkt_len * 2) + 2];
-  char temp_target[(strlen(__rule->rule_target) * 2) + 2];
-  // memset(&temp_target,0,sizeof(temp_target));
-  // memset(&temp_pkt,0,sizeof(temp_pkt));
-
+  
   for(int i = 0; i < __rule_data->pkt_len; i++){
     sprintf(temp_pkt + i * 2, "%02x",__rule_data->pkt[i]);
   }
-  unsigned int parsing_byte = 0;
-  for(int i = 0; i < strlen(__rule->rule_target); i++){
-    if(__rule->rule_target[i] == '|') {
-      if(parsing_byte != 0){
-        parsing_byte = 0;
-      }
-      else {
-        parsing_byte = 1;
-      }
-        continue;
-    }
-    if(parsing_byte == 1){
-
-        sprintf(temp_target +i - 1, "%c", __rule->rule_target[i]);
-    } else {
-      sprintf(temp_target +i * 2, "%02x",__rule->rule_target[i]);
-    }
-  }
-  // if(debug_mode) printf("%s = %s\n",__rule->rulename, temp_target);
-  if(strstr(temp_pkt,temp_target) != NULL) return true;
+  if(strstr(temp_pkt,__rule->rule_target) != NULL) return true;
   return false;
+
 }
 
 bool is_blocked_ipv4(const char * ipv4_addr){
@@ -61,4 +41,13 @@ bool is_blocked_ipv4(const char * ipv4_addr){
 
 bool none(const struct rule_data * __rule_data, const struct rule * __rule){
   return true;
+}
+
+
+bool pcre_match(const struct rule_data * rdata, const struct rule *r){
+  regex_t rgx;
+  if(regcomp(&rgx,r->pcretarget,0) != 0){
+    printf("CRITICAL ALERT FOR RULE %s: FAILED TO COMPILE REGULAR EXPRESSION!\n",r->rulename);
+  }
+  
 }

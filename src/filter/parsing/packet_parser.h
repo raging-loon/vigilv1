@@ -10,6 +10,6 @@ bool is_blocked_ipv4(const char *);
 
 bool none(const struct rule_data * , const struct rule *);
 
-
+bool pcre_match(const struct rule_data *, const struct rule *);
 
 #endif /* PACKET_PARSER_H */
