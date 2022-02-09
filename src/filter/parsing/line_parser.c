@@ -308,6 +308,9 @@ void line_parser(const char * line){
               rdata->tcp_data.ackset = true;
             }
           }
+          else if(strncmp(keysub,"dsize:",6) == 0){
+            sc_strip(keysub);
+          }
 
         }
 

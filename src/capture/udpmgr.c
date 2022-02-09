@@ -44,6 +44,7 @@ void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata,const st
     if(IS_PORT_DEST_SRC(src_port,dest_port,53)){
     dns_disect(pkt + 15 + sizeof(struct ip_hdr) + sizeof(udp_header),rdata); 
   }
+  rdata->dsize = pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - sizeof(udp_header);
   rulemgr(rdata);
   
 }

@@ -251,5 +251,6 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   // if(packet_print)
   // ascii_hexdump(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),
                 // pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4));
+  rdata->dsize = pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4);
   rulemgr(rdata);
 }

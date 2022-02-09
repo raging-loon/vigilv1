@@ -30,7 +30,8 @@ struct rule_data{
   unsigned int src_port;
   unsigned int dest_port;
   int __protocol;
-  int pkt_len;
+  int pkt_len; // psize;
+  int dsize;
   const struct sockaddr_in * src_socket;
   const struct sockaddr_in * dest_socket;
   const struct ip_hdr * ip_header;
@@ -74,6 +75,7 @@ struct r_raw_ip_data{
 };
 
 struct rule{
+  int dsize, psize;
   char rulename[24];
   int rule_type;
   int times_matched;
