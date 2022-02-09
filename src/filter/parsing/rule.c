@@ -51,11 +51,8 @@ bool r_engine(const struct rule * r, const struct rule_data * rdata){
   } 
   else if(rdata->__protocol == R_TCP){
     if(r->tcp_data.ackset){
-
-      uint32_t val = (rdata->tcp_header->ack_seq);
-      printf("helo");
-
-      if(val != r->tcp_data.ack) return false;
+      printf("%ld | %d\n", ntohl(rdata->tcp_header->ack_seq), ntohl(r->tcp_data.ack));
+      if(ntohl(rdata->tcp_header->ack_seq) != r->tcp_data.ack) return false;
     }
     if(r->tcp_data.flagset){
       if(strcmp(rdata->tcp_flags, r->tcp_data.flags) != 0) return false;
