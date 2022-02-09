@@ -134,7 +134,6 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   
   if(packet_print) {
     printf("%s",__TCP_COLOR_NS);
-    printf(" ack = %d seq = %ld ", ntohl(tcp_hdr->ack_seq),ntohl(tcp_hdr->seq));
     printf("]\n");
     printf("%s",__END_COLOR_STREAM);
   }
