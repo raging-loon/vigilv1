@@ -310,6 +310,7 @@ void line_parser(const char * line){
           }
           else if(strncmp(keysub,"dsize:",6) == 0){
             sc_strip(keysub);
+            
           }
 
         }
