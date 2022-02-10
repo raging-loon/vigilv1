@@ -77,6 +77,7 @@ struct r_raw_ip_data{
 
 struct rule{
   int dsize, psize;
+  int d_operator, p_operator;
   char rulename[24];
   int rule_type;
   int times_matched;

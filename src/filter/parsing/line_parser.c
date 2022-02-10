@@ -24,7 +24,7 @@ static bool delimit(char c){
 }
 
 
-static bool isdigit(const char * pos_num){
+bool isdigit(const char * pos_num){
   for(int i = 0; i < strlen(pos_num); i++){
     if(pos_num[i] != '0' && pos_num[i] != '1' && pos_num[i] != '2' &&
        pos_num[i] != '3' && pos_num[i] != '4' && pos_num[i] != '4' &&
