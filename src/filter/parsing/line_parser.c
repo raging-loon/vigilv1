@@ -6,6 +6,7 @@
 #include <regex.h>
 #include "token.h"
 #include "../../../globals.h"
+#include "dp_size.h"
 #include "../../utils.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -99,10 +100,13 @@ void line_parser(const char * line){
   struct rule * rdata = &rules[++num_rules];
   rdata->port = -1;
   rdata->protocol = -1;
+  rdata->d_operator = -1;
+  rdata->p_operator = -1;
   void_rule(rdata);
   int chars_parsed = 0;
   char * parser;
   char * content;
+
   bool data = false;
   int left = 0, right = 0;
   int len = strlen(line);
@@ -318,10 +322,10 @@ void line_parser(const char * line){
               exit(-1);
             }
           }
-          // else if(strncmp(keysub,"dsize:",6) == 0){
-            // sc_strip(keysub);
-            //    
-          // }    
+          else if(strncmp(keysub,"dsize:",6) == 0){
+            sc_strip(keysub);
+            d_op_parser(rdata,keysub + 6, 1);
+          }    
     
         }   
 

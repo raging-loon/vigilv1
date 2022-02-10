@@ -5,7 +5,7 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include "../../engine/firewall/forward.h"
-
+#include "dp_size.h"
 /*
   *-*-*-*- rule.c -*-*-*-*
   @purpose Apply rules located in "rules" in /globals.h
@@ -21,7 +21,8 @@ void rulemgr(const struct rule_data * __rule_data){
       ((temp_rule->port == -1) || (__rule_data->src_port == temp_rule->port || __rule_data->dest_port == temp_rule->port))){
         if(debug_mode) printf("rulemgr: %s\n",temp_rule->rulename);
       bool e_stat = r_engine(temp_rule,__rule_data);
-      if(temp_rule->pkt_parser(__rule_data,temp_rule) && e_stat){
+      bool d_stat = d_engine(temp_rule, __rule_data);
+      if(temp_rule->pkt_parser(__rule_data,temp_rule) && e_stat && d_stat){
         temp_rule->action(__rule_data,temp_rule,0);
         temp_rule->times_matched++;
       } else {
