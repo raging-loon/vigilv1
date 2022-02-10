@@ -86,7 +86,7 @@ struct rule{
   int severity;
   char message[128];
   regex_t pcre;
-  char pcretarget[128];
+  // char pcretarget[128];
   bool uses_pcre;
   unsigned int num_targets[4];
   char * targets[4];

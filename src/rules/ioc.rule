@@ -8,3 +8,4 @@ alert stdout any ANY (name:"ioc-sh-shell"; msg:"IOC SH Access"; type:str_match; 
 alert stdout any ANY (name:"ioc-bash-shell"; msg:"IOC BASH Access"; type:str_match; target:"/bin/bash";)
 alert stdout any ANY (name:"ioc-ash-shell"; msg:"IOC ASH Access"; type:str_match; target:"/bin/ash";)
 alert stdout any ANY (name:"ioc-dash-shell"; msg:"IOC DASH Access"; type:str_match; target:"/bin/dash";)
+alert stdout any ANY (name:"ioc-pe-exe"; msg:"IOC Windows Portable Executable detected"; type:str_match; target:"This program cannot be run in DOS mode.";)
