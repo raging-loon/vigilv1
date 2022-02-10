@@ -3,6 +3,7 @@
 #include "../actions/alerts.h"
 #include "packet_parser.h"
 #include "rule_parser.h"
+#include <regex.h>
 #include "token.h"
 #include "../../../globals.h"
 #include "../../utils.h"
@@ -56,13 +57,13 @@ static void assign_protocol(const char * sub, struct rule * r){
 }
 
 static void get_ruletype(const char * __line, struct rule * __rule){
-  if(strncmp(__line,"str_match",9) == 0){
+  if(strncmp(__line,"str_match",9) == 0)
     __rule->pkt_parser = str_match_parser;
-    return;
-  }
-  else if(strncmp(__line,"none",4) == 0){
+  else if(strncmp(__line,"none",4) == 0)
     __rule->pkt_parser = none;
-  }
+  else if(strncmp(__line,"pcre",4) == 0)
+    __rule->pkt_parser = pcre_match;
+
   else {
     printf("Unknown rule type: %s\n",__line);
     exit(EXIT_FAILURE);
@@ -308,12 +309,23 @@ void line_parser(const char * line){
               rdata->tcp_data.ackset = true;
             }
           }
-          else if(strncmp(keysub,"dsize:",6) == 0){
-            sc_strip(keysub);
-            
-          }
+          else if(strncmp(keysub,"pcre:\"",6) == 0){
+            // no sc_strip since it may contain a ';' in the regexp
+            strncpy(rdata->pcretarget,keysub + 6,strlen(keysub) - 9);
+            regex_t testr;
+            printf("%s\n",rdata->pcretarget);
 
-        }
+            if(regcomp(&testr,rdata->pcretarget,0) != 0){
+              printf("Failed to compile regular expression\n");
+              exit(-1);
+            }
+          }
+          // else if(strncmp(keysub,"dsize:",6) == 0){
+            // sc_strip(keysub);
+            //    
+          // }    
+    
+        }   
 
     
       }

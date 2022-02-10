@@ -46,8 +46,11 @@ bool none(const struct rule_data * __rule_data, const struct rule * __rule){
 
 bool pcre_match(const struct rule_data * rdata, const struct rule *r){
   regex_t rgx;
-  if(regcomp(&rgx,r->pcretarget,0) != 0){
-    printf("CRITICAL ALERT FOR RULE %s: FAILED TO COMPILE REGULAR EXPRESSION!\n",r->rulename);
-  }
+
+  regcomp(&rgx,(const char *)&r->pcretarget,0);
+  
+  if(regexec(&rgx,(char *)rdata->pkt,0,NULL,0) == REG_NOMATCH) return false;
+  else return true;
+  
   
 }

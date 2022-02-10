@@ -1,4 +1,4 @@
 alert stdout any TCP (name:"nmap_ua"; msg:"Nmap User Agent Detected"; type:str_match; target:"Nmap Scripting Engine;";) 
 alert stdout any TCP (name:"bashrc_retr"; msg:"Information disclosure: GET request for .bashrc"; type:str_match; target:"GET /.bashrc";) 
 alert stdout 22 TCP (name:"nmap_ssh_probe"; msg:"NMap SSH Probing detected"; type:str_match; target:"SSH-2.0-Nmap-SSH2-Hostkey";)
-alert stdout any TCP (name:"nikto-scan"; msg:"SCAN Nikto Scan detected"; type:pcre; pcre:"User-Agent:\\s.*\\s\\(Nikto\\/.*\\)\\s\\(Evasions:.*\\).*";)
+alert stdout any TCP (name:"nikto-scan"; msg:"SCAN Nikto Scan detected"; type:pcre; pcre:"User-Agent:.*\(.*Nikto.*\).*\(Evasions:.*\).*";)
