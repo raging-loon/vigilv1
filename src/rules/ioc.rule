@@ -9,3 +9,8 @@ alert stdout any ANY (name:"ioc-bash-shell"; msg:"IOC BASH Access"; type:str_mat
 alert stdout any ANY (name:"ioc-ash-shell"; msg:"IOC ASH Access"; type:str_match; target:"/bin/ash";)
 alert stdout any ANY (name:"ioc-dash-shell"; msg:"IOC DASH Access"; type:str_match; target:"/bin/dash";)
 alert stdout any ANY (name:"ioc-pe-exe"; msg:"IOC Windows Portable Executable detected"; type:str_match; target:"This program cannot be run in DOS mode.";)
+alert stdout any ANY (name:"ioc-file-copy"; msg:"IOC file copoed ok"; type:str_match; target:"1 file(s) copied";)
+alert stdout any ANY (name:"ioc-invalid-url"; msg:"IOC Invalid URL"; type:str_match; target:"Invalid URL";)
+alert stdout any ANY (name:"ioc-index-cgi"; msg:"IOC Index of /cgi-bin/ response"; type:str_match; target:"Index of /cgi-bin/";)
+alert stdout any ANY (name:"ioc-http-403"; msg:"IOC 403 Forbidden"; type:str_match; target:"HTTP/1.1 403";)
+# alert stdout any ANY (name:"ioc-uid-check"; msg:"IOC id check returned user id";)
