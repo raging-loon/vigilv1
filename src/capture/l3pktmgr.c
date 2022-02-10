@@ -54,6 +54,7 @@
 void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
   struct ip6hdr * ipv6_hdr = (struct ip6hdr *)(pkt + sizeof(struct ethhdr) );
   char dest_ip6[134];
+
   char src_ip6[134];
   strncpy(src_ip6,inet6_ntoa(ipv6_hdr->srcaddr),sizeof(src_ip6));
   strncpy(dest_ip6,inet6_ntoa(ipv6_hdr->dstaddr),sizeof(dest_ip6));
@@ -81,7 +82,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   char src_ip[16];
   char dest_ip[16]; 
 
- 
+  rdata.pkt_len = pkt_hdr->len;
   memset(&src,0,sizeof(src));
   memset(&dest,0,sizeof(dest));
   rdata.ip_header = ip_header;
