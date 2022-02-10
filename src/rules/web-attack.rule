@@ -19,6 +19,6 @@ alert stdout any TCP (name:"nc-cmd-attempt"; msg:"Web Attack: netcat command att
 alert stdout any TCP (name:"netcat-cmd-attempt"; msg:"Web Attack: netcat command attempt"; type:str_match; target:"netcat%20";)
 alert stdout any TCP (name:"traceroute-cmd-attempt"; msg:"Web Attack: traceroute command attempt"; type:str_match; target:"traceroute%20";)
 alert stdout any TCP (name:"nmap-cmd-attempt"; msg:"Web Attack: nmap command attempt"; type:str_match; target:"nmap%20";)
-
+alert stdout any TCP (name:"sqlmap-ua"; msg:"WEB ATTACK SQLMap User Agent Detected"; type:pcre; pcre:"User-Agent:.*sqlmap.*\(http://sqlmap.org\)";)
 
 

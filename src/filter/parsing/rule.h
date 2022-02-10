@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include "../../packets/ip_hdr.h"
 #include "../../packets/tcp.h"
+#include <regex.h>
 #include "../../packets/icmp4.h"
 
 /*
@@ -84,6 +85,7 @@ struct rule{
   int port;
   int severity;
   char message[128];
+  regex_t pcre;
   char pcretarget[128];
   bool uses_pcre;
   unsigned int num_targets[4];

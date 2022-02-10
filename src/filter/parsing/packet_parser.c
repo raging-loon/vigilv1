@@ -45,11 +45,11 @@ bool none(const struct rule_data * __rule_data, const struct rule * __rule){
 
 
 bool pcre_match(const struct rule_data * rdata, const struct rule *r){
-  regex_t rgx;
+  // regex_t rgx;
 
-  regcomp(&rgx,(const char *)&r->pcretarget,0);
+  // regcomp(&rgx,(const char *)&r->pcretarget,0);
   
-  if(regexec(&rgx,(char *)rdata->pkt,0,NULL,0) == REG_NOMATCH) return false;
+  if(regexec(&r->pcre,(char *)rdata->pkt,0,NULL,0) == REG_NOMATCH) return false;
   else return true;
   
   
