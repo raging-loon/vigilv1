@@ -87,7 +87,7 @@ void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
   rdata->pkt = (pkt + ETH_HDR_SZ + sizeof(struct iphdr));
   rdata->icmp_header = icmp4;
   int len = rdata->pkt_len;
-  rdata->dsize = rdata->pkt_len - ETH_HDR_SZ - sizeof(struct iphdr) - sizeof(struct __icmp4);
+  rdata->dsize = rdata->pkt_len - ETH_HDR_SZ - sizeof(struct iphdr) - 8;
   if(icmp4->type == 8 && strict_nmap_host_alive_check == true){
     int watchlist_index;
     if((watchlist_index = member_exists(rdata->src_ip_addr)) != -1){

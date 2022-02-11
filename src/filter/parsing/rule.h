@@ -32,7 +32,7 @@ struct rule_data{
   unsigned int dest_port;
   int __protocol;
   int pkt_len; // psize;
-  int dsize;
+  unsigned int dsize;
   const struct sockaddr_in * src_socket;
   const struct sockaddr_in * dest_socket;
   const struct ip_hdr * ip_header;
