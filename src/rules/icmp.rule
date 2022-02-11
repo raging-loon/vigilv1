@@ -19,4 +19,4 @@ alert stdout any ICMP (name:"icmp-dest-admin-unr"; msg:"ICMP Destination Unreach
 alert stdout any ICMP (name:"icmp-dest-unr-admin-host"; msg:"ICMP Destination Unreachable Communication with Destination Host is Administratively Prohibited"; icode:10; itype:3; type:none;)
 alert stdout any ICMP (name:"icmp-dest-unr-admin-net"; msg:"ICMP Destination Unreachable Communication with Destination Network is Administratively Prohibited"; icode:9; itype:3; type:none;)
 alert stdout any ICMP (name:"icmp_digit_bandwidth_qry"; msg:"ICMP digital island bandwidth query"; type:str_match; target:"mailto:ops@digisle.com";)
-# alert stdout any ICMP (msg:"ICMP Large ICMP Packet"; dsize:>800; reference:arachnids,246; classtype:bad-unknown; sid:499; rev:4;)
+alert stdout any ICMP (name:"icmp-too-large"; msg:"ICMP Large ICMP Packet"; dsize:>800; type:none;)

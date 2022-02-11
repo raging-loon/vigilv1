@@ -3,7 +3,8 @@
 #include <string.h>
 void rm_leading_zeroes_ipv6(const char *, char *);
 int main(){
-  char ipv6addr[] = "fe80:0000:0000:0000:0218:0000:0000:2ca5";
+  // should turn into fe80::128:0:0:2ca5
+  char ipv6addr[] =  "fe80:0000:0000:0000:0218:0000:0000:2ca5";
   char shortaddr[strlen(ipv6addr)];
   rm_leading_zeroes_ipv6((const char *)&ipv6addr,(char *)&shortaddr);
   printf("%s\n",shortaddr);
@@ -33,4 +34,8 @@ void rm_leading_zeroes_ipv6(const char * ipv6addr, char * dest){
     hextets_scanned++;
     hextet = strtok(NULL,":");
   }
+}
+
+void combine_semicolons_ipv6(const char * ipv6addr, char * dest){
+  
 }

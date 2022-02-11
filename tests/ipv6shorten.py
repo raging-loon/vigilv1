@@ -1,4 +1,4 @@
-ipv6addr = "fe80:0000:0000:0000:0218:0aff:fe87:2ca5"
+ipv6addr = "fe80:0:0:0:218:aff:fe87:2ca5"
 
 #
 # Rules
@@ -16,7 +16,6 @@ def groupzeros(addr):
       realaddr += i
     else:
       
-
 
 
 realaddr = groupzeros("fe80:0:0:0:218:0:0:2ca5")

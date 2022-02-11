@@ -37,3 +37,35 @@ Supported types\:
 <li>pcre -> match regular expressions</li>
 <li>none -> do not look for anything.</li>
 </ol>
+
+## target:
+The target for str_match. Must use | | for raw bytes, for example:<br>
+|9090909090| would match 5 bytes equal to 0x90
+Note that these bytes <b>MUST BE LOWERCASE</b> 
+## pcre:
+The same as target, but uses regex instead of substrings.
+
+# Protocol Specific Data
+
+<table>
+  <tr>
+    <th>Keyword</th>
+    <th>Function</th>
+  </tr>
+  <tr>
+    <td>ttl</td>
+    <td>matches the ttl in the ipv4 or ipv6 header
+  </tr>
+  <tr>
+    <td>itype</td>
+    <td>matches the ICMP type</td>
+  </tr>
+    <tr>
+    <td>icode</td>
+    <td>Matches the ICMP code</td>
+  </tr>
+    <tr>
+    <td>dsize</td>
+    <td>Matches destination size(note, operators such as > are acceptable)</td>
+  </tr>
+</table>
