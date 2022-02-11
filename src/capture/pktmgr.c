@@ -5,6 +5,8 @@
 #include "l2pktmgr.h"
 #include <stdio.h>
 #include "../../globals.h"
+#include "../utils.h"
+#include "../logging.h"
 #include "l3pktmgr.h"
 #include "../statistics/wclean.h"
 
@@ -50,7 +52,8 @@ void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsign
       loopback_ctp_decode(pkt);
       break;
     default:
-      printf("Unknown frame protocol number: %d\n",ethernet_header->h_proto);
+      lfprintf("/var/log/npsi/siglog.log","BAD-TRAFFIC Unknown Ethernt Frame Protocol Number",
+               uc_mac_ntoa(ethernet_header->h_source),uc_mac_ntoa(ethernet_header->h_dest),-1,-1);
       break;
       
   }

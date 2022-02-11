@@ -1,3 +1,4 @@
 alert stdout 0 ANY (name:"port0-traffic"; msg:"BAD-TRAFFIC port 0 traffic"; type:none;)
 alert stdout any ANY (name:"zero-ttl"; msg:"BAD-TRAFFIC ttl zero"; ttl:0; type:none;)
+alert stdout any 80 (name:"large-http"; msg:"BAD-TRAFFIC Large HTTP packet"; dsize:>=80; type:none;)
 #alert stdout any TCP (name:"tcp-flag-test"; msg:"TCP Flag Test Passed"; ack:0; type:none;)
