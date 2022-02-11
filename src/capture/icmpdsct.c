@@ -81,13 +81,13 @@ void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
   const char * src_ip = rdata->src_ip_addr;
   const char * dest_ip = rdata->dest_ip_addr;
   
-    printf("s");
+  
   
   struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
   rdata->pkt = (pkt + ETH_HDR_SZ + sizeof(struct iphdr));
   rdata->icmp_header = icmp4;
   int len = rdata->pkt_len;
-  rdata->pkt_len = len - ETH_HDR_SZ - sizeof(struct iphdr) - sizeof(struct __icmp4);
+  rdata->dsize = rdata->pkt_len - ETH_HDR_SZ - sizeof(struct iphdr) - sizeof(struct __icmp4);
   if(icmp4->type == 8 && strict_nmap_host_alive_check == true){
     int watchlist_index;
     if((watchlist_index = member_exists(rdata->src_ip_addr)) != -1){

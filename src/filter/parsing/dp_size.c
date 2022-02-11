@@ -45,27 +45,28 @@ void d_op_parser(struct rule * r, const char * ksub,int type){
 
 
 bool d_engine(const struct rule* r, const struct rule_data * rdata){
-  if(r->d_operator == -1) return false;
-  printf("e");
-  switch(r->d_operator){
-    case D_OP_JE:
 
-      if(r->dsize == rdata->pkt_len) return true;
+  if(r->d_operator == -1) return false;
+
+  switch(r->d_operator){
+    printf("D");
+    case D_OP_JE:
+      if(r->dsize == rdata->dsize) return true;
       break;
     case D_OP_JG:
-      if(rdata->pkt_len > r->dsize) return true;
+      if(rdata->dsize > r->dsize) return true;
       break;
     case D_OP_JGE:
-      if(rdata->pkt_len >= r->dsize) return true;
+      if(rdata->dsize >= r->dsize) return true;
       break;
     case D_OP_JL:
-      if(rdata->pkt_len < r->dsize) return true;
+      if(rdata->dsize < r->dsize) return true;
       break;
     case D_OP_JLE:
-      if(rdata->pkt_len <= r->dsize) return true;
+      if(rdata->dsize <= r->dsize) return true;
       break;
     case D_OP_NE:
-      if(rdata->pkt_len != r->dsize) return true;
+      if(rdata->dsize != r->dsize) return true;
       break;
   }
   return false;
