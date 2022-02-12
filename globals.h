@@ -91,5 +91,8 @@ extern bool use_spi;
 
 extern void add_thread(pthread_t *);
 
+uint32_t homenet;
+uint32_t homenetmask;
+
 
 #endif /* GLOBALS_H */

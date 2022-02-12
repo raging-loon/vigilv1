@@ -81,7 +81,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   // rdata.spi_pkt->src_port = 0;
   char src_ip[16];
   char dest_ip[16]; 
-
+  
   rdata.pkt_len = pkt_hdr->len;
   memset(&src,0,sizeof(src));
   memset(&dest,0,sizeof(dest));

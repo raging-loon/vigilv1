@@ -6,6 +6,8 @@ version 12.2
 no service pad
 service password-encryption
 
+enable secret password
+
 ! Connected to switch 1
 interface GigabitEthernet 0/1 
   ip address 192.168.0.1 255.255.255.0
@@ -15,6 +17,11 @@ interface Serial 0/0/1
 
 ip route 100.100.100.0 255.255.255.252 100.100.100.2
 ip route 192.168.0.0 255.255.255.0 100.100.100.2
+
+line console 0
+  password class
+  login
+
 
 !
 !

@@ -25,6 +25,7 @@
 #include "../../../globals.h"
 #include "../../debug.h"
 #include "line_parser.h"
+#include "homenet.h"
 #include "../../utils.h"
 static bool is_rule(const char *);
 static bool is_comment(const char * line);
@@ -160,6 +161,14 @@ void rule_library_parser(const char * alt_file){
     else if(strncmp(line,"use_spi=",8)  == 0){
       if(strcmp(line + 6,"YES") == 0) use_spi = true;
       else use_spi = false;
+    }
+    else if(strncmp(line,"HOME_NET=",9) == 0){
+      line[strcspn(line,"\n")] = 0x00;
+      homenet =  homenet_toi(line + 9);
+    }
+    else if(strncmp(line,"HOME_NET_MASK=",14) == 0){
+      rstrip(line);
+      homenetmask = homenet_toi(line + 14);
     }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);
