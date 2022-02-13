@@ -41,22 +41,31 @@
 // extern struct ip_addr_counter ip_stats[256];
 // extern int ip_addr_stat_counter_len;
 
-extern char ip_addr[32];
-
 extern unsigned int total_pkt_captured;
-
+//! @brief array of all of the rules
 extern struct rule rules[MAX_RULES];
+//! @brief counter for all of the rules
 extern int num_rules;
+//! @brief list of threads for thread management. 
 extern pthread_t threads[64];
 extern int thread_count;
+//! @brief Determines whether the program is running in IDS or IPS mode
 extern int npsi_mode;
 
+//! @brief default is /etc/npsi/npsi.conf
 extern char * default_config;
+//! @brief default is /var/log/siglog.log
 extern char * def_log_file;
+//! @todo expand on this
 extern char * default_host_conf;
+
 
 extern bool debug_mode;
 extern bool packet_print;
+/*!
+  @brief the blacklist
+  @todo replace this with a struct that can hold different type of addresses
+*/
 extern struct blocked_ipv4 blocked_ipv4_addrs[32];
 extern int blk_ipv4_len;
 extern unsigned int pkt_counter;
@@ -97,7 +106,6 @@ extern char local_ip[18];
 extern char def_gw[18];
 
 extern bool use_spi;
-
 extern void add_thread(pthread_t *);
 
 uint32_t homenet;
