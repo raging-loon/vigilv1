@@ -108,7 +108,9 @@ extern char def_gw[18];
 extern bool use_spi;
 extern void add_thread(pthread_t *);
 
+//! @brief homenet address for anding
 uint32_t homenet;
+//! @brief homenet netmask for anding
 uint32_t homenetmask;
 
 

@@ -10,11 +10,11 @@
 #include "l3pktmgr.h"
 #include "../statistics/wclean.h"
 
-/*
+/*!
   @file
   @author Conner Macolley <cxmacolley@gmail.com>
 
-  @section license
+  @section LICENSE
 
  Copyright 2021 Conner Macolley
 
@@ -33,6 +33,7 @@
   @section DESCRIPTION
 
   Disect the ethernet header and call functions based on that.
+  
 */
 void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsigned char *pkt){
   

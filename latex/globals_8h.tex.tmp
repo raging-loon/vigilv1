@@ -141,11 +141,11 @@ char {\bfseries def\+\_\+gw} \mbox{[}18\mbox{]}
 bool {\bfseries use\+\_\+spi}
 \item 
 \mbox{\Hypertarget{globals_8h_a5e746f134877b43b9fe0f50a5caec923}\label{globals_8h_a5e746f134877b43b9fe0f50a5caec923}} 
-uint32\+\_\+t {\bfseries homenet}
-\item 
+uint32\+\_\+t \mbox{\hyperlink{globals_8h_a5e746f134877b43b9fe0f50a5caec923}{homenet}}
+\begin{DoxyCompactList}\small\item\em homenet address for anding \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{globals_8h_a696e14fae3601fe62749d766c18e83b5}\label{globals_8h_a696e14fae3601fe62749d766c18e83b5}} 
-uint32\+\_\+t {\bfseries homenetmask}
-\end{DoxyCompactItemize}
+uint32\+\_\+t \mbox{\hyperlink{globals_8h_a696e14fae3601fe62749d766c18e83b5}{homenetmask}}
+\begin{DoxyCompactList}\small\item\em homenet netmask for anding \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}

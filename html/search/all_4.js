@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['readme_8',['README',['../md_README.html',1,'']]],
-  ['rules_9',['rules',['../globals_8h.html#a53330e5b143884bfcb7c3bb7292fc27b',1,'globals.c']]]
+  ['notes_20for_20portscan_20detection_7',['Notes for portscan detection',['../md_portscannotes.html',1,'']]],
+  ['npsi_5fmode_8',['npsi_mode',['../globals_8h.html#a432cd5eefaa9daaac37b313c4452254a',1,'globals.h']]],
+  ['num_5frules_9',['num_rules',['../globals_8h.html#aa53169e27c9b915a8e6d9b9bda375702',1,'globals.c']]]
 ];
