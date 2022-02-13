@@ -11,15 +11,28 @@
 #include "../statistics/wclean.h"
 
 /*
-  *-*-*-*- pktmgr.c -*-*-*-*
-  @purpose Decode the ethernet header
-  void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsigned char *pkt);
-    ==> The function used in the pcap_loop function in /main.c
-    @actions:
-      1. Print the packet seperator
-      2. Scan for watchlist cleaning(not yet implemented)
-      3. Call decoding functions based on the protocol number in the ethernet header
-    @TODO: fix the scan_for_clean function in /src/statistics/wclean.c
+  @file
+  @author Conner Macolley <cxmacolley@gmail.com>
+
+  @section license
+
+ Copyright 2021 Conner Macolley
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ 
+  @section DESCRIPTION
+
+  Disect the ethernet header and call functions based on that.
 */
 void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsigned char *pkt){
   

@@ -1,0 +1,168 @@
+\hypertarget{globals_8h}{}\doxysection{globals.\+h File Reference}
+\label{globals_8h}\index{globals.h@{globals.h}}
+{\ttfamily \#include \char`\"{}src/statistics/ip\+\_\+addr\+\_\+stat.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}src/engine/spi.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}src/filter/parsing/rule.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}src/statistics/arpcache.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}src/statistics/watchlist.\+h\char`\"{}}\newline
+Include dependency graph for globals.\+h\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{globals_8h_a1c6d5de492ac61ad29aec7aa9a436bbf}\label{globals_8h_a1c6d5de492ac61ad29aec7aa9a436bbf}} 
+\#define {\bfseries V\+E\+R\+S\+I\+ON}~\char`\"{}1.\+0.\+0\char`\"{}
+\item 
+\mbox{\Hypertarget{globals_8h_ad7ce24cd4f7ada588b3e698bc9784e3d}\label{globals_8h_ad7ce24cd4f7ada588b3e698bc9784e3d}} 
+\#define {\bfseries I\+D\+S\+\_\+\+P\+A\+S\+S\+I\+VE}~1
+\item 
+\mbox{\Hypertarget{globals_8h_ad1955f161f7f72223eb3a316c6d4e284}\label{globals_8h_ad1955f161f7f72223eb3a316c6d4e284}} 
+\#define {\bfseries I\+P\+S\+\_\+\+A\+C\+T\+I\+VE}~2
+\item 
+\mbox{\Hypertarget{globals_8h_afcd3f2212725d2cc0d74135e7d25eb34}\label{globals_8h_afcd3f2212725d2cc0d74135e7d25eb34}} 
+\#define {\bfseries M\+A\+X\+\_\+\+R\+U\+L\+ES}~1024
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{globals_8h_a38761740dbf845c48636bafd826b7279}\label{globals_8h_a38761740dbf845c48636bafd826b7279}} 
+void {\bfseries add\+\_\+thread} (pthread\+\_\+t $\ast$)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{globals_8h_ae3ac282ca2958baf7c6417d767d77f1d}\label{globals_8h_ae3ac282ca2958baf7c6417d767d77f1d}} 
+char {\bfseries ip\+\_\+addr} \mbox{[}32\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_a5e1f4f95413d7d0cc11cccd94a4091ff}\label{globals_8h_a5e1f4f95413d7d0cc11cccd94a4091ff}} 
+unsigned int {\bfseries total\+\_\+pkt\+\_\+captured}
+\item 
+\mbox{\Hypertarget{globals_8h_a53330e5b143884bfcb7c3bb7292fc27b}\label{globals_8h_a53330e5b143884bfcb7c3bb7292fc27b}} 
+struct rule {\bfseries rules} \mbox{[}M\+A\+X\+\_\+\+R\+U\+L\+ES\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_aa53169e27c9b915a8e6d9b9bda375702}\label{globals_8h_aa53169e27c9b915a8e6d9b9bda375702}} 
+int {\bfseries num\+\_\+rules}
+\item 
+\mbox{\Hypertarget{globals_8h_ac3f434fdbe5f3b95f5ccc7b2e4b3f2b2}\label{globals_8h_ac3f434fdbe5f3b95f5ccc7b2e4b3f2b2}} 
+pthread\+\_\+t {\bfseries threads} \mbox{[}64\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_a774208e1be4f8ad02ea0fbafff834ee8}\label{globals_8h_a774208e1be4f8ad02ea0fbafff834ee8}} 
+int {\bfseries thread\+\_\+count}
+\item 
+\mbox{\Hypertarget{globals_8h_a432cd5eefaa9daaac37b313c4452254a}\label{globals_8h_a432cd5eefaa9daaac37b313c4452254a}} 
+int {\bfseries npsi\+\_\+mode}
+\item 
+\mbox{\Hypertarget{globals_8h_a7618201dd89dfe8f177a50bb8f7d1214}\label{globals_8h_a7618201dd89dfe8f177a50bb8f7d1214}} 
+char $\ast$ {\bfseries default\+\_\+config}
+\item 
+\mbox{\Hypertarget{globals_8h_af503453494398f72ca7418f8112d8a41}\label{globals_8h_af503453494398f72ca7418f8112d8a41}} 
+char $\ast$ {\bfseries def\+\_\+log\+\_\+file}
+\item 
+\mbox{\Hypertarget{globals_8h_a9c8e4f58df4b69f907e43970f83c287d}\label{globals_8h_a9c8e4f58df4b69f907e43970f83c287d}} 
+char $\ast$ {\bfseries default\+\_\+host\+\_\+conf}
+\item 
+\mbox{\Hypertarget{globals_8h_aa021995764a0c77f628e3411497239cc}\label{globals_8h_aa021995764a0c77f628e3411497239cc}} 
+bool {\bfseries debug\+\_\+mode}
+\item 
+\mbox{\Hypertarget{globals_8h_a873a26f83727e405ebf8f219f5f4244b}\label{globals_8h_a873a26f83727e405ebf8f219f5f4244b}} 
+bool {\bfseries packet\+\_\+print}
+\item 
+\mbox{\Hypertarget{globals_8h_a7001c396444c2a4e6980701215de1ac8}\label{globals_8h_a7001c396444c2a4e6980701215de1ac8}} 
+struct blocked\+\_\+ipv4 {\bfseries blocked\+\_\+ipv4\+\_\+addrs} \mbox{[}32\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_a333489e3501b6df02f21d3e7f1831d1a}\label{globals_8h_a333489e3501b6df02f21d3e7f1831d1a}} 
+int {\bfseries blk\+\_\+ipv4\+\_\+len}
+\item 
+\mbox{\Hypertarget{globals_8h_a91a3106262336d220c75c85793d964db}\label{globals_8h_a91a3106262336d220c75c85793d964db}} 
+unsigned int {\bfseries pkt\+\_\+counter}
+\item 
+\mbox{\Hypertarget{globals_8h_a915bc54d327c13ac665cdd58fd7e722a}\label{globals_8h_a915bc54d327c13ac665cdd58fd7e722a}} 
+struct watchlist\+\_\+member {\bfseries watchlist} \mbox{[}128\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_aa35d090f5c2a4fd7dc22ed63c153cd4f}\label{globals_8h_aa35d090f5c2a4fd7dc22ed63c153cd4f}} 
+int {\bfseries watchlist\+\_\+num}
+\item 
+\mbox{\Hypertarget{globals_8h_ad6d0a95d0ce85d2a9a4da49677b86af4}\label{globals_8h_ad6d0a95d0ce85d2a9a4da49677b86af4}} 
+int {\bfseries strict\+\_\+icmp\+\_\+timestamp\+\_\+req}
+\item 
+\mbox{\Hypertarget{globals_8h_abfd0cdc910d9b6372e0845c1f71e7498}\label{globals_8h_abfd0cdc910d9b6372e0845c1f71e7498}} 
+int {\bfseries strict\+\_\+nmap\+\_\+host\+\_\+alive\+\_\+check}
+\item 
+\mbox{\Hypertarget{globals_8h_a0e5c21f988bbb915f852008b6826a1bd}\label{globals_8h_a0e5c21f988bbb915f852008b6826a1bd}} 
+unsigned long {\bfseries last\+\_\+clean\+\_\+time}
+\item 
+\mbox{\Hypertarget{globals_8h_a707af83c0245fc554daa93ea0bceaf1a}\label{globals_8h_a707af83c0245fc554daa93ea0bceaf1a}} 
+unsigned long {\bfseries clean\+\_\+delay}
+\item 
+\mbox{\Hypertarget{globals_8h_a3ef6fa64af1fbb7665dd8da1bef3fb6e}\label{globals_8h_a3ef6fa64af1fbb7665dd8da1bef3fb6e}} 
+int {\bfseries is\+\_\+running}
+\item 
+\mbox{\Hypertarget{globals_8h_acd1ae1bac96769f41932c3f92c344fcb}\label{globals_8h_acd1ae1bac96769f41932c3f92c344fcb}} 
+struct arp\+\_\+entry {\bfseries arpcache} \mbox{[}255\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_ab7cb66aa5151426e596ce9064c68baec}\label{globals_8h_ab7cb66aa5151426e596ce9064c68baec}} 
+int {\bfseries arp\+\_\+entries}
+\item 
+\mbox{\Hypertarget{globals_8h_a0aa4dce6e86098cea366b7181e572e5c}\label{globals_8h_a0aa4dce6e86098cea366b7181e572e5c}} 
+bool {\bfseries use\+\_\+sqlite}
+\item 
+\mbox{\Hypertarget{globals_8h_af6fa136808f80b133560ca4500e9c3fa}\label{globals_8h_af6fa136808f80b133560ca4500e9c3fa}} 
+char {\bfseries sqlite\+\_\+db\+\_\+path} \mbox{[}32\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_a380e13f4544b8e45c8d48cb7d08fcf28}\label{globals_8h_a380e13f4544b8e45c8d48cb7d08fcf28}} 
+unsigned int {\bfseries clean\+\_\+delay\+\_\+pkts}
+\item 
+\mbox{\Hypertarget{globals_8h_ac74b3d7bc4f278e041b9d769a2e2e339}\label{globals_8h_ac74b3d7bc4f278e041b9d769a2e2e339}} 
+bool {\bfseries quiet\+\_\+exit}
+\item 
+\mbox{\Hypertarget{globals_8h_af4e9d892a6b958ab8f0f4fd11d069c38}\label{globals_8h_af4e9d892a6b958ab8f0f4fd11d069c38}} 
+int {\bfseries spi\+\_\+max}
+\item 
+\mbox{\Hypertarget{globals_8h_a1caccb152ba057a05ce56e25abf2d57c}\label{globals_8h_a1caccb152ba057a05ce56e25abf2d57c}} 
+unsigned int {\bfseries total\+\_\+conversations}
+\item 
+\mbox{\Hypertarget{globals_8h_aa0583a7e3f02c236aeebb8c7c8a60975}\label{globals_8h_aa0583a7e3f02c236aeebb8c7c8a60975}} 
+struct spi\+\_\+members {\bfseries spi\+\_\+table} \mbox{[}1024\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_ae12a9c9ead4d74cae8de3a2088095546}\label{globals_8h_ae12a9c9ead4d74cae8de3a2088095546}} 
+char {\bfseries input\+\_\+adapter} \mbox{[}10\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_a893ed2ba8f2e9471d9d05742249ebc06}\label{globals_8h_a893ed2ba8f2e9471d9d05742249ebc06}} 
+char {\bfseries output\+\_\+adapter} \mbox{[}10\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_acf31cbac2ffb6b4db27211163488d7f9}\label{globals_8h_acf31cbac2ffb6b4db27211163488d7f9}} 
+int {\bfseries N\+P\+S\+I\+\_\+\+M\+O\+DE}
+\item 
+\mbox{\Hypertarget{globals_8h_ac564d5972a01a3841ee485ec2658ca99}\label{globals_8h_ac564d5972a01a3841ee485ec2658ca99}} 
+char {\bfseries local\+\_\+ip} \mbox{[}18\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_a9a5fb407b5f9ba71063fa8b487366994}\label{globals_8h_a9a5fb407b5f9ba71063fa8b487366994}} 
+char {\bfseries def\+\_\+gw} \mbox{[}18\mbox{]}
+\item 
+\mbox{\Hypertarget{globals_8h_ad7e95b168a676584d42168e3fb9f277a}\label{globals_8h_ad7e95b168a676584d42168e3fb9f277a}} 
+bool {\bfseries use\+\_\+spi}
+\item 
+\mbox{\Hypertarget{globals_8h_a5e746f134877b43b9fe0f50a5caec923}\label{globals_8h_a5e746f134877b43b9fe0f50a5caec923}} 
+uint32\+\_\+t {\bfseries homenet}
+\item 
+\mbox{\Hypertarget{globals_8h_a696e14fae3601fe62749d766c18e83b5}\label{globals_8h_a696e14fae3601fe62749d766c18e83b5}} 
+uint32\+\_\+t {\bfseries homenetmask}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Conner Macolley
+\end{DoxyAuthor}
+\hypertarget{globals_8h_LICENSE}{}\doxysubsection{L\+I\+C\+E\+N\+SE}\label{globals_8h_LICENSE}
+Copyright 2021 Conner Macolley
+
+Licensed under the Apache License, Version 2.\+0 (the \char`\"{}\+License\char`\"{}); you may not use this file except in compliance with the License. You may obtain a copy of the License at \begin{DoxyVerb}http://www.apache.org/licenses/LICENSE-2.0
+\end{DoxyVerb}
+
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \char`\"{}\+A\+S I\+S\char`\"{} B\+A\+S\+IS, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+T\+I\+ES OR C\+O\+N\+D\+I\+T\+I\+O\+NS OF A\+NY K\+I\+ND, either express or implied. See the License for the specific language governing permissions and limitations under the License.\hypertarget{globals_8h_DESCRIPTION}{}\doxysubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{globals_8h_DESCRIPTION}
+Declare globals 
