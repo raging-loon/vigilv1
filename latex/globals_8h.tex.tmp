@@ -34,35 +34,31 @@ void {\bfseries add\+\_\+thread} (pthread\+\_\+t $\ast$)
 \doxysubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{globals_8h_ae3ac282ca2958baf7c6417d767d77f1d}\label{globals_8h_ae3ac282ca2958baf7c6417d767d77f1d}} 
-char {\bfseries ip\+\_\+addr} \mbox{[}32\mbox{]}
-\item 
 \mbox{\Hypertarget{globals_8h_a5e1f4f95413d7d0cc11cccd94a4091ff}\label{globals_8h_a5e1f4f95413d7d0cc11cccd94a4091ff}} 
 unsigned int {\bfseries total\+\_\+pkt\+\_\+captured}
 \item 
 \mbox{\Hypertarget{globals_8h_a53330e5b143884bfcb7c3bb7292fc27b}\label{globals_8h_a53330e5b143884bfcb7c3bb7292fc27b}} 
-struct rule {\bfseries rules} \mbox{[}M\+A\+X\+\_\+\+R\+U\+L\+ES\mbox{]}
-\item 
+struct rule \mbox{\hyperlink{globals_8h_a53330e5b143884bfcb7c3bb7292fc27b}{rules}} \mbox{[}M\+A\+X\+\_\+\+R\+U\+L\+ES\mbox{]}
+\begin{DoxyCompactList}\small\item\em array of all of the rules \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{globals_8h_aa53169e27c9b915a8e6d9b9bda375702}\label{globals_8h_aa53169e27c9b915a8e6d9b9bda375702}} 
-int {\bfseries num\+\_\+rules}
-\item 
+int \mbox{\hyperlink{globals_8h_aa53169e27c9b915a8e6d9b9bda375702}{num\+\_\+rules}}
+\begin{DoxyCompactList}\small\item\em counter for all of the rules \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{globals_8h_ac3f434fdbe5f3b95f5ccc7b2e4b3f2b2}\label{globals_8h_ac3f434fdbe5f3b95f5ccc7b2e4b3f2b2}} 
-pthread\+\_\+t {\bfseries threads} \mbox{[}64\mbox{]}
-\item 
+pthread\+\_\+t \mbox{\hyperlink{globals_8h_ac3f434fdbe5f3b95f5ccc7b2e4b3f2b2}{threads}} \mbox{[}64\mbox{]}
+\begin{DoxyCompactList}\small\item\em list of threads for thread management. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{globals_8h_a774208e1be4f8ad02ea0fbafff834ee8}\label{globals_8h_a774208e1be4f8ad02ea0fbafff834ee8}} 
 int {\bfseries thread\+\_\+count}
 \item 
 \mbox{\Hypertarget{globals_8h_a432cd5eefaa9daaac37b313c4452254a}\label{globals_8h_a432cd5eefaa9daaac37b313c4452254a}} 
-int {\bfseries npsi\+\_\+mode}
-\item 
+int \mbox{\hyperlink{globals_8h_a432cd5eefaa9daaac37b313c4452254a}{npsi\+\_\+mode}}
+\begin{DoxyCompactList}\small\item\em Determines whether the program is running in I\+DS or I\+PS mode. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{globals_8h_a7618201dd89dfe8f177a50bb8f7d1214}\label{globals_8h_a7618201dd89dfe8f177a50bb8f7d1214}} 
-char $\ast$ {\bfseries default\+\_\+config}
-\item 
+char $\ast$ \mbox{\hyperlink{globals_8h_a7618201dd89dfe8f177a50bb8f7d1214}{default\+\_\+config}}
+\begin{DoxyCompactList}\small\item\em default is /etc/npsi/npsi.conf \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{globals_8h_af503453494398f72ca7418f8112d8a41}\label{globals_8h_af503453494398f72ca7418f8112d8a41}} 
-char $\ast$ {\bfseries def\+\_\+log\+\_\+file}
-\item 
-\mbox{\Hypertarget{globals_8h_a9c8e4f58df4b69f907e43970f83c287d}\label{globals_8h_a9c8e4f58df4b69f907e43970f83c287d}} 
-char $\ast$ {\bfseries default\+\_\+host\+\_\+conf}
+char $\ast$ \mbox{\hyperlink{globals_8h_af503453494398f72ca7418f8112d8a41}{def\+\_\+log\+\_\+file}}
+\begin{DoxyCompactList}\small\item\em default is /var/log/siglog.log \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{globals_8h_a9c8e4f58df4b69f907e43970f83c287d}{default\+\_\+host\+\_\+conf}}
 \item 
 \mbox{\Hypertarget{globals_8h_aa021995764a0c77f628e3411497239cc}\label{globals_8h_aa021995764a0c77f628e3411497239cc}} 
 bool {\bfseries debug\+\_\+mode}
@@ -70,9 +66,8 @@ bool {\bfseries debug\+\_\+mode}
 \mbox{\Hypertarget{globals_8h_a873a26f83727e405ebf8f219f5f4244b}\label{globals_8h_a873a26f83727e405ebf8f219f5f4244b}} 
 bool {\bfseries packet\+\_\+print}
 \item 
-\mbox{\Hypertarget{globals_8h_a7001c396444c2a4e6980701215de1ac8}\label{globals_8h_a7001c396444c2a4e6980701215de1ac8}} 
-struct blocked\+\_\+ipv4 {\bfseries blocked\+\_\+ipv4\+\_\+addrs} \mbox{[}32\mbox{]}
-\item 
+struct blocked\+\_\+ipv4 \mbox{\hyperlink{globals_8h_a7001c396444c2a4e6980701215de1ac8}{blocked\+\_\+ipv4\+\_\+addrs}} \mbox{[}32\mbox{]}
+\begin{DoxyCompactList}\small\item\em the blacklist \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{globals_8h_a333489e3501b6df02f21d3e7f1831d1a}\label{globals_8h_a333489e3501b6df02f21d3e7f1831d1a}} 
 int {\bfseries blk\+\_\+ipv4\+\_\+len}
 \item 
@@ -166,3 +161,25 @@ Licensed under the Apache License, Version 2.\+0 (the \char`\"{}\+License\char`\
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \char`\"{}\+A\+S I\+S\char`\"{} B\+A\+S\+IS, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+T\+I\+ES OR C\+O\+N\+D\+I\+T\+I\+O\+NS OF A\+NY K\+I\+ND, either express or implied. See the License for the specific language governing permissions and limitations under the License.\hypertarget{globals_8h_DESCRIPTION}{}\doxysubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{globals_8h_DESCRIPTION}
 Declare globals 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{globals_8h_a7001c396444c2a4e6980701215de1ac8}\label{globals_8h_a7001c396444c2a4e6980701215de1ac8}} 
+\index{globals.h@{globals.h}!blocked\_ipv4\_addrs@{blocked\_ipv4\_addrs}}
+\index{blocked\_ipv4\_addrs@{blocked\_ipv4\_addrs}!globals.h@{globals.h}}
+\doxysubsubsection{\texorpdfstring{blocked\_ipv4\_addrs}{blocked\_ipv4\_addrs}}
+{\footnotesize\ttfamily struct blocked\+\_\+ipv4 blocked\+\_\+ipv4\+\_\+addrs\mbox{[}32\mbox{]}}
+
+
+
+the blacklist 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000002}{Todo}}]replace this with a struct that can hold different type of addresses \end{DoxyRefDesc}
+\mbox{\Hypertarget{globals_8h_a9c8e4f58df4b69f907e43970f83c287d}\label{globals_8h_a9c8e4f58df4b69f907e43970f83c287d}} 
+\index{globals.h@{globals.h}!default\_host\_conf@{default\_host\_conf}}
+\index{default\_host\_conf@{default\_host\_conf}!globals.h@{globals.h}}
+\doxysubsubsection{\texorpdfstring{default\_host\_conf}{default\_host\_conf}}
+{\footnotesize\ttfamily char$\ast$ default\+\_\+host\+\_\+conf}
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000001}{Todo}}]expand on this \end{DoxyRefDesc}
