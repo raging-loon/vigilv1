@@ -12,7 +12,7 @@ touch /etc/noraa/hosts.conf
 mkdir /var/log/noraa/
 touch /var/log/noraa/siglog.log
 touch /etc/noraa/passwd
-touch /usr/share/nspi/arpcache.csv
+touch /usr/share/noraa/arpcache.csv
 chmod +x nshadduser
 cp nshadduser /bin
 touch /var/log/noraa/login.log
