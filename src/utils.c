@@ -45,9 +45,9 @@ unsigned char * u8_ipv4_ntoa(uint8_t * ip_addr){
   );
   return buffer;
 }
-unsigned char * ipv4_ntoa( uint32_t * ip_addr){
+char * ipv4_ntoa( uint32_t  ip_addr){
   // char buffer[18];
-  unsigned char * __ip_addr = (unsigned char *)ip_addr;
+  unsigned char * __ip_addr = (unsigned char *)&ip_addr;
   snprintf((char *)buffer,sizeof(buffer),"%d.%d.%d.%d",
     __ip_addr[0],__ip_addr[1],__ip_addr[2],__ip_addr[3]
   );

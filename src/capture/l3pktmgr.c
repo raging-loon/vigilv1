@@ -76,30 +76,22 @@ void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
 
 void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   struct ip_hdr * ip_header = (struct ip_hdr * )(pkt + ETH_HDR_SZ);
-  struct sockaddr_in src, dest;
   struct rule_data rdata;
   // rdata.spi_pkt->src_port = 0;
   char src_ip[16];
   char dest_ip[16]; 
   
   rdata.pkt_len = pkt_hdr->len;
-  memset(&src,0,sizeof(src));
-  memset(&dest,0,sizeof(dest));
   rdata.ip_header = ip_header;
-  dest.sin_addr.s_addr = ip_header->daddr;
-  src.sin_addr.s_addr = ip_header->saddr;
-  rdata.src_socket = &src;
-  rdata.dest_socket = &dest;
-  // memset(rdata->pkt,0,sizeof(rdata->pkt));
-  // rdata->pkt = (unsigned char **)&pkt;
+
   rdata.pkt_len = pkt_hdr->len;
   
   int base_data_size = pkt_hdr->len 
                      - ETH_HDR_SZ
                      - (((struct iphdr *)(pkt + ETH_HDR_SZ))->ihl * 4);
 
-  strncpy(dest_ip, inet_ntoa(dest.sin_addr),sizeof(dest_ip));
-  strncpy(src_ip, inet_ntoa(src.sin_addr),sizeof(src_ip));
+  strncpy(dest_ip, ipv4_ntoa(ip_header->daddr),sizeof(dest_ip));
+  strncpy(src_ip, ipv4_ntoa(ip_header->saddr),sizeof(src_ip));
    // init both addresses;
   
   init_member((const char *)&dest_ip);

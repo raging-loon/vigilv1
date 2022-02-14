@@ -1,4 +1,7 @@
-/*
+/*!
+ * @file utils.h
+ * @brief define functions for utils.c
+ * @section LICENSE
  * Copyright 2021 Conner Macolley
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,17 +26,25 @@
    x and y are interchangeable
    z = target
 */
+//! @brief Test if the destination or the source port are a particular value
 #define IS_PORT_DEST_SRC(X,Y,Z)(X == Z || Y == Z)
+//! @brief Test if the character is in the ASCII range
 #define IS_PRINTABLE_ASCII(X)(X > 32 || X < 127)
 
-
+//! @brief same as ether_ntoa_r in glibc
 unsigned char * mac_ntoa(uint8_t * );
+
 unsigned char * uc_mac_ntoa(unsigned char *);
-unsigned char * ipv4_ntoa( uint32_t *);
+//! @brief inet_ntoa but for raw bytes instead of a socket
+char * ipv4_ntoa( uint32_t );
 unsigned char * u8_ipv4_ntoa(uint8_t * );
+//! @brief see ipv4_ntoa but for ipv6
 unsigned char * inet6_ntoa(uint8_t * );
+//! @brief return a character array with the current time
 char * get_formated_time();
+//! @brief find the first occurence of a character within a string
 int strloc(const char *  haystack,const char needle);
+//! @brief Copy the current time in the to character array fiven as an argument
 void cb_get_formatted_time(char * );
 
 void fail(const char * , const char *);
