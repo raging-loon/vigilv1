@@ -60,5 +60,11 @@ Please note that the database comes preconfigured and empty with the package. It
  - [ ] Add internal and external mode
 
 ## Todo
-- [ ] Add a feature that finds and opens all files in /usr/share/nspi/rules
-- [ ] Add the net_host_monitoring thing
+- [ ] Add ports for rules
+- [ ] Add networks for rules
+- [ ] IPv6 shortener
+- [ ] DNS Response
+- [ ] SPI for RST
+- [ ] SPI for UDP
+- [ ] SNMP 
+- [ ] Testing with NAGIOS and Rsyslog
