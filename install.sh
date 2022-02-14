@@ -3,7 +3,7 @@
 apt install libpcap-dev libssl-dev
 mkdir /usr/share/noraa
 mkdir /usr/share/noraa/rules
-cp -r src/rules /usr/share/noraa/rules
+cp src/rules/* /usr/share/noraa/rules/
 mkdir /etc/noraa
 cp noraa.conf /etc/noraa/noraa.conf
 cp deny.conf /etc/noraa/deny.conf
