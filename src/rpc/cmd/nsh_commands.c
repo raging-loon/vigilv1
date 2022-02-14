@@ -7,7 +7,7 @@
 #include "../../filter/parsing/rule_parser.h"
 #include "../../statistics/arpcache.h"
 #include "../../utils.h"
-static __thread char message_buffer[4096];
+static __thread char message_buffer[102400];
 
 void send_blacklist(int * fd){
   memset(&message_buffer,0,sizeof(message_buffer));
