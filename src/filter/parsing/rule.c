@@ -52,7 +52,6 @@ bool r_engine(const struct rule * r, const struct rule_data * rdata){
   } 
   else if(rdata->__protocol == R_TCP){
     if(r->tcp_data.ackset){
-      // printf("%ld | %d\n", ntohl(rdata->tcp_header->ack_seq), ntohl(r->tcp_data.ack));
       if(ntohl(rdata->tcp_header->ack_seq) != r->tcp_data.ack) return false;
     }
     if(r->tcp_data.flagset){
