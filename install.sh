@@ -7,6 +7,7 @@ cp -r src/rules /usr/share/npsi/rules
 mkdir /etc/npsi
 cp npsi.conf /etc/npsi/npsi.conf
 cp deny.conf /etc/npsi/deny.conf
+cp domainm.conf /etc/npsi/
 touch /etc/npsi/hosts.conf
 mkdir /var/log/npsi/
 touch /var/log/npsi/siglog.log

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 int main(){
-  char * pkt = "User-Agent: sqlmap/1.5.7#pip (http://sqlmap.org)";
+  char * pkt = "User-Agent:.*\(.*Nikto.*\).*\(Evasions:.*\).*";
 
   regex_t rgx;
   char re[128];
