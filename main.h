@@ -1,4 +1,6 @@
-/*
+/*!
+ * @file
+ * @section LICENSE
  * Copyright 2021 Conner Macolley
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +14,11 @@
  *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
+ * 
+ * @section DESCRIPTION
+ * Describe functions for @file main.c
  */
+
 
 
 #ifndef __MAIN_NPSI_H
