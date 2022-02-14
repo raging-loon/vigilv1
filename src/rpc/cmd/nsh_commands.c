@@ -41,7 +41,11 @@ void get_loaded_rules(int * fd){
     const struct rule * tmprule = &rules[i++];
     strncat(message_buffer,tmprule->rulename,strlen(tmprule->rulename));
     char submsg[200];
-    sprintf(submsg,"\t\t\t\t\t\t[ %d | %d | %s ]",tmprule->port, tmprule->protocol, tmprule->rule_target);
+    sprintf(submsg,"\t\t\t\t\t\t[ %d | %d |",tmprule->port, tmprule->protocol);
+    if(tmprule->uses_pcre)
+      sprintf(submsg + strlen(submsg)," %s ]", tmprule->pcre);
+    else 
+      sprintf(submsg + strlen(submsg)," %s ]", tmprule->rule_target);
     strcat(message_buffer,submsg);
     strcat(message_buffer,"\n\t");
   }

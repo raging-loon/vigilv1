@@ -87,7 +87,7 @@ static void sc_strip(char * sub){
 
 
 static void void_rule(struct rule * r){
-  memset(r,0,sizeof(r));
+  // memset(r,0,sizeof(r));
 }
 
 

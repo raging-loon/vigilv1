@@ -13,7 +13,7 @@ mkdir /var/log/noraa/
 touch /var/log/noraa/siglog.log
 touch /etc/noraa/passwd
 touch /usr/share/noraa/arpcache.csv
-chmod +x nshadduser
-cp nshadduser /bin
+chmod +x src/scripts/nsh*
+cp src/scripts/nsh* /bin
 touch /var/log/noraa/login.log
 touch /var/log/noraa/fail.log

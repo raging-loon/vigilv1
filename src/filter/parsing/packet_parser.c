@@ -19,11 +19,13 @@
 bool str_match_parser(const struct rule_data * __rule_data, const struct rule * __rule){
 
   char temp_pkt[ (__rule_data->pkt_len * 2) + 2];
-  
+  memset(&temp_pkt, 0, sizeof(temp_pkt));
   for(int i = 0; i < __rule_data->pkt_len; i++){
     sprintf(temp_pkt + i * 2, "%02x",__rule_data->pkt[i]);
   }
+  printf("%s\n",temp_pkt);
   if(strstr(temp_pkt,__rule->rule_target) != NULL) return true;
+  
   return false;
 
 }
