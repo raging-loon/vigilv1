@@ -151,7 +151,7 @@ void sigint_processor(int signal){
 
 
 static void print_help_and_exit(){
-  printf("NPSI UTM %s\n"
+  printf("NORAA UTM %s\n"
          "\t-d: debug mode\n"
          "\t-h: display this message\n"
          "\t-i <iface>: set the interface to listen on\n"

@@ -68,7 +68,7 @@ unsigned int total_conversations = -1;
 
 struct spi_members spi_table[1024];
 
-int NPSI_MODE = 0xffff;
+int NORAA_MODE = 0xffff;
 char input_adapter[10];
 char output_adapter[10];
 char local_ip[18];

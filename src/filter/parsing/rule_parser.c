@@ -39,7 +39,7 @@ static void get_action(const char * , struct rule *);
   @purpose Parse <i>stuff</i>
 
   void rule_library_parser(const char * alt_file);
-    ==> Parse the configuration file located in /npsi.conf(github) or /etc/npsi/npsi.conf(live system)
+    ==> Parse the configuration file located in /noraa.conf(github) or /etc/noraa/noraa.conf(live system)
     Global variables in /globals.c are declared here.
     Rules are parsed here, any line starting with a '$' is treated like a file containing rules.
     They are passed to rule_parser
@@ -141,12 +141,12 @@ void rule_library_parser(const char * alt_file){
       livedebug("mode: %s",line + 5);
       printf("Running in ");
       if(strncmp(line+5,"2",1) == 0){
-        NPSI_MODE = IPS_ACTIVE;
+        NORAA_MODE = IPS_ACTIVE;
         printf("IPS mode as per config\n");
       } else {
         // default to ids mode to minimize disruption if there was an mistake in the config
 
-        NPSI_MODE = IDS_PASSIVE;
+        NORAA_MODE = IDS_PASSIVE;
         printf("IDS mode as per config\n");
       }
 
@@ -176,8 +176,8 @@ void rule_library_parser(const char * alt_file){
     }
     memset(line,0,sizeof(line)); 
   }
-  if(NPSI_MODE == 0xffff){
-    NPSI_MODE = IDS_PASSIVE;
+  if(NORAA_MODE == 0xffff){
+    NORAA_MODE = IDS_PASSIVE;
   }
 }
 static bool is_rule(const char * line){

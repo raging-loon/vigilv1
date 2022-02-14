@@ -1,2 +1,2 @@
-rm npsi.exe.stable
-cp npsi.exe npsi.exe.stable
+rm noraa.exe.stable
+cp noraa.exe noraa.exe.stable

@@ -27,7 +27,7 @@ void rulemgr(const struct rule_data * __rule_data){
         temp_rule->action(__rule_data,temp_rule,0);
         temp_rule->times_matched++;
       } else {
-        if(NPSI_MODE == IPS_ACTIVE) forward_packet(__rule_data);
+        if(NORAA_MODE == IPS_ACTIVE) forward_packet(__rule_data);
       }
     }
   }
