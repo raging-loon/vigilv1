@@ -1,6 +1,6 @@
 /*!
  * @file
- * @brief Start the entire program
+ * @brief Start the program, handle signals, packet capture, handle arguments, etc
  * @section LICENSE
  * Copyright 2021 Conner Macolley
  *

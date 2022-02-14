@@ -1,5 +1,6 @@
 /*!
  * @file
+ * @brief Describe functions for main.c
  * @section LICENSE
  * Copyright 2021 Conner Macolley
  *
@@ -16,7 +17,7 @@
  *    limitations under the License.
  * 
  * @section DESCRIPTION
- * Describe functions for @file main.c
+ * Describe functions for main.c
  */
 
 
