@@ -1,11 +1,11 @@
 -- created for MYSQL
 
--- CREATE USER 'NPSI'@'localhost' IDENTIFIED BY 'Pa@@w0rD';
--- GRANT ALL PRIVILEGES ON * . * TO 'NPSI'@'localhost';
+-- CREATE USER 'NORAA'@'localhost' IDENTIFIED BY 'Pa@@w0rD';
+-- GRANT ALL PRIVILEGES ON * . * TO 'NORAA'@'localhost';
 -- FLUSH PRIVILEGES;
 
-CREATE DATABASE NPSIDB;
-USE NPSIDB DATABASE;
+CREATE DATABASE NORAA;
+USE NORAADB DATABASE;
 
 CREATE TABLE watchlist (
   ip_address varchar(20),

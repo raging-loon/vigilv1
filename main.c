@@ -78,17 +78,17 @@ int main(int argc, char **argv){
   signal(SIGINT,sigint_processor);
   signal(SIGSEGV,sigint_processor);  
   // char * ip_addr = "";
-  deny_conf_parser("/etc/npsi/deny.conf");
-  printf("Finsished loading explicit deny file(/etc/npsi/deny.conf)\n");
+  deny_conf_parser("/etc/noraa/deny.conf");
+  printf("Finsished loading explicit deny file(/etc/noraa/deny.conf)\n");
   spi_max = 100;
   if(load_csv_arp_cache() != -1) printf("Finished loading CSV arp cache\n");
   else printf("Failed to load CSV arp cache(non critical error)\n");
   
-  rule_library_parser("/etc/npsi/npsi.conf");
+  rule_library_parser("/etc/noraa/noraa.conf");
   printf("Parsed rule files\n");
   rule_processor();
   
-  printf("NPSI listening on interface %s\n",iface_name);
+  printf("NORAA listening on interface %s\n",iface_name);
   pcap_t *pcap_mgr;
   
   char pkt_buffer[2046] = {0};
@@ -127,9 +127,9 @@ void sigint_processor(int signal){
     }
     
   }
-  FILE * fp = fopen("/usr/share/npsi/arpcache.csv","w");
+  FILE * fp = fopen("/usr/share/noraa/arpcache.csv","w");
   if(fp == NULL){
-    printf("Cannot open /usr/share/npsi/arpcache.csv: printing arpcache to screen\n");
+    printf("Cannot open /usr/share/noraa/arpcache.csv: printing arpcache to screen\n");
     fclose(fp);
     for(int i = 0; i < arp_entries + 1; i++){
       printf("%s -> %s\n",arpcache[i].ip_addr, arpcache[i].mac_addr);

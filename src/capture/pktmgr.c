@@ -67,7 +67,7 @@ void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsign
       loopback_ctp_decode(pkt);
       break;
     default:
-      lfprintf("/var/log/npsi/siglog.log","BAD-TRAFFIC Unknown Ethernt Frame Protocol Number",
+      lfprintf("/var/log/noraa/siglog.log","BAD-TRAFFIC Unknown Ethernt Frame Protocol Number",
                uc_mac_ntoa(ethernet_header->h_source),uc_mac_ntoa(ethernet_header->h_dest),-1,-1);
       break;
       

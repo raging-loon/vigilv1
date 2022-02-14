@@ -22,12 +22,12 @@
 
 
 
-#ifndef __MAIN_NPSI_H
-#define __MAIN_NPSI_H
+#ifndef __MAIN_NORAA_H
+#define __MAIN_NORAA_H
 
 int main(int, char **);
 
 void sigint_processor(int);
 static void print_help_and_exit();
 
-#endif /* __MAIN_NPSI_H */
+#endif /* __MAIN_NORAA_H */

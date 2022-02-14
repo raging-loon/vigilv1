@@ -1,8 +1,8 @@
 <?php 
   $server = "localhost";
-  $username = "NPSI";
+  $username = "NORAA";
   $password = "Pa@@w0rD";
-  $conn = new mysqli($server, $username, $password, "NPSIDB");
+  $conn = new mysqli($server, $username, $password, "NORAADB");
   if($conn->connect_error){
     die("Connection failed: " . $conn->connect_error);
   }
@@ -10,7 +10,7 @@
 ?>
 
 <!DOCTYPE html>
-  <head><title>NPSI Management</title></head>
+  <head><title>NORAA Management</title></head>
   <body>
     <?php 
       $query = "SELECT * FROM arp_cache";

@@ -52,9 +52,9 @@ struct arp_entry arpcache[255];
 char ip_addr[32];
 bool debug_mode;
 // default files
-char * default_config = "/etc/npsi/npsi.conf";
-char * def_log_file = "/var/log/npsi/siglog.log";
-char * default_host_conf = "/etc/npsi/hosts.conf";
+char * default_config = "/etc/noraa/noraa.conf";
+char * def_log_file = "/var/log/noraa/siglog.log";
+char * default_host_conf = "/etc/noraa/hosts.conf";
 
 bool use_sqlite;
 char sqlite_db_path[32];
