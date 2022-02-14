@@ -1,3 +1,26 @@
+/*!
+ * @file rule.h
+ * @author Conner Macolley
+ * @brief Define functions and structure for rule.c
+ * @section LICENSE
+ * 
+ *
+ * Copyright 2021 Conner Macolley
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
+ */
+
 #ifndef RULE_H
 #define RULE_H
 
@@ -23,7 +46,7 @@
 #define  R_ICMP   128
 #define  R_ALL    129
 
-
+//! @brief the struct for gathering data to be tested against rules
 struct rule_data{
   unsigned char *pkt;
   char *src_ip_addr;
@@ -41,6 +64,7 @@ struct rule_data{
   unsigned char tcp_flags[8]; 
   // ^ needs to be seperate since it's not part of the __tcp 
 };
+//! @brief take the rule_data and test it by iterating through all of the rules in rules
 void rulemgr(const struct rule_data *);
 
 struct blocked_ipv4{
@@ -75,9 +99,10 @@ struct r_raw_ip_data{
   uint8_t proto;
 };
 
+//! @brief the actual data for the rules
 struct rule{
-  int dsize, psize;
-  int d_operator, p_operator;
+  int dsize;
+  int d_operator;
   char rulename[24];
   int rule_type;
   int times_matched;
