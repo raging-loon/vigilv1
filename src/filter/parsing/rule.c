@@ -19,11 +19,9 @@ void rulemgr(const struct rule_data * __rule_data){
     struct rule * temp_rule = &rules[i++];
     if(((temp_rule->protocol == R_ALL) || ( __rule_data->__protocol == temp_rule->protocol)) &&
       ((temp_rule->port == -1) || (__rule_data->src_port == temp_rule->port || __rule_data->dest_port == temp_rule->port))){
-        if(debug_mode) printf("rulemgr: %s\n",temp_rule->rulename);
       bool e_stat = r_engine(temp_rule,__rule_data);
-  
       bool d_stat = d_engine(temp_rule, __rule_data);
-      if(temp_rule->pkt_parser(__rule_data,temp_rule) && e_stat && d_stat){
+      if(temp_rule->pkt_parser(__rule_data,temp_rule) && (e_stat && d_stat)){
         temp_rule->action(__rule_data,temp_rule,0);
         temp_rule->times_matched++;
       } else {
@@ -37,7 +35,6 @@ void rulemgr(const struct rule_data * __rule_data){
 bool r_engine(const struct rule * r, const struct rule_data * rdata){
   if(debug_mode) printf("in r_engine\n");
   if(rdata->__protocol == R_ICMP){
-    if(debug_mode) printf("ICMP\n");
     if(r->icmp_data.codeset){
       if(rdata->icmp_header->code != r->icmp_data.code) return false;
     }

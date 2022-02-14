@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 int main(){
-  char * pkt = "User-Agent:.*\(.*Nikto.*\).*\(Evasions:.*\).*";
-
+  char * pkt = "User-Agent: Mozilla/5.00 (Nikto/2.1.5) (Evasions:None) (Test:Port Check)";
+//
   regex_t rgx;
   char re[128];
-  strcpy(re,"User-Agent:.*sqlmap.*\(http://sqlmap.org\)");
+  strcpy(re,"User-Agent:.*\(.*Nikto.*\).*\(Evasions:.*\)");
   if(regcomp(&rgx,re,0) != 0){
     printf("Failed to compile\n");
   }
