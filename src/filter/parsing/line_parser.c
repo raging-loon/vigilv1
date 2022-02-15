@@ -101,6 +101,7 @@ void line_parser(const char * line){
   rdata->port = -1;
   rdata->protocol = -1;
   rdata->d_operator = -1;
+  rdata->dsize = -1;
   void_rule(rdata);
   int chars_parsed = 0;
   char * parser;

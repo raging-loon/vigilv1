@@ -37,7 +37,7 @@ void d_op_parser(struct rule * r, const char * ksub,int type){
 bool d_engine(const struct rule* r, const struct rule_data * rdata){
 
   if(r->d_operator == -1) {
-    return false;
+    return true;
   }
   switch(r->d_operator){
     case D_OP_JE:

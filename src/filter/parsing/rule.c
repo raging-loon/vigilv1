@@ -21,9 +21,9 @@ void rulemgr(const struct rule_data * __rule_data){
       ((temp_rule->port == -1) || (__rule_data->src_port == temp_rule->port || __rule_data->dest_port == temp_rule->port))){
       bool e_stat = r_engine(temp_rule,__rule_data);
       bool d_stat = d_engine(temp_rule, __rule_data);
-      // if(d_stat && e_stat) printf("helo");
       bool r_stat = temp_rule->pkt_parser(__rule_data,temp_rule);
-      printf("%s | %d | %d | %d\n",temp_rule->rulename ,e_stat,d_stat, r_stat);
+      // printf("%s | %d | %d | %d\n",temp_rule->rulename ,e_stat,d_stat, r_stat);
+
       if(r_stat && (e_stat == true  && d_stat)){
         temp_rule->action(__rule_data,temp_rule,0);
         temp_rule->times_matched++;

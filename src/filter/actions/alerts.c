@@ -42,6 +42,5 @@ void stdout_alert(const struct rule_data* __rule_data, const struct rule * __rul
   fputs(message,fp);
   fclose(fp);
 
-  printf("ALer\n");
 
 }
