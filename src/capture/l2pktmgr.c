@@ -1,5 +1,5 @@
 /*!
- * @file
+ * @file l2pktmgr.c
  * @brief Handle Datalink decoding
  * @section LICENSE
  * 
