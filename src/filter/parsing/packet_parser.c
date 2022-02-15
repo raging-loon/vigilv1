@@ -23,8 +23,11 @@ bool str_match_parser(const struct rule_data * __rule_data, const struct rule * 
   for(int i = 0; i < __rule_data->pkt_len; i++){
     sprintf(temp_pkt + i * 2, "%02x",__rule_data->pkt[i]);
   }
-  printf("%s\n",temp_pkt);
-  if(strstr(temp_pkt,__rule->rule_target) != NULL) return true;
+  // printf("%s\n",temp_pkt);
+  if(strstr(temp_pkt,__rule->rule_target) != NULL)
+    return true;
+ 
+  
   
   return false;
 
