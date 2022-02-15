@@ -1,6 +1,6 @@
 [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/raging-loon/NPSI.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/raging-loon/NPSI/context:cpp)
-# NPSI
-Network Packet Sniffer and Inspector
+# NORAA
+NORAA
 ## Requirements
 Runs well on Debian based linux distributions
 Requires the following to run:
@@ -35,7 +35,7 @@ Recommened stats for machine running:
 ## Installation
 You just need to run install.sh and make
 Note that if you are not planning on using the web interface and not using a sqlite database, then you need to mark "use_sqlite" in the config file as "NO".
-Please note that the database comes preconfigured and empty with the package. It is in the file "/npsi.db".
+Please note that the database comes preconfigured and empty with the package. It is in the file "/noraa.db".
 
 ## Plans
  - [x] Add monitoring for total amount of packets sent and recieved

@@ -36,7 +36,7 @@ void add_to_blacklist(int * fd, const char * ro_cmd){
 
 void get_loaded_rules(int * fd){
   memset(&message_buffer,0,sizeof(message_buffer));
-  strcat(message_buffer,"Loaded rules for NPSI Server:\n\t");
+  strcat(message_buffer,"Loaded rules for NORAA IDS:\n\t");
   for(int i = 0; i < num_rules + 1; ){
     const struct rule * tmprule = &rules[i++];
     strncat(message_buffer,tmprule->rulename,strlen(tmprule->rulename));

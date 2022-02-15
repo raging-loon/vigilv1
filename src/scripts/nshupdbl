@@ -2,7 +2,7 @@
 # NSH Update Blacklist
 """
   Entries in the scraped blacklist should be compared to those in the 
-  /etc/npsi/deny.conf file. 
+  /etc/noraa/deny.conf file. 
   Regex should be used to identify the type of address being used.
   New entired should be entered into deny.conf as followed:
     <protocol>:<address>
