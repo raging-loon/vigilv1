@@ -1,6 +1,8 @@
 /*!
  * @file
+ * @brief Handle ICMP decoding for IPv4 and IPv6
  * @section LICENSE
+ * 
  * Copyright 2021 Conner Macolley
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
