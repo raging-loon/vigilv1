@@ -321,6 +321,7 @@ void line_parser(const char * line){
               printf("Failed to compile regular expression\n");
               exit(-1);
             }
+            rdata->uses_pcre = true;
           }
           else if(strncmp(keysub,"dsize:",6) == 0){
             sc_strip(keysub);
