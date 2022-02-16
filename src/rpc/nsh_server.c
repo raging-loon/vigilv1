@@ -104,7 +104,7 @@ static bool nsh_do_login(int fd,const char * rhost){
 	len_read = read(fd,username,16);
 	send(fd,"Password: ",11,0);
 	rnstrip((char *)&username);
-	len_read = read(fd,&password,16);
+	len_read = read(fd,&password,16); //lgtm [cpp/cleartext-transmission]
 	rnstrip((char *)&password);
 	passwd_ptr = &password;
 	// printf("%s:%s\n",username,password);

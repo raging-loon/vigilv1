@@ -315,9 +315,9 @@ void line_parser(const char * line){
           }
           else if(strncmp(keysub,"pcre:\"",6) == 0){
             // no sc_strip since it may contain a ';' in the regexp
-            char temp[128];
-            strncpy(temp,keysub + 6,strlen(keysub) - 9);
-            if(regcomp(&rdata->pcre,temp,0) != 0){
+            // char temp[128];
+            strncpy(&rdata->pcrestr,keysub + 6,strlen(keysub) - 9);
+            if(regcomp(&rdata->pcre,rdata->pcrestr,0) != 0){
               printf("Failed to compile regular expression\n");
               exit(-1);
             }

@@ -43,7 +43,7 @@ void get_loaded_rules(int * fd){
     char submsg[200];
     sprintf(submsg,"\t\t\t\t\t\t[ %d | %d |",tmprule->port, tmprule->protocol);
     if(tmprule->uses_pcre)
-      sprintf(submsg + strlen(submsg)," %s ]", tmprule->pcre);
+      sprintf(submsg + strlen(submsg)," %s ]", tmprule->pcrestr);
     else 
       sprintf(submsg + strlen(submsg)," %s ]", tmprule->rule_target);
     strcat(message_buffer,submsg);
