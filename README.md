@@ -1,4 +1,4 @@
-[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/raging-loon/NPSI.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/raging-loon/NPSI/context:cpp)
+<!--[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/raging-loon/NPSI.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/raging-loon/NPSI/context:cpp) -->
 # NORAA
 NORAA
 ## Requirements

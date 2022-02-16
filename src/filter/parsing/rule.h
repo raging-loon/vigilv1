@@ -106,7 +106,7 @@ struct rule{
   char rulename[24];
   int rule_type;
   int times_matched;
-  char rule_target[128];
+  char rule_target[255];
   int protocol;
   int port;
   int severity;
@@ -116,7 +116,7 @@ struct rule{
   bool uses_pcre;
   unsigned int num_targets[4];
   char * targets[4];
-  
+  char raw_target[128];
   
   // int total_ports;
   struct r_tcp_data tcp_data;

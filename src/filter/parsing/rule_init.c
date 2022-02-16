@@ -15,6 +15,7 @@ void process_rule(struct rule * r){
   if(!r->uses_pcre){
     char target[(strlen(r->rule_target) * 2) + 2];
     unsigned int parsing_byte = 0;
+    strcpy(r->raw_target, r->rule_target);
     for(int i = 0; i < strlen(r->rule_target); i++){
       if(r->rule_target[i] == '|'){
         if(parsing_byte != 0) parsing_byte = 0;
