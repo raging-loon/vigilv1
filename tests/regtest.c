@@ -1,19 +1,18 @@
-#include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-int main(){
-  char * pkt = "User-Agent: Mozilla/5.00 (Nikto/2.1.5) (Evasions:None) (Test:Port Check)";
-//
-  regex_t rgx;
-  char re[128];
-  strcpy(re,"User-Agent:.*\(.*Nikto.*\).*\(Evasions:.*\)");
-  if(regcomp(&rgx,re,0) != 0){
-    printf("Failed to compile\n");
-  }
-  if(regexec(&rgx,pkt,0,NULL,0) == REG_NOMATCH)
-    printf("Failure\n");
-  else
-    printf("Success\n");
-}
+#include <stdint.h>
+struct data{
+  unsigned int data1 : 16;
+  unsigned int data2 : 16;
+  unsigned int data3 : 32;
+};
 
+int main(){
+  struct data * d = (struct data *)malloc(sizeof(struct data));
+  d->data1 = 0x6261;
+  d->data2 = 0x6463;
+  d->data3 = 0x90676665;
+  printf("%s\n",d);
+
+  
+}

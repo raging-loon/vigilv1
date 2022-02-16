@@ -40,6 +40,7 @@
 #include "../packets/ip6hdr.h"
 #include "../utils.h"
 #include "tcpmgr.h"
+#include "../logging.h"
 #include "udpmgr.h"
 #include "../packets/icmp4.h"
 #include "icmpdsct.h"
@@ -119,10 +120,15 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   init_member((const char *)&src_ip);
   
   if(is_blocked_ipv4((const char *)&dest_ip)){
-    printf("%s Found blocked ipv4 address(dest): %s%s\n",BLOCKED_IP_FOUND,dest_ip,__END_COLOR_STREAM);
+    char blockedmsg[1024];
+    sprintf(blockedmsg,"%s Found blocked ipv4 address(dest): %s\n",get_formated_time(),dest_ip);
+    saprintf(blockedmsg);
   }
   if(is_blocked_ipv4((const char *)&src_ip)){
-    printf("%s Found blocked ipv4 address(src): %s%s\n",BLOCKED_IP_FOUND,src_ip,__END_COLOR_STREAM);
+    char blockedmsg[1024];
+
+    sprintf(blockedmsg,"%s Found blocked ipv4 address(src): %s\n",get_formated_time(), src_ip);
+    saprintf(blockedmsg);
   }
   rdata.src_ip_addr = (char *)&src_ip;
   rdata.dest_ip_addr = (char *)&dest_ip;
