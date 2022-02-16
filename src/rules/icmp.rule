@@ -2,7 +2,7 @@ alert stdout any ICMP (name:"icmp-iss-pinger"; msg:"ICMP ISS Pinger"; itype:8; t
 alert stdout any ICMP (name:"icmp-l3retriever"; msg:"ICMP L3retriever Ping"; icode:0; itype:8; type:str_match; target:"ABCDEFGHIJKLMNOPQRSTUVWABCDEFGHI";)
 alert stdout any ICMP (name:"icmp-nemesis"; msg:"ICMP Nemesis v1.1 Echo"; icmp_id:0; icmp_seq:0; itype:8; type:str_match;  target:"|0000000000000000000000000000000000000000|";)
 alert stdout any ICMP (name:"icmp-nmap"; msg:"ICMP PING NMAP"; dsize:0; itype:8; type:none;)
-alert stdout any ICMP (name:"icmp-icmpenum";msg:"ICMP icmpenum v1.1.1"; icmp_id:666; icmp_seq:0; id:666; itype:8; type:none;)
+alert stdout any ICMP (name:"icmp-icmpenum"; msg:"ICMP icmpenum v1.1.1"; icmp_id:666; icmp_seq:0; id:666; itype:8; type:none;)
 alert stdout any ICMP (name:"icmp-red-host"; msg:"ICMP redirect host"; icode:1; itype:5; type:none;)
 alert stdout any ICMP (name:"icmp-red-net"; msg:"ICMP redirect net"; icode:0; itype:5; type:none;)
 alert stdout any ICMP (name:"icmp-superscan"; msg:"ICMP superscan echo"; itype:8; type:str_match; target:"|0000000000000000|";)
