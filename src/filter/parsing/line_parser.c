@@ -44,6 +44,12 @@ static void assign_port_number(const char * sub, struct rule * r){
     r->port = -1;
   
 }
+static int check_port_number(const char * str){
+  if(isdigit(str))
+    return atoi(str);
+  else if(strcmp(str,"any") == 0)
+    return -1;
+}
 
 static void assign_protocol(const char * sub, struct rule * r){
   if(strcmp(sub,"ANY") == 0)
@@ -96,12 +102,16 @@ static void void_rule(struct rule * r){
 
 
 
+
 void line_parser(const char * line){
   struct rule * rdata = &rules[++num_rules];
   rdata->port = -1;
   rdata->protocol = -1;
   rdata->d_operator = -1;
   rdata->dsize = -1;
+  rdata->flow = -1;
+  rdata->src = -1;
+  rdata->dest = -1;
   void_rule(rdata);
   int chars_parsed = 0;
   char * parser;
@@ -112,6 +122,8 @@ void line_parser(const char * line){
   int len = strlen(line);
   bool parsing_msg_str = false;
   bool parsing_target_str = false;
+  bool justparsed_extern = false;
+  bool justparsed_intern = false;
   while(right <= len && left <= right){
     if(!delimit(line[right])) {
       right++;
@@ -132,15 +144,53 @@ void line_parser(const char * line){
       
       if(data == false){
 
-        if(strcmp(sub,NKEY_ALERT) == 0)
-            ;
-        else if(strcmp(sub,"stdout") == 0 && !parsing_msg_str && !parsing_target_str)
+        if(strcmp(sub,"alert") == 0 && !parsing_msg_str && !parsing_target_str)
           rdata->action = stdout_alert;
         else if((strcmp(sub,"ICMP") == 0 || strcmp(sub,"ANY") == 0 || 
                  strcmp(sub,"TCP") == 0 || strcmp(sub,"UDP") == 0) && !parsing_target_str && !parsing_msg_str)
           assign_protocol(sub,rdata);
-        else if((isdigit(sub) || strcmp(sub,"any") == 0) && !parsing_msg_str && !parsing_target_str)
+
+
+
+        else if((isdigit(sub) || strcmp(sub,"any") == 0) && !parsing_msg_str && !parsing_target_str){
           assign_port_number(sub,rdata);
+        }
+          
+        else if(strncmp(sub,"$homenet",8) == 0){
+          if(rdata->dest == -1 || (rdata->src == -1 && rdata->dest == -1))
+            rdata->src = homenet;
+          else if (rdata->src == -1)
+            rdata->dest = homenet;
+
+          char portno[6];
+          strcpy(portno,sub + 9);
+          // v get rid of ':'
+          
+          rdata->src_port = check_port_number(portno );
+           
+        }
+        else if(strcmp(sub,"->") == 0){
+          if(rdata->src == homenet)
+            rdata->flow = FLOW_OUTWARD;
+          else if(rdata->src == EXTERNAL_NET)
+            rdata->flow = FLOW_INWARD;
+        }
+        else if(strcmp(sub,"<>") == 0)
+          rdata->flow =FLOW_EITHER;
+        
+        else if(strncmp(sub,"$externalnet",12) == 0){
+          if(rdata->dest == -1 || (rdata->src == -1 && rdata->dest == -1))
+            rdata->dest = EXTERNAL_NET;
+          else if(rdata->src == -1)
+            rdata->dest = EXTERNAL_NET;
+
+          
+          char portno[6];
+          strcpy(portno,sub + 12);
+          // v get rid of ':'
+          rdata->dest_port = check_port_number(portno + 1);
+        }
+
         else if(sub[0] == '('){
           data = true;
           continue;

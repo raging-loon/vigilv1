@@ -41,6 +41,16 @@
     - int pkt_len is required for the functions in packet_parser.c
 */
 
+
+// $homenet -> $externalnet
+#define FLOW_OUTWARD            0x45
+// $externalnet -> $homenet
+#define FLOW_INWARD             0x46
+// $externalnet <> $homenet
+// $any <> $any
+#define FLOW_EITHER             0x47
+
+#define EXTERNAL_NET            0xffffffff
 #define  R_TCP    126
 #define  R_UDP    127
 #define  R_ICMP   128
@@ -51,6 +61,8 @@ struct rule_data{
   unsigned char *pkt;
   char *src_ip_addr;
   char *dest_ip_addr;
+  uint32_t srcip,destip;
+  int flow;
   unsigned int src_port;
   unsigned int dest_port;
   int __protocol;
@@ -101,6 +113,11 @@ struct r_raw_ip_data{
 
 //! @brief the actual data for the rules
 struct rule{
+  uint32_t src, dest;
+  int dest_port, src_port;
+  int flow;
+
+
   int dsize;
   int d_operator;
   char rulename[24];

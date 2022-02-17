@@ -1,1 +1,2 @@
-alert stdout any ANY (name:"setgid-shell"; msg:"SHELLCODE x86 setgid 0"; type:str_match; target:"|b0b5cd80|";)
+#alert stdout any ANY (name:"setgid-shell"; msg:"SHELLCODE x86 setgid 0"; type:str_match; target:"|b0b5cd80|";)
+alert TCP $homenet:any -> $externalnet:80 (name:"main-test"; msg:"MAIN TEST SUCCEEDED"; type:none;)

@@ -14,7 +14,7 @@ void lprintf(FILE * fp, const char * fmt, ...){
 
 void lfprintf(const char * filename, const char * msg, const char * src, const char * dest, int sport, int dport){
   FILE * fp = fopen(filename,"a");
-  if(fp == -1){
+  if(fp == NULL){
     printf("CRITICAL FAILED TO OPEN FILE FOR LOGGING: %s\n",msg);
     return;
   }
