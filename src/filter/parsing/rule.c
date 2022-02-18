@@ -17,14 +17,14 @@ void rulemgr(const struct rule_data * __rule_data){
   // printf("In rulemgr\n");
   for(int i = 0; i < num_rules + 1;){
     struct rule * temp_rule = &rules[i++];
-    if(temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) printf("Src Port check passed\n");
+    // if(temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port)) printf("Dest Port check passed\n");
     if(((temp_rule->protocol == R_ALL) || ( __rule_data->__protocol == temp_rule->protocol)) && 
 
       (__rule_data->flow == FLOW_EITHER || __rule_data->flow == temp_rule->flow) &&
       (temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
       (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port)) 
       ){
-         printf("hello\n");
+        //  printf("hello\n");
       bool e_stat = r_engine(temp_rule,__rule_data);
       bool d_stat = d_engine(temp_rule, __rule_data);
       bool r_stat = temp_rule->pkt_parser(__rule_data,temp_rule);

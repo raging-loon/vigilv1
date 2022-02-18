@@ -54,7 +54,7 @@
 #define  R_TCP    126
 #define  R_UDP    127
 #define  R_ICMP   128
-#define  R_ALL    129
+#define  R_ALL    -1
 
 //! @brief the struct for gathering data to be tested against rules
 struct rule_data{

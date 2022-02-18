@@ -111,8 +111,8 @@ void line_parser(const char * line){
   rdata->d_operator = -1;
   rdata->dsize = -1;
   rdata->flow = -1;
-  rdata->src = -1;
-  rdata->dest = -1;
+  rdata->src = 0;
+  rdata->dest = 0;
   void_rule(rdata);
   int chars_parsed = 0;
   char * parser;
@@ -157,9 +157,9 @@ void line_parser(const char * line){
         }
           
         else if(strncmp(sub,"$homenet",8) == 0){
-          if(rdata->dest == -1 || (rdata->src == -1 && rdata->dest == -1))
+          if(rdata->dest == 0 || (rdata->src == 0 && rdata->dest == 0))
             rdata->src = homenet;
-          else if (rdata->src == -1)
+          else if (rdata->src == 0)
             rdata->dest = homenet;
 
           char portno[6];
@@ -179,9 +179,9 @@ void line_parser(const char * line){
           rdata->flow =FLOW_EITHER;
         
         else if(strncmp(sub,"$externalnet",12) == 0){
-          if(rdata->dest == -1 || (rdata->src == -1 && rdata->dest == -1))
+          if(rdata->dest == 0 && rdata->src != 0)
             rdata->dest = EXTERNAL_NET;
-          else if(rdata->src == -1)
+          else if(rdata->src == 0)
             rdata->dest = EXTERNAL_NET;
 
           
