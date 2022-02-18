@@ -105,20 +105,22 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   rdata.destip = (uint32_t)ntohl(ip_header->daddr);
   rdata.srcip =  (uint32_t)ntohl(ip_header->saddr);
   // printf("%u | %u | %u:%u\n",rdata.srcip,homenetmask,rdata.srcip & homenetmask,homenet);
-  printf("%d\n",rdata.srcip & homenetmask == homenet);
-  if(rdata.srcip & homenetmask == homenet){
-    printf("Outward flow\n");
+  uint32_t srcstatus = rdata.srcip & homenetmask;
+  uint32_t dststatus = rdata.destip & homenetmask;
+  // printf("%d:%d\n",x, homenet);
+  if(srcstatus == homenet){
+    // printf("Outward flow\n");
     rdata.flow = FLOW_OUTWARD;
   }
-  else if(rdata.destip & homenetmask == homenet) 
+  else if(dststatus & homenetmask == homenet) 
     rdata.flow = FLOW_INWARD;
   else 
     rdata.flow = FLOW_EITHER;
   
+
   rdata.pkt_len = pkt_hdr->len;
   rdata.ip_header = ip_header;
 
-  rdata.pkt_len = pkt_hdr->len;
   
   int base_data_size = pkt_hdr->len 
                      - ETH_HDR_SZ
