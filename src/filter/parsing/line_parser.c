@@ -157,38 +157,48 @@ void line_parser(const char * line){
         }
           
         else if(strncmp(sub,"$homenet",8) == 0){
-          if(rdata->dest == 0 || (rdata->src == 0 && rdata->dest == 0))
-            rdata->src = homenet;
-          else if (rdata->src == 0)
-            rdata->dest = homenet;
-
+          printf("$homenet\n");
           char portno[6];
           strcpy(portno,sub + 9);
+          if(rdata->dest == 0 && rdata->src == 0){
+            rdata->src = homenet;
+            rdata->src_port = check_port_number(portno);
+
+          }
+          else{
+            rdata->dest = homenet;
+            rdata->dest_port = check_port_number(portno);
+          }
+
           // ^ get rid of ':'
           
-          rdata->src_port = check_port_number(portno);
           // printf("src_port: %d\n",rdata->src_port);
         }
         else if(strcmp(sub,"->") == 0){
           if(rdata->src == homenet)
             rdata->flow = FLOW_OUTWARD;
-          else if(rdata->src == EXTERNAL_NET)
+          else 
             rdata->flow = FLOW_INWARD;
         }
         else if(strcmp(sub,"<>") == 0)
-          rdata->flow =FLOW_EITHER;
+          rdata->flow = FLOW_EITHER;
         
         else if(strncmp(sub,"$externalnet",12) == 0){
-          if(rdata->dest == 0 && rdata->src != 0)
-            rdata->dest = EXTERNAL_NET;
-          else if(rdata->src == 0)
-            rdata->dest = EXTERNAL_NET;
-
-          
+          printf("$externalnet\n");
           char portno[6];
           strcpy(portno,sub + 12);
+          if(rdata->dest == 0 && rdata->src == homenet){
+            rdata->dest = -1;
+            rdata->dest_port = check_port_number(portno + 1);
+
+          }
+          else{
+            rdata->src = -1;
+            rdata->src_port = check_port_number(portno + 1);
+          } 
+
+          
           // v get rid of ':'
-          rdata->dest_port = check_port_number(portno + 1);
         }
 
         else if(sub[0] == '('){

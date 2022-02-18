@@ -43,14 +43,14 @@
 
 
 // $homenet -> $externalnet
-#define FLOW_OUTWARD            0x45
+#define FLOW_OUTWARD            69
 // $externalnet -> $homenet
-#define FLOW_INWARD             0x46
+#define FLOW_INWARD             70
 // $externalnet <> $homenet
 // $any <> $any
-#define FLOW_EITHER             0x47
+#define FLOW_EITHER             71
 
-#define EXTERNAL_NET            0xffffffff
+#define EXTERNAL_NET            -1
 #define  R_TCP    126
 #define  R_UDP    127
 #define  R_ICMP   128
