@@ -128,7 +128,6 @@ void rule_library_parser(const char * alt_file){
     }
     else if(strncmp(line,"in_adapter=",11) == 0){
       strcpy(input_adapter,line + 11);
-      printf("%s\n",line +11);
       livedebug("rule_parser.c: rule_library_parser: in_adapter: %s",input_adapter);
       
     }
@@ -163,7 +162,8 @@ void rule_library_parser(const char * alt_file){
       else use_spi = false;
     }
     else if(strncmp(line,"HOME_NET=",9) == 0){
-      line[strcspn(line,"\n")] = 0x00;
+      // line[strcspn(line,"\n")] = 0x00;
+      rstrip(line);
       homenet =  homenet_toi(line + 9);
     }
     else if(strncmp(line,"HOME_NET_MASK=",14) == 0){

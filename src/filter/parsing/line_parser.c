@@ -49,6 +49,8 @@ static int check_port_number(const char * str){
     return atoi(str);
   else if(strcmp(str,"any") == 0)
     return -1;
+  else 
+    return -1;
 }
 
 static void assign_protocol(const char * sub, struct rule * r){
@@ -56,7 +58,6 @@ static void assign_protocol(const char * sub, struct rule * r){
     r->protocol = R_ALL;
   else if(strcmp(sub,"ICMP") == 0)
     r->protocol = R_ICMP;
-
   else if(strcmp(sub,"TCP") == 0)
     r->protocol = R_TCP;
   else if(strcmp(sub,"UDP") == 0)
@@ -139,7 +140,6 @@ void line_parser(const char * line){
     
     } else if(delimit(line[right]) && left != right || (right == len && left != right)){
       char * sub = substr(line, left, right -1);
-      // printf("%s\n",sub);
       entry:
       
       if(data == false){
@@ -164,10 +164,10 @@ void line_parser(const char * line){
 
           char portno[6];
           strcpy(portno,sub + 9);
-          // v get rid of ':'
+          // ^ get rid of ':'
           
-          rdata->src_port = check_port_number(portno );
-           
+          rdata->src_port = check_port_number(portno);
+          // printf("src_port: %d\n",rdata->src_port);
         }
         else if(strcmp(sub,"->") == 0){
           if(rdata->src == homenet)

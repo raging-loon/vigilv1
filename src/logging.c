@@ -21,7 +21,7 @@ void lfprintf(const char * filename, const char * msg, const char * src, const c
 
   char message[2048];
   char time[64];
-  cb_get_formatted_time(&time);
+  cb_get_formatted_time(time);
   if(sport == -1){
     sprintf(message,"%s %s %s -> %s\n",time,msg,src,dest);
   } else {
@@ -32,7 +32,7 @@ void lfprintf(const char * filename, const char * msg, const char * src, const c
 }
 void saprintf(const char * msg){
   FILE * fp = fopen(def_log_file,"a");
-  if(fp == -1){
+  if(fp == NULL){
     printf("CRITICAL FAILED TO OPEN FILE FOR LOGGING: %s\n",msg);
     return;
   }

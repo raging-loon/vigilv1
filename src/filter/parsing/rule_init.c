@@ -31,6 +31,7 @@ void process_rule(struct rule * r){
 
     memset(&r->rule_target,0,sizeof(r->rule_target));
     strcpy(r->rule_target,target);
+    printf("%s %d %d:%d | %d | %d:%d\n",r->rulename,r->protocol, r->src,r->src_port,r->flow, r->dest,r->dest_port);
   }
 
 }

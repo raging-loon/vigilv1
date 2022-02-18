@@ -8,7 +8,7 @@ uint32_t homenet_toi(const char * ip_addr){
   
   char * octet = strtok(ip_addr,".");
   while(octet != NULL){
-    sprintf(num_str + strlen(num_str),"%x",atoi(octet));
+    sprintf(num_str + strlen(num_str),"%02x",atoi(octet));
     octet = strtok(NULL,".");
   }
   return (uint32_t)strtol(num_str,NULL,16);
