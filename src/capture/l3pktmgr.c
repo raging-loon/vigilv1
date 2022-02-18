@@ -52,27 +52,9 @@
 #include "../engine/flags.h"
 #include "../engine/spi.h"
 
-/*
-  *-*-*-*- l3pktmgr.c -*-*-*-*
-  @purpose Handle decoding of layer three protocols for ipv4 and ipv6
-  void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr);
-    ==> Decodes ipv6_hdr based on the size of the ethernet header and the 
-        ipv6_hdr struct located in /src/packets/ip6hdr.h
-    Can currently decode ICMPv6
-    @TODO: Add support for TCP and UDP decoding and for rule_data
-    @FIXME: Fix IGMP decoding as it relates to spi_pkt
-  void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr);
-    ==> Decodes ipv4_hdr based on size of ethernet header and the ip_hdr located in 
-        /src/packets/iphdr.h
-    Can decode the following:
-      - TCP --> pass data to tcpmgr(/src/capture/tcpmgr.c)
-      - UDP --> pass data to udpmgr(/src/capture/udpmgr.c)
-      - ICMP -> pass data to icmpdsct(/src/capture/icmpdsct.c)
-    Members of the watchlist(/src/statistics/watchlist.h) are initiated here through the
-    "init_member" function.
 
-*/
-
+//! @brief handle decoding for ipv6
+//! @todo expand on this
 void ipv6pktmgr(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
   struct ip6hdr * ipv6_hdr = (struct ip6hdr *)(pkt + sizeof(struct ethhdr) );
   char dest_ip6[134];
@@ -111,6 +93,7 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   if(srcstatus == homenet){
     rdata.flow = FLOW_OUTWARD;
   }
+
   else if(dststatus == homenet) 
     rdata.flow = FLOW_INWARD;
   else 
