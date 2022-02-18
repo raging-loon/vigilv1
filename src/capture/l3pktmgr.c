@@ -109,10 +109,9 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   uint32_t dststatus = rdata.destip & homenetmask;
   // printf("%d:%d\n",x, homenet);
   if(srcstatus == homenet){
-    // printf("Outward flow\n");
     rdata.flow = FLOW_OUTWARD;
   }
-  else if(dststatus & homenetmask == homenet) 
+  else if(dststatus == homenet) 
     rdata.flow = FLOW_INWARD;
   else 
     rdata.flow = FLOW_EITHER;
