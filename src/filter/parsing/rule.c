@@ -20,7 +20,7 @@ void rulemgr(const struct rule_data * __rule_data){
     // if(temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port)) printf("Dest Port check passed\n");
     if(((temp_rule->protocol == R_ALL) || ( __rule_data->__protocol == temp_rule->protocol)) && 
 
-      (__rule_data->flow == FLOW_EITHER || __rule_data->flow == temp_rule->flow) &&
+      (temp_rule->flow == FLOW_EITHER || __rule_data->flow == temp_rule->flow) &&
       (temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
       (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port)) 
       ){
