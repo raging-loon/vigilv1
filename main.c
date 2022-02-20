@@ -35,6 +35,7 @@
 #include "src/utils.h"
 #include "src/statistics/watchlist.h"
 #include <pthread.h>
+#include <unistd.h>
 #include "src/statistics/arpcache.h"
 #include <time.h>
 #include "src/filter/parsing/rule_init.h"
@@ -59,7 +60,6 @@ int main(int argc, char **argv){
         print_help_and_exit();
         break;
       case 'i':
-        printf("GETOPT: main.c: iface_name = %s\n",optarg);
         iface_name = optarg;
         break;
       case 'p':
@@ -69,6 +69,8 @@ int main(int argc, char **argv){
         quiet_exit = true;
         break;
       case 'e':
+        printf("RUNNING IN DEMONSTRATION MODE. YOU HAVE 10 SECONDS TO ABORT\n");
+        sleep(10);
         demo_mode = true;
         break;
       default:
