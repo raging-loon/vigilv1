@@ -1,2 +1,2 @@
-alert stdout 21 TCP (name:"ftp_authorized_keys"; msg:"FTP authorized_keys"; type:str_match; target:"authorized_keys";)
-alert stdout 21 TCP (name:"fpt-adm-scan"; msg:"FTP adm scan"; type:str_match; target:"PASS|20|ddd|400a|";)
+alert TCP $externalnet:any -> $homenet:21 (name:"ftp_authorized_keys"; msg:"FTP authorized_keys"; type:str_match; target:"authorized_keys";)
+alert TCP $externalnet:any -> $homenet:21 (name:"fpt-adm-scan"; msg:"FTP adm scan"; type:str_match; target:"PASS|20|ddd|400a|";)
