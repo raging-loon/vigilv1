@@ -13,32 +13,36 @@
     ==> Apply the rules
     TODO: Add support for ports
 */
+static void rule_app(struct rule * r, const struct rule_data * rdata){
+  bool e_stat = r_engine(r,rdata);    
+  bool d_stat = d_engine(r, rdata);
+  bool r_stat = r->pkt_parser(rdata,r);
+  // printf("%s | %d | %d | %d\n",temp_rule->rulename ,e_stat,d_stat, r_stat)
+  if(r_stat && (e_stat == true  && d_stat)){
+    r->action(rdata,r,0);
+    r->times_matched++;
+  } else {
+    if(NORAA_MODE == IPS_ACTIVE) forward_packet(rdata);
+  }
+}
 void rulemgr(const struct rule_data * __rule_data){
   // printf("In rulemgr\n");
   for(int i = 0; i < num_rules + 1;){
     struct rule * temp_rule = &rules[i++];
-    // if(temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port)) printf("Dest Port check passed\n");
-    if(((temp_rule->protocol == R_ALL) || ( __rule_data->__protocol == temp_rule->protocol)) && 
+    if(((temp_rule->protocol == R_ALL) || ( __rule_data->__protocol == temp_rule->protocol))){
 
-      (temp_rule->flow == FLOW_EITHER || __rule_data->flow == temp_rule->flow) &&
-      (temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
-      (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port)) 
-      ){
-        //  printf("hello\n");
-      bool e_stat = r_engine(temp_rule,__rule_data);
-      bool d_stat = d_engine(temp_rule, __rule_data);
-      bool r_stat = temp_rule->pkt_parser(__rule_data,temp_rule);
-      // printf("%s | %d | %d | %d\n",temp_rule->rulename ,e_stat,d_stat, r_stat);
-
-      if(r_stat && (e_stat == true  && d_stat)){
-        temp_rule->action(__rule_data,temp_rule,0);
-        temp_rule->times_matched++;
-      } else {
-        if(NORAA_MODE == IPS_ACTIVE) forward_packet(__rule_data);
+      if((temp_rule->flow == FLOW_EITHER  || __rule_data->flow == temp_rule->flow)){
+        if(temp_rule->protocol == R_ICMP)
+          rule_app(temp_rule,__rule_data);
+        else if((temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
+      (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port)))
+          rule_app(temp_rule,__rule_data);
       }
+      
     }
   }
 }
+
 
 
 bool r_engine(const struct rule * r, const struct rule_data * rdata){
