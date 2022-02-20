@@ -31,8 +31,9 @@ void rulemgr(const struct rule_data * __rule_data){
   for(int i = 0; i < num_rules + 1;){
     struct rule * temp_rule = &rules[i++];
     if(((temp_rule->protocol == R_ALL) || ( __rule_data->__protocol == temp_rule->protocol))){
+      if(demo_mode) rule_app(temp_rule,__rule_data);
 
-      if((temp_rule->flow == FLOW_EITHER || __rule_data->flow == temp_rule->flow)){
+      else if((temp_rule->flow == FLOW_EITHER || __rule_data->flow == temp_rule->flow)){
         // printf("%s: %d|%d <-----> %d|%d hellos\n",temp_rule->rulename,temp_rule->src_port,temp_rule->dest_port,__rule_data->src_port,__rule_data->dest_port);
         if(temp_rule->protocol == R_ICMP)
           rule_app(temp_rule,__rule_data);

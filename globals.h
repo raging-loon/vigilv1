@@ -51,7 +51,7 @@ extern pthread_t threads[64];
 extern int thread_count;
 //! @brief Determines whether the program is running in IDS or IPS mode
 extern int noraa_mode;
-
+extern bool demo_mode;
 //! @brief default is /etc/npsi/npsi.conf
 extern char * default_config;
 //! @brief default is /var/log/siglog.log

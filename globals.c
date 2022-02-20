@@ -30,6 +30,7 @@
 #include <pthread.h>
 // globals defined in @globals.h
 // config options
+bool demo_mode;
 int strict_icmp_timestamp_req;
 int strict_nmap_host_alive_check;
 pthread_t threads[64];

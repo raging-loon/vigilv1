@@ -50,7 +50,7 @@ int main(int argc, char **argv){
   char error_buf[PCAP_ERRBUF_SIZE];
   char * iface_name;
   int opt;
-  while((opt = getopt(argc,argv,"pdqhi:")) != -1){
+  while((opt = getopt(argc,argv,"pdqhei:")) != -1){
     switch(opt){
       case 'd':
         debug_mode = true;
@@ -67,6 +67,9 @@ int main(int argc, char **argv){
         break;
       case 'q':
         quiet_exit = true;
+        break;
+      case 'e':
+        demo_mode = true;
         break;
       default:
         printf("Unknown argument -%c\n",opt);
