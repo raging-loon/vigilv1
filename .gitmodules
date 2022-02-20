@@ -1,0 +1,3 @@
+[submodule "nsh"]
+	path = nsh
+	url = http://github.com/raging-loon/nsh
