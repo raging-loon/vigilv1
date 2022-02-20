@@ -1,6 +1,7 @@
 #include "rule.h"
 #include "../../../globals.h"
 #include <stdio.h>
+#include "../../utils.h"
 #include <stdlib.h>
 #include <string.h>
 #include <arpa/inet.h>
@@ -31,12 +32,23 @@ void rulemgr(const struct rule_data * __rule_data){
     struct rule * temp_rule = &rules[i++];
     if(((temp_rule->protocol == R_ALL) || ( __rule_data->__protocol == temp_rule->protocol))){
 
-      if((temp_rule->flow == FLOW_EITHER  || __rule_data->flow == temp_rule->flow)){
+      if((temp_rule->flow == FLOW_EITHER || __rule_data->flow == temp_rule->flow)){
+        // printf("%s: %d|%d <-----> %d|%d hellos\n",temp_rule->rulename,temp_rule->src_port,temp_rule->dest_port,__rule_data->src_port,__rule_data->dest_port);
         if(temp_rule->protocol == R_ICMP)
           rule_app(temp_rule,__rule_data);
-        else if((temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
-      (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port)))
-          rule_app(temp_rule,__rule_data);
+        else {
+          if(temp_rule->flow == FLOW_EITHER){
+            if((temp_rule->src_port == R_ALL || IS_PORT_DEST_SRC(__rule_data->src_port,__rule_data->dest_port,temp_rule->src_port)) &&
+              (temp_rule->dest_port == R_ALL) || IS_PORT_DEST_SRC(__rule_data->src_port,__rule_data->dest_port,temp_rule->dest_port)){
+                rule_app(temp_rule,__rule_data);
+              }
+
+          }
+          else if((temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
+                  (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port)))
+            rule_app(temp_rule,__rule_data);
+
+        }
       }
       
     }
