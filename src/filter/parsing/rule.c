@@ -40,7 +40,7 @@ void rulemgr(const struct rule_data * __rule_data){
         else {
           if(temp_rule->flow == FLOW_EITHER){
             if((temp_rule->src_port == R_ALL || IS_PORT_DEST_SRC(__rule_data->src_port,__rule_data->dest_port,temp_rule->src_port)) &&
-              (temp_rule->dest_port == R_ALL) || IS_PORT_DEST_SRC(__rule_data->src_port,__rule_data->dest_port,temp_rule->dest_port)){
+              (temp_rule->dest_port == R_ALL || IS_PORT_DEST_SRC(__rule_data->src_port,__rule_data->dest_port,temp_rule->dest_port))){
                 rule_app(temp_rule,__rule_data);
               }
 

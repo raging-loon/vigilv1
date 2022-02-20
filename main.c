@@ -69,7 +69,7 @@ int main(int argc, char **argv){
         quiet_exit = true;
         break;
       case 'e':
-        printf("RUNNING IN DEMONSTRATION MODE. YOU HAVE 10 SECONDS TO ABORT\n");
+        printf("RUNNING IN DEMONSTRATION MODE. YOU HAVE 10 SECONDS TO ABORT.\n");
         sleep(10);
         demo_mode = true;
         break;
