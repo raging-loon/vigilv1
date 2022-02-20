@@ -157,7 +157,7 @@ void line_parser(const char * line){
         }
           
         else if(strncmp(sub,"$homenet",8) == 0){
-          printf("$homenet\n");
+          // printf("$homenet\n");
           char portno[6];
           strcpy(portno,sub + 9);
           if(rdata->dest == 0 && rdata->src == 0){
@@ -184,7 +184,7 @@ void line_parser(const char * line){
           rdata->flow = FLOW_EITHER;
         
         else if(strncmp(sub,"$externalnet",12) == 0){
-          printf("$externalnet\n");
+          // printf("$externalnet\n");
           char portno[6];
           strcpy(portno,sub + 12);
           if(rdata->dest == 0 && rdata->src == homenet){
@@ -377,6 +377,7 @@ void line_parser(const char * line){
             // no sc_strip since it may contain a ';' in the regexp
             // char temp[128];
             strncpy(&rdata->pcrestr,keysub + 6,strlen(keysub) - 9);
+            printf("%s\n",rdata->pcrestr);
             if(regcomp(&rdata->pcre,rdata->pcrestr,0) != 0){
               printf("Failed to compile regular expression\n");
               exit(-1);
