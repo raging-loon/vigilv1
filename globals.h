@@ -113,5 +113,6 @@ extern uint32_t homenet;
 //! @brief homenet netmask for anding
 extern uint32_t homenetmask;
 
+extern bool in_test_mode;
 
 #endif /* GLOBALS_H */

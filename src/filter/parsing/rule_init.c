@@ -6,7 +6,9 @@
 #include "rule_init.h"
 
 void rule_processor(){
+
   for(int i = 0; i < num_rules + 1; i++){
+
     process_rule(&rules[i]);
   }
 }

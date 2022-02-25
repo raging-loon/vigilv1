@@ -30,6 +30,10 @@ void rulemgr(const struct rule_data * __rule_data){
   // printf("In rulemgr\n");
   for(int i = 0; i < num_rules + 1;){
     struct rule * temp_rule = &rules[i++];
+    if(in_test_mode){
+      if(temp_rule->flow == FLOW_INWARD) temp_rule->flow = FLOW_OUTWARD;
+      else if(temp_rule->flow == FLOW_OUTWARD) temp_rule->flow = FLOW_INWARD; 
+    }
     if(((temp_rule->protocol == R_ALL) || ( __rule_data->__protocol == temp_rule->protocol))){
       if(demo_mode) rule_app(temp_rule,__rule_data);
 

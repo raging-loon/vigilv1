@@ -78,7 +78,7 @@ bool use_spi;
 
 uint32_t homenet;
 uint32_t homenetmask;
-
+bool in_test_mode;
 void add_thread(pthread_t * pthrd){
   threads[thread_count++] = pthrd;
 }

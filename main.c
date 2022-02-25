@@ -51,7 +51,7 @@ int main(int argc, char **argv){
   char error_buf[PCAP_ERRBUF_SIZE];
   char * iface_name;
   int opt;
-  while((opt = getopt(argc,argv,"pdqhei:")) != -1){
+  while((opt = getopt(argc,argv,"pdqhtei:")) != -1){
     switch(opt){
       case 'd':
         debug_mode = true;
@@ -72,6 +72,11 @@ int main(int argc, char **argv){
         printf("RUNNING IN DEMONSTRATION MODE. YOU HAVE 10 SECONDS TO ABORT.\n");
         sleep(10);
         demo_mode = true;
+        break;
+      case 't':
+        printf("RUNNING IN TEST MODE. YOU HAVE 10 SECONDS TO ABORT.\n");
+        sleep(10);
+        in_test_mode = true;  
         break;
       default:
         printf("Unknown argument -%c\n",opt);

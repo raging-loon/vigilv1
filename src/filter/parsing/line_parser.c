@@ -123,8 +123,7 @@ void line_parser(const char * line){
   int len = strlen(line);
   bool parsing_msg_str = false;
   bool parsing_target_str = false;
-  bool justparsed_extern = false;
-  bool justparsed_intern = false;
+  bool gotname = false;
   while(right <= len && left <= right){
     if(!delimit(line[right])) {
       right++;
@@ -238,6 +237,7 @@ void line_parser(const char * line){
 
             if(strncmp(keysub,"name:\"",6) == 0){
               strncpy(rdata->rulename,keysub + 6,strlen(keysub) - 8);
+              gotname = true;
             }
             else if(strncmp(keysub,"msg:\"",5) == 0){
               parsing_msg_str = true;
@@ -260,7 +260,6 @@ void line_parser(const char * line){
                 strcat(rdata->rule_target, partial_target);
                 strcat(rdata->rule_target,"\x20");
               }
-            
             }
           else if(strncmp(keysub,"sev:",4) == 0){
             // remove semicolon
@@ -397,6 +396,8 @@ void line_parser(const char * line){
       if(sub[strlen(sub) - 1] == ')') return;
     }
 
-
+    
   }
+  if(!gotname) 
+    strcpy(rdata->rulename,"Untitled");
 }
