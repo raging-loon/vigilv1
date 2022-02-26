@@ -13,4 +13,5 @@ alert ANY $externalnet:any <> $homenet:any (name:"ioc-file-copy"; msg:"IOC file 
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-invalid-url"; msg:"IOC Invalid URL"; type:str_match; target:"Invalid URL";)
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-index-cgi"; msg:"IOC Index of /cgi-bin/ response"; type:str_match; target:"Index of /cgi-bin/";)
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-http-403"; msg:"IOC 403 Forbidden"; type:str_match; target:"HTTP/1.1 403";)
+alert ANY $externalnet:any <> $homenet:4444 (name:"msf-port"; msg:"IOC Communication IO port 4444/tcp"; type:none;)
 # alert stdout any ANY (name:"ioc-uid-check"; msg:"IOC id check returned user id";)
