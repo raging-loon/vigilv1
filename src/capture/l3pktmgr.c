@@ -86,16 +86,19 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   char dest_ip[16]; 
   rdata.destip = (uint32_t)ntohl(ip_header->daddr);
   rdata.srcip =  (uint32_t)ntohl(ip_header->saddr);
-  // printf("%u | %u | %u:%u\n",rdata.srcip,homenetmask,rdata.srcip & homenetmask,homenet);
+  printf("%u | %u | %u:%u\n",rdata.srcip,homenetmask,rdata.srcip & homenetmask,homenet);
   uint32_t srcstatus = rdata.srcip & homenetmask;
   uint32_t dststatus = rdata.destip & homenetmask;
-  // printf("%d:%d\n",x, homenet);
+  printf("%d\n",rdata.srcip &  homenet);
   if(srcstatus == homenet){
     rdata.flow = FLOW_OUTWARD;
+    printf("Outgoing packet\n");
   }
 
-  else if(dststatus == homenet) 
+  else if(dststatus == homenet){
     rdata.flow = FLOW_INWARD;
+    printf("Incoming packet\n");
+  } 
   else 
     rdata.flow = FLOW_EITHER;
   
