@@ -15,12 +15,13 @@
     TODO: Add support for ports
 */
 static void rule_app(struct rule * r, const struct rule_data * rdata){
+    // printf("%s\n",r->rulename);
+
   bool e_stat = r_engine(r,rdata);    
   bool d_stat = d_engine(r, rdata);
   bool r_stat = r->pkt_parser(rdata,r);
   // printf("%s | %d | %d | %d\n",temp_rule->rulename ,e_stat,d_stat, r_stat)
-  if(r_stat && (e_stat == true  && d_stat)){
-    printf("%s\n",r->rulename);
+  if(r_stat && (e_stat   && d_stat)){
     r->action(rdata,r,0);
     r->times_matched++;
   } else {
