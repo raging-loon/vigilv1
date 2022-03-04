@@ -20,6 +20,7 @@ static void rule_app(struct rule * r, const struct rule_data * rdata){
   bool r_stat = r->pkt_parser(rdata,r);
   // printf("%s | %d | %d | %d\n",temp_rule->rulename ,e_stat,d_stat, r_stat)
   if(r_stat && (e_stat == true  && d_stat)){
+    printf("%s\n",r->rulename);
     r->action(rdata,r,0);
     r->times_matched++;
   } else {
@@ -35,7 +36,7 @@ void rulemgr(const struct rule_data * __rule_data){
       else if(temp_rule->flow == FLOW_OUTWARD) temp_rule->flow = FLOW_INWARD; 
     }
     if(((temp_rule->protocol == R_ALL) || ( __rule_data->__protocol == temp_rule->protocol))){
-      if(demo_mode) rule_app(temp_rule,__rule_data);
+      if(demo_mode || noraa_location == INTERNAL) rule_app(temp_rule,__rule_data);
 
       else if((temp_rule->flow == FLOW_EITHER || __rule_data->flow == temp_rule->flow)){
         // printf("%s: %d|%d <-----> %d|%d hellos\n",temp_rule->rulename,temp_rule->src_port,temp_rule->dest_port,__rule_data->src_port,__rule_data->dest_port);

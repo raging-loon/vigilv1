@@ -170,6 +170,11 @@ void rule_library_parser(const char * alt_file){
       rstrip(line);
       homenetmask = homenet_toi(line + 14);
     }
+    else if(strncmp(line,"location=",9) == 0){
+      rstrip(line);
+      if(strcmp(line + 9, "external") == 0) noraa_location = EXTERNAL;
+      else noraa_location = INTERNAL;
+    }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);
       rule_parser(line);

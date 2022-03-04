@@ -40,7 +40,8 @@
 #define MAX_RULES               1024        
 // extern struct ip_addr_counter ip_stats[256];
 // extern int ip_addr_stat_counter_len;
-
+#define INTERNAL                3
+#define EXTERNAL                4
 extern unsigned int total_pkt_captured;
 //! @brief array of all of the rules
 extern struct rule rules[MAX_RULES];
@@ -59,7 +60,7 @@ extern char * def_log_file;
 //! @todo expand on this
 extern char * default_host_conf;
 
-
+extern int noraa_location;
 extern bool debug_mode;
 extern bool packet_print;
 /*!

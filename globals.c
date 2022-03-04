@@ -66,7 +66,7 @@ bool quiet_exit = false;
 
 
 unsigned int total_conversations = -1;
-
+int noraa_location;
 struct spi_members spi_table[1024];
 
 int NORAA_MODE = 0xffff;
