@@ -37,7 +37,14 @@ void rulemgr(const struct rule_data * __rule_data){
       else if(temp_rule->flow == FLOW_OUTWARD) temp_rule->flow = FLOW_INWARD; 
     }
     if(((temp_rule->protocol == R_ALL) || ( __rule_data->__protocol == temp_rule->protocol))){
-      if(demo_mode || vigil_location == INTERNAL) rule_app(temp_rule,__rule_data);
+      if(demo_mode || vigil_location == INTERNAL){
+        if(vigil_location == INTERNAL){
+          if((temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
+                  (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port))){
+                    rule_app(temp_rule,__rule_data);
+          }
+        } 
+      }
 
       else if((temp_rule->flow == FLOW_EITHER || __rule_data->flow == temp_rule->flow)){
         // printf("%s: %d|%d <-----> %d|%d hellos\n",temp_rule->rulename,temp_rule->src_port,temp_rule->dest_port,__rule_data->src_port,__rule_data->dest_port);
@@ -52,8 +59,11 @@ void rulemgr(const struct rule_data * __rule_data){
 
           }
           else if((temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
-                  (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port)))
-            rule_app(temp_rule,__rule_data);
+                  (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port))){
+                    rule_app(temp_rule,__rule_data);
+                    
+                  }
+            
 
         }
       }
