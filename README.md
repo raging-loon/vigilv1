@@ -1,6 +1,6 @@
 <!--[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/raging-loon/NPSI.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/raging-loon/NPSI/context:cpp) -->
 # Vigil
-Vigil IDS
+Vigil IDS: This branch is used for testing only
 ## Requirements
 Runs well on Debian based linux distributions
 Requires the following to run:
