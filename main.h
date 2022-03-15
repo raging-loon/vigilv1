@@ -22,12 +22,12 @@
 
 
 
-#ifndef __MAIN_NORAA_H
-#define __MAIN_NORAA_H
+#ifndef __MAIN_VIGIL_H
+#define __MAIN_VIGIL_H
 
 int main(int, char **);
 
 void sigint_processor(int);
 static void print_help_and_exit();
 
-#endif /* __MAIN_NORAA_H */
+#endif /* __MAIN_VIGIL_H */

@@ -1,2 +1,2 @@
-rm noraa.exe.stable
-cp noraa.exe noraa.exe.stable
+rm vigil.exe.stable
+cp vigil.exe vigil.exe.stable

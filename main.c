@@ -88,17 +88,17 @@ int main(int argc, char **argv){
   signal(SIGINT,sigint_processor);
   signal(SIGSEGV,sigint_processor);  
   // char * ip_addr = "";
-  deny_conf_parser("/etc/noraa/deny.conf");
-  printf("Finsished loading explicit deny file(/etc/noraa/deny.conf)\n");
+  deny_conf_parser("/etc/vigil/deny.conf");
+  printf("Finsished loading explicit deny file(/etc/vigil/deny.conf)\n");
   spi_max = 100;
   if(load_csv_arp_cache() != -1) printf("Finished loading CSV arp cache\n");
   else printf("Failed to load CSV arp cache(non critical error)\n");
   
-  rule_library_parser("/etc/noraa/noraa.conf");
+  rule_library_parser("/etc/vigil/vigil.conf");
   printf("Parsed rule files\n");
   rule_processor();
   
-  printf("NORAA listening on interface %s\n",iface_name);
+  printf("VIGIL listening on interface %s\n",iface_name);
   pcap_t *pcap_mgr;
   
   char pkt_buffer[2046] = {0};
@@ -137,9 +137,9 @@ void sigint_processor(int signal){
     }
     
   }
-  FILE * fp = fopen("/usr/share/noraa/arpcache.csv","w");
+  FILE * fp = fopen("/usr/share/vigil/arpcache.csv","w");
   if(fp == NULL){
-    printf("Cannot open /usr/share/noraa/arpcache.csv: printing arpcache to screen\n");
+    printf("Cannot open /usr/share/vigil/arpcache.csv: printing arpcache to screen\n");
     fclose(fp);
     for(int i = 0; i < arp_entries + 1; i++){
       printf("%s -> %s\n",arpcache[i].ip_addr, arpcache[i].mac_addr);
@@ -161,7 +161,7 @@ void sigint_processor(int signal){
 
 
 static void print_help_and_exit(){
-  printf("NORAA UTM %s\n"
+  printf("VIGIL UTM %s\n"
          "\t-d: debug mode\n"
          "\t-h: display this message\n"
          "\t-i <iface>: set the interface to listen on\n"

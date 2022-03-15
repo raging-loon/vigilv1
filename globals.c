@@ -53,9 +53,9 @@ struct arp_entry arpcache[255];
 char ip_addr[32];
 bool debug_mode;
 // default files
-char * default_config = "/etc/noraa/noraa.conf";
-char * def_log_file = "/var/log/noraa/siglog.log";
-char * default_host_conf = "/etc/noraa/hosts.conf";
+char * default_config = "/etc/vigil/vigil.conf";
+char * def_log_file = "/var/log/vigil/siglog.log";
+char * default_host_conf = "/etc/vigil/hosts.conf";
 
 bool use_sqlite;
 char sqlite_db_path[32];
@@ -66,10 +66,10 @@ bool quiet_exit = false;
 
 
 unsigned int total_conversations = -1;
-int noraa_location;
+int vigil_location;
 struct spi_members spi_table[1024];
 
-int NORAA_MODE = 0xffff;
+int VIGIL_MODE = 0xffff;
 char input_adapter[10];
 char output_adapter[10];
 char local_ip[18];

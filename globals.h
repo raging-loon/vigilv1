@@ -51,7 +51,7 @@ extern int num_rules;
 extern pthread_t threads[64];
 extern int thread_count;
 //! @brief Determines whether the program is running in IDS or IPS mode
-extern int noraa_mode;
+extern int vigil_mode;
 extern bool demo_mode;
 //! @brief default is /etc/npsi/npsi.conf
 extern char * default_config;
@@ -60,7 +60,7 @@ extern char * def_log_file;
 //! @todo expand on this
 extern char * default_host_conf;
 
-extern int noraa_location;
+extern int vigil_location;
 extern bool debug_mode;
 extern bool packet_print;
 /*!
@@ -102,7 +102,7 @@ extern struct spi_members spi_table[1024];
 
 extern char input_adapter[10];
 extern char output_adapter[10];
-extern int NORAA_MODE;
+extern int VIGIL_MODE;
 extern char local_ip[18];
 extern char def_gw[18];
 
