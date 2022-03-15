@@ -17,7 +17,7 @@
 
 from hashlib import sha512
 username = input("Username: ").strip("\n")
-file = open("/etc/noraa/passwd","r")
+file = open("/etc/vigil/passwd","r")
 for line in file:
   if(line.split(":")[0] == username):
     print("User already exists")
@@ -28,7 +28,7 @@ if(pwr!= repass):
   print("Passwords do not match")
   exit(-1)
 file.close()
-appendfile = open("/etc/noraa/passwd","a")
+appendfile = open("/etc/vigil/passwd","a")
 __hash = sha512(pwr.encode()).hexdigest();
 ph = "{}:{}\n".format(username,__hash) # lgtm [py/clear-text-storage-sensitive-data]
 

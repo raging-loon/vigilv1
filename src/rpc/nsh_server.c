@@ -98,7 +98,7 @@ static bool nsh_do_login(int fd,const char * rhost){
 	char username[32];
 	char password[32];
 	char * passwd_ptr;
-	send(fd,"NORAA Login Shell\r\n",19,0);
+	send(fd,"VIGIL Login Shell\r\n",19,0);
 	
 	send(fd,"Username: ",11,0);
 	len_read = read(fd,username,16);
@@ -108,7 +108,7 @@ static bool nsh_do_login(int fd,const char * rhost){
 	rnstrip((char *)&password);
 	passwd_ptr = &password;
 	// printf("%s:%s\n",username,password);
-	FILE * fp = fopen("/etc/noraa/passwd","r");
+	FILE * fp = fopen("/etc/vigil/passwd","r");
 	if(fp == NULL){
 		printf("Failed to open password file\n");
 		return false;
@@ -160,7 +160,7 @@ static bool nsh_do_login(int fd,const char * rhost){
 		printf("%s\n",real_hash);
 
 		if(strncmp(real_hash,temp_password,64) == 0){
-			FILE * loginfp = fopen("/var/log/noraa/login.log","a");
+			FILE * loginfp = fopen("/var/log/vigil/login.log","a");
 			
 			char logmessage[128];
 			sprintf(logmessage,"Successful login for %s at %s from %s\n",username,nowtime,rhost);
@@ -171,7 +171,7 @@ static bool nsh_do_login(int fd,const char * rhost){
 			return true;
 		}
 	}
-	FILE * loginfp = fopen("/var/log/noraa/login.log","a");
+	FILE * loginfp = fopen("/var/log/vigil/login.log","a");
 	char logmessage[128];
 	sprintf(logmessage,"Failed login for %s at %s from %s\n",username,nowtime,rhost);
 	fputs(logmessage,loginfp);

@@ -53,7 +53,7 @@ int compare_mac_entry(char * mac1,char * mac2){
 
 
 int load_csv_arp_cache(){
-  FILE * fp = fopen("/usr/share/noraa/arpcache.csv","r");
+  FILE * fp = fopen("/usr/share/vigil/arpcache.csv","r");
   if(fp == NULL){
     printf("Could not load arp cache from database, file nonexistant\n");
     fclose(fp);

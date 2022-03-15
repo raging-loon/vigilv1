@@ -39,7 +39,7 @@ static void get_action(const char * , struct rule *);
   @purpose Parse <i>stuff</i>
 
   void rule_library_parser(const char * alt_file);
-    ==> Parse the configuration file located in /noraa.conf(github) or /etc/noraa/noraa.conf(live system)
+    ==> Parse the configuration file located in /vigil.conf(github) or /etc/vigil/vigil.conf(live system)
     Global variables in /globals.c are declared here.
     Rules are parsed here, any line starting with a '$' is treated like a file containing rules.
     They are passed to rule_parser
@@ -140,12 +140,12 @@ void rule_library_parser(const char * alt_file){
       livedebug("mode: %s",line + 5);
       printf("Running in ");
       if(strncmp(line+5,"2",1) == 0){
-        NORAA_MODE = IPS_ACTIVE;
+        VIGIL_MODE = IPS_ACTIVE;
         printf("IPS mode as per config\n");
       } else {
         // default to ids mode to minimize disruption if there was an mistake in the config
 
-        NORAA_MODE = IDS_PASSIVE;
+        VIGIL_MODE = IDS_PASSIVE;
         printf("IDS mode as per config\n");
       }
 
@@ -172,8 +172,8 @@ void rule_library_parser(const char * alt_file){
     }
     else if(strncmp(line,"location=",9) == 0){
       rstrip(line);
-      if(strcmp(line + 9, "external") == 0) noraa_location = EXTERNAL;
-      else noraa_location = INTERNAL;
+      if(strcmp(line + 9, "external") == 0) vigil_location = EXTERNAL;
+      else vigil_location = INTERNAL;
     }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);
@@ -181,8 +181,8 @@ void rule_library_parser(const char * alt_file){
     }
     memset(line,0,sizeof(line)); 
   }
-  if(NORAA_MODE == 0xffff){
-    NORAA_MODE = IDS_PASSIVE;
+  if(VIGIL_MODE == 0xffff){
+    VIGIL_MODE = IDS_PASSIVE;
   }
 }
 static bool is_rule(const char * line){
