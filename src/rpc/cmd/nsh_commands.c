@@ -106,3 +106,16 @@ void get_arp_cache(int * fd){
   strcat(message_buffer,"\r\n");
   send(*fd,message_buffer,strlen(message_buffer),0);
 }
+
+
+void set_spi_max(int fd, char * spi){
+  memset(&message_buffer,0,sizeof(message_buffer));
+  sprintf(message_buffer,"Current SPI Max: %d",spi_max);
+  if(strlen(spi) < 2){
+    strcat(message_buffer,"SPI Number too short or is not a number\n");
+  } else {
+    spi_max = atoi(spi);
+    sprintf(message_buffer + strlen(message_buffer),"\nNew SPI Max: %d\r\n",spi_max);
+  }
+  send(fd,message_buffer,strlen(message_buffer),0);   
+}

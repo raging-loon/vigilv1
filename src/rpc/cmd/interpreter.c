@@ -6,6 +6,12 @@
 #include "helpmsgs.h"
 #include "nsh_commands.h"
 #include "../../../globals.h"
+
+static void vsh_set_int(int fd, const char * sub_cmd){
+  if(strncmp(sub_cmd + 3,"spimax",6) == 0){
+    set_spi_max(fd,sub_cmd + 9);
+  }
+}
 void nsh_cmd_interpret(const char * input, int fd){
   // rnstrip(input);
   if(strcmp(input,"test_echo") == 0){
@@ -64,7 +70,9 @@ void nsh_cmd_interpret(const char * input, int fd){
     } 
     
   }
-
+  else if(strncmp(input,"set",3) == 0){
+    vsh_set_int(fd, input + 3);
+  }
   else {
     int len = 28 + strlen(input);
     // error: command not found: %s\r\n
