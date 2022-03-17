@@ -110,7 +110,7 @@ void get_arp_cache(int * fd){
 
 void set_spi_max(int fd, char * spi){
   memset(&message_buffer,0,sizeof(message_buffer));
-  sprintf(message_buffer,"Current SPI Max: %d",spi_max);
+  sprintf(message_buffer,"Current SPI Max: %d\n",spi_max);
   if(strlen(spi) < 2){
     strcat(message_buffer,"SPI Number too short or is not a number\n");
   } else {

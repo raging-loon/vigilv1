@@ -8,8 +8,8 @@
 #include "../../../globals.h"
 
 static void vsh_set_int(int fd, const char * sub_cmd){
-  if(strncmp(sub_cmd + 3,"spimax",6) == 0){
-    set_spi_max(fd,sub_cmd + 9);
+  if(strncmp(sub_cmd,"spimax",6) == 0){
+    set_spi_max(fd,sub_cmd + 6);
   }
 }
 void nsh_cmd_interpret(const char * input, int fd){
@@ -71,7 +71,7 @@ void nsh_cmd_interpret(const char * input, int fd){
     
   }
   else if(strncmp(input,"set",3) == 0){
-    vsh_set_int(fd, input + 3);
+    vsh_set_int(fd, input + 4);
   }
   else {
     int len = 28 + strlen(input);
