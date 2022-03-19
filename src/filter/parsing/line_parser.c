@@ -137,7 +137,7 @@ void line_parser(const char * line){
       left = right;
     
     
-    } else if(delimit(line[right]) && left != right || (right == len && left != right)){
+    } else if(delimit(line[right]) && (left != right) || (right == len && left != right)){
       char * sub = substr(line, left, right -1);
       entry:
       
