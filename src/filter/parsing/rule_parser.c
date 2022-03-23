@@ -158,7 +158,11 @@ void rule_library_parser(const char * alt_file){
       strcpy(def_gw,line + 6);
     }
     else if(strncmp(line,"use_spi=",8)  == 0){
-      if(strcmp(line + 6,"YES") == 0) use_spi = true;
+      if(strcmp(line + 8,"YES") == 0){
+        use_spi = true;
+        printf("VIGIL SPI service active\n");
+      } 
+      
       else use_spi = false;
     }
     else if(strncmp(line,"HOME_NET=",9) == 0){
