@@ -20,6 +20,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 #include <stdint.h>
+#include <stdbool.h>
 
 /* x = src
    y = dest
@@ -48,5 +49,6 @@ int strloc(const char *  haystack,const char needle);
 void cb_get_formatted_time(char * );
 
 void fail(const char * , const char *);
-
+bool char_is_printable(const char );
+bool test_string_arr_print(const char * );
 #endif /* UTILS_H */

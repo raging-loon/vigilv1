@@ -75,7 +75,7 @@ void rulemgr(const struct rule_data * __rule_data){
 
 
 bool r_engine(const struct rule * r, const struct rule_data * rdata){
-  if(debug_mode) printf("in r_engine\n");
+  // if(debug_mode) printf("in r_engine\n");
   if(rdata->__protocol == R_ICMP){
     if(r->icmp_data.codeset){
       if(rdata->icmp_header->code != r->icmp_data.code) return false;
@@ -92,7 +92,6 @@ bool r_engine(const struct rule * r, const struct rule_data * rdata){
   } 
   else if(rdata->__protocol == R_TCP){
     if(r->tcp_data.ackset){
-      // printf("%ld | %d\n", ntohl(rdata->tcp_header->ack_seq), ntohl(r->tcp_data.ack));
       if(ntohl(rdata->tcp_header->ack_seq) != r->tcp_data.ack) return false;
     }
     if(r->tcp_data.flagset){

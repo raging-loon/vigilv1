@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <uchar.h>
+#include <stdbool.h>
 #include <time.h>
 static __thread unsigned char buffer[128];
 
@@ -110,4 +111,18 @@ int strloc(const char * haystack,const char needle){
 
 void fail(const char * modname, const char * msg){
   printf("%s: %s\n",modname,msg);
+}
+
+
+bool char_is_printable(const char c){
+  //                                      v test and maybe remove
+  if(c < 32 && c > 127 || c == '\x20' || c == '\0') return false;
+  return true;
+}
+
+bool test_string_arr_print(const char * str){
+  for(int i = 0; i < strlen(str); i++){
+    if(!char_is_printable(str[i])) return false;
+  }
+  return true;
 }
