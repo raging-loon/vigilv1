@@ -2,8 +2,6 @@
 #define IP6_HDR_H
 #include <stdint.h>
 struct ip6hdr{
-  // unsigned int version:             8;
-  // unsigned int misc_info:           32;
   unsigned int version:             4;
   unsigned int t_class:             8;
   unsigned int flow_label:          20;
