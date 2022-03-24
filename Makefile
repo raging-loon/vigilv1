@@ -10,6 +10,9 @@ main.o:
 	$(CC) $(CFLAGS) -c main.c 
 ip_addr_stat.o:
 	$(CC) $(CFLAGS) -c src/statistics/ip_addr_stat.c  
+tcp_chksum.o:
+	$(CC) $(CFLAGS) -c src/engine/checksum/tcp_chksum.c
+
 igmp_dsct.o:
 	$(CC) $(CFLAGS) -c src/capture/protocols/igmp_dsct.c 
 icmpdsct.o:
@@ -93,7 +96,7 @@ vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			interpreter.o nsh_commands.o watchlist.o wclean.o arpcache.o \
 			update_db.o http_disect.o dns_disect.o ftp-disect.o  debug.o\
 			forward.o spi.o logging.o line_parser.o rule_init.o dp_size.o \
-			homenet.o
+			homenet.o tcp_chksum.o
 
 			
 	$(CC) -o vigil.exe $^ -l pcap -l pthread -l ssl -l crypto -l sqlite3

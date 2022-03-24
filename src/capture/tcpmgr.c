@@ -41,6 +41,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
+#include "../engine/checksum/tcp_chksum.h"
 #include <time.h>
 
 /*
@@ -95,6 +96,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   
 
   } 
+  
   if((uint16_t)ntohs(tcp_hdr->ack) != 0){
     if(packet_print) printf("%s ACK ",__TCP_ACK);
     ack_set = true;
@@ -137,6 +139,11 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
     printf("%s",__TCP_COLOR_NS);
     printf("]\n");
     printf("%s",__END_COLOR_STREAM);
+  }
+  if(tcp_check_sum_passed(tcp_hdr,sizeof(tcp_hdr))){
+    printf("Checksum passed\n");
+  } else {
+    printf("Invalid checksum\n");
   }
   if(flags_set > 3 || flags_set == 0){
     printf("%sSuspicious TCP Packet encoutered: %s:%d -> %s:%d, %d flags%s\n",
