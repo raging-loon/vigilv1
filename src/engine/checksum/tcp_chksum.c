@@ -25,7 +25,7 @@ bool tcp_check_sum_passed(struct ip_hdr * ip_header, struct __tcp * tcp_hdr){
   while(tcp_len > 1){
     sum += *(unsigned char*)tcp_hdr++;
     tcp_len -= 2;
-  }
+  } 
   if(tcp_len > 0){
     // padding
     sum += ((*(unsigned char*)tcp_hdr));// & htons(0xffff));
@@ -33,8 +33,8 @@ bool tcp_check_sum_passed(struct ip_hdr * ip_header, struct __tcp * tcp_hdr){
   while(sum >> 16){
     sum = (sum & 0xffff) + (sum >> 16);
   }
-  sum += (sum >> 16);
-  sum = ~sum;
+  // sum += (sum >> 16);
+  sum = ~sum & 0xffff;
   tcp_hdr->check = recv_chksum;
   printf("%02x -- %02x\n",ntohs(sum),ntohs(tcp_hdr->check));
 
