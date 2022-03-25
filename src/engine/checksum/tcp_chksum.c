@@ -7,12 +7,13 @@
 #include <string.h>
 #include <arpa/inet.h>
 bool tcp_check_sum_passed(struct ip_hdr * ip_header, struct __tcp * tcp_hdr){
-  unsigned long sum = 0;
+  register unsigned long sum = 0;
   unsigned short tcp_len = ntohs(ip_header->tot_len) - (ip_header->ihl<<2); 
   // struct __tcp * tcp_hdr= (struct __tcp *)ippayload;
   const unsigned long recv_chksum = tcp_hdr->check;
 
   unsigned short * ippayload = (unsigned short *)&tcp_hdr;
+  /* adding psuedo header */
   sum += (ip_header->saddr >> 16) & 0xffff;
   sum += (ip_header->saddr) & 0xffff;
   sum += (ip_header->daddr >> 16) & 0xffff;
@@ -22,16 +23,17 @@ bool tcp_check_sum_passed(struct ip_hdr * ip_header, struct __tcp * tcp_hdr){
 
   tcp_hdr->check = 0x0000;
   while(tcp_len > 1){
-    sum += *ippayload++;
+    sum += *(unsigned char*)tcp_hdr++;
     tcp_len -= 2;
   }
   if(tcp_len > 0){
     // padding
-    sum += ((*ippayload)&htons(0xffff));
+    sum += ((*(unsigned char*)tcp_hdr));// & htons(0xffff));
   }
   while(sum >> 16){
     sum = (sum & 0xffff) + (sum >> 16);
   }
+  sum += (sum >> 16);
   sum = ~sum;
   tcp_hdr->check = recv_chksum;
   printf("%02x -- %02x\n",ntohs(sum),ntohs(tcp_hdr->check));
