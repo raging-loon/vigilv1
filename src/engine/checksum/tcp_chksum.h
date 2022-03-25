@@ -3,7 +3,7 @@
 #include "../../packets/tcp.h"
 #include "../../packets/ip_hdr.h"
 #include <stdbool.h>
-bool tcp_check_sum_passed(struct ip_hdr *, unsigned short *tcp_hdr);
+bool tcp_check_sum_passed(struct ip_hdr *, struct __tcp *tcp_hdr);
 
 
 #endif /* TCP_CHKSUM_H */

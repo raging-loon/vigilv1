@@ -140,7 +140,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
     printf("]\n");
     printf("%s",__END_COLOR_STREAM);
   }
-
+  printf("%02d\n");
   if(tcp_check_sum_passed(rdata->ip_header,tcp_hdr)){
     printf("Checksum passed\n");
   } else {
