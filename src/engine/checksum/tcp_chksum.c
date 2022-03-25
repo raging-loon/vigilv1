@@ -1,29 +1,40 @@
 #include "tcp_chksum.h"
 #include "../../packets/tcp.h"
+#include "../../packets/ip_hdr.h"
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <arpa/inet.h>
+bool tcp_check_sum_passed(struct ip_hdr * ip_header, unsigned short *ippayload){
+  unsigned long sum = 0;
+  unsigned short tcp_len = ntohs(ip_header->tot_len) - (ip_header->ihl<<2); 
+  struct __tcp * tcp_hdr= (struct __tcp *)ippayload;
+  unsigned long recv_chksum= 0x0000;
+  recv_chksum = tcp_hdr->check;
+  sum += (ip_header->saddr >> 16) & 0xffff;
+  sum += (ip_header->saddr) & 0xffff;
+  sum += (ip_header->daddr >> 16) & 0xffff;
+  sum += (ip_header->daddr) & 0xffff;
+  sum += htons(IPPROTO_TCP);
+  sum += htons(tcp_len);
 
-bool tcp_check_sum_passed(struct __tcp * tcp_hdr, int size){
-  uint16_t sent_checksum = tcp_hdr->check;
+  tcp_hdr->check = 0x0000;
+  while(tcp_len > 1){
+    sum += *ippayload++;
+    tcp_len -= 2;
+  }
+  if(tcp_len > 0){
+    // padding
+    sum += ((*ippayload)&htons(0xffff));
+  }
+  while(sum >> 16){
+    sum = (sum & 0xffff) + (sum >> 16);
+  }
+  sum = ~sum;
+  printf("%02x -- %02x\n",ntohs(sum),ntohs(recv_chksum));
+
+  if(ntohs(sum) == ntohs(recv_chksum)) return true;
+  return false;
   
-  uint16_t calc_cksum = 0;
-  struct __tcp temp_tcp = *tcp_hdr;
-  memset(temp_tcp.check,0,sizeof(temp_tcp.check));
-  const uint16_t * raw_chk = (const uint16_t*)&temp_tcp;
-
-  while(size > 1){
-    calc_cksum += *raw_chk++;
-    size -= sizeof(uint16_t);
-  }
-  if(size)
-    calc_cksum += *(uint16_t*)raw_chk;
-
-  calc_cksum = (calc_cksum >> 16) + (calc_cksum & 0xffff);
-  calc_cksum += (calc_cksum >> 16);
-  printf("%02x --- %02x\n",raw_chk,calc_cksum);
-  if(sent_checksum != calc_cksum){
-    return false;
-  }
-  return true;
 }   
