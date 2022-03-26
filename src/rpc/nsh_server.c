@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Conner Macolley
+ * Copyright 2021-2022 Conner Macolley
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -106,7 +106,7 @@ static bool nsh_do_login(int fd,const char * rhost){
 	rnstrip((char *)&username);
 	len_read = read(fd,&password,16); //lgtm [cpp/cleartext-transmission]
 	rnstrip((char *)&password);
-	passwd_ptr = &password;
+	passwd_ptr = (char *)&password;
 	// printf("%s:%s\n",username,password);
 	FILE * fp = fopen("/etc/vigil/passwd","r");
 	if(fp == NULL){

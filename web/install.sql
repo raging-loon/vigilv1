@@ -1,11 +1,11 @@
--- created for MYSQL
+-- created for SQLITE
 
--- CREATE USER 'NORAA'@'localhost' IDENTIFIED BY 'Pa@@w0rD';
--- GRANT ALL PRIVILEGES ON * . * TO 'NORAA'@'localhost';
+-- CREATE USER 'VIGIL'@'localhost' IDENTIFIED BY 'Pa@@w0rD';
+-- GRANT ALL PRIVILEGES ON * . * TO 'VIGIL'@'localhost';
 -- FLUSH PRIVILEGES;
 
-CREATE DATABASE NORAA;
-USE NORAADB DATABASE;
+CREATE DATABASE VIGIL;
+USE VIGIL DATABASE;
 
 CREATE TABLE watchlist (
   ip_address varchar(20),
