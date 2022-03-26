@@ -100,7 +100,7 @@ void cb_get_formatted_time(char * time_buff){
 
 
 int strloc(const char * haystack,const char needle){
-  for(int i = 0; haystack[i] != NULL; i++){
+  for(int i = 0; haystack[i] != '\0'; i++){
     if(haystack[i] == needle){
       return i;
     }

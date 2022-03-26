@@ -1,24 +1,14 @@
-<!--[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/raging-loon/NPSI.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/raging-loon/NPSI/context:cpp) -->
+<!--[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/raging-loon/vigil.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/raging-loon/vigil/context:cpp) -->
 # Vigil
 Vigil IDS
 ## Requirements
 Runs well on Debian based linux distributions
 Requires the following to run:
- - With the web interface:
-   - gcc 
-   - make 
-   - libpcap-dev 
-   - php7.4-fpm 
-   - sqlite3
-   - libsqlite3-dev
-   - any web server
-   - php7.4-sqlite3
- - Without web interface: 
-   - gcc 
-   - make 
-   - libpcap-dev
-   - sqlite3
-   - libsqlite3-dev
+  - gcc 
+  - make 
+  - libpcap-dev
+  - sqlite3
+  - libsqlite3-dev
 
 Recommened stats for machine running:
  - Recommended 8GB RAM, minimum of 4GB
@@ -42,7 +32,7 @@ Please note that the database comes preconfigured and empty with the package. It
  - [x] Add monitoring for some layer 3 protocols for IPv4
  - [ ] Add the above for IPv6
  - [ ] Add traffic size monitoring
- - [ ] Add a background logging function[s]
+ - [x] Add a background logging function[s]
  - [x] Come up with some configuration options
  - [ ] Better plan monitoring of hosts on the intranet
  - [x] Set up hexadecimal printing of packet data
@@ -56,8 +46,9 @@ Please note that the database comes preconfigured and empty with the package. It
  - [ ] Figure out email alerts
  - [x] Add everything from the ip_stats struct to the watchlist_member struct
  - [ ] Figure out the brute force stuff
+ - [ ] Add IP/IP6/TCP/UDP Checksum Algorithms
  - [x] Add arp cache and monitoring for it
- - [ ] Add internal and external mode
+ - [x] Add internal and external mode
 
 ## Todo
 - [ ] Add ports for rules
