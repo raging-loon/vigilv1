@@ -1,11 +1,5 @@
-/*!
- * @file globals.c
- * @author Conner Macolley
- * @brief Define global variables
- * @section LICENSE
- * 
- *
- * Copyright 2021 Conner Macolley
+/*
+ * Copyright 2021-2022 Conner Macolley
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,9 +12,6 @@
  *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
- *
- *  @section DESCRIPTION
- *  Define globals 
  */
 #include "globals.h"
 #include "src/statistics/watchlist.h"

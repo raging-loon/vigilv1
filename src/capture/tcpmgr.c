@@ -14,6 +14,7 @@
  *    limitations under the License.
  */
 
+#include "../engine/checksum/tcp_chksum.h"
 #include "../statistics/ip_addr_stat.h"
 #include "../statistics/ip_addr_stat.h"
 #include "../statistics/watchlist.h"
@@ -40,7 +41,6 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>
-#include "../engine/checksum/tcp_chksum.h"
 #include <time.h>
 
 /*
