@@ -116,7 +116,7 @@ void fail(const char * modname, const char * msg){
 
 bool char_is_printable(const char c){
   //                                      v test and maybe remove
-  if(c < 32 || c > 127 || c == '\x20' || c == '\0') return false;
+  if(c < 32 || c > 127) return false;
   return true;
 }
 
