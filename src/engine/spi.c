@@ -14,7 +14,7 @@
 #include "../../globals.h"
 spi_info * conversation_exists(struct rule_data * rdata){
   
-  spi_info info;
+  spi_info * info;
   if(use_spi){  
     // printf("%s:%d -> %s:%d | ",rdata->src_ip_addr,rdata->src_port, rdata->dest_ip_addr,rdata->dest_port);
     for(int i = 0 ; i < total_conversations + 1; ++i){
@@ -25,24 +25,24 @@ spi_info * conversation_exists(struct rule_data * rdata){
         if(rdata->dest_port == sm->cli_port && rdata->src_port == sm->serv_port){
           // printf("src\n");
           if(strcmp(rdata->src_ip_addr, sm->server_addr.netaddr) == 0 && strcmp(rdata->dest_ip_addr,sm->client_addr.netaddr) == 0){
-            info.direction = DIR_SERVER_TO_CLIENT;
-            info.table_location = i;
-            return &info;
+            info->direction = DIR_SERVER_TO_CLIENT;
+            info->table_location = i;
+            return info;
           }
         }
         else if(rdata->src_port == sm->cli_port && rdata->dest_port == sm->serv_port){
           // printf("dest\n");
           if(strcmp(rdata->src_ip_addr, sm->client_addr.netaddr) == 0 && strcmp(rdata->dest_ip_addr,sm->server_addr.netaddr) == 0){
-            info.direction = DIR_CLIENT_TO_SERVER;
-            info.table_location = i;
-            return &info;
+            info->direction = DIR_CLIENT_TO_SERVER;
+            info->table_location = i;
+            return info;
           }
         }
       }
     }  
   }
-  info.table_location = -1;
-  return &info;
+  info->table_location = -1;
+  return info;
 }
 
 

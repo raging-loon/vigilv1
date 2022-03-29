@@ -20,6 +20,7 @@
 int main(int, char **);
 
 void sigint_processor(int);
+void crash_handler(int);
 static void print_help_and_exit();
 
 #endif /* __MAIN_VIGIL_H */

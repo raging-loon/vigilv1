@@ -87,7 +87,7 @@ int main(int argc, char **argv){
   }
   
   signal(SIGINT,sigint_processor);
-  signal(SIGSEGV,sigint_processor);  
+  signal(SIGSEGV,crash_handler);  
   // char * ip_addr = "";
   deny_conf_parser("/etc/vigil/deny.conf");
   printf("Finsished loading explicit deny file(/etc/vigil/deny.conf)\n");
@@ -169,4 +169,26 @@ static void print_help_and_exit(){
          "\t-p print packets\n"
          "\t-q exit quietly\n",VERSION);
   exit(EXIT_SUCCESS);
+}
+
+
+void crash_handler(int signal){
+  printf("Segmentation fault at %s: application crashed\n",get_formated_time());
+  /*
+  unsigned int * r_rax;
+  unsigned int * r_rdx;
+  unsigned int * r_rbx;
+  unsigned int * r_rcx;
+  
+  asm volatile("movq %%rax,%0\n" : "=r"(r_rax));
+  asm volatile("movq %%rbx,%0\n" : "=r"(r_rbx));
+  asm volatile("movq $1, (%rdx)\n");
+  asm volatile("movq %%rcx,%0\n" : "=r"(r_rcx));
+  asm volatile("movq %%rdx,%0\n" : "=r"(r_rdx));
+  printf("RAX: %ls\n",r_rax);
+  printf("RBX: %ls\n",r_rbx);
+  printf("RCX: %ls\n",r_rcx);
+  printf("RDX: %ls\n",r_rdx);
+  */
+  exit(EXIT_FAILURE); 
 }
