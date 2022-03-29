@@ -60,7 +60,7 @@ typedef struct{
 
 
 
-spi_info conversation_exists(struct rule_data *);
+spi_info* conversation_exists(struct rule_data *);
 
 void add_new_conversation(struct rule_data *);
 

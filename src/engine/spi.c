@@ -12,7 +12,7 @@
 #include <pthread.h>
 #include <string.h>
 #include "../../globals.h"
-spi_info conversation_exists(struct rule_data * rdata){
+spi_info * conversation_exists(struct rule_data * rdata){
   
   spi_info info;
   if(use_spi){  
@@ -27,7 +27,7 @@ spi_info conversation_exists(struct rule_data * rdata){
           if(strcmp(rdata->src_ip_addr, sm->server_addr.netaddr) == 0 && strcmp(rdata->dest_ip_addr,sm->client_addr.netaddr) == 0){
             info.direction = DIR_SERVER_TO_CLIENT;
             info.table_location = i;
-            return info;
+            return &info;
           }
         }
         else if(rdata->src_port == sm->cli_port && rdata->dest_port == sm->serv_port){
@@ -35,14 +35,14 @@ spi_info conversation_exists(struct rule_data * rdata){
           if(strcmp(rdata->src_ip_addr, sm->client_addr.netaddr) == 0 && strcmp(rdata->dest_ip_addr,sm->server_addr.netaddr) == 0){
             info.direction = DIR_CLIENT_TO_SERVER;
             info.table_location = i;
-            return info;
+            return &info;
           }
         }
       }
     }  
   }
   info.table_location = -1;
-  return info;
+  return &info;
 }
 
 
@@ -52,13 +52,13 @@ void add_new_conversation(struct rule_data * rdata){
   
     // int c_cache = total_conversations;
     int location;
-    spi_info info = conversation_exists(rdata);
-    if(info.table_location != -1){
+    spi_info * info = conversation_exists(rdata);
+    if(info->table_location != -1){
 
-      struct spi_members * sm = &spi_table[info.table_location];
+      struct spi_members * sm = &spi_table[info->table_location];
       sm->possible_retransmissions++;
       if(debug_mode) printf("SPI TABLE RETRAN %d: %s:%d -> %s:%d\n",
-                                    info.table_location,sm->client_addr.netaddr,
+                                    info->table_location,sm->client_addr.netaddr,
                                     sm->cli_port, sm->server_addr.netaddr,
                                     sm->serv_port);
     }
@@ -84,7 +84,7 @@ void add_new_conversation(struct rule_data * rdata){
     if(total_conversations == 1024){
       livedebug("SPI TABLE: ROLLING OVER\n");
       total_conversations = 0;
-      info.table_location = 0;  
+      info->table_location = 0;  
     }
     }
   }
@@ -94,9 +94,9 @@ void update_table(struct rule_data * rdata){
   if(use_spi){
 
   
-    spi_info info = conversation_exists(rdata);
-    if(info.table_location != -1){
-      struct spi_members * sm = &spi_table[info.table_location];
+    spi_info *info = conversation_exists(rdata);
+    if(info->table_location != -1){
+      struct spi_members * sm = &spi_table[info->table_location];
       if(sm->status == __TCP_ACK_W){
         sm->status = __TCP_ESTABLISHED;
         if(debug_mode) printf("SPI CONNECTION EST %d: %s:%d -> %s:%d %d\n",
@@ -110,12 +110,12 @@ void update_table(struct rule_data * rdata){
         if(sm->status == __TCP_FIN_INIT2){
           sm->status = __TCP_CLOSED_FIN;
           if(debug_mode) printf("SPI CONNECTION CLOSED %d: %s:%d -> %s:%d\n", 
-                    info.table_location,sm->client_addr.netaddr, sm->cli_port,
+                    info->table_location,sm->client_addr.netaddr, sm->cli_port,
                     sm->server_addr.netaddr, sm->serv_port);
         }
-        update_information(sm,&info);
+        update_information(sm,info);
       }
-      update_information(sm,&info);
+      update_information(sm,info);
     } else {
       printf("Suspect packet recv\n");
     } 
@@ -141,9 +141,9 @@ void spi_ud_thw(struct rule_data * rdata){
   if(use_spi){
 
   
-    spi_info info = conversation_exists(rdata);
-    if(info.table_location != -1){
-      struct spi_members * sm = &spi_table[info.table_location];
+    spi_info *info = conversation_exists(rdata);
+    if(info->table_location != -1){
+      struct spi_members * sm = &spi_table[info->table_location];
       if(sm->status == __TCP_INIT){
         sm->status = __TCP_ACK_W;
       } 
@@ -158,10 +158,10 @@ void end_connection(struct rule_data * rdata){
   if(use_spi){
 
   
-    spi_info info = conversation_exists(rdata);
-    if(info.table_location != -1){
-      struct spi_members * sm = &spi_table[info.table_location];
-      update_information(sm,&info);
+    spi_info * info = conversation_exists(rdata);
+    if(info->table_location != -1){
+      struct spi_members * sm = &spi_table[info->table_location];
+      update_information(sm,info);
       if(sm->status == __TCP_FIN_INIT) sm->status = __TCP_FIN_INIT2;
       else sm->status = __TCP_FIN_INIT;
     } else {
