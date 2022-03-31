@@ -25,8 +25,8 @@
 
 
 struct spi_members{
-  struct net_addr server_addr;
-  struct net_addr client_addr;
+  struct net_addr serv_addr;
+  struct net_addr cli_addr;
   unsigned int serv_port;
   unsigned int cli_port;
   int serv_packet_sent;
@@ -36,6 +36,7 @@ struct spi_members{
   int * cli_packet_sent; 
   int * cli_packet_recv; 
 
+  
 
   struct rule * srv_rules[32];
   struct rule * cli_rules[32];
@@ -45,7 +46,6 @@ struct spi_members{
   unsigned long start_time;
   unsigned long end_time;
   unsigned int total_packets;
-  unsigned int pps; 
   unsigned int protocol;
   unsigned int pps; /* Packets per second */
   int possible_retransmissions;
@@ -66,14 +66,14 @@ int conversation_exists(struct rule_data *);
 
 void add_new_conversation(struct rule_data *);
 
-void update_table(struct rule_data *);
+// void update_table(struct rule_data *);
 // void add_pkt_data(const struct spi_tcp_table *);
-void spi_ud_thw(struct rule_data *);
-
-void update_information(struct spi_members *, spi_info *);
-void table_roll_over();
-void end_connection(struct rule_data *);
-void * spi_scan();
+// void spi_ud_thw(struct rule_data *);
+// 
+// void update_information(struct spi_members *, spi_info *);
+// void table_roll_over();
+// void end_connection(struct rule_data *);
+// void * spi_scan();
 #endif /* SPI_H */
 
 
