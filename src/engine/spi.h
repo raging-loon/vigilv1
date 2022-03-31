@@ -8,12 +8,12 @@
 
 
 #define __TCP_LISTENING       240
-#define  __TCP_ESTABLISHED    241 
+#define  __TCP_ESTABLISHED    241 /* ACK - end of twh*/
 #define  __TCP_FINISHED       242      
-#define  __TCP_INIT           243
-#define  __TCP_ACK_W          244
-#define  __TCP_FIN_INIT       245
-#define  __TCP_FIN_INIT2      246
+#define  __TCP_INIT           243 /* SYN */
+#define  __TCP_ACK_W          244 /* SYN/ACK */
+#define  __TCP_FIN_INIT       245 /* FIN/ACK */
+#define  __TCP_FIN_INIT2      246 /* ACK */
 #define  __TCP_RST_COMP       247
 #define  __TCP_RST_INIT       248
 #define  __TCP_RST_INIT2      249
@@ -68,7 +68,7 @@ void add_new_conversation(struct rule_data *);
 
 // void update_table(struct rule_data *);
 // void add_pkt_data(const struct spi_tcp_table *);
-// void spi_ud_thw(struct rule_data *);
+void spi_ud_thw(struct rule_data *);
 // 
 // void update_information(struct spi_members *, spi_info *);
 // void table_roll_over();

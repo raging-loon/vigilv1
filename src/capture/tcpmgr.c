@@ -166,7 +166,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
     add_new_conversation(rdata);
   }
   else if(SYN_ACK_SET(syn_set,ack_set) && flags_set == 2){
-    // spi_ud_thw(rdata);
+    spi_ud_thw(rdata);
   }
   else if(ack_set && flags_set == 1){
     // update_table(rdata);

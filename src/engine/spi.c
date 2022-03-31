@@ -32,18 +32,29 @@ void add_new_conversation(struct rule_data * rdata){
       sm->possible_retransmissions++;
       printf("SPI TABLE RETRANS: %d: %s:%d -> %s:%d\n",loc,sm->cli_addr.netaddr,sm->cli_port,sm->serv_addr.netaddr,sm->serv_port);
     } else {
-      sm = &spi_table[++total_conversations];
-      memset(sm,0,sizeof(sm));
-      sm->conversation_active = true;
-      strcpy(sm->cli_addr.netaddr, rdata->src_ip_addr);
-      strcpy(sm->serv_addr.netaddr, rdata->dest_ip_addr);
-      sm->cli_port = rdata->src_port;
-      sm->serv_port = rdata->dest_port;
-      printf("SPI NEW CONV: %d: %s:%d -> %s:%d\n",total_conversations,sm->cli_addr.netaddr,sm->cli_port,sm->serv_addr.netaddr,sm->serv_port);
-      if(rdata->__protocol == R_TCP){
-        sm->status = __TCP_INIT;
-      }
+        sm = &spi_table[++total_conversations];
+        memset(sm,0,sizeof(sm));
+        sm->conversation_active = true;
+        strcpy(sm->cli_addr.netaddr, rdata->src_ip_addr);
+        strcpy(sm->serv_addr.netaddr, rdata->dest_ip_addr);
+        sm->cli_port = rdata->src_port;
+        sm->serv_port = rdata->dest_port;
+        printf("SPI NEW CONV: %d: %s:%d -> %s:%d\n",total_conversations,sm->cli_addr.netaddr,sm->cli_port,sm->serv_addr.netaddr,sm->serv_port);
+        if(rdata->__protocol == R_TCP){
+          sm->status = __TCP_INIT;
+        }
       
     }
+  }
+}
+
+
+void spi_ud_thw(struct rule_data * rdata){
+  int loc = conversation_exists(rdata);
+  if(loc != -1){
+
+    struct spi_members * sm = &spi_table[loc];
+    printf("SPI TWH 2/3: %d: %s:%d -> %s:%d\n",loc,rdata->src_ip_addr,rdata->src_port,rdata->dest_ip_addr,rdata->dest_port);
+    if(sm->status == __TCP_INIT) sm->status = __TCP_ACK_W;
   }
 }
