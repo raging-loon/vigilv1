@@ -48,6 +48,7 @@ struct spi_members{
   unsigned int pps; 
   unsigned int protocol;
   int possible_retransmissions;
+  bool conversation_active;
 };
 
 
@@ -60,7 +61,7 @@ typedef struct{
 
 
 
-spi_info* conversation_exists(struct rule_data *);
+int conversation_exists(struct rule_data *);
 
 void add_new_conversation(struct rule_data *);
 
