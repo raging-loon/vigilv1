@@ -36,7 +36,14 @@ void add_new_conversation(struct rule_data * rdata){
       memset(sm,0,sizeof(sm));
       sm->conversation_active = true;
       strcpy(sm->client_addr.netaddr, rdata->src_ip_addr);
-
+      strcpy(sm->server_addr.netaddr, rdata->dest_ip_addr);
+      sm->cli_port = rdata->src_port;
+      sm->serv_port = rdata->dest_port;
+      printf("SPI NEW CONV: %d: %s:%d -> %s:%d\n",loc,sm->client_addr.netaddr,sm->cli_port,sm->server_addr.netaddr,sm->serv_port);
+      if(rdata->__protocol == R_TCP){
+        sm->status = __TCP_INIT;
+      }
+      
     }
   }
 }

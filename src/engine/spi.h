@@ -47,6 +47,7 @@ struct spi_members{
   unsigned int total_packets;
   unsigned int pps; 
   unsigned int protocol;
+  unsigned int pps; /* Packets per second */
   int possible_retransmissions;
   bool conversation_active;
 };
