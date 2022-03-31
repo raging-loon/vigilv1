@@ -169,7 +169,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
     spi_ud_thw(rdata);
   }
   else if(ack_set && flags_set == 1){
-    // update_table(rdata);
+    update_table(rdata);
   }
   
   if(rst_set == true){

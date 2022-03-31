@@ -39,6 +39,8 @@ void add_new_conversation(struct rule_data * rdata){
         strcpy(sm->serv_addr.netaddr, rdata->dest_ip_addr);
         sm->cli_port = rdata->src_port;
         sm->serv_port = rdata->dest_port;
+        sm->data_pkt = 0;
+        sm->control_pkt = 0;
         printf("SPI NEW CONV: %d: %s:%d -> %s:%d\n",total_conversations,sm->cli_addr.netaddr,sm->cli_port,sm->serv_addr.netaddr,sm->serv_port);
         if(rdata->__protocol == R_TCP){
           sm->status = __TCP_INIT;
@@ -56,5 +58,22 @@ void spi_ud_thw(struct rule_data * rdata){
     struct spi_members * sm = &spi_table[loc];
     printf("SPI TWH 2/3: %d: %s:%d -> %s:%d\n",loc,rdata->src_ip_addr,rdata->src_port,rdata->dest_ip_addr,rdata->dest_port);
     if(sm->status == __TCP_INIT) sm->status = __TCP_ACK_W;
+  }
+}
+
+/* Handles packets with ACK as the only flag set */
+void update_table(struct rule_data * rdata){
+  int loc = conversation_exists(rdata);
+  if(loc != -1){
+    struct spi_members * sm = &spi_table[loc];
+    if(sm->status == __TCP_ACK_W){
+      sm->status = __TCP_ESTABLISHED;
+      printf("SPI ENTRY: %d: SESSION EST: %s:%d -> %s:%d\n",
+        loc,
+        rdata->src_ip_addr,
+        rdata->src_port,
+        rdata->dest_ip_addr,
+        rdata->dest_port);
+    }
   }
 }

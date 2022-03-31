@@ -36,7 +36,7 @@ struct spi_members{
   int * cli_packet_sent; 
   int * cli_packet_recv; 
 
-  
+  unsigned int data_pkt, control_pkt;
 
   struct rule * srv_rules[32];
   struct rule * cli_rules[32];
