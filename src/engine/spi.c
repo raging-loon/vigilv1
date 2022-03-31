@@ -34,7 +34,9 @@ void add_new_conversation(struct rule_data * rdata){
     } else {
       sm = &spi_table[++total_conversations];
       memset(sm,0,sizeof(sm));
-      
+      sm->conversation_active = true;
+      strcpy(sm->client_addr.netaddr, rdata->src_ip_addr);
+
     }
   }
 }
