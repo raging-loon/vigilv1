@@ -34,11 +34,13 @@
 #include <time.h>
 #include "src/filter/parsing/rule_init.h"
 #include "src/debug.h"
+#include "src/lua/lua_engine.h"
 
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   printf("\033[01mStand with Ukraine!\033[0m\n");
   is_running = 1;
+  run_hello_script();
   last_clean_time = (unsigned long)time(NULL);
   if(argc == 1){
     print_help_and_exit();
