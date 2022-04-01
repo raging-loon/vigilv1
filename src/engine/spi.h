@@ -66,7 +66,7 @@ int conversation_exists(struct rule_data *);
 
 void add_new_conversation(struct rule_data *);
 
-// void update_table(struct rule_data *);
+void update_table(struct rule_data *);
 // void add_pkt_data(const struct spi_tcp_table *);
 void spi_ud_thw(struct rule_data *);
 // 

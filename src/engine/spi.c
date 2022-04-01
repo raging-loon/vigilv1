@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "../../globals.h"
 
 int conversation_exists(struct rule_data * rdata){
