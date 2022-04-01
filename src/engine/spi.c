@@ -37,6 +37,12 @@ int conversation_exists(struct rule_data * rdata){
   return -1;
 }
 
+static int get_new_spi_location(){
+  for(int i = 0; i < total_conversations - 1; ++i){
+    if(spi_table[i].conversation_active == false) return i;
+  }
+  return total_conversations++;
+}
 
 void add_new_conversation(struct rule_data * rdata){
   if(use_spi){
