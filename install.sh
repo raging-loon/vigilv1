@@ -1,5 +1,4 @@
 # the installation file for the UTM 
-# the installation for the NSHclient is located in src/nshclient/
 apt install libpcap-dev libssl-dev
 mkdir /usr/share/vigil
 mkdir /usr/share/vigil/rules
@@ -17,3 +16,6 @@ chmod +x src/scripts/nsh*
 cp src/scripts/nsh* /bin
 touch /var/log/vigil/login.log
 touch /var/log/vigil/fail.log
+
+mkdir /usr/share/vigil/scripts/
+cp src/lua/scripts/* /usr/share/vigil/scripts/
