@@ -1,3 +1,18 @@
+/*
+ * Copyright 2021-2022 Conner Macolley
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -75,6 +90,43 @@ void update_table(struct rule_data * rdata){
         rdata->src_port,
         rdata->dest_ip_addr,
         rdata->dest_port);
+    } else if(sm->status == __TCP_FIN_INIT2){
+        printf("SPI ENTRY: %d: POLITE CONV END 3/3: %s:%d -> %s:%d\n",
+          loc,
+          rdata->src_ip_addr,
+          rdata->src_port,
+          rdata->dest_ip_addr,
+          rdata->dest_port);
+        sm->status == __TCP_CLOSED_FIN;
+        sm->conversation_active = false;
     }
   }
+}
+
+void polite_end(struct rule_data * rdata){
+  int loc = conversation_exists(rdata);
+  if(loc != -1){
+    
+    struct spi_members * sm = &spi_table[loc];
+    if(sm->status == __TCP_FIN_INIT){
+      printf("SPI ENTRY: %d: POLITE CONV END 2/3: %s:%d -> %s:%d\n",
+        loc,
+        rdata->src_ip_addr,
+        rdata->src_port,
+        rdata->dest_ip_addr,
+        rdata->dest_port);     
+      sm->status = __TCP_FIN_INIT2;
+    }
+    else {
+      printf("SPI ENTRY: %d: POLITE CONV END 1/3: %s:%d -> %s:%d\n",
+        loc,
+        rdata->src_ip_addr,
+        rdata->src_port,
+        rdata->dest_ip_addr,
+        rdata->dest_port);
+      sm->status = __TCP_FIN_INIT;
+
+    }
+  }
+
 }
