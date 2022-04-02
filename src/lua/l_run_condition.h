@@ -10,6 +10,7 @@ struct l_run_condition{
 
 
 /* opcodes - these only include conditional expressions, no assignments*/
-
+#define LRC_IS_EQUAL      0x01
+#define LRC_NOT_EQUAL     0x02
 
 #endif /* L_RUN_CONDITION */ 

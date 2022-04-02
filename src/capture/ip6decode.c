@@ -20,7 +20,6 @@ void ip6decode(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
   // printf("src=%s dst=%s\n", 
                       // src_ip6,dest_ip6);
   switch(ipv6_hdr->n_hdr){
-    case 58:
     case 0:{
       ip6_icmp_decode(pkt,src_ip6,dest_ip6);
       break;
