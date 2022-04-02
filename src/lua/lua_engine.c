@@ -29,7 +29,12 @@ void collect_scripts(){
   }  
   size_t pos, len;
   char * line = NULL;
+  char lscript_root[40];
   while((pos = getline(&line,&len,fp)) != -1){
-    //
+    if(line[0] == '#') continue;
+    if(strncmp(line,"l_script_root=",14) == 0){
+      strcpy(lscript_root,line+14);
+      printf("%s\n",lscript_root);
+    }    
   } 
 }
