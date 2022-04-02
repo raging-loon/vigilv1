@@ -3,7 +3,9 @@
 #include <lua5.3/lua.h>
 #include <lua5.3/lauxlib.h>
 #include <lua5.3/lualib.h>
-
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 struct l_script lua_scripts[MAX_LUA_SCRIPTS];
 
 
@@ -20,5 +22,14 @@ void run_hello_script(){
 }
 
 void collect_scripts(){
-   
+  FILE * fp = fopen("/etc/vigil/lscript.conf","r");
+  if(fp == NULL){
+    printf("Failed to collect Lua scripts: /etc/vigil/lscript.conf not found.\n");
+    exit(-1); // the engineer should have their stuff together
+  }  
+  size_t pos, len;
+  char * line = NULL;
+  while((pos = getline(&line,&len,fp)) != -1){
+//
+  } 
 }

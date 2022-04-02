@@ -1,31 +1,22 @@
 -- created for SQLITE
 
--- CREATE USER 'VIGIL'@'localhost' IDENTIFIED BY 'Pa@@w0rD';
--- GRANT ALL PRIVILEGES ON * . * TO 'VIGIL'@'localhost';
--- FLUSH PRIVILEGES;
 
 CREATE DATABASE VIGIL;
 USE VIGIL DATABASE;
 
-CREATE TABLE watchlist (
-  ip_address varchar(20),
-  danger_level int
-);
-
-CREATE TABLE arp_cache (
-  ip_address varchar(20),
-  mac_address varchar(25)
-);
-
-CREATE TABLE ip_stats(
-  ip_address varchar(20),
-  total_pkts int,
-  total_sent int,
-  total_recv int,
-  tcp_sent int,
-  tcp_recv int,
-  udp_sent int,
-  udp_recv int,
-  icmp_sent int,
-  icmp_recv int
+CREATE TABLE spi_table(
+  serv_addr varchar(24);
+  cli_addr varchar(24);
+  serv_port int,
+  cli_port int,
+  serv_pkt_sent int,
+  cli_pkt_sent int,
+  serv_pkt_recv int,
+  cli_pkt_recv int,
+  protocol int,
+  avg_pps int,
+  start_time int,
+  end_time int,
+  data_pkts int,
+  control_pkts int
 );
