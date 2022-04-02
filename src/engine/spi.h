@@ -53,8 +53,6 @@ struct spi_members{
 
   unsigned int data_pkt, control_pkt;
 
-  struct rule * srv_rules[32];
-  struct rule * cli_rules[32];
   int num_cli_rules;
   int num_srv_rules;
   unsigned int status;

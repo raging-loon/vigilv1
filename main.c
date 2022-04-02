@@ -38,7 +38,7 @@
 
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
-  printf("\033[01mStand with Ukraine!\033[0m\n");
+  // printf("\033[01mStand with Ukraine!\033[0m\n");
   is_running = 1;
   run_hello_script();
   last_clean_time = (unsigned long)time(NULL);

@@ -16,6 +16,17 @@
 
 #ifndef LUA_ENGINE_H
 #define LUA_ENGINE_H
+#include "l_run_condition.h"
+#define MAX_LUA_SCRIPTS             20 // for now
+struct l_script{
+  char filename[64];
+  struct l_run_condition conditions;
+};
+
+extern struct l_script lua_scripts[MAX_LUA_SCRIPTS];
+
+void collect_scripts();
+
 
 void run_hello_script();
 
