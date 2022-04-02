@@ -9,7 +9,7 @@
 #include "../logging.h"
 #include "l3pktmgr.h"
 #include "../statistics/wclean.h"
-
+#include "ip6decode.h"
 /*!
   @file
   @author Conner Macolley <cxmacolley@gmail.com>
@@ -58,7 +58,7 @@ void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsign
       arpdecode(pkt, pkt_hdr);
       break;
     case L3_IPV6:
-      ipv6pktmgr(pkt, pkt_hdr);
+      ip6decode(pkt, pkt_hdr);
       break;
     case L3_IPV4:
       ipv4pktmgr(pkt, pkt_hdr);
