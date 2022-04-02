@@ -103,7 +103,7 @@ void update_table(struct rule_data * rdata){
           rdata->src_port,
           rdata->dest_ip_addr,
           rdata->dest_port);
-        sm->status == __TCP_CLOSED_FIN;
+        sm->status = __TCP_CLOSED_FIN;
         sm->conversation_active = false;
     }
   }
