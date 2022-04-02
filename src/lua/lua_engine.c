@@ -30,6 +30,6 @@ void collect_scripts(){
   size_t pos, len;
   char * line = NULL;
   while((pos = getline(&line,&len,fp)) != -1){
-//
+    //
   } 
 }

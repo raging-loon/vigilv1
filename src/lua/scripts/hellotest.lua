@@ -5,3 +5,9 @@ else
   print "no"
 
 end
+
+local function x()
+  print "hi"
+end
+
+x()

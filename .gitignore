@@ -33,3 +33,5 @@ z
 
 # vscode stuff
 .vscode/
+liblua/*
+
