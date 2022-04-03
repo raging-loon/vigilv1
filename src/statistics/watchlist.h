@@ -27,12 +27,13 @@
 struct watchlist_member{
   unsigned long last_time_seen;
   char ip_addr[32];
-  int suspect_activity;
   struct nmap_watch_host_alive nmap_watch_host_alive_watch;
   struct portscan_dataset psds;
   int failed_ftp_login_attempts;
   int frag_ipv4_sent;
-
+  unsigned int conversations_started;
+  unsigned int cvips; // conversations init per sec
+  unsigned long conv_ib_time;
 
 
 
