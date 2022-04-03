@@ -55,7 +55,7 @@ void add_new_conversation(struct rule_data * rdata){
       /*
         first packet = 1000s
         second packets = 2000s
-        
+        w->cvips = 
       
       */
     }
