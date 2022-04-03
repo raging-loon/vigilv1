@@ -47,19 +47,15 @@ static int get_new_spi_location(){
 
 void add_new_conversation(struct rule_data * rdata){
   if(use_spi){
+    /*
     struct watchlist_member * w = member_exists(rdata->src_ip_addr);
     w->conversations_started++;
     if(w->conv_ib_time == 0) 
       w->conv_ib_time = (unsigned long)time(NULL);
     else {
-      /*
-        first packet = 1000s
-        second packets = 2000s
-        w->cvips = 
       
-      */
     }
-
+    */
     int loc = conversation_exists(rdata);
     struct spi_members * sm;
 
