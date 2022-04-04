@@ -35,7 +35,7 @@ void collect_scripts(){
   char lscript_root[40];
 
   regex_t lua_rgx;
-  if(regcomp(&lua_rgx,".*\.lua:.*",0);
+  regcomp(&lua_rgx,".*\.lua:.*",0);
 
 
   while((pos = getline(&line,&len,fp)) != -1){
