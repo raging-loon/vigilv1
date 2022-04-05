@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include "../statistics/watchlist.h"
 #include <string.h>
+#include <time.h>
 #include "../../globals.h"
 #include "../database/update_db.h"
 
@@ -63,6 +64,7 @@ void add_new_conversation(struct rule_data * rdata){
     if(loc != -1){
       sm = &spi_table[loc];
       sm->possible_retransmissions++;
+      sm->control_pkt++;
       printf("SPI TABLE RETRANS: %d: %s:%d -> %s:%d\n",loc,sm->cli_addr.netaddr,sm->cli_port,sm->serv_addr.netaddr,sm->serv_port);
     } else {
         sm = &spi_table[++total_conversations];
@@ -73,6 +75,8 @@ void add_new_conversation(struct rule_data * rdata){
         sm->cli_port = rdata->src_port;
         sm->serv_port = rdata->dest_port;
         sm->data_pkt = 0;
+        sm->control_pkt++;
+        sm->start_time = (unsigned long)time(NULL);
         sm->control_pkt = 0;
         printf("SPI NEW CONV: %d: %s:%d -> %s:%d\n",total_conversations,sm->cli_addr.netaddr,sm->cli_port,sm->serv_addr.netaddr,sm->serv_port);
         if(rdata->__protocol == R_TCP){
@@ -89,6 +93,7 @@ void spi_ud_thw(struct rule_data * rdata){
   if(loc != -1){
 
     struct spi_members * sm = &spi_table[loc];
+    sm->control_pkt++;
     printf("SPI TWH 2/3: %d: %s:%d -> %s:%d\n",loc,rdata->src_ip_addr,rdata->src_port,rdata->dest_ip_addr,rdata->dest_port);
     if(sm->status == __TCP_INIT) sm->status = __TCP_ACK_W;
   }
@@ -99,6 +104,7 @@ void update_table(struct rule_data * rdata){
   int loc = conversation_exists(rdata);
   if(loc != -1){
     struct spi_members * sm = &spi_table[loc];
+    sm->control_pkt++;
     if(sm->status == __TCP_ACK_W){
       sm->status = __TCP_ESTABLISHED;
       printf("SPI ENTRY: %d: SESSION EST: %s:%d -> %s:%d\n",
@@ -116,6 +122,7 @@ void update_table(struct rule_data * rdata){
           rdata->dest_port);
         sm->status = __TCP_CLOSED_FIN;
         sm->conversation_active = false;
+        sm->end_time = (unsigned long)time(NULL);
         pthread_t pthrd;
         pthread_create(&pthrd,NULL,&update_spi_db,sm);
         pthread_join(pthrd,NULL);
@@ -129,6 +136,7 @@ void polite_end(struct rule_data * rdata){
   if(loc != -1){
     
     struct spi_members * sm = &spi_table[loc];
+    sm->control_pkt++;
     if(sm->status == __TCP_FIN_INIT){
       printf("SPI ENTRY: %d: POLITE CONV END 2/3: %s:%d -> %s:%d\n",
         loc,
@@ -151,4 +159,12 @@ void polite_end(struct rule_data * rdata){
 
   }
 
+}
+
+void handle_data_pkt(struct rule_data * rdata){
+  int loc = conversation_exists(rdata);
+  if(loc != -1){
+    struct spi_members * sm = &spi_table[loc];
+    sm->data_pkt++;
+  }
 }
