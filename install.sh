@@ -20,3 +20,6 @@ touch /var/log/vigil/fail.log
 mkdir /usr/share/vigil/scripts/
 cp src/lua/scripts/* /usr/share/vigil/scripts/
 cp lscript.conf /etc/vigil/
+
+sqlite3 spi.db < src/database/install_spi.sql
+cp spi.db /usr/share/vigil/

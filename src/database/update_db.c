@@ -59,10 +59,10 @@ void * update_spi_db(void * spi_data){
     return NULL;
   }
   char statement[1024];
-  char * b_statement = "INSERT INTO spi_tabe ("
+  char * b_statement = "INSERT INTO spi_table ("
                             "serv_addr, cli_addr,serv_port,cli_port,"
-                            "serv_pkt_sent,cli_pkt_sent,serv_pkt_recv,cli_pkt_recv"
-                            "protocol,avg_pps,start_time,end_time,data_pkts,controlpkts) "
+                            "serv_pkt_sent,cli_pkt_sent,serv_pkt_recv,cli_pkt_recv,"
+                            "protocol,avg_pps,start_time,end_time,data_pkts,control_pkts) "
                             "VALUES (\"%s\",\"%s\",%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d);";
   sprintf(statement,b_statement,
           sm->serv_addr.netaddr,sm->cli_addr.netaddr,
