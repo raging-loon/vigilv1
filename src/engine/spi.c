@@ -79,9 +79,10 @@ void add_new_conversation(struct rule_data * rdata){
         sm->cli_packet_recv = &sm->serv_packet_sent;
         sm->cli_packet_sent = &sm->serv_packet_recv;
         increment_stats(rdata,sm);
-        sm->control_pkt++;
+        
         sm->start_time = (unsigned long)time(NULL);
         sm->control_pkt = 0;
+        sm->control_pkt++;
         sm->protocol = rdata->__protocol;
         printf("SPI NEW CONV: %d: %s:%d -> %s:%d\n",total_conversations,sm->cli_addr.netaddr,sm->cli_port,sm->serv_addr.netaddr,sm->serv_port);
         if(rdata->__protocol == R_TCP){
