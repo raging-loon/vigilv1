@@ -1,6 +1,6 @@
 -- created for SQLITE
 
--- should run : sqlite3 spi.db < install.ssssssssssssssssssssssssssssql
+-- should run : sqlite3 spi.db < install.sql
 
 CREATE TABLE spi_table(
   serv_addr varchar(24),
