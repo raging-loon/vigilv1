@@ -71,7 +71,7 @@ void * update_spi_db(void * spi_data){
           sm->serv_packet_recv,sm->cli_packet_recv,
           sm->protocol,sm->pps,sm->start_time,sm->end_time,
           sm->data_pkt,sm->control_pkt);
-  char errmsg[512];
+  char * errmsg = 0;
   if(sqlite3_exec(db,statement,0,0,&errmsg) != SQLITE_OK){
     printf("SQLITE Encountered error: %s\n",errmsg);
   }

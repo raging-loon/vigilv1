@@ -18,6 +18,7 @@
 #include "../statistics/watchlist.h"
 #include <string.h>
 #include "../../globals.h"
+#include "../database/update_db.h"
 
 int conversation_exists(struct rule_data * rdata){
   for(int i = 0; i < total_conversations + 1; ++i){
@@ -115,6 +116,10 @@ void update_table(struct rule_data * rdata){
           rdata->dest_port);
         sm->status = __TCP_CLOSED_FIN;
         sm->conversation_active = false;
+        pthread_t pthrd;
+        pthread_create(&pthrd,NULL,&update_spi_db,sm);
+        pthread_join(pthrd,NULL);
+  
     }
   }
 }
@@ -143,6 +148,7 @@ void polite_end(struct rule_data * rdata){
       sm->status = __TCP_FIN_INIT;
 
     }
+
   }
 
 }
