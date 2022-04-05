@@ -16,5 +16,6 @@ typedef struct {
 
 void * update_db(void *);
 
+void * update_spi_db(void * spi_data);
 
 #endif /* UDPATE_DB_H */

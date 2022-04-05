@@ -1,12 +1,10 @@
 -- created for SQLITE
 
-
-CREATE DATABASE VIGIL;
-USE VIGIL DATABASE;
+-- should run : sqlite3 spi.db < install.ssssssssssssssssssssssssssssql
 
 CREATE TABLE spi_table(
-  serv_addr varchar(24);
-  cli_addr varchar(24);
+  serv_addr varchar(24),
+  cli_addr varchar(24),
   serv_port int,
   cli_port int,
   serv_pkt_sent int,

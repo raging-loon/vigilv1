@@ -3,6 +3,7 @@
 #include "../../globals.h"
 #include <sqlite3.h>
 #include "update_db.h"
+#include "../engine/spi.h"
 
 /*
   *-*-*-*- update_db.c -*-*-*-*
@@ -46,4 +47,33 @@ void * update_db(void * args){
  close: 
   sqlite3_close(database);
   return (void *)1; 
+}
+
+
+void * update_spi_db(void * spi_data){
+  sqlite3 * db;
+  struct spi_members * sm = spi_data;
+  if(sqlite3_open("/usr/share/vigil/spi.db",&db)){
+    printf("SQLite error %s\n",sqlite3_errmsg(db));
+    sqlite3_close(db);
+    return NULL;
+  }
+  char statement[1024];
+  char * b_statement = "INSERT INTO spi_tabe ("
+                            "serv_addr, cli_addr,serv_port,cli_port,"
+                            "serv_pkt_sent,cli_pkt_sent,serv_pkt_recv,cli_pkt_recv"
+                            "protocol,avg_pps,start_time,end_time,data_pkts,controlpkts) "
+                            "VALUES (\"%s\",\"%s\",%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d);";
+  sprintf(statement,b_statement,
+          sm->serv_addr.netaddr,sm->cli_addr.netaddr,
+          sm->serv_port,sm->cli_port,
+          sm->serv_packet_sent,sm->cli_packet_sent,
+          sm->serv_packet_recv,sm->cli_packet_recv,
+          sm->protocol,sm->pps,sm->start_time,sm->end_time,
+          sm->data_pkt,sm->control_pkt);
+  char errmsg[512];
+  if(sqlite3_exec(db,statement,0,0,&errmsg) != SQLITE_OK){
+    printf("SQLITE Encountered error: %s\n",errmsg);
+  }
+  return NULL;
 }
