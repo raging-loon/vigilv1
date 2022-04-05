@@ -88,6 +88,7 @@ void handle_data_pkt(struct rule_data *);
 // void table_roll_over();
 // void end_connection(struct rule_data *);
 // void * spi_scan();
+void increment_stats(struct rule_data * , struct spi_members *);
 #endif /* SPI_H */
 
 

@@ -67,8 +67,8 @@ void * update_spi_db(void * spi_data){
   sprintf(statement,b_statement,
           sm->serv_addr.netaddr,sm->cli_addr.netaddr,
           sm->serv_port,sm->cli_port,
-          sm->serv_packet_sent,sm->cli_packet_sent,
-          sm->serv_packet_recv,sm->cli_packet_recv,
+          sm->serv_packet_sent,*sm->cli_packet_sent,
+          sm->serv_packet_recv,*sm->cli_packet_recv,
           sm->protocol,sm->pps,sm->start_time,sm->end_time,
           sm->data_pkt,sm->control_pkt);
   char * errmsg = 0;

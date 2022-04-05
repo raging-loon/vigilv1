@@ -69,15 +69,20 @@ void add_new_conversation(struct rule_data * rdata){
     } else {
         sm = &spi_table[++total_conversations];
         memset(sm,0,sizeof(sm));
+
         sm->conversation_active = true;
         strcpy(sm->cli_addr.netaddr, rdata->src_ip_addr);
         strcpy(sm->serv_addr.netaddr, rdata->dest_ip_addr);
         sm->cli_port = rdata->src_port;
         sm->serv_port = rdata->dest_port;
         sm->data_pkt = 0;
+        sm->cli_packet_recv = &sm->serv_packet_sent;
+        sm->cli_packet_sent = &sm->serv_packet_recv;
+        increment_stats(rdata,sm);
         sm->control_pkt++;
         sm->start_time = (unsigned long)time(NULL);
         sm->control_pkt = 0;
+        sm->protocol = rdata->__protocol;
         printf("SPI NEW CONV: %d: %s:%d -> %s:%d\n",total_conversations,sm->cli_addr.netaddr,sm->cli_port,sm->serv_addr.netaddr,sm->serv_port);
         if(rdata->__protocol == R_TCP){
           sm->status = __TCP_INIT;
@@ -94,6 +99,7 @@ void spi_ud_thw(struct rule_data * rdata){
 
     struct spi_members * sm = &spi_table[loc];
     sm->control_pkt++;
+    increment_stats(rdata,sm);
     printf("SPI TWH 2/3: %d: %s:%d -> %s:%d\n",loc,rdata->src_ip_addr,rdata->src_port,rdata->dest_ip_addr,rdata->dest_port);
     if(sm->status == __TCP_INIT) sm->status = __TCP_ACK_W;
   }
@@ -105,6 +111,7 @@ void update_table(struct rule_data * rdata){
   if(loc != -1){
     struct spi_members * sm = &spi_table[loc];
     sm->control_pkt++;
+    increment_stats(rdata,sm);
     if(sm->status == __TCP_ACK_W){
       sm->status = __TCP_ESTABLISHED;
       printf("SPI ENTRY: %d: SESSION EST: %s:%d -> %s:%d\n",
@@ -156,7 +163,7 @@ void polite_end(struct rule_data * rdata){
       sm->status = __TCP_FIN_INIT;
 
     }
-
+    increment_stats(rdata,sm);
   }
 
 }
@@ -166,5 +173,13 @@ void handle_data_pkt(struct rule_data * rdata){
   if(loc != -1){
     struct spi_members * sm = &spi_table[loc];
     sm->data_pkt++;
+    increment_stats(rdata,sm);
+  }
+}
+void increment_stats(struct rule_data * rdata, struct spi_members * sm){
+  if(strcmp(rdata->src_ip_addr,sm->cli_addr.netaddr) == 0){
+    sm->serv_packet_recv++;
+  } else if(strcmp(rdata->src_ip_addr,sm->serv_addr.netaddr) == 0){
+    sm->serv_packet_sent++;
   }
 }
