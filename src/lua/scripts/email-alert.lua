@@ -17,4 +17,48 @@
 -- this script includes everything to send an email about a rule alert
 
 -- email pushed as an argument
-local email_components = {}
+
+
+
+local function main()
+  -- local maillist = io.open("/etc/vigil/maillist","r")
+  
+  local port = nil
+  local password = ""
+  local rcpt = ""
+  local sender = ""
+  local server = ""
+
+  local lines = {}
+  for line in io.lines("/etc/vigil/maillist") do
+    lines[#lines + 1] = line
+  end
+
+  for i,v in pairs(lines) do
+    if(string.sub(v,1,1) ~= "#") then
+      values = {}
+      for s in v:gmatch("[^:]+") do
+        table.insert(values,s)
+      end
+
+      if(values[1] == "server") then
+        server = values[2]
+      elseif(values[1] == "port") then
+        port = values[2]
+      elseif(values[1] == "rcpt") then
+        rcpt = values[2]
+      elseif(values[1] == "sender") then
+        sender = values[2]
+      elseif(values[1] == "pass") then
+        password = values[2]
+      end
+
+    
+    end    
+    
+    --
+  end 
+  -- maillist:close();
+end
+
+main()
