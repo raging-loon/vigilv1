@@ -1,33 +1,42 @@
--- 
--- Copyright 2021-2022 Conner Macolley
--- 
---    Licensed under the Apache License, Version 2.0 (the "License");
---    you may not use this file except in compliance with the License.
---    You may obtain a copy of the License at
--- 
---        http://www.apache.org/licenses/LICENSE-2.0
--- 
---    Unless required by applicable law or agreed to in writing, software
---    distributed under the License is distributed on an "AS IS" BASIS,
---    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
---    See the License for the specific language governing permissions and
---    limitations under the License.
--- 
+-- Modified version of the script writting by Michal Kottman
 
 -- this script includes everything to send an email about a rule alert
 
 -- email pushed as an argument
+local socket = require("socket")
+local smtp = require("socket.smtp")
+local ssl = require("ssl")
+local https = require("ssl.https")
+local ltn12 = require("ltn12")
 
+
+function sslCreate()
+  local sock = socket.tcp()
+  return setmetatable({
+    connect = function(_, host, port)
+      local r, e = sock:connect(host,port)
+      if not r then return r, e end
+      sock = ssl.wrap(sock, {mode="client",protocol='sslv23'})
+      return sock:dohandshake()
+    end
+  }, {
+    __index = function(t,n)
+      return function(_,...)
+        return sock[n](sock,...)
+      end
+    end
+  })
+end
 
 
 local function main()
   -- local maillist = io.open("/etc/vigil/maillist","r")
   
   local port = nil
-  local password = ""
+  local pass = ""
   local rcpt = ""
   local sender = ""
-  local server = ""
+  local serv = ""
 
   local lines = {}
   for line in io.lines("/etc/vigil/maillist") do
@@ -42,7 +51,7 @@ local function main()
       end
 
       if(values[1] == "server") then
-        server = values[2]
+        serv = values[2]
       elseif(values[1] == "port") then
         port = values[2]
       elseif(values[1] == "rcpt") then
@@ -50,14 +59,36 @@ local function main()
       elseif(values[1] == "sender") then
         sender = values[2]
       elseif(values[1] == "pass") then
-        password = values[2]
+        pass = values[2]
       end
 
     
     end    
     
     --
-  end 
+  end
+  local msg = {
+    headers = {
+      from = sender,
+      to = rcpt,
+      subject = "VIGIL IDS Alert"
+    },
+    body = "The IDS Has picked up an error"
+  } 
+
+  local ok, err = smtp.send {
+    from = sender,
+    to = rcpt,
+    source = smtp.message(msg),
+    username = sender,
+    password = pass,
+    server = serv,
+    port = tonumber(port),
+    create = sslCreate
+  }
+  if not ok then
+    print("Message failed to send", err)
+  end
   -- maillist:close();
 end
 

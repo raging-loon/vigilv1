@@ -1,0 +1,6 @@
+# mailing list
+server:smtp.gmail.com
+port:465
+rcpt:
+sender:
+pass:
