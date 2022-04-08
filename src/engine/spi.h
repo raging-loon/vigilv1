@@ -40,8 +40,8 @@
 
 
 struct spi_members{
-  struct net_addr serv_addr;
-  struct net_addr cli_addr;
+  unsigned char * serv_addr;
+  unsigned char * cli_addr;
   unsigned int serv_port;
   unsigned int cli_port;
   int serv_packet_sent;

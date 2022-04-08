@@ -26,11 +26,11 @@ int conversation_exists(struct rule_data * rdata){
     struct spi_members * sm = (struct spi_members *)&spi_table[i];
     if(sm->conversation_active != false){
       if(rdata->dest_port == sm->cli_port && rdata->src_port == sm->serv_port){
-        if(strcmp(rdata->src_ip_addr, sm->serv_addr.netaddr) == 0 && strcmp(rdata->dest_ip_addr,sm->cli_addr.netaddr) == 0){
+        if(strcmp(rdata->src_ip_addr, sm->serv_addr) == 0 && strcmp(rdata->dest_ip_addr,sm->cli_addr) == 0){
           return i;
         }
       } else if(rdata->src_port == sm->cli_port && rdata->dest_port == sm->serv_port){
-        if(strcmp(rdata->dest_ip_addr, sm->serv_addr.netaddr) == 0 && strcmp(rdata->src_ip_addr,sm->cli_addr.netaddr) == 0){
+        if(strcmp(rdata->dest_ip_addr, sm->serv_addr) == 0 && strcmp(rdata->src_ip_addr,sm->cli_addr) == 0){
           return i;
         }
       }
@@ -65,14 +65,14 @@ void add_new_conversation(struct rule_data * rdata){
       sm = &spi_table[loc];
       sm->possible_retransmissions++;
       sm->control_pkt++;
-      printf("SPI TABLE RETRANS: %d: %s:%d -> %s:%d\n",loc,sm->cli_addr.netaddr,sm->cli_port,sm->serv_addr.netaddr,sm->serv_port);
+      printf("SPI TABLE RETRANS: %d: %s:%d -> %s:%d\n",loc,sm->cli_addr,sm->cli_port,sm->serv_addr,sm->serv_port);
     } else {
         sm = &spi_table[++total_conversations];
         memset(sm,0,sizeof(sm));
 
         sm->conversation_active = true;
-        strcpy(sm->cli_addr.netaddr, rdata->src_ip_addr);
-        strcpy(sm->serv_addr.netaddr, rdata->dest_ip_addr);
+        strcpy(sm->cli_addr, rdata->src_ip_addr);
+        strcpy(sm->serv_addr, rdata->dest_ip_addr);
         sm->cli_port = rdata->src_port;
         sm->serv_port = rdata->dest_port;
         sm->data_pkt = 0;
@@ -84,7 +84,7 @@ void add_new_conversation(struct rule_data * rdata){
         sm->control_pkt = 0;
         sm->control_pkt++;
         sm->protocol = rdata->__protocol;
-        printf("SPI NEW CONV: %d: %s:%d -> %s:%d\n",total_conversations,sm->cli_addr.netaddr,sm->cli_port,sm->serv_addr.netaddr,sm->serv_port);
+        printf("SPI NEW CONV: %d: %s:%d -> %s:%d\n",total_conversations,sm->cli_addr,sm->cli_port,sm->serv_addr,sm->serv_port);
         if(rdata->__protocol == R_TCP){
           sm->status = __TCP_INIT;
         }
@@ -178,9 +178,9 @@ void handle_data_pkt(struct rule_data * rdata){
   }
 }
 void increment_stats(struct rule_data * rdata, struct spi_members * sm){
-  if(strcmp(rdata->src_ip_addr,sm->cli_addr.netaddr) == 0){
+  if(strcmp(rdata->src_ip_addr,sm->cli_addr) == 0){
     sm->serv_packet_recv++;
-  } else if(strcmp(rdata->src_ip_addr,sm->serv_addr.netaddr) == 0){
+  } else if(strcmp(rdata->src_ip_addr,sm->serv_addr) == 0){
     sm->serv_packet_sent++;
   }
 }

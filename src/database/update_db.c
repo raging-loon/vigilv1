@@ -65,7 +65,7 @@ void * update_spi_db(void * spi_data){
                             "protocol,avg_pps,start_time,end_time,data_pkts,control_pkts) "
                             "VALUES (\"%s\",\"%s\",%ld,%ld,%d,%d,%d,%d,%d,%d,%ld,%ld,%d,%d);";
   sprintf(statement,b_statement,
-          sm->serv_addr.netaddr,sm->cli_addr.netaddr,
+          sm->serv_addr,sm->cli_addr,
           sm->serv_port,sm->cli_port,
           sm->serv_packet_sent,*sm->cli_packet_sent,
           sm->serv_packet_recv,*sm->cli_packet_recv,

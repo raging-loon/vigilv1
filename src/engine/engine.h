@@ -12,10 +12,6 @@
 #define NA_IPv4         220
 #define NA_IPv6         221
 
-struct net_addr{
-  char netaddr[40];
-  int addr_type;
-};
 
 
 
