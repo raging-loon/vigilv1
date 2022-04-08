@@ -11,6 +11,7 @@
   they will not work an any other data structure.
 */
 #ifdef LIBTEST
+#include <stdbool.h>
 struct spi_members{
   unsigned char * serv_addr;
   unsigned char * cli_addr;
@@ -37,7 +38,7 @@ struct spi_members{
   bool conversation_active;
 };
 
-
+int main(int argc, char ** argv);
 #endif
 unsigned char * sm_to_bytes(struct spi_members *);
 unsigned char * sm_to_php(struct spi_members *);

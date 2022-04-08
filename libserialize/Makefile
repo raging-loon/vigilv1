@@ -5,7 +5,7 @@ libserialize.o:
 	$(CC) -c libserialize.c $(DOPTS) 
 
 test: libserialize.o
-	$(CC) -o test.exe $^
+	$(CC) -o test.exe $^ $(DOPTS)
 
 clean:
 	rm *.o
