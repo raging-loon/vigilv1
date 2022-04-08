@@ -19,7 +19,7 @@ void sm_to_php(struct spi_members * sm, unsigned char * php_ser_buff){
     <type>:<strlen of obj name>:<objname>:<num members>:{data}
   */
 
-  sprintf(php_ser_buff,"O:11:spi_members:14:{"
+  sprintf(php_ser_buff,"O:11:\"spi_members\":14:{"
                       "s:9:\"serv_addr\";s:%lu:\"%s\";"\
   
                        \
