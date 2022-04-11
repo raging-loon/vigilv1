@@ -41,10 +41,10 @@ int conversation_exists(struct rule_data * rdata){
 }
 
 static int get_new_spi_location(){
-  for(int i = 0; i < total_conversations - 1; ++i){
+  for(int i = 0; i < total_conversations - 1; i++){
     if(spi_table[i].conversation_active == false) return i;
   }
-  return total_conversations++;
+  return ++total_conversations;
 }
 
 void add_new_conversation(struct rule_data * rdata){
@@ -67,7 +67,7 @@ void add_new_conversation(struct rule_data * rdata){
       sm->control_pkt++;
       printf("SPI TABLE RETRANS: %d: %s:%d -> %s:%d\n",loc,sm->cli_addr,sm->cli_port,sm->serv_addr,sm->serv_port);
     } else {
-        sm = &spi_table[++total_conversations];
+        sm = &spi_table[get_new_spi_location()];
         memset(sm,0,sizeof(sm));
 
         sm->conversation_active = true;
