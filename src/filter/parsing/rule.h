@@ -127,6 +127,7 @@ struct rule{
   int protocol;
   int port;
   int severity;
+  unsigned int depth;
   char message[128];
   regex_t pcre;
   char pcrestr[128];

@@ -246,6 +246,10 @@ void line_parser(const char * line){
               strcat(rdata->message, partial_msg);
               strcat(rdata->message,"\x20");
             } 
+            else if(strncmp(keysub,"depth:", 6) == 0){
+              int depth = atoi(keysub + 6);
+              rdata->depth = depth;
+            }
             else if(strncmp(keysub,"type:",5) == 0){
               char rtype[10];
               strncpy(rtype,keysub + 5, strlen(keysub) -6);
