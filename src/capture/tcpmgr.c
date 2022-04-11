@@ -174,6 +174,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       update_table(rdata);
     }
   }
+  if(PSH_ACK_SET(psh_set,ack_set) && flags_set == 2) rdata->is_established = true;
   if(rst_set == true){
     int watchlist_index;
     if((watchlist_index = member_exists(rdata->dest_ip_addr)) != -1){

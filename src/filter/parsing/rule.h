@@ -74,6 +74,7 @@ struct rule_data{
   const struct __tcp * tcp_header;
   const struct __icmp4 * icmp_header;
   unsigned char tcp_flags[8]; 
+  int is_established;
   // ^ needs to be seperate since it's not part of the __tcp 
 };
 //! @brief take the rule_data and test it by iterating through all of the rules in rules
@@ -135,7 +136,7 @@ struct rule{
   unsigned int num_targets[4];
   char * targets[4];
   char raw_target[128];
-  
+  int is_established;
   // int total_ports;
   struct r_tcp_data tcp_data;
   struct r_raw_ip_data ip_data;
