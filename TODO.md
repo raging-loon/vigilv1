@@ -15,3 +15,4 @@
 - [] Test logging with Rsyslog
 - [] Add more rules
 - [] Add debug logging
+- [] Add usage guide
