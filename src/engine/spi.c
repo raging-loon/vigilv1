@@ -41,7 +41,10 @@ int conversation_exists(struct rule_data * rdata){
 }
 
 static int get_new_spi_location(){
-  for(int i = 0; i < total_conversations - 1; i++){
+  if(total_conversations == -1)
+    return ++total_conversations;
+  
+  for(int i = 0; i < total_conversations; ++i){
     if(spi_table[i].conversation_active == false) return i;
   }
   return ++total_conversations;
