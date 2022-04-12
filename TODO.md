@@ -14,3 +14,4 @@
 - [] Add Email Alerts
 - [] Test logging with Rsyslog
 - [] Add more rules
+- [] Add debug logging
