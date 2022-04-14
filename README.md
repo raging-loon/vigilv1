@@ -59,3 +59,8 @@ Please note that the database comes preconfigured and empty with the package. It
 - [ ] SPI for UDP
 - [ ] SNMP 
 - [ ] Testing with NAGIOS and Rsyslog
+
+
+## Copyright
+See the LICENSE file for more information about Copyright
+VIGIL Logo designed by Andrew Heishman
