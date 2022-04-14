@@ -43,7 +43,27 @@ void sm_to_php(struct spi_members * sm, unsigned char * php_ser_buff){
 
 }
 
-#ifdef lIBTEST
+void sm_to_pypickle(struct spi_members * sm, unsigned char * py_pickle_buf){
+  /*
+    """
+    (b'\x80\x04\x95#\x01\x00\x00\x00\x00\x00\x00\x8c\x11vigil.classes.spi\x94\x8c'
+    b'\x0bspi_members\x94\x93\x94)\x81\x94}\x94(\x8c\tserv_addr\x94\x8c\x0b192.1'
+    b'68.0.1\x94\x8c\x08cli_addr\x94\x8c\x0b192.168.0.2\x94\x8c\tserv_port\x94'
+    b'M\xbb\x01\x8c\x08cli_port\x94M\x99\xdc\x8c\x10serv_packet_sent\x94'
+    b'K\x0c\x8c\x0fcli_packet_sent\x94K\x14\x8c\x0fcli_packet_recv\x94'
+    b'K\x0c\x8c\x10serv_packet_recv\x94K\x14\x8c\x08protocol\x94K~\x8c\x03pp'
+    b's\x94K\x00\x8c\nstart_time\x94J\xa2\\Lb\x8c\x08end_time\x94J\xcd\\Lb\x8c\x0b'
+    b'control_pkt\x94K\x0f\x8c\x08data_pkt\x94K\x10ub.')
+    """
+  */
+
+  sprintf(py_pickle_buf,"%c",0x80);
+}
+
+
+
+
+// #ifdef lIBTEST
 // 140.82.112.3|10.108.32.227|443|50800|12|20|20|12|126|0|1649171618|1649171661|16|15
 
 int main(int argc, char ** argv){
@@ -63,8 +83,8 @@ int main(int argc, char ** argv){
   sm.control_pkt = 15;
   sm.data_pkt = 16;
   unsigned char php_data[512];
-  sm_to_php(&sm,(unsigned char*)&php_data);
+  sm_to_pypickle(&sm,(unsigned char*)&php_data);
   printf("%s\n",php_data);
 }
 
-#endif
+// #endif

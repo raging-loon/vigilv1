@@ -9,6 +9,7 @@ Requires the following to run:
   - libpcap-dev
   - sqlite3
   - libsqlite3-dev
+  - liblua-5.3
 
 Recommened stats for machine running:
  - Recommended 8GB RAM, minimum of 4GB
@@ -62,5 +63,5 @@ Please note that the database comes preconfigured and empty with the package. It
 
 
 ## Copyright
-See the LICENSE file for more information about Copyright
+See the LICENSE file for more information about Copyright<br>
 VIGIL Logo designed by Andrew Heishman

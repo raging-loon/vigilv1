@@ -42,7 +42,7 @@ int main(int argc, char ** argv);
 #endif
 unsigned char * sm_to_bytes(struct spi_members *);
 void sm_to_php(struct spi_members *,unsigned char *);
-// unsigned char * sm_to_pypickle(struct spi_members *);
+void sm_to_pypickle(struct spi_members *, unsigned char *);
 // unsigned char * sm_to_java(struct spi_members *);
 
 
