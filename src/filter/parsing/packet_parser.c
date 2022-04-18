@@ -17,16 +17,16 @@
 */
 
 bool str_match_parser(const struct rule_data * __rule_data, const struct rule * __rule){
-
+  printf("%d:%d\n",__rule->offset,__rule_data->pkt_len);
   char temp_pkt[ (__rule_data->pkt_len * 2) + 2];
   memset(&temp_pkt, 0, sizeof(temp_pkt));
   if(__rule->depth != 0){
     
-    for(int i = 0; i < __rule->depth; i++){
+    for(int i = __rule->offset; i < __rule->depth; i++){
       sprintf(temp_pkt + i * 2, "%02x",__rule_data->pkt[i]);
     }
   } else {
-    for(int i = 0; i < __rule_data->pkt_len; i++){
+    for(int i = __rule->offset; i < __rule_data->pkt_len; i++){
       sprintf(temp_pkt + i * 2, "%02x",__rule_data->pkt[i]);
     }
   }
