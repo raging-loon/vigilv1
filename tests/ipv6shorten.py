@@ -8,15 +8,14 @@ ipv6addr = "fe80:0:0:0:218:aff:fe87:2ca5"
 
 def groupzeros(addr):
   realaddr = ""
-  groups_zeros = 0;
-  grst = grend = 0;
-  hextexts_comp = 0;
-  for i in addr.split(":"):
-    if i != '0':
-      realaddr += i
-    else:
-      
+  addr_groupings = ["",""]
+  x = 0
+  groups = 0
+  for i in range(0,len(addr)):
+    if(addr[i] == '0' and (addr[i + 1] == '0' or addr[i + 1] == ':')):
+      x = 1
+      addr_groupings[groups + 1] 
 
 
-realaddr = groupzeros("fe80:0:0:0:218:0:0:2ca5")
-print(realaddr)
+addr = groupzeros("fe80:0:0:0:218:0:0:2ca5")
+print(addr)

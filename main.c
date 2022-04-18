@@ -39,6 +39,8 @@
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   // printf("\033[01mStand with Ukraine!\033[0m\n");
+  print_logo();
+  print_cpu_info(); // purely for cosmetics
   is_running = 1;
   last_clean_time = (unsigned long)time(NULL);
   if(argc == 1){
@@ -187,4 +189,41 @@ void crash_handler(int signal){
   printf("RDX: %ls\n",r_rdx);
   */
   exit(EXIT_FAILURE); 
+}
+
+static void print_cpu_info(){
+  FILE * cpuinfo = fopen("/proc/cpuinfo","rb");
+  char * line = 0;
+  size_t sz = 0;
+  int numcpus = 0;
+  char to_print[512];
+  memset(&to_print,0,sizeof(to_print));
+  while(getdelim(&line,&sz,'\n',cpuinfo) != -1){
+    if(strncmp("model name", line, 10) == 0){
+      int loc = 0;
+      for(int i = 0; i < strlen(line); i++){
+        if(line[i] == ':'){
+          loc = i;
+          break;
+        }
+      }
+      numcpus++;
+      strcat(to_print,line + loc + 2);
+    }
+  }
+  printf("Found %d cpus:\n%s",numcpus,to_print);
+  free(line);
+  fclose(cpuinfo);
+}
+
+static void print_logo(){
+  printf(
+    "██    ██ ██  ██████  ██ ██\n"     
+    "██    ██ ██ ██       ██ ██\n"     
+    "██    ██ ██ ██   ███ ██ ██\n"     
+    " ██  ██  ██ ██    ██ ██ ██\n"     
+    "  ████   ██  ██████  ██ ███████\n"
+
+
+  );
 }
