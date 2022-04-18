@@ -30,7 +30,6 @@ bool str_match_parser(const struct rule_data * __rule_data, const struct rule * 
       sprintf(temp_pkt + i * 2, "%02x",__rule_data->pkt[i]);
     }
   }
-  printf("%s:%s\n",__rule->rulename,__rule->rule_target);
   
   // printf("%s\n",temp_pkt);
   if(strstr(temp_pkt,__rule->rule_target) != NULL)
