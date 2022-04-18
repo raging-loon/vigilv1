@@ -32,16 +32,19 @@ void rulemgr(const struct rule_data * __rule_data){
   // printf("In rulemgr\n");
   for(int i = 0; i < num_rules + 1;){
     struct rule * temp_rule = &rules[i++];
+
     if(in_test_mode){
       if(temp_rule->flow == FLOW_INWARD) temp_rule->flow = FLOW_OUTWARD;
       else if(temp_rule->flow == FLOW_OUTWARD) temp_rule->flow = FLOW_INWARD; 
     }
+    
     if(((temp_rule->protocol == R_ALL) || ( __rule_data->__protocol == temp_rule->protocol))){
       if(demo_mode || vigil_location == INTERNAL){
         if(vigil_location == INTERNAL){
           if((temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
                   (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port))){
-                    rule_app(temp_rule,__rule_data);
+                    if(test_tcp_session_status(temp_rule,__rule_data))
+                      rule_app(temp_rule,__rule_data);
           }
         } 
       }
@@ -60,7 +63,8 @@ void rulemgr(const struct rule_data * __rule_data){
           }
           else if((temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
                   (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port))){
-                    rule_app(temp_rule,__rule_data);
+                    if(test_tcp_session_status(temp_rule,__rule_data))
+                      rule_app(temp_rule,__rule_data);
                     
                   }
             
@@ -109,4 +113,15 @@ bool r_engine(const struct rule * r, const struct rule_data * rdata){
     }
   }
   return true;
+}
+
+static bool test_tcp_session_status(const struct rule * r, const struct rule_data * rdata){
+  if(r->protocol == R_TCP && rdata->__protocol == R_TCP){
+    if(r->is_established == true && rdata->is_established == false){
+      return false;
+    }
+    return true;
+  } else{
+    return true;
+  }
 }

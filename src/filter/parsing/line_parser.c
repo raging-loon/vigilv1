@@ -113,6 +113,7 @@ void line_parser(const char * line){
   rdata->d_operator = -1;
   rdata->dsize = -1;
   rdata->flow = -1;
+  rdata->depth =0;
   rdata->src = 0;
   rdata->dest = 0;
   void_rule(rdata);
@@ -248,6 +249,7 @@ void line_parser(const char * line){
               strcat(rdata->message,"\x20");
             } 
             else if(strncmp(keysub,"depth:", 6) == 0){
+              sc_strip(keysub);
               int depth = atoi(keysub + 6);
               // printf("Depth: %d\n",depth);
               rdata->depth = depth;
@@ -398,6 +400,10 @@ void line_parser(const char * line){
           else if(strncmp(keysub,"offset:",7) == 0){
             sc_strip(keysub);
             rdata->offset = atoi(keysub + 7);
+          } 
+          else if(strncmp(keysub,"established",11) == 0){
+            rdata->is_established = true;
+           
           }
     
         }   

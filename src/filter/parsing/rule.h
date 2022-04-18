@@ -137,7 +137,7 @@ struct rule{
   char raw_target[128];
   int is_established;
   // int total_ports;
-  unsigned int depth;
+  int depth;
   struct r_tcp_data tcp_data;
   struct r_raw_ip_data ip_data;
   struct r_icmp_dataset icmp_data;
@@ -149,6 +149,6 @@ struct rule{
 
 
 bool r_engine(const struct rule *, const struct rule_data *);
-
+static bool test_tcp_session_status(const struct rule * r, const struct rule_data * rdata);
 
 #endif /* RULE_H */
