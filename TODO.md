@@ -16,3 +16,4 @@
 - [] Add more rules
 - [] Add debug logging
 - [] Add usage guide
+- [x] Add logo
