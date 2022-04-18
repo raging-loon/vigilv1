@@ -128,7 +128,6 @@ struct rule{
   int protocol;
   int port;
   int severity;
-  unsigned int depth;
   char message[128];
   regex_t pcre;
   char pcrestr[128];
@@ -138,6 +137,7 @@ struct rule{
   char raw_target[128];
   int is_established;
   // int total_ports;
+  unsigned int depth;
   struct r_tcp_data tcp_data;
   struct r_raw_ip_data ip_data;
   struct r_icmp_dataset icmp_data;

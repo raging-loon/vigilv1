@@ -107,6 +107,7 @@ static void void_rule(struct rule * r){
 
 void line_parser(const char * line){
   struct rule * rdata = &rules[++num_rules];
+  memset(rdata,0,sizeof(rdata));
   rdata->port = -1;
   rdata->protocol = -1;
   rdata->d_operator = -1;
