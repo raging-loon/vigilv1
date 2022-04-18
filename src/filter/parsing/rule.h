@@ -117,7 +117,7 @@ struct rule{
   uint32_t src, dest;
   int dest_port, src_port;
   int flow;
-
+  unsigned int offset;
 
   int dsize;
   int d_operator;

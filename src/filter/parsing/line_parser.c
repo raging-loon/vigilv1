@@ -249,6 +249,7 @@ void line_parser(const char * line){
             } 
             else if(strncmp(keysub,"depth:", 6) == 0){
               int depth = atoi(keysub + 6);
+              // printf("Depth: %d\n",depth);
               rdata->depth = depth;
             }
             else if(strncmp(keysub,"type:",5) == 0){
@@ -261,6 +262,7 @@ void line_parser(const char * line){
               char * partial_target = keysub + 8;
               if(strstr(partial_target,"\";") != NULL){
                 strncpy(rdata->rule_target, keysub + 8,strlen(keysub) - 11);
+                // printf("%s\n",rdata->rule_target);
               } else {
                 parsing_target_str = true;
                 strcat(rdata->rule_target, partial_target);
@@ -393,6 +395,10 @@ void line_parser(const char * line){
             sc_strip(keysub);
             d_op_parser(rdata,keysub + 6, 1);
           }    
+          else if(strncmp(keysub,"offset:",7) == 0){
+            sc_strip(keysub);
+            rdata->offset = atoi(keysub + 7);
+          }
     
         }   
 
