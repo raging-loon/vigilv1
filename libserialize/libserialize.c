@@ -46,7 +46,7 @@ void sm_to_php(struct spi_members * sm, unsigned char * php_ser_buff){
 void sm_to_pypickle(struct spi_members * sm, unsigned char * py_pickle_buf){
   /*
     """
-    (b'\x80\x04\x95#\x01\x00\x00\x00\x00\x00\x00\x8c\x11vigil.classes.spi\x94\x8c'
+   (b'\x80\x04\x95#\x01\x00\x00\x00\x00\x00\x00\x8c\x11vigil.classes.spi\x94\x8c'
     b'\x0bspi_members\x94\x93\x94)\x81\x94}\x94(\x8c\tserv_addr\x94\x8c\x0b192.1'
     b'68.0.1\x94\x8c\x08cli_addr\x94\x8c\x0b192.168.0.2\x94\x8c\tserv_port\x94'
     b'M\xbb\x01\x8c\x08cli_port\x94M\x99\xdc\x8c\x10serv_packet_sent\x94'
@@ -56,8 +56,16 @@ void sm_to_pypickle(struct spi_members * sm, unsigned char * py_pickle_buf){
     b'control_pkt\x94K\x0f\x8c\x08data_pkt\x94K\x10ub.')
     """
   */
+  // char *temp = (char *)sm->serv_port;
+  sprintf(py_pickle_buf,
+          "\x80\x04\x95#\x01\xff\xff\xff\xff\xff\xff\x8c\x11vigil.classes.spi\x94\x8c"
+          "\x0bspi_members\x94\x93\x94)\x81\x94}\x94(\x8c\tserv_addr\x94\x8c\x0b%s"
+          "\x94\x8c\x08cli_addr\x94\x8c\x0b%s"
+          "\x94\x8c\tserv_port\x94M%c%c\x8c\x08cli_port\x94M%c%c"
 
-  sprintf(py_pickle_buf,"%c",0x80);
+          , sm->serv_addr, sm->cli_addr,sm->serv_port, sm->cli_port
+          );
+  
 }
 
 
