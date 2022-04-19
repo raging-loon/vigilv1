@@ -17,7 +17,6 @@
 */
 
 bool str_match_parser(const struct rule_data * rdata, const struct rule * __rule){
-  printf("%d:%d\n",__rule->offset,rdata->pkt_len);
   if(rdata->pkt_len == 0) return false;  
   char temp_pkt[ (rdata->pkt_len * 2) + 2];
 
