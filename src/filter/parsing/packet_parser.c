@@ -9,29 +9,32 @@
 /*
   *-*-*-*- packet_parser.c -*-*-*-*
   @purpose Provides parsing for packets so rules can be applied.
-  bool str_match_parser(const struct rule_data * __rule_data, const struct rule * __rule);
+  bool str_match_parser(const struct rule_data * rdata, const struct rule * __rule);
     ==> Convert both the entire packet and __rule->target_chars into hexadecimal characters.
         __rule->target_chars is searched for within the hexadecimal representation of the packet
   
   @TODO: add a function for raw bit matching and rename bit_match_parser.  
 */
 
-bool str_match_parser(const struct rule_data * __rule_data, const struct rule * __rule){
-  printf("%d:%d\n",__rule->offset,__rule_data->pkt_len);
-  char temp_pkt[ (__rule_data->pkt_len * 2) + 2];
+bool str_match_parser(const struct rule_data * rdata, const struct rule * __rule){
+  printf("%d:%d\n",__rule->offset,rdata->pkt_len);
+  if(rdata->pkt_len == 0) return false;  
+  char temp_pkt[ (rdata->pkt_len * 2) + 2];
+
   memset(&temp_pkt, 0, sizeof(temp_pkt));
+  int chars_filled = 0; // we have to use this because offset could be and odd number
   if(__rule->depth != 0){
     
     for(int i = __rule->offset; i < __rule->depth; i++){
-      sprintf(temp_pkt + i * 2, "%02x",__rule_data->pkt[i]);
+      sprintf(temp_pkt + chars_filled++ * 2, "%02x",rdata->pkt[i]);
     }
   } else {
-    for(int i = __rule->offset; i < __rule_data->pkt_len; i++){
-      sprintf(temp_pkt + i * 2, "%02x",__rule_data->pkt[i]);
+    for(int i = __rule->offset; i < rdata->pkt_len; i++){
+      
+      sprintf(temp_pkt + chars_filled++ * 2, "%02x",rdata->pkt[i]);
     }
   }
   
-  printf("%s:%s\n",temp_pkt,__rule->rule_target);
   if(strstr(temp_pkt,__rule->rule_target) != NULL)
     return true;
  
@@ -52,7 +55,7 @@ bool is_blocked_ipv4(const char * ipv4_addr){
 }
 
 
-bool none(const struct rule_data * __rule_data, const struct rule * __rule){
+bool none(const struct rule_data * rdata, const struct rule * __rule){
   return true;
 }
 

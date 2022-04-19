@@ -1,41 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-void rm_leading_zeroes_ipv6(const char *, char *);
+
+unsigned char *packet = "HEAD / HTTP/1.1\r\nHost: scanme.nmap.org\r\nUser-Agent: curl/7.68.0\r\nAccept: */*\r\n";
+
+// 48454144202f20485454502f312e310d0a486f73743a207363616e6d652e6e6d61702e6f72670d0a557365722d4167656e743a206375726c2f372e36382e300d0a4163636570743a202a2f2a0d0a
 int main(){
-  // should turn into fe80::128:0:0:2ca5
-  char ipv6addr[] =  "fe80:0000:0000:0000:0218:0000:0000:2ca5";
-  char shortaddr[strlen(ipv6addr)];
-  rm_leading_zeroes_ipv6((const char *)&ipv6addr,(char *)&shortaddr);
-  printf("%s\n",shortaddr);
-}
-
-void rm_leading_zeroes_ipv6(const char * ipv6addr, char * dest){
-  char * hextet = strtok(ipv6addr,":");
-  int hextets_scanned = 0;
-  while(hextet != NULL){
-    int num_zeroes = 0;
-    for(int i = 0; i < strlen(hextet); i++){
-      if(hextet[i] == '0')
-        num_zeroes++;
-      else 
-        break;
-    }
-    if(num_zeroes == 4)
-      strcat(dest,"0");
-    else
-      strcat(dest,hextet + num_zeroes );
-
-    if(hextets_scanned != 7)
-      strcat(dest,":");
-    else 
-      break;
-
-    hextets_scanned++;
-    hextet = strtok(NULL,":");
+  unsigned int pkt_len = 86;
+  unsigned int offset = 15;
+  char temp_pkt[(pkt_len * 2) + 2];
+  int chars_filled = 0;
+  for(int i = offset; i < pkt_len; i++){
+    sprintf(temp_pkt + chars_filled++ * 2, "%02x",packet[i]);
+    // printf("%c\n",packet[i]);
   }
-}
-
-void combine_semicolons_ipv6(const char * ipv6addr, char * dest){
-  
+  printf("%s\n",temp_pkt);
 }
