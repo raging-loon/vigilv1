@@ -31,7 +31,7 @@ bool str_match_parser(const struct rule_data * __rule_data, const struct rule * 
     }
   }
   
-  // printf("%s\n",temp_pkt);
+  printf("%s:%s\n",temp_pkt,__rule->rule_target);
   if(strstr(temp_pkt,__rule->rule_target) != NULL)
     return true;
  
