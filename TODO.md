@@ -17,3 +17,4 @@
 - [] Add debug logging
 - [] Add usage guide
 - [x] Add logo
+- [] Add daemon

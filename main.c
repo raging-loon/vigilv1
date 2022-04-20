@@ -172,22 +172,9 @@ static void print_help_and_exit(){
 
 void crash_handler(int signal){
   printf("Segmentation fault at %s: application crashed\n",get_formated_time());
-  /*
-  unsigned int * r_rax;
-  unsigned int * r_rdx;
-  unsigned int * r_rbx;
-  unsigned int * r_rcx;
+  // register void * rax __asm__("rax");
+  // printf("RAX: %d\n",rax);
   
-  asm volatile("movq %%rax,%0\n" : "=r"(r_rax));
-  asm volatile("movq %%rbx,%0\n" : "=r"(r_rbx));
-  asm volatile("movq $1, (%rdx)\n");
-  asm volatile("movq %%rcx,%0\n" : "=r"(r_rcx));
-  asm volatile("movq %%rdx,%0\n" : "=r"(r_rdx));
-  printf("RAX: %ls\n",r_rax);
-  printf("RBX: %ls\n",r_rbx);
-  printf("RCX: %ls\n",r_rcx);
-  printf("RDX: %ls\n",r_rdx);
-  */
   exit(EXIT_FAILURE); 
 }
 
