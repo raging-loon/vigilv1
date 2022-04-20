@@ -35,7 +35,8 @@
 #include "src/filter/parsing/rule_init.h"
 #include "src/debug.h"
 #include "src/lua/lua_engine.h"
-
+#include <execinfo.h>
+#include "src/capture/tcpmgr.h"
 int main(int argc, char **argv){
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   // printf("\033[01mStand with Ukraine!\033[0m\n");
@@ -172,9 +173,18 @@ static void print_help_and_exit(){
 
 void crash_handler(int signal){
   printf("Segmentation fault at %s: application crashed\n",get_formated_time());
-  // register void * rax __asm__("rax");
-  // printf("RAX: %d\n",rax);
-  
+  void * btrace[10];
+  char ** symbols;
+  printf("TCPMGR: %p\n",ip4_tcp_decode);
+  int size = backtrace(btrace,10);
+  symbols = backtrace_symbols(btrace,size);
+  if(symbols != NULL){
+    for(int i = 0; i < size; i++){
+      printf("0x%x\n",symbols[i]);
+    }
+  }
+  free(symbols);
+
   exit(EXIT_FAILURE); 
 }
 
