@@ -61,11 +61,10 @@ void sm_to_pypickle(struct spi_members * sm, unsigned char * py_pickle_buf){
           "\x80\x04\x95#\x01\xff\xff\xff\xff\xff\xff\x8c\x11vigil.classes.spi\x94\x8c"
           "\x0bspi_members\x94\x93\x94)\x81\x94}\x94(\x8c\tserv_addr\x94\x8c\x0b%s"
           "\x94\x8c\x08cli_addr\x94\x8c\x0b%s"
-          "\x94\x8c\tserv_port\x94M%c%c\x8c\x08cli_port\x94M%c%c"
+          "\x94\x8c\tserv_port\x94M"//\x8c\x08cli_port\x94M%c"
 
-          , sm->serv_addr, sm->cli_addr,sm->serv_port, sm->cli_port
-          );
-  
+          , sm->serv_addr, sm->cli_addr);
+  // memcpy(py_pickle_buf,(void*)sm->serv_port,strlen(py_pickle_buf));
 }
 
 
