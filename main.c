@@ -173,18 +173,24 @@ static void print_help_and_exit(){
 
 void crash_handler(int signal){
   printf("Segmentation fault at %s: application crashed\n",get_formated_time());
-  void * btrace[10];
-  char ** symbols;
-  printf("TCPMGR: %p\n",ip4_tcp_decode);
-  int size = backtrace(btrace,10);
-  symbols = backtrace_symbols(btrace,size);
-  if(symbols != NULL){
-    for(int i = 0; i < size; i++){
-      printf("0x%x\n",symbols[i]);
-    }
-  }
-  free(symbols);
+  // void * btrace[100];
+  // char ** symbols;
+  // char p[16];
 
+  // sprintf(p,"%p",ip4_tcp_decode);
+  // int len = strlen(p);
+  // int size = backtrace(btrace,100);
+  // symbols = backtrace_symbols(btrace,size);
+
+  // if(symbols != NULL){
+  //   for(int i = 0; i < size; i++){
+  //     char process[16];
+  //     sprintf(process,"0x%x",symbols[i]);
+  //     if(strlen(process) != len) continue;
+  //     else printf("%s\n",process);
+  //   }
+  // }
+  // free(symbols);
   exit(EXIT_FAILURE); 
 }
 
