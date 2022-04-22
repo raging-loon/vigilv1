@@ -1,6 +1,7 @@
 #ifndef __VTASK_H
 #define __VTASK_H
 #include <stdint.h>
+#include <pthread.h>
 #define MAX_TASKS     256
 
 extern vtask tasks[MAX_TASKS]; 
@@ -11,6 +12,11 @@ typedef struct {
   uint32_t conditions;
   
 } vtask;
+
+typedef struct {
+  
+} vthreads;
+
 
 void add_new_task();
 
