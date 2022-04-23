@@ -37,10 +37,9 @@
 #include "src/lua/lua_engine.h"
 #include <execinfo.h>
 #include "src/capture/tcpmgr.h"
+#include "src/backtrace/backtrace.h"
 int main(int argc, char **argv){
-  printf("main: %p\n",main);
-  register char * const rbp __asm__("rax");
-  printf("RBP: 0x%02x\n",rbp);
+  printf("ip4_tcp_decode: %p\n",ip4_tcp_decode);
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   // printf("\033[01mStand with Ukraine!\033[0m\n");
   print_logo();
@@ -173,24 +172,6 @@ static void print_help_and_exit(){
   exit(EXIT_SUCCESS);
 }
 
-
-void crash_handler(int signal){
-  register unsigned int const r_rax __asm__("rax");
-  register unsigned int const r_rbx __asm__("rbx");
-  register unsigned int const r_rcx __asm__("rcx");
-  register unsigned int const r_rdx __asm__("rdx");
-  register unsigned int const r_rsp __asm__("rsp");
-  register unsigned int const r_rbp __asm__("rbp");
-  printf("Segmentation fault at %s: application crashed\n",get_formated_time());
-  printf("Register Dump:\n");
-  printf("[RAX] = 0x%02x\n",r_rax);
-  printf("[RBX] = 0x%02x\n",r_rbx);
-  printf("[RCX] = 0x%02x\n",r_rbx);
-  printf("[RDX] = 0x%02x\n",r_rcx);
-  printf("[RSP] = 0x%02x\n",r_rsp);
-  printf("[RBP] = 0x%02x\n",r_rbp);
-  exit(EXIT_FAILURE); 
-}
 
 static void print_cpu_info(){
   FILE * cpuinfo = fopen("/proc/cpuinfo","rb");
