@@ -38,6 +38,9 @@
 #include <execinfo.h>
 #include "src/capture/tcpmgr.h"
 int main(int argc, char **argv){
+  printf("main: %p\n",main);
+  register char * const rbp __asm__("rax");
+  printf("RBP: 0x%02x\n",rbp);
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   // printf("\033[01mStand with Ukraine!\033[0m\n");
   print_logo();
@@ -172,25 +175,20 @@ static void print_help_and_exit(){
 
 
 void crash_handler(int signal){
+  register unsigned int const r_rax __asm__("rax");
+  register unsigned int const r_rbx __asm__("rbx");
+  register unsigned int const r_rcx __asm__("rcx");
+  register unsigned int const r_rdx __asm__("rdx");
+  register unsigned int const r_rsp __asm__("rsp");
+  register unsigned int const r_rbp __asm__("rbp");
   printf("Segmentation fault at %s: application crashed\n",get_formated_time());
-  // void * btrace[100];
-  // char ** symbols;
-  // char p[16];
-
-  // sprintf(p,"%p",ip4_tcp_decode);
-  // int len = strlen(p);
-  // int size = backtrace(btrace,100);
-  // symbols = backtrace_symbols(btrace,size);
-
-  // if(symbols != NULL){
-  //   for(int i = 0; i < size; i++){
-  //     char process[16];
-  //     sprintf(process,"0x%x",symbols[i]);
-  //     if(strlen(process) != len) continue;
-  //     else printf("%s\n",process);
-  //   }
-  // }
-  // free(symbols);
+  printf("Register Dump:\n");
+  printf("[RAX] = 0x%02x\n",r_rax);
+  printf("[RBX] = 0x%02x\n",r_rbx);
+  printf("[RCX] = 0x%02x\n",r_rbx);
+  printf("[RDX] = 0x%02x\n",r_rcx);
+  printf("[RSP] = 0x%02x\n",r_rsp);
+  printf("[RBP] = 0x%02x\n",r_rbp);
   exit(EXIT_FAILURE); 
 }
 
