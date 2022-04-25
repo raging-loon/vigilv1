@@ -13,7 +13,6 @@
 #
 
 
-from ast import arg
 import re
 import argparse
 
@@ -34,3 +33,11 @@ class fn_loc:
 # should only be full of fn_loc
 fn_mem_map = []
 
+
+def main():
+  for i in open(args.file,"r"):
+    print(i)
+
+
+
+main()
