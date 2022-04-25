@@ -16,6 +16,6 @@
 import re
 
 # matches to something like "Disassembly of section .gnu.version:"
-DISM_SECTION = r"Dissasembly of section"
+DISM_SECTION = "Disassembly of section.*"
 x = "Disassembly of section .gnu.version:\n"
-print(re.search(DISM_SECTION,x))
+print(re.match(DISM_SECTION,x))
