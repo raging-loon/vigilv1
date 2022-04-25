@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../../main.h"
-
+#include "../capture/tcpmgr.h"
 
 void add_fn(void * fn, char * fn_name){
   fn_mem_loc * fn_loc = &fn_mem_map[fn_num++];
@@ -19,6 +19,16 @@ void print_mem_map(){
 }
 
 void load_fn_mem_map(){
+  /* MAIN_H */
   add_fn(main,"main");
+  add_fn(sigint_processor,"sigint_processor");
+
+
+  /* TCPMGR_H */
+
+  add_fn(ip4_tcp_decode,"ip4_tcp_decode");
+  
+
 }
+
 

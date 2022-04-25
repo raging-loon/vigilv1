@@ -4,6 +4,7 @@
 #include <string.h>
 #include <execinfo.h>
 #include "../utils.h"
+
 fn_mem_loc fn_mem_map[TOTAL_FN];
 int fn_num = 0;
 void crash_handler(int sig){

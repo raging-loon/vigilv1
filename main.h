@@ -20,7 +20,6 @@
 int main(int, char **);
 
 void sigint_processor(int);
-void crash_handler(int);
 static void print_help_and_exit();
 static void print_cpu_info();
 static void print_logo();
