@@ -38,3 +38,9 @@ void crash_handler(int sig){
   exit(EXIT_FAILURE); 
 
 }
+
+
+
+void load_fn_mem_map(){
+  
+}

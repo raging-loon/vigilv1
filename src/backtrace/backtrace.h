@@ -8,8 +8,7 @@ typedef struct{
   unsigned int mem_loc;
 } fn_mem_loc;
 
-void load_fn_io_map();
-
+void load_fn_mem_map();
 
 void crash_handler(int );
 
