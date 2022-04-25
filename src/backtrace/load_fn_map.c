@@ -4,7 +4,7 @@
 #include <string.h>
 #include "../../main.h"
 #include "../capture/tcpmgr.h"
-
+#include "../capture/pktmgr.h"
 void add_fn(void * fn, char * fn_name){
   fn_mem_loc * fn_loc = &fn_mem_map[fn_num++];
   strcpy(fn_loc->fn_name,fn_name);
@@ -28,6 +28,7 @@ void load_fn_mem_map(){
 
   add_fn(ip4_tcp_decode,"ip4_tcp_decode");
   
+  add_fn(pktmgr,"pktmgr");
 
 }
 

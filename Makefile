@@ -111,8 +111,8 @@ vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			load_fn_map.o
 
 			
-	$(CC) -o vigil.exe $^ -l pcap -l pthread -l ssl -l crypto -l sqlite3 -l lua5.3
-	strip vigil.exe
+	$(CC) -g -o vigil.exe $^ -l pcap -l pthread -l ssl -l crypto -l sqlite3 -l lua5.3
+	# strip vigil.exe
 
 clean:
 	rm *.o

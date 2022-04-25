@@ -33,6 +33,7 @@
 // extern int ip_addr_stat_counter_len;
 #define INTERNAL                3
 #define EXTERNAL                4
+
 extern unsigned int total_pkt_captured;
 //! @brief array of all of the rules
 extern struct rule rules[MAX_RULES];
