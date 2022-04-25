@@ -13,9 +13,24 @@
 #
 
 
+from ast import arg
 import re
+import argparse
+
+argument_parser = argparse.ArgumentParser()
+argument_parser.add_argument("-f","--file",type=str,help="path of executable")
+args = argument_parser.parse_args()
 
 # matches to something like "Disassembly of section .gnu.version:"
 DISM_SECTION = "Disassembly of section.*"
-x = "Disassembly of section .gnu.version:\n"
-print(re.match(DISM_SECTION,x))
+
+class fn_loc:
+  def __init__(self,name,start, end):
+    self.name = name
+    # V should be numbers
+    self.start = start
+    self.end = end
+
+# should only be full of fn_loc
+fn_mem_map = []
+
