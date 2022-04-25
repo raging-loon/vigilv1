@@ -39,7 +39,7 @@
 #include "src/capture/tcpmgr.h"
 #include "src/backtrace/backtrace.h"
 int main(int argc, char **argv){
-  printf("ip4_tcp_decode: %p\n",ip4_tcp_decode);
+  load_fn_mem_map();
   // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
   // printf("\033[01mStand with Ukraine!\033[0m\n");
   print_logo();
