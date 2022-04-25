@@ -4,7 +4,8 @@
 #include <string.h>
 #include <execinfo.h>
 #include "../utils.h"
-
+fn_mem_loc fn_mem_map[TOTAL_FN];
+int fn_num = 0;
 void crash_handler(int sig){
   register unsigned int const r_rax __asm__("rax");
   register unsigned int const r_rbx __asm__("rbx");
@@ -39,8 +40,12 @@ void crash_handler(int sig){
 
 }
 
-
+void add_fn(void * fn, char * fn_name){
+  fn_mem_loc * fn_loc = &fn_mem_map[fn_num++];
+  strcpy(fn_loc->fn_name,fn_name);
+  sprintf(fn_loc->mem_loc,"%p",fn);
+}
 
 void load_fn_mem_map(){
-  
+
 }
