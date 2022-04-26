@@ -51,8 +51,7 @@ void crash_handler(int sig){
   printf("[RDX] = 0x%02x\n",r_rcx);
   printf("[RSP] = 0x%02x\n",r_rsp);
   printf("[RBP] = 0x%02x\n",r_rbp);
-  printf("%p\n",crash_handler);
-  printf("0x%02x\n",r_rbp - r_rsp);
+
   exit(EXIT_FAILURE); 
 
 }
