@@ -23,3 +23,8 @@ cp lscript.conf /etc/vigil/
 
 sqlite3 spi.db < src/database/install_spi.sql
 cp spi.db /usr/share/vigil/
+
+
+cd ../
+make
+cp memmap.txt /usr/share/vigil
