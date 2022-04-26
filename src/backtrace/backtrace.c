@@ -34,7 +34,7 @@ void crash_handler(int sig){
         offset = strtol(temp_offset,NULL,16);
         fn_mem_loc * fn = offset_search(offset);
         if(offset != NULL){
-          printf("%s(./vigil.exe(+0x%02x)\n",fn->fn_name,offset);
+          printf("%s(./vigil.exe(+0x%02x))\n",fn->fn_name,offset);
         } else {
           printf("Unknown function at memory offset 0x%02x\n",offset);
         }
