@@ -38,7 +38,9 @@ class fn_loc:
     self.start = start
     self.end = end
   def write_to_file(self,filename):
-    filename.write("%s %s %s"%(self.name,self.start,self.end))
+    if self.name == "" or self.end == "" or self.start == "":
+      return 
+    filename.write("%s %s %s\n"%(self.name,self.start,self.end))
 
 # should only be full of fn_loc
 fn_mem_map = []
@@ -52,10 +54,12 @@ def main():
   name = "" 
   start = "" 
   end = ""
-
+  j_parsed_name = False
   for i in open(args.file,"r"):
     # builtin functions
-    if i == "Disassembly of section .plt.sec:\n":
+    if "file format" in i:
+      continue
+    elif i == "Disassembly of section .plt.sec:\n":
       parse_section = SECTION_PLT_FUNC
     # my functions
     elif i == "Disassembly of section .text:\n":
@@ -69,12 +73,18 @@ def main():
       if(parse_section != 0x0):
         if(re.match(DISM_FUNC,i) != None):
           name = i[i.index("<") + 1:i.index(">")]
-        elif len(i) == 0:
-          temp_fn = None
-          fn_mem_locs += 1
+          j_parsed_name = True
         elif re.match(DISM_MEM_LOC,i):
-          # print("Hello")
-          pass
-        
+          if(j_parsed_name == True):
+            j_parsed_name = False
+            start = i[4:i.index(':')]
+          else:
+            end = i[4:i.index(":")]
+        elif len(i) == 1:
+          fn_mem_map.append(fn_loc(name,start,end))
+
+  output = open("memmap.txt","w")
+  for i in fn_mem_map:
+    i.write_to_file(output)        
 
 main()
