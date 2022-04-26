@@ -27,7 +27,7 @@ void crash_handler(int sig){
     }
   }
   free(strings);
-  print_mem_map();
+  // print_mem_map();
   printf("Register Dump:\n");
   printf("[RAX] = 0x%02x\n",r_rax);
   printf("[RBX] = 0x%02x\n",r_rbx);
