@@ -32,7 +32,12 @@ void crash_handler(int sig){
         sprintf(temp_offset,"%s\n",strings[i] + strloc(strings[i],'+') + 1);
         temp_offset[strloc(temp_offset,')') ] = 0;
         offset = strtol(temp_offset,NULL,16);
-        
+        fn_mem_loc * fn = offset_search(offset);
+        if(offset != NULL){
+          printf("%s\n",fn->fn_name);
+        } else {
+          printf("Unknown function at memory offset 0x%02x\n",offset);
+        }
       }
 
     }
@@ -50,4 +55,13 @@ void crash_handler(int sig){
   printf("0x%02x\n",r_rbp - r_rsp);
   exit(EXIT_FAILURE); 
 
+}
+
+
+fn_mem_loc * offset_search(unsigned int offset){
+  for(int i = 0; i < fn_num; i++){
+    fn_mem_loc * fn = &fn_mem_map[i];
+    if(offset > fn->start && offset < fn->end) return fn;
+  }
+  return NULL;
 }

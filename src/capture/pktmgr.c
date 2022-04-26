@@ -36,7 +36,7 @@
   
 */
 void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsigned char *pkt){
-  // int *p = 0; *p =0;
+  
   if(packet_print) printf("\033[90m-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\033[m\n");
   /*
     pktmgr -> ethernet header -> protocol number -> protocol number header -> data

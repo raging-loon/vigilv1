@@ -189,7 +189,8 @@ tcp_check_sum_passed c50d c6a7
 run_hello_script c6a8 c74c
 collect_scripts c74d c88f
 ip6decode c890 c982
-crash_handler c983 cc09
-add_fn cc0e cc7b
-print_mem_map cc7c cceb
-load_fn_mem_map ccec ce78
+crash_handler c983 cc2b
+offset_search cc30 cc99
+add_fn cc9a cd07
+print_mem_map cd08 cd77
+load_fn_mem_map cd78 cf04
