@@ -29,22 +29,25 @@ void load_fn_mem_map(){
   char * line = NULL;
   size_t pos, len = 0;
   while((pos = getline(&line,&len,fp)) != -1){
-    line[strcspn(line,'\n')] = 0;
-    char * name;
+    line[strcspn(line,"\n")] = 0;
+    char name[32];
     unsigned int start;
     unsigned int end;
+
+
     int num_parsed = 0;
     char * token = strtok(line, " ");
     while(token != NULL){
       switch(num_parsed){
         case 0:
-          name = token;
+
+          strcpy(name,token);
           break;
         case 1:
-          start = atoi(token);
+          start = (unsigned int)strtol(token,NULL,16);
           break;
         case 2:
-          end = atoi(token);
+          end = (unsigned int) strtol(token,NULL,16);
           break;
         default:
           break;
@@ -52,8 +55,10 @@ void load_fn_mem_map(){
       token = strtok(NULL," ");
       num_parsed++;
     }
+
     add_fn(name,start,end);
   }
+  fclose(fp);
 }
 
 
