@@ -112,6 +112,8 @@ vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 
 			
 	$(CC) -g -o vigil.exe $^ -l pcap -l pthread -l ssl -l crypto -l sqlite3 -l lua5.3
+	objdump -D vigil.exe -M intel > objdump.txt
+	python tools/gen_mem_map.py -f objdump.txt
 	# strip vigil.exe
 
 clean:
