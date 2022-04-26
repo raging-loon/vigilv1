@@ -49,20 +49,26 @@ def main():
   fn_mem_locs = 0
   temp_fn = None
 
-  name = start = end = ""
+  name = "" 
+  start = "" 
+  end = ""
 
   for i in open(args.file,"r"):
+    # builtin functions
     if i == "Disassembly of section .plt.sec:\n":
       parse_section = SECTION_PLT_FUNC
+    # my functions
     elif i == "Disassembly of section .text:\n":
       parse_section = SECTION_TEXT_FUNC
+    # if neither of the above matched 
+    # then it is some other function that is unimportant
+    # such as .bss
     elif re.match(DISM_SECTION,i) != None:
       parse_section = 0x0
     else:
       if(parse_section != 0x0):
         if(re.match(DISM_FUNC,i) != None):
-          print(i[i.index("<") + 1:i.index(">")])
-  
+          name = i[i.index("<") + 1:i.index(">")]
         elif len(i) == 0:
           temp_fn = None
           fn_mem_locs += 1
