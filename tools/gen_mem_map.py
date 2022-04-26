@@ -20,24 +20,33 @@ argument_parser = argparse.ArgumentParser()
 argument_parser.add_argument("-f","--file",type=str,help="path of executable")
 args = argument_parser.parse_args()
 
+###### CONSTANTS ######
 # matches to something like "Disassembly of section .gnu.version:"
 DISM_SECTION = "Disassembly of section.*"
+DISM_FUNC = ".* <.*>:"
+SECTION_PLT_FUNC = 0x01
+SECTOIN_TEXT_FUNC = 0x02
 
 class fn_loc:
+
   def __init__(self,name,start, end):
     self.name = name
     # V should be numbers
     self.start = start
     self.end = end
+  def write_to_file(self,filename):
+    filename.write("%s %s %s"%(self.name,self.start,self.end))
 
 # should only be full of fn_loc
 fn_mem_map = []
 
 
 def main():
+  parse_section = None
+  fn_mem_locs = 0
+  
   for i in open(args.file,"r"):
     print(i)
 
 
 
-main()
