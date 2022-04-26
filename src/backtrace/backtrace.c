@@ -23,7 +23,18 @@ void crash_handler(int sig){
   printf("Function backtrace:\n");
   if(strings != NULL){
     for(int i = 0; i < size; i++){
-      printf("%s\n",strings[i]);
+      if(strstr(strings[i],"lib") != NULL){
+        // printf("Library function: %s\n",strings[i]);
+        continue;
+      } else {
+        char temp_offset[24];
+        unsigned int offset;
+        sprintf(temp_offset,"%s\n",strings[i] + strloc(strings[i],'+') + 1);
+        temp_offset[strloc(temp_offset,')') ] = 0;
+        offset = strtol(temp_offset,NULL,16);
+        
+      }
+
     }
   }
   free(strings);

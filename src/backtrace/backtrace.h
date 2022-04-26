@@ -14,6 +14,6 @@ void load_fn_mem_map();
 void add_fn(char * name, unsigned int start, unsigned int end);
 void print_mem_map();
 void crash_handler(int );
-
+fn_mem_loc * offset_search(unsigned int);
 
 #endif /* BACKTRACE_H */
