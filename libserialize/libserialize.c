@@ -1,6 +1,7 @@
 #include "libserialize.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 #ifndef LIBTEST
 # include "../src/engine/spi.h"
 #endif
@@ -56,32 +57,26 @@ void sm_to_pypickle(struct spi_members * sm, unsigned char * py_pickle_buf){
     b'control_pkt\x94K\x0f\x8c\x08data_pkt\x94K\x10ub.')
     """
   */
-  // char *temp = (char *)sm->serv_port;
+  
   sprintf(py_pickle_buf,
-          "\x80\x04\x95#\x01\xff\xff\xff\xff\xff\xff\x8c\x11vigil.classes.spi\x94\x8c"
-          "\x0bspi_members\x94\x93\x94)\x81\x94}\x94(\x8c\tserv_addr\x94\x8c\x0b%s"
-          "\x94\x8c\x08cli_addr\x94\x8c\x0b%s"
-          "\x94\x8c\tserv_port\x94%sM\x8c\x08cli_port\x94M%c"
+          "%s|%s|%d|%d|%d|%d|%d|%d|%d|%d|%lu|%lu|%d|%d"
+          , sm->serv_addr, sm->cli_addr,sm->serv_port,sm->cli_port,
+            sm->serv_packet_sent, *sm->cli_packet_sent, *sm->cli_packet_recv, sm->serv_packet_recv,
+            sm->protocol, sm->pps,sm->start_time,sm->end_time,sm->data_pkt,sm->control_pkt
+          );
 
-          , sm->serv_addr, sm->cli_addr,sm->serv_port);
   // memcpy(py_pickle_buf,(void*)sm->serv_port,strlen(py_pickle_buf));
 }
 
 
 
 
-// #ifdef lIBTEST
+#ifdef lIBTEST
 // 140.82.112.3|10.108.32.227|443|50800|12|20|20|12|126|0|1649171618|1649171661|16|15
 #include <signal.h>
-void crash_handler(int x){
-  register void * rax __asm__("rsp");
-  printf("RAX: %02x\n",rax);
-  exit(-1);
-}
 
 int main(int argc, char ** argv){
   struct spi_members sm;
-  signal(SIGSEGV,crash_handler);
   strcpy(sm.serv_addr, "140.82.112.3");
   strcpy(sm.cli_addr,"10.108.32.227");
   sm.serv_port = 443;
@@ -101,4 +96,4 @@ int main(int argc, char ** argv){
   printf("%s\n",php_data);
 }
 
-// #endif
+#endif
