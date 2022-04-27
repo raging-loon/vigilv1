@@ -95,11 +95,16 @@ static void * accept_cmd(void * args){
 	static __thread char buffer[1024] = {0};
 	while(true){
 		int len_read = read(connection->file_desc,buffer,1024);
+		if(len_read <= 0){
+			break;
+		} 
+		
 		struct vrmc_pkt * cmd = (struct vrmc_pkt *)&buffer;
 		printf("0x%02x\n",cmd->opcode);
+
 	}
 	
-
+	close(connection->file_desc);
 
 }
 /*
