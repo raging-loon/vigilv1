@@ -27,7 +27,7 @@
 #include "../utils.h"
 #include <string.h>
 #include <openssl/sha.h>
-
+#include "vrmc.h"
 
 
 
@@ -91,7 +91,16 @@ static void *actually_start_nsh_server(){
 
 }
 static void * accept_cmd(void * args){
-	//
+	const connect_t * connection = args;
+	static __thread char buffer[1024] = {0};
+	while(true){
+		int len_read = read(connection->file_desc,buffer,1024);
+		struct vrmc_pkt * cmd = (struct vrmc_pkt *)&buffer;
+		printf("0x%02x\n",cmd->opcode);
+	}
+	
+
+
 }
 /*
 static bool nsh_do_login(int fd,const char * rhost){

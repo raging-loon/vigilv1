@@ -2,7 +2,7 @@
 #define NSH_SERVER_H
 #include <sys/socket.h>
 #include <stdbool.h>
-#define NSH_RPC_PORT            23
+#define NSH_RPC_PORT            641
 
 typedef struct{
   int file_desc;
