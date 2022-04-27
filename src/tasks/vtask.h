@@ -16,19 +16,14 @@ extern vtask tasks[MAX_TASKS];
 
 typedef struct {
   unsigned int type;
-  void (*task)(struct vtask*);
+  void (*task)();
   uint32_t conditions;
   
 } vtask;
 
-typedef struct {
-  
-} vthreads;
 
 
 void add_new_task();
-
-void vt_nullify(int); // takes the location of the task in the tasks array
 
 void vts_listen();
 
