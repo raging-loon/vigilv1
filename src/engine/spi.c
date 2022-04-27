@@ -24,6 +24,8 @@
 int conversation_exists(struct rule_data * rdata){
   for(int i = 0; i < total_conversations + 1; ++i){
     struct spi_members * sm = (struct spi_members *)&spi_table[i];
+    // printf("sm | %s | %s | %d | %d\n",sm->serv_addr,sm->cli_addr,sm->serv_port,sm->cli_port);
+    // printf("rdata | %s | %s | %d | %d\n",rdata->src_ip_addr,rdata->dest_ip_addr,rdata->src_port, rdata->dest_port);
     if(sm->conversation_active != false){
       if(rdata->dest_port == sm->cli_port && rdata->src_port == sm->serv_port){
         if(strcmp(rdata->src_ip_addr, sm->serv_addr) == 0 && strcmp(rdata->dest_ip_addr,sm->cli_addr) == 0){
