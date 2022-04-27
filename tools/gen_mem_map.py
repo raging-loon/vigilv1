@@ -48,8 +48,6 @@ fn_mem_map = []
 
 def main():
   parse_section = None
-  fn_mem_locs = 0
-  temp_fn = None
 
   name = "" 
   start = "" 
