@@ -26,7 +26,6 @@
 #include <arpa/inet.h>
 #include "../utils.h"
 #include <string.h>
-#include "cmd/interpreter.h"
 #include <openssl/sha.h>
 
 
@@ -86,12 +85,15 @@ static void *actually_start_nsh_server(){
 			connection_ptr.file_desc = client_sock;
 			connection_ptr.__socket = &addr;
 			pthread_t pthrd;
-			pthread_create(&pthrd,NULL,&nsh_shell,&connection_ptr);
-		}	
+			pthread_create(&pthrd,NULL,&accept_cmd,&connection_ptr);
+		}
 	}
 
 }
-
+static void * accept_cmd(void * args){
+	//
+}
+/*
 static bool nsh_do_login(int fd,const char * rhost){
 	int len_read;
 	const char * del = ":";
@@ -181,29 +183,4 @@ static bool nsh_do_login(int fd,const char * rhost){
 	return false;
 
 }
-
-
-static void *nsh_shell(void * args){
-	const connect_t * connection = args;
-			printf("new connection at %s:%d\n",
-						inet_ntoa(connection->__socket->sin_addr),htons(connection->__socket->sin_port));
-			static __thread char buffer[1024] = {0};
-
-			if(nsh_do_login(connection->file_desc, inet_ntoa(connection->__socket->sin_addr)) == false){
-				send(connection->file_desc,"Invalid login\r\n",16,0);
-				close(connection->file_desc);
-			}
-			else {
-				char * nsh_str = "nsh# ";
-				while(strncmp(buffer,"exit",4) !=0){
-					send(connection->file_desc,nsh_str,strlen(nsh_str),0);
-					memset(&buffer,0,sizeof(buffer));
-					int len_read = read(connection->file_desc,buffer,1024);
-					rnstrip(buffer);
-					
-					nsh_cmd_interpret(buffer,connection->file_desc);
-				}
-				close(connection->file_desc);
-			}
-	return (void *)1;
-}
+*/

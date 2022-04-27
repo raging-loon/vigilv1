@@ -49,11 +49,6 @@ rule.o:
 	$(CC) $(CFLAGS) -c src/filter/parsing/rule.c 
 nsh_server.o:
 	$(CC) $(CFLAGS) -c src/rpc/nsh_server.c 
-interpreter.o:
-	$(CC) $(CFLAGS) -c src/rpc/cmd/interpreter.c 
-
-nsh_commands.o:
-	$(CC) $(CFLAGS) -c src/rpc/cmd/nsh_commands.c 
 
 watchlist.o:
 	$(CC) $(CFLAGS) -c src/statistics/watchlist.c 
@@ -104,7 +99,7 @@ load_fn_map.o:
 vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o print_utils.o\
 			alerts.o packet_parser.o rule_parser.o rule.o main.o nsh_server.o\
-			interpreter.o nsh_commands.o watchlist.o wclean.o arpcache.o \
+			watchlist.o wclean.o arpcache.o \
 			update_db.o http_disect.o dns_disect.o ftp-disect.o  debug.o\
 			forward.o spi.o logging.o line_parser.o rule_init.o dp_size.o \
 			homenet.o tcp_chksum.o lua_engine.o ip6decode.o backtrace.o \

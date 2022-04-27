@@ -14,7 +14,6 @@ void start_nsh_server();
 
 // thread
 static void *actually_start_nsh_server();
-
-static void *nsh_shell(void *);
-static bool nsh_do_login(int,const char *);
+static void *accept_cmd(void *);
+// static bool nsh_do_login(int,const char *);
 #endif /* NSH_SERVER_H */ 
