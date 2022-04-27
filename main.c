@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <pcap.h>
 #include <stdlib.h>
+#include <sys/resource.h>
 #include <string.h>
 #include "src/statistics/wclean.h"
 #include "src/capture/pktmgr.h"
@@ -39,10 +40,11 @@
 #include "src/capture/tcpmgr.h"
 #include "src/backtrace/backtrace.h"
 int main(int argc, char **argv){
-  // printf("hello");
+  
   load_fn_mem_map();
-  // rules/  = (struct rule *)malloc(sizeof(struct rule) * 128);
-  // printf("\033[01mStand with Ukraine!\033[0m\n");
+  signal(SIGINT,sigint_processor);
+  signal(SIGSEGV,crash_handler); 
+  
   print_logo();
   print_cpu_info(); // purely for cosmetics
   is_running = 1;
@@ -87,8 +89,7 @@ int main(int argc, char **argv){
     }
   }
   
-  signal(SIGINT,sigint_processor);
-  signal(SIGSEGV,crash_handler);  
+ 
   // char * ip_addr = "";
   deny_conf_parser("/etc/vigil/deny.conf");
   printf("Finsished loading explicit deny file(/etc/vigil/deny.conf)\n");
