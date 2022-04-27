@@ -38,7 +38,6 @@
 #define  __ICMP_FIRST_SEEN    253
 
 
-
 struct spi_members{
   unsigned char serv_addr[41];
   unsigned char cli_addr[41];
@@ -64,6 +63,10 @@ struct spi_members{
   int possible_retransmissions;
   bool conversation_active;
 };
+
+extern unsigned int total_conversations;
+
+extern struct spi_members spi_table[1024];
 
 
 typedef struct{

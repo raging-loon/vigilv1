@@ -56,9 +56,8 @@ bool packet_print;
 bool quiet_exit = false;
 
 
-unsigned int total_conversations = -1;
+
 int vigil_location;
-struct spi_members spi_table[1024];
 
 int VIGIL_MODE = 0xffff;
 char input_adapter[10];

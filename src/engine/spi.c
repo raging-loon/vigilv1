@@ -21,6 +21,10 @@
 #include "../../globals.h"
 #include "../database/update_db.h"
 
+struct spi_members spi_table[1024];
+unsigned int total_conversations = -1;
+
+
 int conversation_exists(struct rule_data * rdata){
   for(int i = 0; i < total_conversations + 1; ++i){
     struct spi_members * sm = (struct spi_members *)&spi_table[i];
