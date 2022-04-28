@@ -1,5 +1,5 @@
 # Vigil IDS Todos
-
+## Internal Todos
 - [] Add TCP/IP/UDP Checksum Validation
 - [] Add IPv6 Support
   - [] Shortening
@@ -18,3 +18,33 @@
 - [] Add usage guide
 - [x] Add logo
 - [] Add daemon
+- [x] Add backtracing functions:
+  - [x] Add memory map script
+  - [x] Add offset 
+- [] Add the following SPI capabilities:
+  - [] UDP 
+    - [] Session time monitoring
+    - [] ICMP close
+  - [] TCP RST/Timeout close
+  - [] Remove automatic update db and add a task for that
+- [] Finish VRMCv1 
+  - [] More opcodes
+  - [] UUID cookie
+  - [] Optional TLS/SSL encryption
+- [] Do the following for the rule engine:
+  - [] Add not operator for ports
+  - [] Add port ranges
+  - [] Add more advanced content searching
+  - [] Fix the PCRE engine
+  - [] IPv4 fragment bits
+  - [] TCP flags
+  - [] Add nocase operator
+  - [x] Add depth operator
+  - [x] Add offset operator
+- [] Add memory usage/cpu time tracker:
+  - [] Optional output to graph
+  - [] Add tasks
+  - [] Add alerts
+- [] Remove junk code
+- [] Remove ip_addr_stat
+- [] Add packet per second graphs
