@@ -24,6 +24,7 @@ void load_fn_mem_map(){
   size_t pos, len = 0;
   while((pos = getline(&line,&len,fp)) != -1){
     line[strcspn(line,"\n")] = 0;
+    // printf("%s\n",line);
     char name[32];
     unsigned int start;
     unsigned int end;
@@ -38,6 +39,7 @@ void load_fn_mem_map(){
           strcpy(name,token);
           break;
         case 1:
+          // printf("Start: %s\n",token);
           start = (unsigned int)strtol(token,NULL,16);
           break;
         case 2:

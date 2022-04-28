@@ -42,6 +42,7 @@
 int main(int argc, char **argv){
   
   load_fn_mem_map();
+  // print_mem_map();
   signal(SIGINT,sigint_processor);
   signal(SIGSEGV,crash_handler); 
   
