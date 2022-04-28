@@ -7,6 +7,13 @@
 
 fn_mem_loc fn_mem_map[TOTAL_FN];
 int fn_num = 0;
+void print_mem_map(){
+  for(int i = 0; i < fn_num; i++){
+    fn_mem_loc * fn = &fn_mem_map[i];
+    printf("[N %s S 0x%02x E 0x%02x]\n",fn->fn_name, fn->start,fn->end);
+  }
+}
+
 void crash_handler(int sig){
   register unsigned int const r_rax __asm__("rax");
   register unsigned int const r_rbx __asm__("rbx");
@@ -34,7 +41,7 @@ void crash_handler(int sig){
         offset = strtol(temp_offset,NULL,16);
         fn_mem_loc * fn = offset_search(offset);
         if(offset != NULL){
-          printf("%s(./vigil.exe(+0x%02x))\n",fn->fn_name,offset);
+          printf("[N %s S 0x%02x E 0x%02x (./vigil.exe(+0x%02x))]\n",fn->fn_name, fn->start, fn->end, offset);
         } else {
           printf("Unknown function at memory offset 0x%02x\n",offset);
         }
@@ -43,6 +50,7 @@ void crash_handler(int sig){
     }
   }
   free(strings);
+  
   // print_mem_map();
   printf("Register Dump:\n");
   printf("[RAX] = 0x%02x\n",r_rax);

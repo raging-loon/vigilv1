@@ -12,12 +12,6 @@ void add_fn(char * name, unsigned int start, unsigned int end){
   fn->end = end;
 }
 
-void print_mem_map(){
-  for(int i = 0; i < fn_num; i++){
-    fn_mem_loc * fn = &fn_mem_map[i];
-    printf("%s [start %d] [end %d]\n",fn->fn_name,fn->start,fn->end);
-  } 
-}
 
 void load_fn_mem_map(){
   FILE * fp = fopen("/usr/share/vigil/memmap.txt","r");
