@@ -48,3 +48,8 @@
 - [] Remove junk code
 - [] Remove ip_addr_stat
 - [] Add packet per second graphs
+- [] Update readme:
+  - [] Add pictures
+  - [x] Add logo to github
+  - [] Update dependencies
+  
