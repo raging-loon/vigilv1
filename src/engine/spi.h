@@ -20,6 +20,7 @@
 
 #include "../filter/parsing/rule.h"
 #include "engine.h"
+#include <stdbool.h>
 
 
 #define __TCP_LISTENING       240
@@ -49,7 +50,7 @@ struct spi_members{
   // they only exist to make this easier to write.
   int * cli_packet_sent; 
   int * cli_packet_recv; 
-
+  bool session_encrypted;
   unsigned int data_pkt, control_pkt;
 
   int num_cli_rules;
