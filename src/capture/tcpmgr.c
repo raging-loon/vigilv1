@@ -42,6 +42,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
+#include "tls.h"
 
 /*
   *-*-*-*- tcpmgr.c -*-*-*-*
@@ -260,7 +261,9 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   if(IS_PORT_DEST_SRC(dest_port,src_port,21)){
     ftp_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),rdata);
   }
-
+  if(IS_PORT_DEST_SRC(dest_port,src_port,443) && PSH_ACK_SET(psh_set,ack_set)){
+    tls_decode(pkt,rdata,pkt_hdr);
+  }
   // if(packet_print)
   // ascii_hexdump(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),
                 // pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4));

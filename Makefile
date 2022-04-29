@@ -34,7 +34,8 @@ udpmgr.o:
 
 http_disect.o:
 	$(CC) $(CFLAGS) -c src/capture/protocols/http_disect.c 
-
+tls.o:
+	$(CC) $(CFLAGS) -c src/capture/tls.c
 dns_disect.o:
 	$(CC) $(CFLAGS) -c src/capture/protocols/dns_disect.c 
 
