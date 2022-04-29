@@ -26,7 +26,7 @@
 #include "main.h"
 #include "src/filter/parsing/rule_parser.h"
 #include "src/statistics/ip_addr_stat.h"
-#include "src/rpc/nsh_server.h"
+#include "src/vrmc/nsh_server.h"
 #include "src/utils.h"
 #include "src/statistics/watchlist.h"
 #include <pthread.h>
