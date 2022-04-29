@@ -3,7 +3,7 @@
 #include <stdint.h>
 struct tlsd{
   uint8_t content_type;
-  uint16_t version;
+  unsigned int version: 16;
   uint16_t len;
 };
 

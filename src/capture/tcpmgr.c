@@ -64,7 +64,7 @@
 */
 
 void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr *pkt_hdr){
-  int * p  = 0; *p = 0; // this crashes the program. only use this to test the backtrace functions
+  // int * p  = 0; *p = 0; // this crashes the program. only use this to test the backtrace functions
 
   struct __tcp * tcp_hdr = (struct __tcp *)(pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr));
   // printf("56\n");
@@ -261,8 +261,8 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   if(IS_PORT_DEST_SRC(dest_port,src_port,21)){
     ftp_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),rdata);
   }
-  if(IS_PORT_DEST_SRC(dest_port,src_port,443) && PSH_ACK_SET(psh_set,ack_set)){
-    tls_decode(pkt,rdata,pkt_hdr);
+  if((IS_PORT_DEST_SRC(dest_port,src_port,443)) && PSH_ACK_SET(psh_set,ack_set)){
+    tls_decode(rdata->pkt,rdata,pkt_hdr);
   }
   // if(packet_print)
   // ascii_hexdump(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),

@@ -6,7 +6,7 @@
 
 void tls_decode(const unsigned char * pkt ,struct rule_data * rdata,const struct pcap_pkthdr * pkt_hdr){
   struct tlsd * __tlsdata = (struct tlsd *)(pkt);
-
+  printf("0x%02x\n",__tlsdata->content_type);
   switch(__tlsdata->version){
     case 0x0301:
       if(packet_print) printf("TLS 1.0 DATA: ");    
@@ -27,7 +27,7 @@ void tls_decode(const unsigned char * pkt ,struct rule_data * rdata,const struct
       // alert
       break;
     case 0x16:
-      tls_handshake(pkt,rdata,pkt_hdr);
+      tlshandshake(pkt,rdata,pkt_hdr);
       break;
     case 0x17:
       // application data
@@ -40,6 +40,7 @@ void tls_decode(const unsigned char * pkt ,struct rule_data * rdata,const struct
 
 void tlshandshake(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr * pkt_hdr){
   struct tls_handshake * tlsh = (struct tls_handshake *)(pkt + sizeof(struct tlsd));
+
   switch(tlsh->handshake_type){
     case 0x01:
       if(packet_print) printf("Client Hello\n");
