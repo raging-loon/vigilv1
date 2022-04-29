@@ -18,6 +18,11 @@ static bool test_encrypt(const struct rule * r, const struct rule_data * rdata){
   if(r->noencrypt == true && rdata->encrypted == true) return false;
   return true;
 }
+/*
+static bool ttl_check(const struct rule *r, const struct rule_data * rdata){
+  if(r->ip_data.ttl == -1) return false;
+  else if(r->ip_data.ttl == rdata->ip_header->ttl) return true;
+}*/
 
 static void rule_app(struct rule * r, const struct rule_data * rdata){
     // printf("%s\n",r->rulename);
