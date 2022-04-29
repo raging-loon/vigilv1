@@ -14,6 +14,11 @@
     ==> Apply the rules
     TODO: Add support for ports
 */
+static bool test_encrypt(const struct rule * r, const struct rule_data * rdata){
+  if(r->noencrypt == true && rdata->encrypted == true) return false;
+  return true;
+}
+
 static void rule_app(struct rule * r, const struct rule_data * rdata){
     // printf("%s\n",r->rulename);
 
@@ -43,7 +48,7 @@ void rulemgr(const struct rule_data * __rule_data){
         if(vigil_location == INTERNAL){
           if((temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
                   (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port))){
-                    // if(test_tcp_session_status(temp_rule,__rule_data))
+                    if(test_tcp_session_status(temp_rule,__rule_data) && test_encrypt(temp_rule,__rule_data))
                       rule_app(temp_rule,__rule_data);
           }
         } 
@@ -64,6 +69,7 @@ void rulemgr(const struct rule_data * __rule_data){
           else if((temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
                   (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port))){
                     // if(test_tcp_session_status(temp_rule,__rule_data))
+                    if(test_tcp_session_status(temp_rule,__rule_data) && test_encrypt(temp_rule,__rule_data))
                       rule_app(temp_rule,__rule_data);
                     
                   }
