@@ -41,6 +41,7 @@
   - [] Add nocase operator
   - [x] Add depth operator
   - [x] Add offset operator
+  - [x] Add noencrypt operator
 - [] Add memory usage/cpu time tracker:
   - [] Optional output to graph
   - [] Add tasks
