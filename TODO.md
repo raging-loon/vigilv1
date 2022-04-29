@@ -52,4 +52,17 @@
   - [] Add pictures
   - [x] Add logo to github
   - [] Update dependencies
-  
+- [] Add the following alert methods:
+  - [x] Screen
+  - [x] Log
+  - [] Socket
+- [] Add support for more than one listening interface(like cisco)
+ - [] Add to config file
+ - [] Actually write the code
+ - [] Figure out a way to add an interface to the rules
+-[] Add statistics for the following:
+  - [] Received packets
+  - [] Recieved packets per interface
+  - [] Malicious packets detected
+  - [] Packets by protocol
+

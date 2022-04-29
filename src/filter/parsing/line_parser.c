@@ -405,6 +405,9 @@ void line_parser(const char * line){
             rdata->is_established = true;
            
           }
+          else if(strncmp(keysub,"noencrypt",9)==0){
+            rdata->noencrypt = true;
+          }
     
         }   
 

@@ -13,6 +13,7 @@ struct tls_handshake{
   uint16_t version;
   unsigned int random_data[32];
   uint8_t ses_id_len;
+  uint16_t cipher_suites_length;
 };
 
 

@@ -68,6 +68,7 @@ struct rule_data{
   int __protocol;
   int pkt_len; // psize;
   unsigned int dsize;
+  bool encrypted;
   const struct sockaddr_in * src_socket;
   const struct sockaddr_in * dest_socket;
   const struct ip_hdr * ip_header;
@@ -127,6 +128,7 @@ struct rule{
   char rule_target[255];
   int protocol;
   int port;
+  bool noencrypt;
   int severity;
   char message[128];
   regex_t pcre;
