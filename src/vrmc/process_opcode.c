@@ -27,9 +27,15 @@
 void process_opcode(struct vrmc_ops * ops, connect_t * c){
   char buffer[1024];
   switch(ops->opcode){
-    case VOPCODE_GET_VERSION:
-      sprintf(buffer,"%d%d",VOPCODE_GET_VERSION,VERSION_NUM);
-      send(c->file_desc,buffer,strlen(buffer),0);
+    case VOPCODE_GET_VERSION:{ 
+      struct v_info{
+        unsigned int opcode: 8;
+        unsigned int version: 24;
+      };
+      struct v_info v = {VOPCODE_GET_VERSION, VERSION_NUM};
+      unsigned char* bytes = (unsigned char *)&v;
+      send(c->file_desc,bytes,4,0);
       break;
+    }
   }
 }

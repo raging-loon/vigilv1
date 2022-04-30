@@ -92,7 +92,7 @@ static void *actually_start_nsh_server(){
 
 }
 static void * accept_cmd(void * args){
-	const connect_t * connection = args;
+	connect_t * connection = args;
 	static __thread char buffer[1024] = {0};
 	while(true){
 		int len_read = read(connection->file_desc,buffer,1024);
@@ -101,6 +101,7 @@ static void * accept_cmd(void * args){
 		} 
 		
 		struct vrmc_ops * ops = (struct vrmc_ops *)&buffer;
+		printf("0x%02x\n",ops->opcode);
 		process_opcode(ops,connection);
 
 	}
