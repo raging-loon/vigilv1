@@ -99,8 +99,8 @@ static void * accept_cmd(void * args){
 			break;
 		} 
 		
-		struct vrmc_pkt * cmd = (struct vrmc_pkt *)&buffer;
-		printf("0x%02x\n",cmd->opcode);
+		struct vrmc_ops * cmd = (struct vrmc_ops *)&buffer;
+
 
 	}
 	

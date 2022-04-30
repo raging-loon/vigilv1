@@ -4,6 +4,7 @@
 
 struct rpc
 */
+#define VOPCODE_GET_VERSION         0xdb
 
 
 #endif /* OPCODES_H */

@@ -2,7 +2,7 @@
 #define VRMC_H
 #include <stdint.h>
 
-struct vrmc_pkt{
+struct vrmc_ops{
   uint8_t opcode;
 };
 
