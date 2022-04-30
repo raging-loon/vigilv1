@@ -17,10 +17,19 @@
 #include "nsh_server.h"
 #include "vrmc.h"
 #include "opcodes.h"
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include "../../globals.h"
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+// static __thread char buffer[1024];
 void process_opcode(struct vrmc_ops * ops, connect_t * c){
+  char buffer[1024];
   switch(ops->opcode){
     case VOPCODE_GET_VERSION:
-      //
+      sprintf(buffer,"%d%d",VOPCODE_GET_VERSION,VERSION_NUM);
+      send(c->file_desc,buffer,strlen(buffer),0);
       break;
   }
 }

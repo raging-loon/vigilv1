@@ -19,6 +19,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#include "process_opcode.h"
 #include "nsh_server.h"
 #include <stdlib.h>
 #include <stdbool.h>
@@ -99,8 +100,8 @@ static void * accept_cmd(void * args){
 			break;
 		} 
 		
-		struct vrmc_ops * cmd = (struct vrmc_ops *)&buffer;
-
+		struct vrmc_ops * ops = (struct vrmc_ops *)&buffer;
+		process_opcode(ops,connection);
 
 	}
 	

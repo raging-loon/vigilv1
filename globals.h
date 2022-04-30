@@ -26,6 +26,7 @@
 #include "src/statistics/watchlist.h"
 //    major.minor.patch
 #define VERSION "1.0.0"
+#define VERSION_NUM 0x010000
 #define IDS_PASSIVE             1
 #define IPS_ACTIVE              2    
 #define MAX_RULES               1024        
