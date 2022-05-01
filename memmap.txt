@@ -186,6 +186,6 @@ crash_handler b507 b7a7
 offset_search b7ac b815
 add_fn b816 b883
 load_fn_mem_map b884 ba11
-pps_monitor ba12 bc6e
-__libc_csu_init bc70 bcdc
-__libc_csu_fini bce0 bce4
+pps_monitor ba12 bcbf
+__libc_csu_init bcc0 bd2c
+__libc_csu_fini bd30 bd34

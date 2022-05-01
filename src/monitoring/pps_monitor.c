@@ -43,20 +43,21 @@ void pps_monitor(){
     char filename[20 + 27];
     sprintf(filename,"/usr/share/vigil/stats/pps/pps.log.%d.txt",f_num); 
 
-    FILE * fp = fopen(filename,"a");
+    FILE * fp = fopen(filename,"w");
     if(fp == NULL){
       perror("Error opening file");
       return;
     }
     printf("Dumping to %s\n",filename);
-    unsigned int inbtwn_times[128];
+    unsigned int inbtwn_times[MAX_PPS_ENTRY];
     unsigned int subtime = 0;
     for(int i = arr_num; i != 0; ){
-      inbtwn_times[subtime++] = pkt_times[i] - pkt_times[i--];
+      inbtwn_times[subtime++] = pkt_times[i] - pkt_times[--i];
       if(i == 0) break;
     }
     for(int i = 0; i < subtime; i++){
-      fprintf(fp,"%lu,%d",pkt_times[i],inbtwn_times[i]);
+      fprintf(fp,"%lu,%d\n",pkt_times[i],inbtwn_times[i]);
+      fprintf(stdout,"%lu,%d\n",pkt_times[i],inbtwn_times[i]);
     }
     memset(&pkt_times,0,sizeof(pkt_times));
     arr_num = 0;
