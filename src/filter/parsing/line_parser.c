@@ -104,7 +104,7 @@ static void void_rule(struct rule * r){
 
 
 
-
+// handles rules
 void line_parser(const char * line){
   struct rule * rdata = &rules[++num_rules];
   memset(rdata,0,sizeof(rdata));

@@ -16,7 +16,7 @@ extern vtask tasks[MAX_TASKS];
 
 typedef struct {
   unsigned int type;
-  void (*condition_chk)();
+  bool (*condition_chk)();
   void (*task)();
   uint32_t conditions;
   
