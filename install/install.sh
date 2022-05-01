@@ -24,6 +24,8 @@ cp lscript.conf /etc/vigil/
 sqlite3 spi.db < src/database/install_spi.sql
 cp spi.db /usr/share/vigil/
 
+mkdir /usr/share/vigil/stats/
+mkdir /usr/share/vigil/stats/pps/
 
 cd ../
 make
