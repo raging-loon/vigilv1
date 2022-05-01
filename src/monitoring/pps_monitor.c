@@ -20,7 +20,7 @@
 #include <string.h>
 #include <dirent.h>
 #define MAX_PPS_ENTRY       128
-void pps_monitor(unsigned char * user, const struct pcap_pkthdr * pkt_hdr, const unsigned char * pkt){
+void pps_monitor(){
   // static unsigned long last_pkt_time;
   // static unsigned long  *pkt_times = (unsigned long *)malloc(256);
   static unsigned long pkt_times[MAX_PPS_ENTRY];
@@ -32,6 +32,7 @@ void pps_monitor(unsigned char * user, const struct pcap_pkthdr * pkt_hdr, const
     DIR * dr = opendir("/usr/share/vigil/stats/pps/");
     if(dr == NULL){
       // add alert here
+      perror("Failed");
       return;
     }
     while((dir = readdir(dr)) != NULL){

@@ -40,6 +40,7 @@
 #include "src/capture/tcpmgr.h"
 #include "src/backtrace/backtrace.h"
 #include "src/monitoring/monitoring.h"
+
 int main(int argc, char **argv){
   
   load_fn_mem_map();
@@ -117,9 +118,9 @@ int main(int argc, char **argv){
   start_nsh_server();
   printf("Unecrypted NSH config server started: 127.0.0.1:641\n");
   // start_wclean();
-  pcap_loop(pcap_mgr,-1, pktmgr, NULL);
-  pcap_loop(pcap_mgr,-1,pps_monitor,NULL);
+    pcap_loop(pcap_mgr,-1, pktmgr, NULL);
 }
+
 
 void sigint_processor(int signal){
 

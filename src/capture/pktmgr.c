@@ -27,10 +27,10 @@
 #include "l3pktmgr.h"
 #include "../statistics/wclean.h"
 #include "ip6decode.h"
-
+#include "../monitoring/monitoring.h"
 void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsigned char *pkt){
   // printf("%s\n",user);
-  
+  pps_monitor();
   if(packet_print) printf("\033[90m-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\033[m\n");
   /*
     pktmgr -> ethernet header -> protocol number -> protocol number header -> data

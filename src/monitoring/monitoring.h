@@ -21,7 +21,7 @@
 
 
 
-void pps_monitor(unsigned char * user, const struct pcap_pkthdr * pkt_hdr, const unsigned char * pkt);
+void pps_monitor();
 
 
 
