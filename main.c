@@ -95,8 +95,8 @@ int main(int argc, char **argv){
   deny_conf_parser("/etc/vigil/deny.conf");
   printf("Finsished loading explicit deny file(/etc/vigil/deny.conf)\n");
   
-  if(load_csv_arp_cache() != -1) printf("Finished loading CSV arp cache\n");
-  else printf("Failed to load CSV arp cache(non critical error)\n");
+  // if(load_csv_arp_cache() != -1) printf("Finished loading CSV arp cache\n");
+  // else printf("Failed to load CSV arp cache(non critical error)\n");
   
   rule_library_parser("/etc/vigil/vigil.conf");
   printf("Parsed rule files\n");
