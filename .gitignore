@@ -34,4 +34,5 @@ z
 # vscode stuff
 .vscode/
 liblua/*
+objdump.txt
 
