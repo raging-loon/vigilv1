@@ -96,7 +96,7 @@ void pps_monitor(){
     }
     for(int i = 0; i < sec_loc; i++){
       fprintf(output,"%lu,%d\n",num_arr[i], nums[i]);
-      // fprintf(stdout,"%lu,%d\n",num_arr[i],nums[i]);
+      
     }
     memset(&pkt_times,0,sizeof(pkt_times));
     arr_num = 0;

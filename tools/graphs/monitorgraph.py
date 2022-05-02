@@ -22,11 +22,9 @@ for i in open("/usr/share/vigil/stats/pps/pps.log.1.txt"):
   
   str_arr = i.split(",")
   # arr = numpy.append(arr,[int(str_arr[0]),int(str_arr[1])])
-  try:
-    xpoints = numpy.append(xpoints,datetime.fromtimestamp(int(str_arr[0])))
-    ypoints = numpy.append(ypoints,int(str_arr[1]))
-  except:
-    pass
+  xpoints = numpy.append(xpoints,datetime.fromtimestamp(int(str_arr[0])))
+  ypoints = numpy.append(ypoints,int(str_arr[1]))
+
   
 
 
