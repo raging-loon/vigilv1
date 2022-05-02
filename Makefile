@@ -99,6 +99,10 @@ process_opcode.o:
 	$(CC) $(CFLAGS) -c src/vrmc/process_opcode.c
 pps_monitor.o:
 	$(CC) $(CFLAGS) -c src/monitoring/pps_monitor.c
+
+monitoring.o:
+	$(CC) $(CFLAGS) -c src/monitoring/monitoring.c
+
 vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o print_utils.o\
 			alerts.o packet_parser.o rule_parser.o rule.o main.o nsh_server.o\
