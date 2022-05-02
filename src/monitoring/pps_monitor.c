@@ -19,48 +19,81 @@
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
-#define MAX_PPS_ENTRY       128
+#define MAX_PPS_ENTRY       2048
 void pps_monitor(){
   // static unsigned long last_pkt_time;
   // static unsigned long  *pkt_times = (unsigned long *)malloc(256);
   static unsigned long pkt_times[MAX_PPS_ENTRY];
-  static unsigned int arr_num = 0;
+  static unsigned int arr_num;
+  static int current_log_num;
   pkt_times[arr_num++] = (unsigned long)time(NULL);
   if(arr_num == MAX_PPS_ENTRY){
-    struct dirent * dir;
-    int f_num = 0;
-    DIR * dr = opendir("/usr/share/vigil/stats/pps/");
-    if(dr == NULL){
-      // add alert here
-      perror("Failed");
-      return;
-    }
-    while((dir = readdir(dr)) != NULL){
-      f_num++;
-    }
-    f_num -= 2; // account for "." and ".."
-    // 20 = name of file, 27 = director name
-    char filename[20 + 27];
-    sprintf(filename,"/usr/share/vigil/stats/pps/pps.log.%d.txt",f_num); 
-
-    FILE * fp = fopen(filename,"w");
+    
+    // get lines in file
+    char temp_file_name[64];
+    sprintf(temp_file_name,"/usr/share/vigil/stats/pps/pps.log.%d.txt",current_log_num); 
+    
+    int linecount = 0;
+    char ch;
+    FILE * fp = fopen(temp_file_name,"r");
     if(fp == NULL){
-      perror("Error opening file");
-      return;
+      linecount = MAX_PPS_ENTRY;
+      goto end;
     }
+    while((ch = fgetc(fp)) != EOF){
+      if(ch == '\n') linecount++;
+    }
+    fclose(fp);
+    end:
+    // struct dirent * dir;
+    // int f_num = 0;
+    // DIR * dr = opendir("/usr/share/vigil/stats/pps/");
+    // if(dr == NULL){
+    //   perror("Failed");
+    //   return;
+    // }
+    // while((dir = readdir(dr)) != NULL){
+    //   f_num++;
+    // }
+    // f_num -= 2; // account for "." and ".."
+    
+    FILE * output;
+    char filename[64];
+    
+    if(linecount >= MAX_PPS_ENTRY){
+      sprintf(filename,"/usr/share/vigil/stats/pps/pps.log.%d.txt",++current_log_num);  
+      output = fopen(filename,"w");
+    } else {
+      sprintf(filename,"/usr/share/vigil/stats/pps/pps.log.%d.txt",current_log_num);
+      output = fopen(filename,"a");
+    }
+
+
+    
     printf("Dumping to %s\n",filename);
-    unsigned int inbtwn_times[MAX_PPS_ENTRY];
-    unsigned int subtime = 0;
-    for(int i = arr_num; i != 0; ){
-      inbtwn_times[subtime++] = pkt_times[i] - pkt_times[--i];
-      if(i == 0) break;
+    unsigned long num_arr[64];
+    unsigned int nums[64];
+    int sec_loc = -1;
+    unsigned long last_seen = 0;
+    for(int i = 0; i < MAX_PPS_ENTRY; i++ ){
+      if(last_seen == pkt_times[i]){
+        nums[sec_loc]++;
+      } else {
+        // printf("Here\n");
+        last_seen = pkt_times[i];
+        num_arr[++sec_loc] = last_seen;
+        nums[sec_loc] = 1;   
+        nums[sec_loc]++;
+      
+      }
     }
-    for(int i = 0; i < subtime; i++){
-      fprintf(fp,"%lu,%d\n",pkt_times[i],inbtwn_times[i]);
-      fprintf(stdout,"%lu,%d\n",pkt_times[i],inbtwn_times[i]);
+    for(int i = 0; i < sec_loc; i++){
+      fprintf(output,"%lu,%d\n",num_arr[i], nums[i]);
+      // fprintf(stdout,"%lu,%d\n",num_arr[i],nums[i]);
     }
     memset(&pkt_times,0,sizeof(pkt_times));
     arr_num = 0;
+    fclose(output);
   }
 
 }
