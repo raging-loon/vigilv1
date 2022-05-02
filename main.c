@@ -1,4 +1,8 @@
-/*
+/*!
+ * @file main.c
+ * @author Conner Macolley
+ * @brief Start everything and start services
+ * @section LICENSE
  * Copyright 2021-2022 Conner Macolley
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +16,18 @@
  *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
+ * @section DESCRIPTION
+ * The main function handles all of the following:
+ *  - Loading the function map
+ *  - Set signals for interrupts and crashes
+ *  - Initialize the throughout monitor
+ *  - Get CPU info(for cosmetics)
+ *  - Gather ip addresses from the blacklist
+ *  - Parse and store all of the rules
+ *  - Initialize all of the rules
+ *  - Collect Lua Scripts
+ *  - Start the VRMC server
+ *  - Start the capture process
  */
 #include <stdio.h>
 #include <pcap.h>
