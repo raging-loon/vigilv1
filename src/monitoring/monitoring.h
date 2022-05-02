@@ -22,7 +22,7 @@
 
 
 void pps_monitor();
-
+// static int get_line_num(FILE *);
 
 
 #endif /* MONITORING_H */

@@ -39,6 +39,7 @@ void pps_monitor(){
       current_log_num -= 2; // account for . and ..
     }
     printf("Found %d log files\n",current_log_num++);
+    arr_num = 0;
     return;
   }
 
@@ -96,7 +97,7 @@ void pps_monitor(){
     }
     for(int i = 0; i < sec_loc; i++){
       fprintf(output,"%lu,%d\n",num_arr[i], nums[i]);
-      
+      fprintf(stdout,"%lu,%d\n",num_arr[i],nums[i]);
     }
     memset(&pkt_times,0,sizeof(pkt_times));
     arr_num = 0;
