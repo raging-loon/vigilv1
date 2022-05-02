@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
-#define MAX_PPS_ENTRY       2048
+#define MAX_PPS_ENTRY      1024
 void pps_monitor(){
   // static unsigned long last_pkt_time;
   // static unsigned long  *pkt_times = (unsigned long *)malloc(256);
