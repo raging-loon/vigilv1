@@ -51,6 +51,7 @@ int main(int argc, char **argv){
   print_logo();
   print_cpu_info(); // purely for cosmetics
   is_running = 1;
+  pps_monitor(); // to set a baseline on the file number
   last_clean_time = (unsigned long)time(NULL);
   if(argc == 1){
     print_help_and_exit();

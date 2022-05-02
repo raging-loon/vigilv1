@@ -26,37 +26,44 @@ void pps_monitor(){
   static unsigned long pkt_times[MAX_PPS_ENTRY];
   static unsigned int arr_num;
   static int current_log_num;
+
+  if(current_log_num == 0){
+    printf("Scanning for previous log files...\n");
+    struct dirent * dir;
+    DIR * dr = opendir("/usr/share/vigil/stats/pps/");
+    if(dr == NULL){
+      perror("Failed");
+      current_log_num = 0;
+    } else {
+      while((dir = readdir(dr)) != NULL) current_log_num++;
+      current_log_num -= 2; // account for . and ..
+    }
+    printf("Found %d log files\n",current_log_num++);
+    return;
+  }
+
+
   pkt_times[arr_num++] = (unsigned long)time(NULL);
   if(arr_num == MAX_PPS_ENTRY){
-    
-    // get lines in file
-    char temp_file_name[64];
-    sprintf(temp_file_name,"/usr/share/vigil/stats/pps/pps.log.%d.txt",current_log_num); 
-    
     int linecount = 0;
-    char ch;
-    FILE * fp = fopen(temp_file_name,"r");
-    if(fp == NULL){
-      linecount = MAX_PPS_ENTRY;
-      goto end;
+    if(current_log_num == 0){
+        char temp_file_name[64];
+      sprintf(temp_file_name,"/usr/share/vigil/stats/pps/pps.log.%d.txt",current_log_num);    
+      int linecount = 0;
+      char ch;
+      FILE * fp = fopen(temp_file_name,"r");
+      if(fp == NULL){
+        linecount = MAX_PPS_ENTRY;
+        goto end;
+      }
+      while((ch = fgetc(fp)) != EOF){
+        if(ch == '\n') linecount++;
+      }
+      fclose(fp);
+      end:;
     }
-    while((ch = fgetc(fp)) != EOF){
-      if(ch == '\n') linecount++;
-    }
-    fclose(fp);
-    end:
-    // struct dirent * dir;
-    // int f_num = 0;
-    // DIR * dr = opendir("/usr/share/vigil/stats/pps/");
-    // if(dr == NULL){
-    //   perror("Failed");
-    //   return;
-    // }
-    // while((dir = readdir(dr)) != NULL){
-    //   f_num++;
-    // }
-    // f_num -= 2; // account for "." and ".."
     
+  
     FILE * output;
     char filename[64];
     
@@ -71,8 +78,8 @@ void pps_monitor(){
 
     
     printf("Dumping to %s\n",filename);
-    unsigned long num_arr[64];
-    unsigned int nums[64];
+    unsigned long num_arr[24 * current_log_num];
+    unsigned int nums[24 * current_log_num];
     int sec_loc = -1;
     unsigned long last_seen = 0;
     for(int i = 0; i < MAX_PPS_ENTRY; i++ ){
