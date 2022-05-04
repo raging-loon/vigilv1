@@ -56,6 +56,7 @@
 #include "src/capture/tcpmgr.h"
 #include "src/backtrace/backtrace.h"
 #include "src/monitoring/monitoring.h"
+#include <unistd.h>
 
 int main(int argc, char **argv){
   
@@ -68,6 +69,8 @@ int main(int argc, char **argv){
   
   print_logo();
   print_cpu_info(); // purely for cosmetics
+  
+  printf("Running as PID %d\n",getpid());
   is_running = 1;
   pps_monitor(); // to set a baseline on the file number
   last_clean_time = (unsigned long)time(NULL);
