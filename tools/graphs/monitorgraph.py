@@ -14,11 +14,15 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime
+import argparse
 import numpy
+parser = argparse.ArgumentParser()
+parser.add_argument("-f","--file",type=str,help="File")
+args = parser.parse_args()
 
 xpoints = numpy.array([])
 ypoints = numpy.array([])
-for i in open("/usr/share/vigil/stats/pps/pps.log.1.txt"):
+for i in open(args.file):
   
   str_arr = i.split(",")
   # arr = numpy.append(arr,[int(str_arr[0]),int(str_arr[1])])
