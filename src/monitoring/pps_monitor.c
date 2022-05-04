@@ -17,6 +17,7 @@
 #include <pcap.h>
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
 #define MAX_PPS_ENTRY      1024
@@ -26,6 +27,7 @@ void pps_monitor(){
   static unsigned long pkt_times[MAX_PPS_ENTRY];
   static unsigned int arr_num;
   static int current_log_num;
+  static int lines_written;
 
   if(current_log_num == 0){
     printf("Scanning for previous log files...\n");
@@ -38,7 +40,32 @@ void pps_monitor(){
       while((dir = readdir(dr)) != NULL) current_log_num++;
       current_log_num -= 2; // account for . and ..
     }
-    printf("Found %d log files\n",current_log_num++);
+    closedir(dr);
+
+    printf("Found %d log files\n",current_log_num);
+    lines_written = 0;
+    
+    // if its still 0
+    if(current_log_num != 0){
+      char filename[64];
+      sprintf(filename,"/usr/share/vigil/stats/pps/pps.log.%d.txt",current_log_num);
+      printf("Reading most recent log file: %s\n",filename);
+      FILE * fp = fopen(filename,"r");
+  
+      int line_num = get_line_num(fp);
+      if(line_num >= MAX_PPS_ENTRY){
+       current_log_num++;
+       printf("Rolling over to new log\n");
+      }
+      else{
+        printf("Found %d entries\n",line_num);
+        current_log_num--;
+        lines_written = line_num;
+      }
+
+    }
+    lines_written = 0;
+    current_log_num++;
     arr_num = 0;
     return;
   }
@@ -46,29 +73,10 @@ void pps_monitor(){
 
   pkt_times[arr_num++] = (unsigned long)time(NULL);
   if(arr_num == MAX_PPS_ENTRY){
-    int linecount = 0;
-    if(current_log_num == 0){
-        char temp_file_name[64];
-      sprintf(temp_file_name,"/usr/share/vigil/stats/pps/pps.log.%d.txt",current_log_num);    
-      int linecount = 0;
-      char ch;
-      FILE * fp = fopen(temp_file_name,"r");
-      if(fp == NULL){
-        linecount = MAX_PPS_ENTRY;
-        goto end;
-      }
-      while((ch = fgetc(fp)) != EOF){
-        if(ch == '\n') linecount++;
-      }
-      fclose(fp);
-      end:;
-    }
-    
-  
     FILE * output;
     char filename[64];
     
-    if(linecount >= MAX_PPS_ENTRY){
+    if(lines_written >= MAX_PPS_ENTRY){
       sprintf(filename,"/usr/share/vigil/stats/pps/pps.log.%d.txt",++current_log_num);  
       output = fopen(filename,"w");
     } else {
@@ -77,7 +85,7 @@ void pps_monitor(){
     }
 
 
-    
+    printf("%d\n",lines_written);
     printf("Dumping to %s\n",filename);
     unsigned long num_arr[24 * current_log_num];
     unsigned int nums[24 * current_log_num];
@@ -100,6 +108,9 @@ void pps_monitor(){
       fprintf(stdout,"%lu,%d\n",num_arr[i],nums[i]);
     }
     memset(&pkt_times,0,sizeof(pkt_times));
+    
+    if(lines_written >= MAX_PPS_ENTRY) lines_written = 0;
+    else lines_written += arr_num;
     arr_num = 0;
     fclose(output);
   }
