@@ -69,8 +69,8 @@ void pps_monitor(){
 
     // printf("%d\n",lines_written);
     printf("Dumping to %s\n",filename);
-    unsigned long  *num_arr = (unsigned long *)malloc(64*sizeof(unsigned long));
-    unsigned int   *nums    =  (unsigned int *)malloc(64*sizeof(unsigned int));
+    unsigned long  *num_arr = (unsigned long *)malloc(128*sizeof(unsigned long));
+    unsigned int   *nums    =  (unsigned int *)malloc(128*sizeof(unsigned int));
     int sec_loc = -1;
     long last_seen = 0;
     for(int i = 0; i < MAX_PPS_ENTRY; i++ ){

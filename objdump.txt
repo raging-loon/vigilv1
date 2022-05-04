@@ -51,17 +51,14 @@ Disassembly of section .note.gnu.build-id:
  3aa:	00 00                	add    BYTE PTR [rax],al
  3ac:	47                   	rex.RXB
  3ad:	4e 55                	rex.WRX push rbp
- 3af:	00 11                	add    BYTE PTR [rcx],dl
- 3b1:	55                   	push   rbp
- 3b2:	22 72 91             	and    dh,BYTE PTR [rdx-0x6f]
- 3b5:	0a 08                	or     cl,BYTE PTR [rax]
- 3b7:	26 27                	es (bad) 
- 3b9:	2c 3f                	sub    al,0x3f
- 3bb:	66 c7 c5 1c 87       	mov    bp,0x871c
- 3c0:	fa                   	cli    
- 3c1:	af                   	scas   eax,DWORD PTR es:[rdi]
- 3c2:	8c                   	.byte 0x8c
- 3c3:	90                   	nop
+ 3af:	00 87 14 e9 70 2f    	add    BYTE PTR [rdi+0x2f70e914],al
+ 3b5:	e6 b3                	out    0xb3,al
+ 3b7:	ac                   	lods   al,BYTE PTR ds:[rsi]
+ 3b8:	94                   	xchg   esp,eax
+ 3b9:	91                   	xchg   ecx,eax
+ 3ba:	84 8d 44 31 aa f3    	test   BYTE PTR [rbp-0xc55cebc],cl
+ 3c0:	b1 cb                	mov    cl,0xcb
+ 3c2:	38 f1                	cmp    cl,dh
 
 Disassembly of section .note.ABI-tag:
 
@@ -11993,10 +11990,10 @@ Disassembly of section .text:
     bb31:	48 8d 3d be 25 00 00 	lea    rdi,[rip+0x25be]        # e0f6 <_IO_stdin_used+0x20f6>
     bb38:	b8 00 00 00 00       	mov    eax,0x0
     bb3d:	e8 8e 69 ff ff       	call   24d0 <printf@plt>
-    bb42:	bf 00 02 00 00       	mov    edi,0x200
+    bb42:	bf 00 04 00 00       	mov    edi,0x400
     bb47:	e8 64 6a ff ff       	call   25b0 <malloc@plt>
     bb4c:	48 89 45 90          	mov    QWORD PTR [rbp-0x70],rax
-    bb50:	bf 00 01 00 00       	mov    edi,0x100
+    bb50:	bf 00 02 00 00       	mov    edi,0x200
     bb55:	e8 56 6a ff ff       	call   25b0 <malloc@plt>
     bb5a:	48 89 45 98          	mov    QWORD PTR [rbp-0x68],rax
     bb5e:	c7 85 74 ff ff ff ff 	mov    DWORD PTR [rbp-0x8c],0xffffffff
