@@ -21,6 +21,7 @@
 #include <string.h>
 #include <dirent.h>
 #define MAX_PPS_ENTRY      1024
+#define MAX_PPS_LOG_ENTRY  600
 void pps_monitor(){
   // static unsigned long last_pkt_time;
   // static unsigned long  *pkt_times = (unsigned long *)malloc(256);
@@ -57,7 +58,7 @@ void pps_monitor(){
     FILE * output;
     char filename[64];
     
-    if(lines_written >= MAX_PPS_ENTRY){
+    if(lines_written >= MAX_PPS_LOG_ENTRY){
       sprintf(filename,"/usr/share/vigil/stats/pps/pps.log.%d.txt",++current_log_num);  
 
       output = fopen(filename,"w");
@@ -93,7 +94,7 @@ void pps_monitor(){
     free(nums);
     memset(&pkt_times,0,sizeof(pkt_times));
     
-    if(lines_written >= MAX_PPS_ENTRY){
+    if(lines_written >= MAX_PPS_LOG_ENTRY){
       lines_written = 0;
       current_log_num++;
     }

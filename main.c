@@ -63,6 +63,8 @@ int main(int argc, char **argv){
   // print_mem_map();
   signal(SIGINT,sigint_processor);
   signal(SIGSEGV,crash_handler); 
+  signal(SIGABRT,crash_handler);
+  signal(SIGALRM,crash_handler);
   
   print_logo();
   print_cpu_info(); // purely for cosmetics
