@@ -111,7 +111,7 @@ vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			forward.o spi.o logging.o line_parser.o rule_init.o dp_size.o \
 			homenet.o tcp_chksum.o lua_engine.o ip6decode.o backtrace.o \
 			load_fn_map.o pps_monitor.o monitoring.o
-			
+	set environment MALLOC_CHECK_ 2
 	$(CC) -g -o vigil.exe $^ -l pcap -l pthread -l ssl -l crypto -l sqlite3 -l lua5.3
 	objdump -D vigil.exe -M intel > objdump.txt
 	python tools/gen_mem_map.py -f objdump.txt

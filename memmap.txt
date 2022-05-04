@@ -188,5 +188,5 @@ crash_handler b46a b70a
 offset_search b70f b778
 add_fn b779 b7e6
 load_fn_mem_map b7e7 b973
-pps_monitor b974 c034
-get_line_num c035 c071
+pps_monitor b974 bd5a
+get_line_num bd5b bd97

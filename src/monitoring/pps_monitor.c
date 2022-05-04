@@ -30,6 +30,7 @@ void pps_monitor(){
   static int lines_written;
 
   if(current_log_num == 0){
+    lines_written = 0;
     printf("Scanning for previous log files...\n");
     struct dirent * dir;
     DIR * dr = opendir("/usr/share/vigil/stats/pps/");
@@ -43,28 +44,8 @@ void pps_monitor(){
     closedir(dr);
 
     printf("Found %d log files\n",current_log_num);
-    lines_written = 0;
     
-    // if its still 0
-    if(current_log_num != 0){
-      char filename[64];
-      sprintf(filename,"/usr/share/vigil/stats/pps/pps.log.%d.txt",current_log_num);
-      printf("Reading most recent log file: %s\n",filename);
-      FILE * fp = fopen(filename,"r");
-  
-      int line_num = get_line_num(fp);
-      if(line_num >= MAX_PPS_ENTRY){
-       current_log_num++;
-       printf("Rolling over to new log\n");
-      }
-      else{
-        printf("Found %d entries\n",line_num);
-        current_log_num--;
-        lines_written = line_num;
-      }
-
-    }
-    lines_written = 0;
+    
     current_log_num++;
     arr_num = 0;
     return;
@@ -78,6 +59,7 @@ void pps_monitor(){
     
     if(lines_written >= MAX_PPS_ENTRY){
       sprintf(filename,"/usr/share/vigil/stats/pps/pps.log.%d.txt",++current_log_num);  
+
       output = fopen(filename,"w");
     } else {
       sprintf(filename,"/usr/share/vigil/stats/pps/pps.log.%d.txt",current_log_num);
@@ -85,12 +67,12 @@ void pps_monitor(){
     }
 
 
-    printf("%d\n",lines_written);
+    // printf("%d\n",lines_written);
     printf("Dumping to %s\n",filename);
-    unsigned long num_arr[24 * current_log_num];
-    unsigned int nums[24 * current_log_num];
+    unsigned long  *num_arr = (unsigned long *)malloc(64*sizeof(unsigned long));
+    unsigned int   *nums    =  (unsigned int *)malloc(64*sizeof(unsigned int));
     int sec_loc = -1;
-    unsigned long last_seen = 0;
+    long last_seen = 0;
     for(int i = 0; i < MAX_PPS_ENTRY; i++ ){
       if(last_seen == pkt_times[i]){
         nums[sec_loc]++;
@@ -105,12 +87,17 @@ void pps_monitor(){
     }
     for(int i = 0; i < sec_loc; i++){
       fprintf(output,"%lu,%d\n",num_arr[i], nums[i]);
-      fprintf(stdout,"%lu,%d\n",num_arr[i],nums[i]);
+      // fprintf(stdout,"%lu,%d\n",num_arr[i],nums[i]);
     }
+    free(num_arr);
+    free(nums);
     memset(&pkt_times,0,sizeof(pkt_times));
     
-    if(lines_written >= MAX_PPS_ENTRY) lines_written = 0;
-    else lines_written += arr_num;
+    if(lines_written >= MAX_PPS_ENTRY){
+      lines_written = 0;
+      current_log_num++;
+    }
+    else lines_written += sec_loc;
     arr_num = 0;
     fclose(output);
   }
