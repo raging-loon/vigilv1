@@ -232,6 +232,7 @@ void rule_parser(const char * __filename){
     } 
   }
   if(debug_mode) printf("Finished parsing %s\n",filename);
+  fclose(fp);
 }
 
 void deny_conf_parser(char * file){
