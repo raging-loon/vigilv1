@@ -1,6 +1,3 @@
-[submodule "nsh"]
-	path = nsh
-	url = http://github.com/raging-loon/nsh
-[submodule "NLog"]
-	path = NLog
-	url = http://github.com/raging-loon/NLog
+[submodule "python-vigil"]
+	path = python-vigil
+	url = http://github.com/raging-loon/python-vigil
