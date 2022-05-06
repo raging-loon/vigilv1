@@ -190,7 +190,7 @@ void sigint_processor(int signal){
 
 
 
-static void print_help_and_exit(){
+void print_help_and_exit(){
   printf("VIGIL UTM %s\n"
          "\t-d: debug mode\n"
          "\t-h: display this message\n"
@@ -201,7 +201,7 @@ static void print_help_and_exit(){
 }
 
 
-static void print_cpu_info(){
+void print_cpu_info(){
   FILE * cpuinfo = fopen("/proc/cpuinfo","rb");
   char * line = 0;
   size_t sz = 0;
@@ -226,7 +226,7 @@ static void print_cpu_info(){
   fclose(cpuinfo);
 }
 
-static void print_logo(){
+void print_logo(){
   printf(
     "██    ██ ██  ██████  ██ ██\n"     
     "██    ██ ██ ██       ██ ██\n"     

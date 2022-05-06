@@ -20,7 +20,7 @@
 int main(int, char **);
 
 void sigint_processor(int);
-static void print_help_and_exit();
-static void print_cpu_info();
-static void print_logo();
+void print_help_and_exit();
+void print_cpu_info();
+void print_logo();
 #endif /* __MAIN_VIGIL_H */

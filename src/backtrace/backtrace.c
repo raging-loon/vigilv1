@@ -72,8 +72,8 @@ void crash_handler(int sig){
   printf("Register Dump:\n");
   printf("[RAX] = 0x%02x\n",r_rax);
   printf("[RBX] = 0x%02x\n",r_rbx);
-  printf("[RCX] = 0x%02x\n",r_rbx);
-  printf("[RDX] = 0x%02x\n",r_rcx);
+  printf("[RCX] = 0x%02x\n",r_rcx);
+  printf("[RDX] = 0x%02x\n",r_rdx);
   printf("[RSP] = 0x%02x\n",r_rsp);
   printf("[RBP] = 0x%02x\n",r_rbp);
 
