@@ -53,7 +53,6 @@ void pps_monitor(){
   }
 
 
-  pkt_times[arr_num++] = (unsigned long)time(NULL);
   if(arr_num == MAX_PPS_ENTRY){
     FILE * output;
     char filename[64];
@@ -70,7 +69,7 @@ void pps_monitor(){
 
     // printf("%d\n",lines_written);
     printf("Dumping to %s\n",filename);
-    unsigned long  *num_arr = (unsigned long *)malloc(128*sizeof(unsigned long));
+    unsigned long  *num_arr = (unsigned long *)malloc(256*sizeof(unsigned long));
     unsigned int   *nums    =  (unsigned int *)malloc(128*sizeof(unsigned int));
     int sec_loc = -1;
     long last_seen = 0;
@@ -102,5 +101,8 @@ void pps_monitor(){
     arr_num = 0;
     fclose(output);
   }
+  // printf("Before memory corruption\n");
+  pkt_times[arr_num++] = (unsigned long)time(NULL);
+
 
 }
