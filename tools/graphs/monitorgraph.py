@@ -29,11 +29,21 @@ for i in open(args.file):
   xpoints = numpy.append(xpoints,datetime.fromtimestamp(int(str_arr[0])))
   ypoints = numpy.append(ypoints,int(str_arr[1]))
 
-  
+select_times = []
+
+length = 0
+if(len(xpoints) % 2 == 0):
+  length = len(xpoints)
+else:
+  length = len(xpoints) + 1
+
+
 
 
 plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S'))
 plt.gca().xaxis.set_major_locator(mdates.DayLocator())
+plt.gca().xaxis.set_visible(False);
 plt.gca().set_xticks(xpoints)
+
 plt.plot(xpoints,ypoints)
 plt.show()
