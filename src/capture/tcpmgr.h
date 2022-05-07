@@ -24,7 +24,7 @@
 #define FIN_ACK_SET(X,Y) (X && Y)
 #define SYN_ACK_SET(X,Y) (X && Y)
 #define RST_ACK_SET(X,Y) (X && Y)
-void ip6_tcp_decode();
+void ip6_tcp_decode(const unsigned char *, struct rule_data *, const struct pcap_pkthdr *);
 
 void ip4_tcp_decode(const unsigned char *,struct rule_data *,const struct pcap_pkthdr *);
 

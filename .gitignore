@@ -35,4 +35,6 @@ z
 .vscode/
 liblua/*
 objdump.txt
+memmap.txt
+objdump.txt
 

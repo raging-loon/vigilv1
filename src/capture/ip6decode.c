@@ -3,9 +3,11 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "../filter/parsing/rule.h"
 #include <netinet/ether.h>
 #include "icmpdsct.h"
 #include <arpa/inet.h>
+#include "../../globals.h"
 #include "../utils.h"
 
 void ip6decode(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
@@ -19,12 +21,14 @@ void ip6decode(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
   // printf("src=%p dst=%p",ipv6_hdr->srcaddr,ipv6_hdr->dstaddr);
   // printf("src=%s dst=%s\n", 
                       // src_ip6,dest_ip6);
+  struct rule_data rdata;
   switch(ipv6_hdr->n_hdr){
     case 0:{
       ip6_icmp_decode(pkt,src_ip6,dest_ip6);
       break;
     }
     default:
+      if(packet_print)
       printf("IPv6 %s -> %s Protocol Number = %d\n",src_ip6,dest_ip6,ipv6_hdr->n_hdr);
       break;
   }
