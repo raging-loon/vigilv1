@@ -27,6 +27,12 @@ cp spi.db /usr/share/vigil/
 mkdir /usr/share/vigil/stats/
 mkdir /usr/share/vigil/stats/pps/
 
-cd ../
+# cd ../
 make
 cp memmap.txt /usr/share/vigil
+
+openssl genrsa -out privkey.pem 2048
+openssl rsa -in privkey.pem -pubout -out pubkey.crt
+openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in privkey.pem -out pkcs8.key
+mkdir /etc/vigil/keys/
+mv privkey.pem pubkey.crt pkcs8.key /etc/vigil/keys
