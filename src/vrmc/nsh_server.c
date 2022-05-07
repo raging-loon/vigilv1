@@ -91,7 +91,7 @@ static void *actually_start_nsh_server(){
 	}
 
 }
-static void * accept_cmd(void * args){
+static void accept_cmd(void * args){
 	connect_t * connection = args;
 	static __thread char buffer[1024] = {0};
 	while(true){
@@ -109,94 +109,3 @@ static void * accept_cmd(void * args){
 	close(connection->file_desc);
 
 }
-/*
-static bool nsh_do_login(int fd,const char * rhost){
-	int len_read;
-	const char * del = ":";
-	char username[32];
-	char password[32];
-	char * passwd_ptr;
-	send(fd,"VIGIL Login Shell\r\n",19,0);
-	
-	send(fd,"Username: ",11,0);
-	len_read = read(fd,username,16);
-	send(fd,"Password: ",11,0);
-	rnstrip((char *)&username);
-	len_read = read(fd,&password,16); //lgtm [cpp/cleartext-transmission]
-	rnstrip((char *)&password);
-	passwd_ptr = (char *)&password;
-	// printf("%s:%s\n",username,password);
-	FILE * fp = fopen("/etc/vigil/passwd","r");
-	if(fp == NULL){
-		printf("Failed to open password file\n");
-		return false;
-	}
-	char * line = NULL;
-	size_t pos, len = 0;
-	time_t t = time(NULL);
-  struct tm __time = *localtime(&t);
-  char nowtime[64];
-	
-  sprintf(nowtime,"%d-%02d-%02d %02d:%02d:%02d",
-          __time.tm_year + 1900,
-          __time.tm_mon + 1,
-          __time.tm_mday,
-          __time.tm_hour,
-          __time.tm_min,
-          __time.tm_sec);
-						
-	while((pos = getline(&line,&len,fp)) != -1){
-		SHA512_CTX ctx;
-		unsigned char real_hash[SHA512_DIGEST_LENGTH * 2];
-		char temp_password[65];
-		unsigned char temp_username[16];
-		unsigned char hash[SHA512_DIGEST_LENGTH];
-		memset(&hash,0,sizeof(hash));
-		memset(&ctx,0,sizeof(ctx));
-		memset(&real_hash,0,sizeof(real_hash));
-		
-		rnstrip(line);
-		char * ptr = strtok(line,del);
-		strcpy(temp_username,ptr);
-		
-		if(strcmp(username,temp_username) != 0){
-			continue;
-		}
-
-		ptr = strtok(NULL,del);
-		strcpy(temp_password,ptr);
-		// printf("%s\n",passwd_ptr);
-		printf("%s\n",temp_password);
-		SHA512_Init(&ctx);
-		SHA512_Update(&ctx,passwd_ptr,sizeof(passwd_ptr));
-		SHA512_Final((unsigned char *)&hash,&ctx);
-		
-		for(int i = 0; i < SHA512_DIGEST_LENGTH * 2; i++){
-			sprintf(real_hash + (i * 2),"%02x",hash[i]);
-		}
-
-		printf("%s\n",real_hash);
-
-		if(strncmp(real_hash,temp_password,64) == 0){
-			FILE * loginfp = fopen("/var/log/vigil/login.log","a");
-			
-			char logmessage[128];
-			sprintf(logmessage,"Successful login for %s at %s from %s\n",username,nowtime,rhost);
-			fputs(logmessage,loginfp);
-			fclose(loginfp);
-			if(line) free(line);
-			fclose(fp);
-			return true;
-		}
-	}
-	FILE * loginfp = fopen("/var/log/vigil/login.log","a");
-	char logmessage[128];
-	sprintf(logmessage,"Failed login for %s at %s from %s\n",username,nowtime,rhost);
-	fputs(logmessage,loginfp);
-	if(line) free(line);
-	fclose(fp);
-	fclose(loginfp);
-	return false;
-
-}
-*/

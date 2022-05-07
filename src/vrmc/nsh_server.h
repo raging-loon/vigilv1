@@ -23,13 +23,13 @@
 typedef struct{
   int file_desc;
   struct sockaddr_in * __socket;
-  
+  char sym_key[1024];
 } connect_t;
 
 void start_nsh_server();
 
 // thread
-static void *actually_start_nsh_server();
-static void *accept_cmd(void *);
+static void actually_start_nsh_server();
+static void accept_cmd(void *);
 // static bool nsh_do_login(int,const char *);
 #endif /* NSH_SERVER_H */ 
