@@ -4,6 +4,11 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#include <netinet/in.h>
+#include "../../globals.h"
+#include "../utils.h"
 
 void start_vrmc_server(){
   pthread_t vthrd;
@@ -40,6 +45,44 @@ void __start_vrmc_server(){
     exit(EXIT_FAILURE);  
   }
 
-   
+  while(true){
+    int csock;
+    if((csock = accept(fd,(struct sockaddr*)&addr,(socklen_t *)&addrlen)) < 0){
+      printf("Failed to accept client at %s\n",get_formated_time());
 
+    } else {
+
+      connect_t cnct_ptr;
+      cnct_ptr.fd = fd;
+      pthread_t client_thread;
+      pthread_create(&client_thread,NULL,&handle_client,&cnct_ptr);
+      // pthread_join(&client_thread,NULL);
+    }
+  }
+
+}
+
+void handle_client(void * cptr){
+  connect_t * cnx = (connect_t*)cptr;
+  unsigned int stage = 0;
+  version_exchange(cnx);
+  
+  while(true){
+    //
+  }
+  close(cnx->fd);
+}
+
+void version_exchange(connect_t * cnx){
+  send(cnx->fd,VERSION,strlen(VERSION),0);
+  printf("Here\n");
+  char buffer[1024];
+  int len_read = read(cnx->fd,buffer,1024);
+  if(len_read <= 0){
+    close(cnx->fd);
+  } else{
+    // check 
+    return;
+  }
+  close(cnx->fd);
 }

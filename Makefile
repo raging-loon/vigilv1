@@ -105,7 +105,7 @@ monitoring.o:
 
 vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o print_utils.o\
-			alerts.o packet_parser.o rule_parser.o rule.o main.o nsh_server.o\
+			alerts.o packet_parser.o rule_parser.o rule.o main.o vrmc.o\
 			watchlist.o wclean.o arpcache.o tls.o process_opcode.o\
 			update_db.o http_disect.o dns_disect.o ftp-disect.o  debug.o\
 			forward.o spi.o logging.o line_parser.o rule_init.o dp_size.o \

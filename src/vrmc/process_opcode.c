@@ -34,7 +34,7 @@ void process_opcode(struct vrmc_ops * ops, connect_t * c){
       };
       struct v_info v = {VOPCODE_GET_VERSION, VERSION_NUM};
       unsigned char* bytes = (unsigned char *)&v;
-      send(c->file_desc,bytes,4,0);
+      send(c->fd,bytes,4,0);
       break;
     }
   }
