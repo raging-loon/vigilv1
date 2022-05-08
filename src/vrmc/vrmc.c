@@ -22,5 +22,24 @@ void __start_vrmc_server(){
     exit(EXIT_FAILURE);
   }
 
+  if(setsockopt(fd,SOL_SOCKET,SO_REUSEADDR, &addrlen,sizeof(addrlen))){
+    perror("vrmc.c: failed setsockopt");
+    exit(EXIT_FAILURE);
+  }
+  addr.sin_family = AF_INET;
+  addr.sin_addr.s_addr = htonl(INADDR_ANY);
+  addr.sin_port = htons(641);
+
+  if(bind(fd, (struct sockaddr*)&addr,sizeof(addr)) < 0){
+    perror("vrmc.c: failed socket binding");
+    exit(EXIT_FAILURE);
+  }
+
+  if(listen(fd,5) < 0){
+    perror("vrmc.c: listen");
+    exit(EXIT_FAILURE);  
+  }
+
+   
 
 }

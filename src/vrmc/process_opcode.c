@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-#include "nsh_server.h"
+#include "vrmc.h"
 #include "vrmc.h"
 #include "opcodes.h"
 #include <arpa/inet.h>

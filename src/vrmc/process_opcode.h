@@ -18,7 +18,7 @@
 #define PROCESS_OPCODE_H
 #include "opcodes.h"
 #include "vrmc.h"
-#include "nsh_server.h"
+#include "vrmc.h"
 void process_opcode(struct vrmc_ops *, connect_t *);
 
 

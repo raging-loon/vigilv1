@@ -6,6 +6,11 @@ struct vrmc_ops{
   uint8_t opcode;
 };
 
+typedef struct{
+  int fd;
+  char sym_key[1024];
+} connect_t;
+
 void start_vrmc_server();
 void __start_vrmc_server();
 

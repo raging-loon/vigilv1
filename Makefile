@@ -48,8 +48,8 @@ packet_parser.o:
 #	$(CC) $(CFLAGS) -c src/filter/parsing/rule_parser.c
 rule.o:
 	$(CC) $(CFLAGS) -c src/filter/parsing/rule.c 
-nsh_server.o:
-	$(CC) $(CFLAGS) -c src/vrmc/nsh_server.c 
+vrmc.o:
+	$(CC) $(CFLAGS) -c src/vrmc/vrmc.c 
 
 watchlist.o:
 	$(CC) $(CFLAGS) -c src/statistics/watchlist.c 
