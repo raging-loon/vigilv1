@@ -44,7 +44,7 @@ void __start_vrmc_server();
   if client was not correctly authenticated, server will send opcode saying so nd terminate the connection
 
 */
-
+#define EX_STAGE_VERSION    0x01
 void version_exchange(connect_t *);
 void handle_client(void *);
 

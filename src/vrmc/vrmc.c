@@ -65,6 +65,8 @@ void __start_vrmc_server(){
 void handle_client(void * cptr){
   connect_t * cnx = (connect_t*)cptr;
   unsigned int stage = 0;
+
+
   version_exchange(cnx);
   
   while(true){
