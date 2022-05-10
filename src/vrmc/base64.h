@@ -15,8 +15,8 @@ static char encoding_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
 static char * decoding_table = NULL;
 static int mod_table[] = {0,2,1};
 
-char * base64_encode(const unsigned char * data, size_t input_len, size_t * output_len);
-unsigned char * base64_decode(const char * data, size_t input_len, size_t * output_len);
+char * base64_encode(const unsigned char * data, size_t input_len);
+unsigned char * base64_decode(const char * data, size_t input_len);
 void build_decoding_table();
 void base64_cleanup();
 #endif /* BASE64_H */
