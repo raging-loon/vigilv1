@@ -36,7 +36,7 @@ void read_pub_key(){
   }
   pubkey = base64_decode(temp_pubkey,strlen(temp_pubkey));
   pubkey_len = strlen(temp_pubkey) / 4 * 3;
-  printf("%02x",pubkey);
+  // printf("%02x",pubkey);
   fclose(f_pubkey);
 
 }
