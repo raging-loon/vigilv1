@@ -56,5 +56,5 @@ void __start_vrmc_server();
 
 void version_exchange(connect_t *);
 void handle_client(void *);
-
+void vkex(connect_t *);
 #endif /* VRMC_H */
