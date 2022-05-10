@@ -13,6 +13,10 @@
 #include <unistd.h>
 #include "../utils.h"
 
+char pubkey[1024];
+char privkey[2048];
+
+
 void start_vrmc_server(){
   pthread_t vthrd;
   pthread_create(&vthrd,NULL,&__start_vrmc_server,NULL);
@@ -79,12 +83,11 @@ void handle_client(void * cptr){
 
 void version_exchange(connect_t * cnx){
   send(cnx->fd,VERSION,strlen(VERSION),0);
-  printf("Here\n");
+
   char buffer[1024];
   int len_read = read(cnx->fd,buffer,1024);
-  printf("Recvd: %s\n",buffer);
   if(len_read <= 0){
-    return;
+    close(cnx->fd);
   } else{
 
     return;

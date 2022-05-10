@@ -7,6 +7,10 @@
 #define STAGE_SMY_KEX     0x03
 #define STAGE_RTR         0x04
 
+extern char pubkey[1024];
+extern char privkey[2048];
+
+
 struct vrmc_ops{
   uint8_t opcode;
 };
