@@ -4,6 +4,8 @@
 #include <sys/socket.h>
 #include "../../globals.h"
 #include <arpa/inet.h>
+#include <netdb.h>
+#include <sys/types.h>
 
 void handle_client(void * cptr){
   connect_t * cnx = (connect_t*)cptr;

@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-
+/* Everything is this file is a modified version of what was found on stackoverflow*/
 char * base64_encode(const unsigned char * data, size_t input_len){
   int output_len = 4 *((input_len + 2) / 3);
 
