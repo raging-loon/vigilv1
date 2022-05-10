@@ -14,14 +14,14 @@
 #include <unistd.h>
 #include "../utils.h"
 
-unsigned char pubkey[1024];
-unsigned char privkey[2048];
+unsigned char * pubkey;
+unsigned char * privkey;
 
-void read_keys(){
+void read_pub_key(){
+  pubkey = (unsigned char *)malloc(1024);
   memset(&pubkey,0,sizeof(pubkey));
-  memset(&privkey,0,sizeof(privkey));
   char temp_pubkey[1024] = {0};
-  char temp_privkey[2048] = {0};
+
   
   FILE * f_pubkey = fopen("/etc/vigil/keys/pubkey.crt","r");
   size_t pos,len;
@@ -32,14 +32,31 @@ void read_keys(){
     line[strcspn(line,"\n")] = 0;
     strcat(&temp_pubkey,line);
   }
-  sprintf(pubkey,"%s",base64_decode(temp_pubkey,strlen(temp_pubkey)));
-  printf("%s",pubkey);
+  pubkey = base64_decode(temp_pubkey,strlen(temp_pubkey));
+  printf("%02x",pubkey);
   fclose(f_pubkey);
+
+}
+
+void read_private_key(){
+  privkey = (unsigned char *)malloc(2048);
+  memset(&privkey,0,sizeof(privkey));
+  char temp_privkey[2048] = {0};
+  FILE * f_privkey = fopen("/etc/vigil/keys/privkey.pem","r");
+  char * line = NULL;
+  size_t pos, len;
+  while((pos = getline(&line,&len,f_privkey)) != -1){
+    if(strloc(line,'-') != -1) continue;
+    line[strcspn(line,"\n")] = 0;
+    strcat(&temp_privkey,line);
+  }
+  privkey = base64_decode(temp_privkey,strlen(temp_privkey));
+  fclose(f_privkey);
 }
 
 
 void start_vrmc_server(){
-  read_keys();
+  read_pub_key();
   pthread_t vthrd;
   pthread_create(&vthrd,NULL,&__start_vrmc_server,NULL);
   

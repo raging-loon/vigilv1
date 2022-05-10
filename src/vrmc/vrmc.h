@@ -7,8 +7,8 @@
 #define STAGE_SMY_KEX     0x03
 #define STAGE_RTR         0x04
 
-extern unsigned char pubkey[1024];
-extern unsigned char privkey[2048];
+extern unsigned char *pubkey;
+extern unsigned char *privkey;
 
 
 struct vrmc_ops{
@@ -56,6 +56,7 @@ void __start_vrmc_server();
 
 void version_exchange(connect_t *);
 void handle_client(void *);
-void read_keys();
+void read_pub_key();
+void read_private_key();
 void vkex(connect_t *);
 #endif /* VRMC_H */
