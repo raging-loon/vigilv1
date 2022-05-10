@@ -16,6 +16,8 @@
 
 unsigned char * pubkey;
 unsigned char * privkey;
+int pubkey_len;
+int privkey_len;
 
 void read_pub_key(){
   pubkey = (unsigned char *)malloc(1024);
@@ -33,6 +35,7 @@ void read_pub_key(){
     strcat(&temp_pubkey,line);
   }
   pubkey = base64_decode(temp_pubkey,strlen(temp_pubkey));
+  pubkey_len = strlen(temp_pubkey) / 4 * 3;
   printf("%02x",pubkey);
   fclose(f_pubkey);
 
@@ -51,6 +54,7 @@ void read_private_key(){
     strcat(&temp_privkey,line);
   }
   privkey = base64_decode(temp_privkey,strlen(temp_privkey));
+  privkey_len = strlen(temp_privkey) / 4 * 3;
   fclose(f_privkey);
 }
 void free_keys(){

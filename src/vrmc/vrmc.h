@@ -9,8 +9,8 @@
 
 extern unsigned char *pubkey;
 extern unsigned char *privkey;
-
-
+extern int pubkey_len;
+extern int privkey_len;
 struct vrmc_ops{
   uint8_t opcode;
 };
