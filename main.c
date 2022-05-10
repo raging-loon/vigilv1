@@ -183,6 +183,7 @@ void sigint_processor(int signal){
   for(int i = 0; i < thread_count; i++){
     pthread_join(threads[i],NULL);
   }
+  free_keys();
   __exit:
     exit(EXIT_SUCCESS);
 }

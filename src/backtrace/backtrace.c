@@ -21,6 +21,7 @@
 #include <string.h>
 #include <execinfo.h>
 #include "../utils.h"
+#include "../vrmc/vrmc.h"
 
 fn_mem_loc fn_mem_map[TOTAL_FN];
 int fn_num = 0;
@@ -38,7 +39,7 @@ void crash_handler(int sig){
   register unsigned int const r_rdx __asm__("rdx");
   register unsigned int const r_rsp __asm__("rsp");
   register unsigned int const r_rbp __asm__("rbp");
-  
+  free_keys();
   void * array[20];
   char ** strings;
   int size = backtrace(array, 20);

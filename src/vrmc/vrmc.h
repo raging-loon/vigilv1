@@ -59,4 +59,5 @@ void handle_client(void *);
 void read_pub_key();
 void read_private_key();
 void vkex(connect_t *);
+void free_keys();
 #endif /* VRMC_H */

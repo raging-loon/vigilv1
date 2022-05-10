@@ -53,7 +53,10 @@ void read_private_key(){
   privkey = base64_decode(temp_privkey,strlen(temp_privkey));
   fclose(f_privkey);
 }
-
+void free_keys(){
+  free(pubkey);
+  free(privkey);
+}
 
 void start_vrmc_server(){
   read_pub_key();
