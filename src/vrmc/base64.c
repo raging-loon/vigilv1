@@ -64,8 +64,3 @@ void build_decoding_table(){
 void base64_cleanup(){
   free(decoding_table);
 }
-
-int main(){
-  const char text[] = "Hello";
-  printf("%s\n", base64_encode(text,strlen(text) ));
-}

@@ -32,7 +32,8 @@ void read_keys(){
     line[strcspn(line,"\n")] = 0;
     strcat(&temp_pubkey,line);
   }
-  
+  sprintf(pubkey,"%s",base64_decode(temp_pubkey,strlen(temp_pubkey)));
+  printf("%s",pubkey);
   fclose(f_pubkey);
 }
 
