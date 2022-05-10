@@ -19,7 +19,7 @@
 #include "opcodes.h"
 #include "vrmc.h"
 #include "vrmc.h"
-void process_opcode(struct vrmc_ops *, connect_t *);
+void process_opcode(connect_t *);
 
 
 #endif /* PROCESS_OPCODE_H */

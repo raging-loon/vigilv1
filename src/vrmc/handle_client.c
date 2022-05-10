@@ -6,6 +6,7 @@
 #include "../../globals.h"
 #include <arpa/inet.h>
 #include <netdb.h>
+#include "process_opcode.h"
 #include <sys/types.h>
 static __thread char buffer[1024];
 
@@ -17,16 +18,21 @@ void handle_client(void * cptr){
   unsigned int stage = STAGE_VERSION;
   
   while(true){
+
     if(stage == STAGE_VERSION){
       version_exchange(cnx);
       stage = STAGE_KEX;
     } 
     else if(stage == STAGE_KEX){
       vkex(cnx);
-      stage = STAGE_KEX;
+      stage = STAGE_SMY_KEX;
+    } else{
+      process_opcode(cnx);
+      break;
     }
 
   }
+  printf("Closing connection\n");
   close(cnx->fd);
 }
 

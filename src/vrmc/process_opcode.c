@@ -20,22 +20,17 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include "../../globals.h"
+#include <arpa/inet.h>
+#include <netdb.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-// static __thread char buffer[1024];
-void process_opcode(struct vrmc_ops * ops, connect_t * c){
-  char buffer[1024];
-  switch(ops->opcode){
-    case VOPCODE_GET_VERSION:{ 
-      struct v_info{
-        unsigned int opcode: 8;
-        unsigned int version: 24;
-      };
-      struct v_info v = {VOPCODE_GET_VERSION, VERSION_NUM};
-      unsigned char* bytes = (unsigned char *)&v;
-      send(c->fd,bytes,4,0);
-      break;
-    }
+static __thread char buffer[1024];
+
+void process_opcode(connect_t * cnx){
+  while(true){
+    int len_read = read(cnx->fd,buffer,1024);
+    if(len_read <= 0) break;
+    
   }
 }
