@@ -10,6 +10,7 @@
 #include "../../globals.h"
 #include <netdb.h>
 #include <sys/types.h>
+#include "base64.h"
 #include <unistd.h>
 #include "../utils.h"
 
@@ -17,13 +18,21 @@ unsigned char pubkey[1024];
 unsigned char privkey[2048];
 
 void read_keys(){
+  memset(&pubkey,0,sizeof(pubkey));
+  memset(&privkey,0,sizeof(privkey));
+  char temp_pubkey[1024] = {0};
+  char temp_privkey[2048] = {0};
+  
   FILE * f_pubkey = fopen("/etc/vigil/keys/pubkey.crt","r");
   size_t pos,len;
   char * line = NULL;
-  while((pos = getline(&line,&len,f_pubkey)) != NULL){
-    if(strloc(line,'-') != -1) continue;
 
+  while((pos = getline(&line,&len,f_pubkey)) != -1){
+    if(strloc(line,'-') != -1) continue;
+    line[strcspn(line,"\n")] = 0;
+    strcat(&temp_pubkey,line);
   }
+  
   fclose(f_pubkey);
 }
 
