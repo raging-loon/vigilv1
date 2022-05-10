@@ -60,6 +60,7 @@ void free_keys(){
 
 void start_vrmc_server(){
   read_pub_key();
+  read_private_key();
   pthread_t vthrd;
   pthread_create(&vthrd,NULL,&__start_vrmc_server,NULL);
   
