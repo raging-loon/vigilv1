@@ -8,12 +8,15 @@
 #include <string.h>
 #include <netinet/in.h>
 #include "../../globals.h"
+#include <netdb.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include "../utils.h"
 
 void start_vrmc_server(){
   pthread_t vthrd;
   pthread_create(&vthrd,NULL,&__start_vrmc_server,NULL);
-
+  
 }
 
 void __start_vrmc_server(){
@@ -40,7 +43,7 @@ void __start_vrmc_server(){
     exit(EXIT_FAILURE);
   }
 
-  if(listen(fd,5) < 0){
+  if(listen(fd,2) < 0){
     perror("vrmc.c: listen");
     exit(EXIT_FAILURE);  
   }
@@ -53,7 +56,7 @@ void __start_vrmc_server(){
     } else {
 
       connect_t cnct_ptr;
-      cnct_ptr.fd = fd;
+      cnct_ptr.fd = csock;
       pthread_t client_thread;
       pthread_create(&client_thread,NULL,&handle_client,&cnct_ptr);
       // pthread_join(&client_thread,NULL);
@@ -65,9 +68,10 @@ void __start_vrmc_server(){
 void handle_client(void * cptr){
   connect_t * cnx = (connect_t*)cptr;
   unsigned int stage = STAGE_VERSION;
+  
   while(true){
     if(stage == STAGE_VERSION){
-      send(cnx->fd,"Hello",5,0);
+      version_exchange(cnx);
     }
   }
   close(cnx->fd);
