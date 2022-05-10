@@ -13,11 +13,23 @@
 #include <unistd.h>
 #include "../utils.h"
 
-char pubkey[1024];
-char privkey[2048];
+unsigned char pubkey[1024];
+unsigned char privkey[2048];
+
+void read_keys(){
+  FILE * f_pubkey = fopen("/etc/vigil/keys/pubkey.crt","r");
+  size_t pos,len;
+  char * line = NULL;
+  while((pos = getline(&line,&len,f_pubkey)) != NULL){
+    if(strloc(line,'-') != -1) continue;
+
+  }
+  fclose(f_pubkey);
+}
 
 
 void start_vrmc_server(){
+  read_keys();
   pthread_t vthrd;
   pthread_create(&vthrd,NULL,&__start_vrmc_server,NULL);
   
