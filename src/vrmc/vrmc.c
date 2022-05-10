@@ -64,13 +64,11 @@ void __start_vrmc_server(){
 
 void handle_client(void * cptr){
   connect_t * cnx = (connect_t*)cptr;
-  unsigned int stage = 0;
-
-
-  version_exchange(cnx);
-  
+  unsigned int stage = STAGE_VERSION;
   while(true){
-    //
+    if(stage == STAGE_VERSION){
+      send(cnx->fd,"Hello",5,0);
+    }
   }
   close(cnx->fd);
 }
@@ -80,11 +78,11 @@ void version_exchange(connect_t * cnx){
   printf("Here\n");
   char buffer[1024];
   int len_read = read(cnx->fd,buffer,1024);
+  printf("Recvd: %s\n",buffer);
   if(len_read <= 0){
-    close(cnx->fd);
+    return;
   } else{
-    // check 
+
     return;
   }
-  close(cnx->fd);
 }

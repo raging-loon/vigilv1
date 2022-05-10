@@ -2,6 +2,11 @@
 #define VRMC_H
 #include <stdint.h>
 
+#define STAGE_VERSION     0x01
+#define STAGE_KEX         0x02
+#define STAGE_SMY_KEX     0x03
+#define STAGE_RTR         0x04
+
 struct vrmc_ops{
   uint8_t opcode;
 };
@@ -44,7 +49,7 @@ void __start_vrmc_server();
   if client was not correctly authenticated, server will send opcode saying so nd terminate the connection
 
 */
-#define EX_STAGE_VERSION    0x01
+
 void version_exchange(connect_t *);
 void handle_client(void *);
 
