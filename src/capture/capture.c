@@ -18,7 +18,8 @@ void init_pcap_int(struct vpcap * vpkt,char * iface){
     exit(EXIT_FAILURE);
   }
   const int len = strnlen(vpkt->interface,IF_NAMESIZE);
-  // if(setsockopt(vpkt->fd,SOL_SOCKET,))
+  setsockopt(vpkt->fd,SOL_SOCKET,25,vpkt->interface,len);
+
 }
 void start_pcap_loop(struct vpcap *);
 
