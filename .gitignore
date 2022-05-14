@@ -38,3 +38,5 @@ objdump.txt
 memmap.txt
 objdump.txt
 
+CMakeCache.txt
+CMakeFiles/
