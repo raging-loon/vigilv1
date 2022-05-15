@@ -49,6 +49,7 @@
 #include <unistd.h>
 #include "src/statistics/arpcache.h"
 #include <time.h>
+#include "src/netif/netif.h"
 #include "src/filter/parsing/rule_init.h"
 #include "src/debug.h"
 #include "src/lua/lua_engine.h"
@@ -69,7 +70,7 @@ int main(int argc, char **argv){
   
   print_logo();
   print_cpu_info(); // purely for cosmetics
-  
+  detect_interfaces();
   printf("Running as PID %d\n",getpid());
   is_running = 1;
   pps_monitor(); // to set a baseline on the file number
@@ -145,7 +146,7 @@ int main(int argc, char **argv){
 
 
 void sigint_processor(int signal){
-
+  free_iface();
   int is_running = 0;
   // char * time = get_formated_time();
   char time[255];

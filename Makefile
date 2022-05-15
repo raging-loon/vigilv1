@@ -105,6 +105,10 @@ monitoring.o:
 	$(CC) $(CFLAGS) -c src/monitoring/monitoring.c
 base64.o:
 	$(CC) $(CFLAGS) -c src/vrmc/base64.c
+
+netif.o:
+	$(CC) $(CFLAGS) -c src/netif/netif.c
+
 vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o print_utils.o\
 			alerts.o packet_parser.o rule_parser.o rule.o main.o vrmc.o\
@@ -112,7 +116,8 @@ vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			update_db.o http_disect.o dns_disect.o ftp-disect.o  debug.o\
 			forward.o spi.o logging.o line_parser.o rule_init.o dp_size.o \
 			homenet.o tcp_chksum.o lua_engine.o ip6decode.o backtrace.o \
-			load_fn_map.o pps_monitor.o monitoring.o base64.o handle_client.o
+			load_fn_map.o pps_monitor.o monitoring.o base64.o handle_client.o \
+			netif.o
 	set environment MALLOC_CHECK_ 2
 	$(CC) -g -o vigil.exe $^  -l pcap -l pthread -l ssl -l crypto -l sqlite3 -l lua5.3
 	objdump -D vigil.exe -M intel > objdump.txt

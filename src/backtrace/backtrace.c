@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <execinfo.h>
+#include "../netif/netif.h"
 #include "../utils.h"
 #include "../vrmc/vrmc.h"
 
@@ -39,11 +40,13 @@ void crash_handler(int sig){
   register unsigned int const r_rdx __asm__("rdx");
   register unsigned int const r_rsp __asm__("rsp");
   register unsigned int const r_rbp __asm__("rbp");
-  free_keys();
+  
   void * array[20];
   char ** strings;
   int size = backtrace(array, 20);
   strings = backtrace_symbols(array,size);
+  free_keys();
+  free_iface();
   printf("Segmentation fault at %s: application crashed\n",get_formated_time());
   printf("Function backtrace:\n");
   if(strings != NULL){
