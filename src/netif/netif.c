@@ -20,19 +20,20 @@ void detect_interfaces(){
 
 
   struct ifaddrs * n_addr_ptr = ifaces;
-  while(ifaces){
+  while(n_addr_ptr){
     int addr_family = n_addr_ptr->ifa_addr->sa_family;
 
     if(addr_family == AF_INET || addr_family == AF_INET6){
       if(iface_detected != 0){
+        
         net_interfaces = (v_netif *)realloc(net_interfaces,sizeof(net_interfaces) * iface_detected);
       }
       v_netif * current_iface = (v_netif*)&net_interfaces[iface_detected];
       
       current_iface->a_family = addr_family;
-      strcpy(current_iface->if_name,n_addr_ptr->ifa_name);
+      strcpy(&current_iface->if_name,n_addr_ptr->ifa_name);
       getnameinfo(n_addr_ptr->ifa_addr,
-                  addr_family = AF_INET ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6),
+                  addr_family == AF_INET ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6),
                   current_iface->address,
                   sizeof(current_iface->address),
                   0,0, NI_NUMERICHOST
