@@ -13,7 +13,7 @@
 #include <netinet/in.h>
 
 void init_pcap_int(struct vpcap * vpkt,char * iface){
-  if((vpkt->fd = socket(AF_INET,SOCK_RAW,IPPROTO_RAW)) < 0){
+  if((vpkt->fd = socket(PF_INET,SOCK_RAW,IPPROTO_RAW)) == -1){
     perror("Failed to open raw socket");
     exit(EXIT_FAILURE);
   }
