@@ -21,5 +21,16 @@ void init_pcap_int(struct vpcap * vpkt,char * iface){
   setsockopt(vpkt->fd,SOL_SOCKET,25,vpkt->interface,len);
 
 }
-void start_pcap_loop(struct vpcap *);
+void start_pcap_loop(struct vpcap * vi){
+  pthread_t vi_thread;
+  pthread_create(&vi_thread,NULL,&__start_pcap_loop,vi);
+}
+
+void __start_pcap_loop(void * args){
+  struct vpcap * vi = (struct vpcap *)args;
+  vi->tid = pthread_self(); // get tid
+  size_t addr_len = sizeof(vi->sock);
+  
+
+}
 
