@@ -16,9 +16,10 @@ typedef struct{
 } v_netif;
 
 extern v_netif * net_interfaces;
-
+extern int iface_detected;
 
 // void start_interface_cap();
 void detect_interfaces();
 void free_iface();
+int iface_exists(const char *);
 #endif /* NET_IF_H */
