@@ -68,7 +68,7 @@ extern unsigned long last_clean_time;
 extern unsigned long clean_delay;
 
 extern int is_running;
-
+extern int global_rule_action;
 
 extern struct arp_entry arpcache[255];
 extern int arp_entries;

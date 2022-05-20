@@ -14,11 +14,10 @@
     - Email
   
 */
-void stdout_alert(const struct rule_data* __rule_data, const struct rule * __rule, int a_level){
+void format_msg(const struct rule_data* rdata, const struct rule * r, char * restrict buf){
   time_t t = time(NULL);
   struct tm __time = *localtime(&t);
   char time[64];
-  char message[256];
   sprintf(time,"%d-%02d-%02d %02d:%02d:%02d",
           __time.tm_year + 1900,
           __time.tm_mon + 1,
@@ -26,16 +25,23 @@ void stdout_alert(const struct rule_data* __rule_data, const struct rule * __rul
           __time.tm_hour,
           __time.tm_min,
           __time.tm_sec);
-  if(__rule_data->__protocol == R_ICMP){
-    sprintf(message,"%s %s %s -> %s\n", time, __rule->message, __rule_data->src_ip_addr, __rule_data->dest_ip_addr);
+  if(rdata->__protocol == R_ICMP){
+    sprintf(buf,"%s %s %s -> %s\n", time, r->message, rdata->src_ip_addr, rdata->dest_ip_addr);
   } else {
 
-    sprintf(message,"%s %s %s:%d -> %s:%d\n",time, __rule->message,
-	  													__rule_data->src_ip_addr,
-	  													__rule_data->src_port,
-	  													__rule_data->dest_ip_addr,
-	  													__rule_data->dest_port);
+    sprintf(buf,"%s %s %s:%d -> %s:%d\n",time, r->message,
+	  													rdata->src_ip_addr,
+	  													rdata->src_port,
+	  													rdata->dest_ip_addr,
+	  													rdata->dest_port);
   }
+        
+}
+
+
+void stdout_alert(const struct rule_data* __rule_data, const struct rule * __rule, int a_level){
+  char message[256];
+  format_msg(__rule_data,__rule,(char*)&message);
   printf("%s",message);
 //   ascii_hexdump(__rule_data->pkt,__rule_data->pkt_len);
   FILE * fp = fopen(def_log_file,"a");
