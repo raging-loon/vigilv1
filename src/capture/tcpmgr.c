@@ -15,9 +15,7 @@
  */
 
 #include "../engine/checksum/tcp_chksum.h"
-#include "../statistics/ip_addr_stat.h"
-#include "../statistics/ip_addr_stat.h"
-#include "../statistics/watchlist.h"
+
 #include "../filter/parsing/rule.h"
 #include "../filter/parsing/rule.h"
 #include "protocols/http_disect.h"
@@ -178,78 +176,6 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   }
   
   if(PSH_ACK_SET(psh_set,ack_set) && flags_set == 2) rdata->is_established = true;
-  /*
-  if(rst_set == true){
-    int watchlist_index;
-    if((watchlist_index = member_exists(rdata->dest_ip_addr)) != -1){
-      struct watchlist_member * w = &watchlist[watchlist_index];
-      
-      strcpy(w->ip_addr,rdata->dest_ip_addr);
-      w->psds.basic_ps_ds.rst_pkt_times[w->psds.basic_ps_ds.rst_pkt_recv++] = (unsigned long )time(NULL); 
-      if(w->psds.basic_ps_ds.rst_pkt_recv >= 30){
-        w->psds.basic_ps_ds.rst_pkt_recv = 30;
-        if(tcp_rst_portscan_detect(w)){
-          w->psds.basic_ps_ds.rst_pkt_recv = 0;
-          memset(&w->psds.basic_ps_ds.rst_pkt_times,0,sizeof(w->psds.basic_ps_ds.rst_pkt_times));
-        }
-
-          // printf("PORT SCAN DETECTED ");
-      }
-    } else {
-      struct watchlist_member * w = &watchlist[++watchlist_num];
-      // w->ip_addr = rdata->dest_ip_addr;
-      strcpy(w->ip_addr,rdata->dest_ip_addr);
-      w->psds.basic_ps_ds.rst_pkt_recv = 0;
-      w->psds.basic_ps_ds.rst_pkt_times[w->psds.basic_ps_ds.rst_pkt_recv++] = (unsigned long)time(NULL);
-    }
-
-  }*/
-  /* else if(fin_set){
-    
-    int watchlist_index;
-    if((watchlist_index = member_exists(rdata->dest_ip_addr)) != -1){
-      struct watchlist_member * w = &watchlist[watchlist_index];
-      strcpy(w->ip_addr,rdata->dest_ip_addr);
-      w->psds.fin_data_set.fin_pkt_times[w->psds.fin_data_set.fin_pkt_recv++] = (unsigned long)time(NULL);
-      if(w->psds.fin_data_set.fin_pkt_recv >= 30){
-        w->psds.fin_data_set.fin_pkt_recv = 30;
-        if(fin_rst_portscan_detect(w)){
-          w->psds.fin_data_set.fin_pkt_recv = 0;
-          memset(&w->psds.fin_data_set.fin_pkt_times,0,sizeof(w->psds.fin_data_set.fin_pkt_times));
-        }
-      }
-    } else {
-        struct watchlist_member * w = &watchlist[++watchlist_num];
-        strcpy(w->ip_addr,rdata->dest_ip_addr);
-        w->psds.fin_data_set.fin_pkt_recv = 0;
-        w->psds.fin_data_set.fin_pkt_times[w->psds.fin_data_set.fin_pkt_recv++] = (unsigned long)time(NULL);
-    }
-  }
-  
-
-  if(strict_nmap_host_alive_check == true &&
-     ((ack_set && IS_PORT_DEST_SRC(dest_port,src_port,80)) || 
-     (syn_set && IS_PORT_DEST_SRC(dest_port,src_port,443) ))){
-    // check which host is sending based on the port numbers
-    const char * target_ip;
-    if(dest_port > src_port) target_ip = dest_ip;
-    else target_ip = src_ip;
-    int watchlist_index;
-    if((watchlist_index = member_exists(target_ip)) != -1 ){
-      struct watchlist_member * w = &watchlist[watchlist_index];
-      if(w->nmap_watch_host_alive_watch.tcp_syn_sent == 0 && w->nmap_watch_host_alive_watch.num_done == 1){
-        w->nmap_watch_host_alive_watch.tcp_syn_sent = 1;
-        w->nmap_watch_host_alive_watch.num_done++;
-      } 
-      else if(w->nmap_watch_host_alive_watch.tcp_ack_sent == 0 && w->nmap_watch_host_alive_watch.num_done == 2){
-        w->nmap_watch_host_alive_watch.tcp_ack_sent = 1;
-        w->nmap_watch_host_alive_watch.num_done++;
-      } else {
-        // do nothing, this host isn't suspect of a nmap host alive scan yet.
-      }
-
-    }
-  }*/
 
 
   

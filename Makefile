@@ -8,8 +8,6 @@ globals.o:
 	$(CC) $(CFLAGS) -c globals.c 
 main.o:
 	$(CC) $(CFLAGS) -c main.c 
-ip_addr_stat.o:
-	$(CC) $(CFLAGS) -c src/statistics/ip_addr_stat.c  
 tcp_chksum.o:
 	$(CC) $(CFLAGS) -c src/engine/checksum/tcp_chksum.c
 
@@ -51,10 +49,6 @@ rule.o:
 vrmc.o:
 	$(CC) $(CFLAGS) -c src/vrmc/vrmc.c 
 
-watchlist.o:
-	$(CC) $(CFLAGS) -c src/statistics/watchlist.c 
-wclean.o:
-	$(CC) $(CFLAGS) -c src/statistics/wclean.c 
 
 arpcache.o:
 	$(CC) $(CFLAGS) -c src/statistics/arpcache.c 

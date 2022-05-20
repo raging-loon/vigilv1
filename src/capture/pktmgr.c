@@ -25,7 +25,6 @@
 #include "../utils.h"
 #include "../logging.h"
 #include "l3pktmgr.h"
-#include "../statistics/wclean.h"
 #include "ip6decode.h"
 #include "../monitoring/monitoring.h"
 void pktmgr(unsigned char *user, const struct pcap_pkthdr *pkt_hdr, const unsigned char *pkt){

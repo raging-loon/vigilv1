@@ -25,11 +25,9 @@
 #include <string.h>
 #include "../packets/icmp6.h"
 #include "../packets/ip6hdr.h"
-#include "../statistics/ip_addr_stat.h"
 
 #include <netinet/ip.h>
 #include <netinet/icmp6.h>
-#include "../statistics/watchlist.h"
 #include "../packets/icmp4.h"
 #include "protocols.h"
 #include "../utils.h"

@@ -47,7 +47,7 @@
   - [] Add tasks
   - [] Add alerts
 - [] Remove junk code
-- [] Remove ip_addr_stat
+- [x] Remove ip_addr_stat
 - [] Add packet per second graphs
 - [] Update readme:
   - [] Add pictures

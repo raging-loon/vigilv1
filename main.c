@@ -34,14 +34,12 @@
 #include <stdlib.h>
 #include <sys/resource.h>
 #include <string.h>
-#include "src/statistics/wclean.h"
 #include "src/capture/pktmgr.h"
 #include <signal.h>
 #include "globals.h"
 #include <getopt.h>
 #include "main.h"
 #include "src/filter/parsing/rule_parser.h"
-#include "src/statistics/ip_addr_stat.h"
 #include "src/vrmc/vrmc.h"
 #include "src/utils.h"
 #include <pthread.h>
@@ -139,7 +137,6 @@ int main(int argc, char **argv){
   collect_scripts();
   start_vrmc_server();
   printf("Unecrypted NSH config server started: 127.0.0.1:641\n");
-  // start_wclean();
     pcap_loop(pcap_mgr,-1, pktmgr, NULL);
 }
 
