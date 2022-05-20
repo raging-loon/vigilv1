@@ -15,7 +15,6 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
-#include "../statistics/watchlist.h"
 #include <string.h>
 #include <time.h>
 #include "../../globals.h"

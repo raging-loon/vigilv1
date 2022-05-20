@@ -110,10 +110,10 @@ netif.o:
 	$(CC) $(CFLAGS) -c src/netif/netif.c
 
 vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
-			tcpmgr.o udpmgr.o igmp_dsct.o ip_addr_stat.o print_utils.o\
+			tcpmgr.o udpmgr.o igmp_dsct.o print_utils.o\
 			alerts.o packet_parser.o rule_parser.o rule.o main.o vrmc.o\
-			watchlist.o wclean.o arpcache.o tls.o process_opcode.o\
-			update_db.o http_disect.o dns_disect.o ftp-disect.o  debug.o\
+			arpcache.o tls.o process_opcode.o\
+			update_db.o http_disect.o dns_disect.o debug.o\
 			forward.o spi.o logging.o line_parser.o rule_init.o dp_size.o \
 			homenet.o tcp_chksum.o lua_engine.o ip6decode.o backtrace.o \
 			load_fn_map.o pps_monitor.o monitoring.o base64.o handle_client.o \

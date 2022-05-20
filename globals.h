@@ -16,14 +16,14 @@
 
 #ifndef GLOBALS_H
 #define GLOBALS_H
-#include "src/statistics/ip_addr_stat.h"
+// #include "src/statistics/ip_addr_stat.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include <pthread.h>
 #include "src/engine/spi.h"
 #include "src/filter/parsing/rule.h"
 #include "src/statistics/arpcache.h"
-#include "src/statistics/watchlist.h"
+// #include "src/statistics/watchlist.h"
 //    major.minor.patch
 #define VERSION "1.0.0"
 #define VERSION_NUM 0x010000
@@ -63,8 +63,8 @@ extern bool packet_print;
 extern struct blocked_ipv4 blocked_ipv4_addrs[32];
 extern int blk_ipv4_len;
 extern unsigned int pkt_counter;
-extern struct watchlist_member watchlist[128];
-extern int watchlist_num;
+// extern struct watchlist_member watchlist[128];
+// extern int watchlist_num;
 
 
 extern int strict_icmp_timestamp_req;

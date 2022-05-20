@@ -44,7 +44,6 @@
 #include "src/statistics/ip_addr_stat.h"
 #include "src/vrmc/vrmc.h"
 #include "src/utils.h"
-#include "src/statistics/watchlist.h"
 #include <pthread.h>
 #include <unistd.h>
 #include "src/statistics/arpcache.h"
@@ -152,22 +151,7 @@ void sigint_processor(int signal){
   char time[255];
   cb_get_formatted_time(time);
   printf("\nCaught signal %d at %s, exiting...\n", signal, time );
-  perror("");
-  if(!quiet_exit){
-
-    printf("Total Packets Caught: %d\n",total_pkt_captured);
-    printf("Statistics\nIp address    Count\n-----------------\n");
-    for(int i = 0; i <= watchlist_num; i++){
-      printf("%s\n\t\ttotal packets = %d\n\t\ttotal sent = %d\n\t\ttotal recv = %d"
-            "\n\t\tTCP sent = %d\n\t\tTCP recv = %d\n\t\t"
-            "UDP sent = %d\n\t\tUDP recv = %d\n\t\t"
-            "ICMP sent = %d\n\t\tICMP recv = %d\n\n",
-            watchlist[i].ip_addr,watchlist[i].count,watchlist[i].total_sent,watchlist[i].total_recv,
-            watchlist[i].tcp_sent, watchlist[i].tcp_recv,watchlist[i].udp_sent, watchlist[i].udp_recv,
-            watchlist[i].icmp_sent,watchlist[i].icmp_recv);
-    }
-    
-  }
+  
   FILE * fp = fopen("/usr/share/vigil/arpcache.csv","w");
   if(fp == NULL){
     printf("Cannot open /usr/share/vigil/arpcache.csv: printing arpcache to screen\n");

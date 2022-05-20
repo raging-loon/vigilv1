@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 #include "globals.h"
-#include "src/statistics/watchlist.h"
+// #include "src/statistics/watchlist.h"
 #include "src/statistics/arpcache.h"
 #include "src/engine/spi.h"
 #include "src/filter/parsing/rule.h"
@@ -29,7 +29,7 @@ int thread_count = 0;
 unsigned int total_pkt_captured = 0;
 int blk_ipv4_len = -1;
 int num_rules = -1;
-int watchlist_num = -1;
+// int watchlist_num = -1;
 int arp_entries = -1;
 int is_running;
 int spi_max = 200;
@@ -39,7 +39,7 @@ unsigned int pkt_counter;
 // info objects
 struct rule rules[MAX_RULES] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
 struct blocked_ipv4 blocked_ipv4_addrs[32];
-struct watchlist_member watchlist[128] = {0};
+// struct watchlist_member watchlist[128] = {0};
 struct arp_entry arpcache[255];
 char ip_addr[32];
 bool debug_mode;

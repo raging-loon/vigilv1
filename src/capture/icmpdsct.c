@@ -83,8 +83,8 @@ void ip6_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
 
 
 void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
-  add_ip_addr_or_inc_counter(rdata->src_ip_addr,true,ICMP);
-  add_ip_addr_or_inc_counter(rdata->dest_ip_addr,false,ICMP);
+  // add_ip_addr_or_inc_counter(rdata->src_ip_addr,true,ICMP);
+  // add_ip_addr_or_inc_counter(rdata->dest_ip_addr,false,ICMP);
   const char * src_ip = rdata->src_ip_addr;
   const char * dest_ip = rdata->dest_ip_addr;
   
@@ -95,47 +95,7 @@ void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
   rdata->icmp_header = icmp4;
   int len = rdata->pkt_len;
   rdata->dsize = rdata->pkt_len - ETH_HDR_SZ - sizeof(struct iphdr) - 8;
-  if(icmp4->type == 8 && strict_nmap_host_alive_check == true){
-    int watchlist_index;
-    if((watchlist_index = member_exists(rdata->src_ip_addr)) != -1){
-      struct watchlist_member * w = &watchlist[watchlist_index];
-      if(w->nmap_watch_host_alive_watch.num_done == 0){
-        w->nmap_watch_host_alive_watch.start_time = (unsigned long)time(NULL);
-        w->nmap_watch_host_alive_watch.icmp_echo_sent = 1;
-        w->nmap_watch_host_alive_watch.num_done++;
-      } 
-    } else {
-      struct watchlist_member * w = &watchlist[++watchlist_num];
-      strcpy(w->ip_addr,src_ip);
-      w->nmap_watch_host_alive_watch.start_time = (unsigned long)time(NULL);
-      w->nmap_watch_host_alive_watch.icmp_echo_sent = 1;
-      w->nmap_watch_host_alive_watch.num_done++;
-    }
-    
-  } else if(icmp4->type == 13 && (strict_icmp_timestamp_req == true || strict_nmap_host_alive_check == true)){
-    if(strict_icmp_timestamp_req){
-      printf("Time stamp request: %s -> %s(config specifies strict timestamp alerts)\n",src_ip,dest_ip);
-    }
-    if(strict_nmap_host_alive_check){
-      int watchlist_index;
-      if((watchlist_index = member_exists(src_ip)) != -1){
-        struct watchlist_member * w = &watchlist[watchlist_index];
-        if(w->nmap_watch_host_alive_watch.num_done != 3) goto stop;
-        else {
-          w->nmap_watch_host_alive_watch.end_time = (unsigned long)time(NULL);
-          if(w->nmap_watch_host_alive_watch.end_time - w->nmap_watch_host_alive_watch.start_time <= 308450){  
-            printf("Possible nmap host alive check %s -> %s; matched ICMP Echo, TCP SYN, TCP ACK, and ICMP Timestamp request\n",src_ip,dest_ip);
-            FILE * fp = fopen(def_log_file,"a");
-            char logmessage[180];
-            sprintf(logmessage,"Possible nmap host alive check %s -> %s at %s; matched ICMP Echo, TCP SYN, TCP ACK, and ICMP Timestamp request\n",src_ip,dest_ip,get_formated_time());
-            fputs(logmessage,fp);
-            fclose(fp);
-            memset(&w->nmap_watch_host_alive_watch,0,sizeof(w->nmap_watch_host_alive_watch));
-          }
-        }
-      }
-    }
-  }
+  
   stop:;
   rdata->__protocol = R_ICMP;
   rulemgr(rdata);

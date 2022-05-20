@@ -72,8 +72,8 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   rdata->pkt_len = rdata->pkt_len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4);
   const char * src_ip = rdata->src_ip_addr;
   const char * dest_ip = rdata->dest_ip_addr;
-  add_ip_addr_or_inc_counter(src_ip,true,TCP);
-  add_ip_addr_or_inc_counter(dest_ip,false, TCP);
+  // add_ip_addr_or_inc_counter(src_ip,true,TCP);
+  // add_ip_addr_or_inc_counter(dest_ip,false, TCP);
   unsigned int dest_port,  src_port;
   int flags_set = 0;
   bool rst_set = false;
@@ -178,7 +178,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
   }
   
   if(PSH_ACK_SET(psh_set,ack_set) && flags_set == 2) rdata->is_established = true;
-  
+  /*
   if(rst_set == true){
     int watchlist_index;
     if((watchlist_index = member_exists(rdata->dest_ip_addr)) != -1){
@@ -203,7 +203,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       w->psds.basic_ps_ds.rst_pkt_times[w->psds.basic_ps_ds.rst_pkt_recv++] = (unsigned long)time(NULL);
     }
 
-  }
+  }*/
   /* else if(fin_set){
     
     int watchlist_index;
@@ -225,7 +225,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
         w->psds.fin_data_set.fin_pkt_times[w->psds.fin_data_set.fin_pkt_recv++] = (unsigned long)time(NULL);
     }
   }
-  */
+  
 
   if(strict_nmap_host_alive_check == true &&
      ((ack_set && IS_PORT_DEST_SRC(dest_port,src_port,80)) || 
@@ -249,7 +249,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
       }
 
     }
-  }
+  }*/
 
 
   
@@ -257,9 +257,6 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const str
     if((PSH_ACK_SET(psh_set,ack_set) && !fin_set) && IS_PORT_DEST_SRC(dest_port,src_port,80)){
       http_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(struct __tcp) + 12,rdata);
     }
-  }
-  if(IS_PORT_DEST_SRC(dest_port,src_port,21)){
-    ftp_disect(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),rdata);
   }
   if((IS_PORT_DEST_SRC(dest_port,src_port,443)) && PSH_ACK_SET(psh_set,ack_set)){
     tls_decode(rdata->pkt,rdata,pkt_hdr);

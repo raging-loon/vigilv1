@@ -93,9 +93,9 @@ void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
   strncpy(src_ip, ipv4_ntoa(ip_header->saddr),sizeof(src_ip));
    // init both addresses;
   
-  init_member((const char *)&dest_ip);
-  init_member((const char *)&src_ip);
-  
+  // init_member((const char *)&dest_ip);
+  // init_member((const char *)&src_ip);
+  // 
   if(is_blocked_ipv4((const char *)&dest_ip)){
     char blockedmsg[1024];
     sprintf(blockedmsg,"%s Found blocked ipv4 address(dest): %s\n",get_formated_time(),dest_ip);
