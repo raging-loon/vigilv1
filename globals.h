@@ -83,13 +83,9 @@ extern bool quiet_exit;
 // extern pthread_t threads[64];
 
 extern int spi_max;
-
-
 extern char input_adapter[10];
 extern char output_adapter[10];
 extern int VIGIL_MODE;
-extern char local_ip[18];
-extern char def_gw[18];
 
 extern bool use_spi;
 extern void add_thread(pthread_t *);
@@ -100,5 +96,5 @@ extern uint32_t homenet;
 extern uint32_t homenetmask;
 
 extern bool in_test_mode;
-
+extern unsigned int global_alert_method;
 #endif /* GLOBALS_H */

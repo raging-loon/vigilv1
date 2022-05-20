@@ -7,6 +7,7 @@
 #include "token.h"
 #include "../../../globals.h"
 #include "dp_size.h"
+
 #include "../../utils.h"
 #include <stdio.h>
 
@@ -147,7 +148,7 @@ void line_parser(const char * line){
       if(data == false){
 
         if(strcmp(sub,"alert") == 0 && !parsing_msg_str && !parsing_target_str)
-          rdata->action = stdout_alert;
+          __asm__("nop"); // do nothing
         else if((strcmp(sub,"ICMP") == 0 || strcmp(sub,"ANY") == 0 || 
                  strcmp(sub,"TCP") == 0 || strcmp(sub,"UDP") == 0) && !parsing_target_str && !parsing_msg_str)
           assign_protocol(sub,rdata);
@@ -422,4 +423,22 @@ void line_parser(const char * line){
   }
   if(!gotname) 
     strcpy(rdata->rulename,"Untitled");
+}
+
+
+void set_alert_method(struct rule * r){
+  switch(global_alert_method){
+    case GAM_IPC:
+      r->action = ipc_msg_alrt;
+      break;
+    case GAM_STDOUT:
+      r->action = stdout_alert;
+      break;
+    case GAM_LOG:
+      r->action = log_alert;
+      break;
+    default:
+      printf("Unknown alert type: please submit a report. Defaulting to log_alert");
+      r->action = log_alert;
+  }
 }

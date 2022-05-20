@@ -4,6 +4,8 @@
 #include "../../../globals.h"
 #include "../../print_utils.h"
 #include <time.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
 /*
   *-*-*-*- alerts.c -*-*-*-*
   @purpose Alert administrators of events
@@ -41,12 +43,25 @@ void format_msg(const struct rule_data* rdata, const struct rule * r, char * res
 
 void stdout_alert(const struct rule_data* __rule_data, const struct rule * __rule, int a_level){
   char message[256];
-  format_msg(__rule_data,__rule,(char*)&message);
+  format_msg(__rule_data, __rule, (char*)&message);
   printf("%s",message);
 //   ascii_hexdump(__rule_data->pkt,__rule_data->pkt_len);
+}
+
+void ipc_msg_alrt(const struct rule_data * rdata, const struct rule * r, int a_level){
+  ipc_queue_mem mesg;
+  format_msg(rdata, r, (char*)&mesg.data);
+  key_t key = ftok("progfile",65);
+  
+  int msgid = msgget(key, 0666 | IPC_CREAT);
+  mesg.pid = getppid();
+  msgsnd(msgid,&mesg,sizeof(mesg),0);
+}
+
+void log_alert(const struct rule_data* rdata, const struct rule* r, int a_level){
+  char message[256];
+  format_msg(rdata,r,(char *)&message);
   FILE * fp = fopen(def_log_file,"a");
   fputs(message,fp);
   fclose(fp);
-
-
 }

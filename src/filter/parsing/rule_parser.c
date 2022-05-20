@@ -26,6 +26,7 @@
 #include "../../debug.h"
 #include "line_parser.h"
 #include "homenet.h"
+#include "../actions/alerts.h"
 #include "../../utils.h"
 static bool is_rule(const char *);
 static bool is_comment(const char * line);
@@ -179,6 +180,9 @@ void rule_library_parser(const char * alt_file){
       if(strcmp(line + 9, "external") == 0) vigil_location = EXTERNAL;
       else vigil_location = INTERNAL;
     }
+    else if(strncmp(line,"global_alert_method=",20) == 0){
+      set_gam(line + 20);
+    }
     else if(is_rule(line)){
       // printf("Parsing: %s\n",line);
       rule_parser(line);
@@ -273,4 +277,18 @@ void host_mon_parser(){
     exit(EXIT_FAILURE);
   }
   fclose(fp);
+}
+
+
+void set_gam(const char * val){
+  if(strcmp(val,"IPC") == 0 || strcmp(val,"ipc") == 0) 
+    global_alert_method = GAM_IPC;
+  else if(strcmp(val,"stdout") == 0)  
+    global_alert_method = GAM_STDOUT;
+  else if(strcmp(val,"log") == 0)
+    global_alert_method = GAM_LOG;
+  else{
+    printf("Unknown global alert method: %s\n",val);
+    exit(-1);
+  }
 }

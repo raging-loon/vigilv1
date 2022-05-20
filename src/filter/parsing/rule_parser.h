@@ -10,4 +10,7 @@ void host_mon_parser();
 // void test_main();
 void line_parser(const char *);
 static void get_protocol(const char *, struct rule * );
+
+void set_gam(const char *);
+
 #endif /* RULE_PARSER_H */ 
