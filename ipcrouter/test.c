@@ -16,7 +16,7 @@ int main()
 	int msgid;
 
 	// ftok to generate unique key
-	key = ftok("progfile", 65);
+	key = ftok("/usr/share/vigil/progfile", 'b');
 
 	// msgget creates a message queue
 	// and returns identifier

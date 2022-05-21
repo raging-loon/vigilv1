@@ -7,14 +7,12 @@
 // structure for message queue
 
 typedef struct{
-  pid_t pid;
-  unsigned int type;
   char data[256];
 } ipc_queue_mem;
 
 int main()
 {
-	key_t key = ftok("progfile", 65);
+	key_t key = ftok("/usr/share/vigil/progfile", 65);
 	int msgid;
 	msgid = msgget(key, 0666 | IPC_CREAT);
 	printf("%d\n",key);
