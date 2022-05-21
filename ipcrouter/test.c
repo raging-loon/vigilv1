@@ -6,8 +6,8 @@
 
 // structure for message queue
 struct mesg_buffer {
-	long mesg_type;
-	char mesg_text[100];
+	// long mesg_type;
+	char mesg_text[256];
 } message;
 
 int main()
@@ -16,14 +16,14 @@ int main()
 	int msgid;
 
 	// ftok to generate unique key
-	key = ftok("/usr/share/vigil/progfile", 'b');
-
+	key = ftok("/usr/share/vigil/progfile", 65);
+	printf("%d\n",key);
 	// msgget creates a message queue
 	// and returns identifier
 	while(1){
 
   msgid = msgget(key, 0666 | IPC_CREAT);
-	message.mesg_type = 1;
+	// message.mesg_type = 1;
 
 	printf("Write Data : ");
 	fgets(message.mesg_text,MAX,stdin);
