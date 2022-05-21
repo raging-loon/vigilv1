@@ -12,7 +12,7 @@ typedef struct{
 
 int main()
 {
-	key_t key = ftok("/usr/share/vigil/progfile", 65);
+	key_t key = ftok("progfile",'b');
 	int msgid;
 	msgid = msgget(key, 0666 | IPC_CREAT);
 	printf("%d\n",key);
