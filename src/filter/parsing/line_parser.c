@@ -118,6 +118,7 @@ void line_parser(const char * line){
   rdata->src = 0;
   rdata->dest = 0;
   void_rule(rdata);
+  set_alert_method(rdata);
   int chars_parsed = 0;
   char * parser;
   char * content;
@@ -429,6 +430,7 @@ void line_parser(const char * line){
 void set_alert_method(struct rule * r){
   switch(global_alert_method){
     case GAM_IPC:
+    
       r->action = ipc_msg_alrt;
       break;
     case GAM_STDOUT:

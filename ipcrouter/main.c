@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
+#include <stdint.h>
 
 // structure for message queue
 
 typedef struct{
   pid_t pid;
-  uint type;
+  unsigned int type;
   char data[256];
 } ipc_queue_mem;
 
@@ -15,10 +16,10 @@ int main()
 {
 	key_t key = ftok("progfile", 65);
 	int msgid;
-
+	msgid = msgget(key, 0666 | IPC_CREAT);
+	printf("%d\n",key);
   while(1){
     ipc_queue_mem message;
-	  msgid = msgget(key, 0666 | IPC_CREAT);
 	  msgrcv(msgid, &message, sizeof(message), 1, 0);
 	  printf("Data Received is : %s \n",			message.data);
   }

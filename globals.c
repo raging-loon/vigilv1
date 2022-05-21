@@ -20,7 +20,7 @@
 #include <pthread.h>
 // globals defined in @globals.h
 // config options
-extern unsigned int global_alert_method;
+unsigned int global_alert_method;
 bool demo_mode;
 int strict_icmp_timestamp_req;
 int strict_nmap_host_alive_check;

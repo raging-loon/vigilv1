@@ -281,8 +281,10 @@ void host_mon_parser(){
 
 
 void set_gam(const char * val){
-  if(strcmp(val,"IPC") == 0 || strcmp(val,"ipc") == 0) 
+  if(strcmp(val,"IPC") == 0 || strcmp(val,"ipc") == 0) {
+    printf("IPC\n");
     global_alert_method = GAM_IPC;
+  }
   else if(strcmp(val,"stdout") == 0)  
     global_alert_method = GAM_STDOUT;
   else if(strcmp(val,"log") == 0)

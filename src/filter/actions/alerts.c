@@ -52,8 +52,9 @@ void ipc_msg_alrt(const struct rule_data * rdata, const struct rule * r, int a_l
   ipc_queue_mem mesg;
   format_msg(rdata, r, (char*)&mesg.data);
   key_t key = ftok("progfile",65);
-  
+  printf("%d\n",key);
   int msgid = msgget(key, 0666 | IPC_CREAT);
+
   mesg.pid = getppid();
   msgsnd(msgid,&mesg,sizeof(mesg),0);
 }
