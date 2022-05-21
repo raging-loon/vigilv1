@@ -21,8 +21,7 @@ int main()
 		ipc_queue_mem message;
 		msgrcv(msgid, &message, sizeof(message), 1, 0);
 
-		printf("%s",
-					message.mesg_text);
+		printf("%s", message.mesg_text);
 	}
 
 	msgctl(msgid, IPC_RMID, NULL);
