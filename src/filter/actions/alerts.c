@@ -51,11 +51,12 @@ void stdout_alert(const struct rule_data* __rule_data, const struct rule * __rul
 void ipc_msg_alrt(const struct rule_data * rdata, const struct rule * r, int a_level){
   ipc_queue_mem mesg;
   format_msg(rdata, r, (char*)&mesg.data);
-  key_t key = ftok("progfile",65);
+  key_t key;
+  key = ftok("progfile",65);
   printf("%d\n",key);
   int msgid = msgget(key, 0666 | IPC_CREAT);
-
-  mesg.pid = getppid();
+  mesg.type = 1;
+  // mesg.pid = getppid();
   msgsnd(msgid,&mesg,sizeof(mesg),0);
 }
 

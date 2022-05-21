@@ -4,8 +4,9 @@
 #include <unistd.h>
 
 typedef struct{
-  pid_t pid;
-  uint type;
+  // pid_t pid;
+  // uint type;
+  long type;
   char data[256];
 } ipc_queue_mem;
 

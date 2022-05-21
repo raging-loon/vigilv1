@@ -1,5 +1,5 @@
 CC = gcc 
-CFLAGS = -Wdiscarded-qualifiers -Wall
+CFLAGS = -Wdiscarded-qualifiers 
 all: vigil clean
 
 print_utils.o:
