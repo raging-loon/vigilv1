@@ -17,7 +17,7 @@
 #include <stdarg.h>
 #include "logging.h"
 #include "utils.h"
-#include "../globals.h"
+#include "globals.h"
 
 void lprintf(FILE * fp, const char * fmt, ...){
   va_list args;
