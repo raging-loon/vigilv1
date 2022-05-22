@@ -829,7 +829,7 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = ./ src src/capture src/database src/engine src/filter src/lua src/scripts src/ssh src/statistics src/filter src/packets \
+INPUT                  =    ../vigil ../vigil/capture ../vigil/database ../vigil/engine ../vigil/filter ../vigil/lua ../vigil/scripts ../vigil/statistics src/filter src/packets \
                             src/filter/actions src/filter/parsing src/capture/protocols  src/backtrace src/monitoring src/vmrc src/netif src/tasks
 
 # This tag can be used to specify the character encoding of the source files
