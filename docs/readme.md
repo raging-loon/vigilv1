@@ -4,12 +4,12 @@
 | Directory | Description|
 | --------- | ---------- |
 | /install  | install files|
-| /ipcmon   | IPC listener
+| /ipcrouter| IPC listener
 | /python-vigil| submodule for vigil API|
-| /src       | main IDS |
-| /tests     | random tests |
-| /tools     | various tools such as memory mapping |
-| /web       | web interface files
+| /src      | main IDS |
+| /tests    | random tests |
+| /tools    | various tools such as memory mapping |
+| /web      | web interface files
 
 ## Director Mapping: /src
 | Directory | Description |
