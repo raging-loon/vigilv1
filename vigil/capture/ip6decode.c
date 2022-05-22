@@ -7,7 +7,7 @@
 #include <netinet/ether.h>
 #include "icmpdsct.h"
 #include <arpa/inet.h>
-#include "../../globals.h"
+#include "../globals.h"
 #include "../utils.h"
 
 void ip6decode(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){

@@ -5,7 +5,7 @@
 #include "rule_parser.h"
 #include <regex.h>
 #include "token.h"
-#include "../../../globals.h"
+#include "../../globals.h"
 #include "dp_size.h"
 
 #include "../../utils.h"

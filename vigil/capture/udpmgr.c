@@ -6,7 +6,7 @@
 #include "protocols.h"
 #include "../colors.h"
 #include <arpa/inet.h>
-#include "../../globals.h"
+#include "../globals.h"
 #include "../packets/ip_hdr.h"
 #include "../filter/parsing/rule.h"
 #include "../utils.h"

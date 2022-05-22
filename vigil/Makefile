@@ -3,105 +3,105 @@ CFLAGS = -Wdiscarded-qualifiers
 all: vigil clean
 
 print_utils.o:
-	$(CC) $(CFLAGS) -c src/print_utils.c 
+	$(CC) $(CFLAGS) -c print_utils.c 
 globals.o:
 	$(CC) $(CFLAGS) -c globals.c 
 main.o:
 	$(CC) $(CFLAGS) -c main.c 
 tcp_chksum.o:
-	$(CC) $(CFLAGS) -c src/engine/checksum/tcp_chksum.c
+	$(CC) $(CFLAGS) -c engine/checksum/tcp_chksum.c
 
 igmp_dsct.o:
-	$(CC) $(CFLAGS) -c src/capture/protocols/igmp_dsct.c 
+	$(CC) $(CFLAGS) -c capture/protocols/igmp_dsct.c 
 icmpdsct.o:
-	$(CC) $(CFLAGS) -c src/capture/icmpdsct.c 
+	$(CC) $(CFLAGS) -c capture/icmpdsct.c 
 l2pktmgr.o:
-	$(CC) $(CFLAGS) -c src/capture/l2pktmgr.c 
+	$(CC) $(CFLAGS) -c capture/l2pktmgr.c 
 l3pktmgr.o:
-	$(CC) $(CFLAGS) -c src/capture/l3pktmgr.c 
+	$(CC) $(CFLAGS) -c capture/l3pktmgr.c 
 pktmgr.o:
-	$(CC) $(CFLAGS) -c src/capture/pktmgr.c 
+	$(CC) $(CFLAGS) -c capture/pktmgr.c 
 rule_parser.o:
-	$(CC) $(CFLAGS) -c src/filter/parsing/rule_parser.c 
+	$(CC) $(CFLAGS) -c filter/parsing/rule_parser.c 
 utils.o:
-	$(CC) $(CFLAGS) -c src/utils.c 
+	$(CC) $(CFLAGS) -c utils.c 
 tcpmgr.o:
-	$(CC) $(CFLAGS) -c src/capture/tcpmgr.c 
+	$(CC) $(CFLAGS) -c capture/tcpmgr.c 
 udpmgr.o: 
-	$(CC) $(CFLAGS) -c src/capture/udpmgr.c  
+	$(CC) $(CFLAGS) -c capture/udpmgr.c  
 
 http_disect.o:
-	$(CC) $(CFLAGS) -c src/capture/protocols/http_disect.c 
+	$(CC) $(CFLAGS) -c capture/protocols/http_disect.c 
 tls.o:
-	$(CC) $(CFLAGS) -c src/capture/tls.c
+	$(CC) $(CFLAGS) -c capture/tls.c
 dns_disect.o:
-	$(CC) $(CFLAGS) -c src/capture/protocols/dns_disect.c 
+	$(CC) $(CFLAGS) -c capture/protocols/dns_disect.c 
 
 alerts.o:
-	$(CC) $(CFLAGS) -c src/filter/actions/alerts.c 
+	$(CC) $(CFLAGS) -c filter/actions/alerts.c 
 
 packet_parser.o:
-	$(CC) $(CFLAGS) -c src/filter/parsing/packet_parser.c 
+	$(CC) $(CFLAGS) -c filter/parsing/packet_parser.c 
 #rule_parser.o:
-#	$(CC) $(CFLAGS) -c src/filter/parsing/rule_parser.c
+#	$(CC) $(CFLAGS) -c filter/parsing/rule_parser.c
 rule.o:
-	$(CC) $(CFLAGS) -c src/filter/parsing/rule.c 
+	$(CC) $(CFLAGS) -c filter/parsing/rule.c 
 vrmc.o:
-	$(CC) $(CFLAGS) -c src/vrmc/vrmc.c 
+	$(CC) $(CFLAGS) -c vrmc/vrmc.c 
 
 
 arpcache.o:
-	$(CC) $(CFLAGS) -c src/statistics/arpcache.c 
+	$(CC) $(CFLAGS) -c statistics/arpcache.c 
 
 update_db.o:
-	$(CC) $(CFLAGS) -c src/database/update_db.c 
+	$(CC) $(CFLAGS) -c database/update_db.c 
 
 ftp-disect.o:
-	$(CC) $(CFLAGS) -c src/capture/protocols/ftp-disect.c 
+	$(CC) $(CFLAGS) -c capture/protocols/ftp-disect.c 
 spi.o:
-	$(CC) $(CFLAGS) -c src/engine/spi.c 
+	$(CC) $(CFLAGS) -c engine/spi.c 
 
 debug.o:
-	$(CC) $(CFLAGS) -c src/debug.c 
+	$(CC) $(CFLAGS) -c debug.c 
 
 forward.o:
-	$(CC) $(CFLAGS) -c src/engine/firewall/forward.c 
+	$(CC) $(CFLAGS) -c engine/firewall/forward.c 
 
 logging.o:
-	$(CC) $(CFLAGS) -c src/logging.c 
+	$(CC) $(CFLAGS) -c logging.c 
 
 line_parser.o:
-	$(CC) $(CFLAGS) -c src/filter/parsing/line_parser.c 
+	$(CC) $(CFLAGS) -c filter/parsing/line_parser.c 
 
 rule_init.o:
-	$(CC) $(CFLAGS) -c src/filter/parsing/rule_init.c 
+	$(CC) $(CFLAGS) -c filter/parsing/rule_init.c 
 
 dp_size.o:
-	$(CC) $(CFLAGS) -c src/filter/parsing/dp_size.c 
+	$(CC) $(CFLAGS) -c filter/parsing/dp_size.c 
 homenet.o:
-	$(CC) $(CFLAGS) -c src/filter/parsing/homenet.c 
+	$(CC) $(CFLAGS) -c filter/parsing/homenet.c 
 
 lua_engine.o:
-	$(CC) $(CFLAGS) -c src/lua/lua_engine.c
+	$(CC) $(CFLAGS) -c lua/lua_engine.c
 ip6decode.o:
-	$(CC) $(CFLAGS) -c src/capture/ip6decode.c
+	$(CC) $(CFLAGS) -c capture/ip6decode.c
 backtrace.o:
-	$(CC) $(CFLAGS) -c src/backtrace/backtrace.c
+	$(CC) $(CFLAGS) -c backtrace/backtrace.c
 load_fn_map.o:
-	$(CC) $(CFLAGS) -c src/backtrace/load_fn_map.c
+	$(CC) $(CFLAGS) -c backtrace/load_fn_map.c
 process_opcode.o:
-	$(CC) $(CFLAGS) -c src/vrmc/process_opcode.c
+	$(CC) $(CFLAGS) -c vrmc/process_opcode.c
 pps_monitor.o:
-	$(CC) $(CFLAGS) -c src/monitoring/pps_monitor.c
+	$(CC) $(CFLAGS) -c monitoring/pps_monitor.c
 handle_client.o:
-	$(CC) $(CFLAGS) -c src/vrmc/handle_client.c
+	$(CC) $(CFLAGS) -c vrmc/handle_client.c
 monitoring.o:
-	$(CC) $(CFLAGS) -c src/monitoring/monitoring.c
+	$(CC) $(CFLAGS) -c monitoring/monitoring.c
 base64.o:
-	$(CC) $(CFLAGS) -c src/vrmc/base64.c
+	$(CC) $(CFLAGS) -c vrmc/base64.c
 
 netif.o:
-	$(CC) $(CFLAGS) -c src/netif/netif.c
+	$(CC) $(CFLAGS) -c netif/netif.c
 
 vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			tcpmgr.o udpmgr.o igmp_dsct.o print_utils.o\
@@ -115,7 +115,7 @@ vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 	set environment MALLOC_CHECK_ 2
 	$(CC) -g -o vigil.exe $^  -l pcap -l pthread -l ssl -l crypto -l sqlite3 -l lua5.3
 	objdump -D vigil.exe -M intel > objdump.txt
-	python tools/gen_mem_map.py -f objdump.txt
+	python ../tools/gen_mem_map.py -f objdump.txt
 	cp memmap.txt /usr/share/vigil/memmap.txt
 	# strip vigil.exe
 

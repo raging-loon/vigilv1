@@ -47,7 +47,7 @@
 #include "../print_utils.h"
 #include "../filter/parsing/rule.h"
 #include "../filter/parsing/packet_parser.h"
-#include "../../globals.h"
+#include "../globals.h"
 #include "../debug.h"
 #include "../engine/flags.h"
 #include "../engine/spi.h"

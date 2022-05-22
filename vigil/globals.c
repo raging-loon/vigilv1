@@ -14,9 +14,9 @@
  *    limitations under the License.
  */
 #include "globals.h"
-#include "src/statistics/arpcache.h"
-#include "src/engine/spi.h"
-#include "src/filter/parsing/rule.h"
+#include "statistics/arpcache.h"
+#include "engine/spi.h"
+#include "filter/parsing/rule.h"
 #include <pthread.h>
 // globals defined in @globals.h
 // config options

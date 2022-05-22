@@ -5,7 +5,7 @@
 #include "../../packets/dns.h"
 #include "dns_disect.h"
 #include "../../utils.h"
-#include "../../../globals.h"
+#include "../../globals.h"
 void dns_disect(const unsigned char * pkt, const struct rule_data * rdata){
   struct dns_pkt_data * dns_data = (struct dns_pkt_data*)(pkt);
   char * query = pkt + sizeof(struct dns_pkt_data);

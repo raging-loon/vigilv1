@@ -5,7 +5,7 @@
 #include <netinet/ip.h>
 #include <netinet/ether.h>
 #include <string.h>
-#include "../../../globals.h"
+#include "../../globals.h"
 #include "../../print_utils.h"
 void forward_packet(const struct rule_data * rdata){
   unsigned char * raw_packet;

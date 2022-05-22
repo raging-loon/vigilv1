@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <netinet/in.h>
-#include "../../globals.h"
+#include "../globals.h"
 #include <netdb.h>
 #include <sys/types.h>
 #include "base64.h"

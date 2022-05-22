@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../../globals.h"
+#include "../../globals.h"
 #include "rule_init.h"
 
 void rule_processor(){

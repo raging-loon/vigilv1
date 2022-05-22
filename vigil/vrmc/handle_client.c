@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <sys/socket.h>
 // #include <base64.h>
-#include "../../globals.h"
+#include "../globals.h"
 #include <arpa/inet.h>
 #include <netdb.h>
 #include "process_opcode.h"

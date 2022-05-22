@@ -34,7 +34,7 @@
 #include "../packets/arp-hdr.h"
 #include "../statistics/arpcache.h"
 #include "../packets/ctp.h"
-#include "../../globals.h"
+#include "../globals.h"
 
 
 /*

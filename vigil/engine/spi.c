@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "../../globals.h"
+#include "../globals.h"
 #include "../database/update_db.h"
 
 struct spi_members spi_table[1024];

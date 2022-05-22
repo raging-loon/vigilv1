@@ -21,7 +21,7 @@
 #include "protocols.h"
 #include "l2pktmgr.h"
 #include <stdio.h>
-#include "../../globals.h"
+#include "../globals.h"
 #include "../utils.h"
 #include "../logging.h"
 #include "l3pktmgr.h"

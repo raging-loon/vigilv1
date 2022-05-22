@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "alerts.h"
-#include "../../../globals.h"
+#include "../../globals.h"
 #include "../../print_utils.h"
 #include <time.h>
 #include <sys/ipc.h>

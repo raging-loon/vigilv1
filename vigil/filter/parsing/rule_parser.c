@@ -22,7 +22,7 @@
 #include "rule.h"
 #include "packet_parser.h"
 #include "../actions/alerts.h"
-#include "../../../globals.h"
+#include "../../globals.h"
 #include "../../debug.h"
 #include "line_parser.h"
 #include "homenet.h"

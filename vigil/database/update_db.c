@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../globals.h"
+#include "../globals.h"
 #include <sqlite3.h>
 #include "update_db.h"
 #include "../engine/spi.h"

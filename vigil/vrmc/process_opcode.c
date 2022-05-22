@@ -19,7 +19,7 @@
 #include "opcodes.h"
 #include <arpa/inet.h>
 #include <sys/socket.h>
-#include "../../globals.h"
+#include "../globals.h"
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <string.h>

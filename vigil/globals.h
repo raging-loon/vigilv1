@@ -19,9 +19,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <pthread.h>
-#include "src/engine/spi.h"
-#include "src/filter/parsing/rule.h"
-#include "src/statistics/arpcache.h"
+#include "engine/spi.h"
+#include "filter/parsing/rule.h"
+#include "statistics/arpcache.h"
 //    major.minor.patch
 #define VERSION "1.0.0"
 #define VERSION_NUM 0x010000

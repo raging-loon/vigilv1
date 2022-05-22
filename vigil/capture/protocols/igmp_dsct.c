@@ -6,7 +6,7 @@
 #include <netinet/ip.h>
 #include "../../utils.h"
 #include <netinet/ether.h>
-#include "../../../globals.h"
+#include "../../globals.h"
 void ip4_igmp_decode(const unsigned char * pkt, const char * src_ip, const char * dest_ip){
   if(packet_print){
     struct main_igmp * type_decode = (struct main_igmp *)(pkt + sizeof(struct ethhdr) + sizeof(struct iphdr) + 4);

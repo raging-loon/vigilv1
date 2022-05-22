@@ -24,7 +24,7 @@
 #include "../engine/flags.h"
 #include "../print_utils.h"
 #include "../packets/tcp.h"
-#include "../../globals.h"
+#include "../globals.h"
 #include "../engine/spi.h"
 #include <netinet/tcp.h>
 #include <netinet/in.h>

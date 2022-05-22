@@ -1,5 +1,5 @@
 #include "rule.h"
-#include "../../../globals.h"
+#include "../../globals.h"
 #include <stdio.h>
 #include "../../utils.h"
 #include <stdlib.h>

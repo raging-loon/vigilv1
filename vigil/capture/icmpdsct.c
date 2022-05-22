@@ -34,7 +34,7 @@
 #include <time.h>
 #include "../colors.h"
 #include "icmpdsct.h"
-#include "../../globals.h"
+#include "../globals.h"
 #include "../filter/parsing/rule.h"
 #include "../engine/spi.h"
 /*

@@ -18,7 +18,7 @@
 #include <stdarg.h>
 #include <time.h>
 #include <string.h>
-#include "../globals.h"
+#include "globals.h"
 
 void livedebug( const char * msg,...){
   if(debug_mode){
