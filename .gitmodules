@@ -1,3 +1,6 @@
 [submodule "python-vigil"]
 	path = python-vigil
 	url = http://github.com/raging-loon/python-vigil
+[submodule "tpcap"]
+	path = tpcap
+	url = https://github.com/raging-loon/tpcap
