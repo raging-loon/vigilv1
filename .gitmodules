@@ -4,3 +4,6 @@
 [submodule "tpcap"]
 	path = tpcap
 	url = https://github.com/raging-loon/tpcap
+[submodule "nlog"]
+	path = nlog
+	url = https://github.com/raging-loon/nlog

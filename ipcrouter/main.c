@@ -4,7 +4,7 @@
 #include <sys/msg.h>
 
 // structure for message queue
-typedef struct ipc_queue_mem {
+typedef struct {
 	long mesg_type;
 	char mesg_text[256];
 } ipc_queue_mem;
