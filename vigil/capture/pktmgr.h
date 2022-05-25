@@ -18,7 +18,7 @@
 #ifndef PKTMGR_H
 #define PKTMGR_H
 #include <pcap.h>
-void pktmgr(unsigned char *, const struct pcap_pkthdr *, const unsigned char *);
+void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt);
 
 
 #endif /* PKTMGR_H */

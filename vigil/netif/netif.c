@@ -74,6 +74,8 @@ void start_interface_cap_ex(void * __iface){
   }
   setsockopt(v_iface->fd, SOL_SOCKET, 25, iface, strlen(iface) + 1);
   
+  v_iface->thrd_id = pthread_self();
+  
   int len;
   int saddr_sz;
   struct sockaddr saddr;
