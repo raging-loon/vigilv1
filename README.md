@@ -10,6 +10,7 @@ Requires the following to run:
   - sqlite3
   - libsqlite3-dev
   - liblua-5.3
+  - libcurl-dev
 
 Recommened stats for machine running:
  - Recommended 8GB RAM, minimum of 4GB

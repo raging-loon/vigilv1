@@ -7,3 +7,6 @@
 [submodule "nlog"]
 	path = nlog
 	url = https://github.com/raging-loon/nlog
+[submodule "libvigil"]
+	path = libvigil
+	url = https://github.com/raging-loon/libvigil
