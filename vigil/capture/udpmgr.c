@@ -23,7 +23,7 @@
 */
 
 
-void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata,const struct pcap_pkthdr * pkt_hdr){
+void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata, const int len){
 
   struct udphdr * udp_header = (struct udphdr*)(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr));
   rdata->pkt = pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(udp_header);

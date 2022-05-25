@@ -56,7 +56,7 @@
 //! @brief handle decoding for ipv6
 //! @todo expand on this
 
-void ipv4pktmgr(const unsigned char * pkt, const struct pcap_pkthdr * pkt_hdr){
+void ipv4pktmgr(const unsigned char * pkt, const int len){
   struct ip_hdr * ip_header = (struct ip_hdr * )(pkt + ETH_HDR_SZ);
   struct rule_data rdata;
   // rdata.spi_pkt->src_port = 0;
