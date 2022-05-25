@@ -6,8 +6,11 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <dirent.h>
+#include "../globals.h"
 #include <arpa/inet.h>
+#include <linux/if_ether.h>
 #include <netdb.h>
+#include <netinet/in.h>
 v_netif * net_interfaces;
 int iface_detected;
 void detect_interfaces(){
@@ -46,4 +49,43 @@ int iface_exists(const char * name){
       return i;
   }
   return -1;
+}
+void start_interface_cap(const char * iface){
+  pthread_t pthrd;
+  add_thread(&pthrd);
+  pthread_create(&pthrd,NULL,&start_interface_cap_ex,iface);
+}
+
+void start_interface_cap_ex(void * __iface){
+  char * iface = (char *)__iface;
+  int loc;
+
+  if((loc = iface_exists(iface)) == -1){
+    printf("Interface %s does not exist",iface);
+    return;
+  }
+
+  v_netif * v_iface = &net_interfaces[loc];
+  
+  v_iface->fd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+  if(v_iface->fd < 0){
+    perror("Socket error");
+    return;
+  }
+  setsockopt(v_iface->fd, SOL_SOCKET, 25, iface, strlen(iface) + 1);
+  
+  int len;
+  int saddr_sz;
+  struct sockaddr saddr;
+  unsigned char * buffer = (unsigned char *)malloc(65535);
+  
+  while((len == recvfrom(v_iface->fd,buffer, 65535, 0, &saddr,(socklen_t *)&saddr_sz)) < 0){
+    // pkt mgr
+    // at the end: memset
+  }
+  free(buffer);
+
+
+
+  
 }
