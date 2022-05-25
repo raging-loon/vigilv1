@@ -9,7 +9,7 @@
  * - STP                        *
  ********************************/  
 
-void arpdecode(const unsigned char*, const struct pcap_pkthdr *);
+void arpdecode(const unsigned char*, const int len);
 
 
 void loopback_ctp_decode(const unsigned char *);

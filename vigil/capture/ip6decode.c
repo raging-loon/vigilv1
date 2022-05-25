@@ -10,7 +10,7 @@
 #include "../globals.h"
 #include "../utils.h"
 
-void ip6decode(const unsigned char * pkt,const  struct pcap_pkthdr * pkt_hdr){
+void ip6decode(const unsigned char * pkt,const  int len){
   struct ip6hdr * ipv6_hdr = (struct ip6hdr *)(pkt + sizeof(struct ethhdr) );
   char dest_ip6[41];
 

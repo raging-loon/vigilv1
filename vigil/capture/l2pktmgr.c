@@ -54,7 +54,7 @@
 */
 
 
-void arpdecode(const unsigned char * pkt, const struct pcap_pkthdr * pkthdr){
+void arpdecode(const unsigned char * pkt, const int len){
   if(packet_print) printf("%s",__ARP_BOTH);
 
   struct arp_hdr * arp = (struct arp_hdr *)(pkt + ETH_HDR_SZ);
