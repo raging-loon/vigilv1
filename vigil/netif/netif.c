@@ -59,6 +59,10 @@ int iface_exists(const char * name){
 void start_interface_cap(const char * iface){
   pthread_t pthrd;
   add_thread(&pthrd);
+  // sigset_t set;
+  // sigemptyset(&set);
+  // sigaddset(&set,SIGSEGV);
+  // pthread_sigmask(SIG_BLOCK,&set,NULL);
   pthread_create(&pthrd,NULL,(void*)&start_interface_cap_ex,(void*)iface);
   pthread_join(pthrd,NULL);
 }
@@ -90,6 +94,7 @@ void start_interface_cap_ex(void * __iface){
   
   char buffer[2048] = {0};
   signal(SIGSEGV,crash_handler);
+
   while(1){
     len == recvfrom(v_iface->fd,buffer, sizeof(buffer), 0, &saddr,(socklen_t *)&saddr_sz);
     if(len < 0) break;

@@ -35,12 +35,6 @@ void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt)
     pktmgr -> ethernet header -> protocol number -> ipv4 -> protocol number -> tcp -> data
   */
   total_pkt_captured++;
-  pkt_counter++;
-  if(pkt_counter >= clean_delay_pkts){
-    pkt_counter = 0;
-    // scan_for_clean();
-
-  }
   struct ethhdr * ethernet_header = (struct ethhdr*)pkt;
   switch(ethernet_header->h_proto){
     case L2_ARP:
