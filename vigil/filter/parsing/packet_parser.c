@@ -18,9 +18,11 @@
 
 bool str_match_parser(const struct rule_data * rdata, const struct rule * __rule){
   if(rdata->pkt_len == 0) return false;  
+  printf("%d\n",rdata->pkt_len);
   char temp_pkt[ (rdata->pkt_len * 2) + 2];
-
+printf("23\n");
   memset(&temp_pkt, 0, sizeof(temp_pkt));
+    printf("25\n");
   int chars_filled = 0; // we have to use this because offset could be and odd number
   if(__rule->depth != 0){
     

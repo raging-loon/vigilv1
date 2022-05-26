@@ -66,7 +66,7 @@ struct rule_data{
   unsigned int src_port;
   unsigned int dest_port;
   int __protocol;
-  int pkt_len; // psize;
+  unsigned int pkt_len; // psize;
   unsigned int dsize;
   bool encrypted;
   const struct sockaddr_in * src_socket;

@@ -83,7 +83,10 @@ void start_interface_cap_ex(void * __iface){
     perror("Socket error");
     return;
   }
-  setsockopt(v_iface->fd, SOL_SOCKET, 25, iface, strlen(iface) + 1);
+  if(setsockopt(v_iface->fd, SOL_SOCKET, 25, iface, strlen(iface) + 1) == -1){
+    perror("setsockopt");
+    return;
+  }
     
   
   v_iface->thrd_id = pthread_self();
@@ -92,14 +95,15 @@ void start_interface_cap_ex(void * __iface){
   int saddr_sz;
   struct sockaddr saddr;
   
-  char buffer[2048] = {0};
+  unsigned char * buffer = (unsigned char *)malloc(65535);
   signal(SIGSEGV,crash_handler);
 
   while(1){
-    len == recvfrom(v_iface->fd,buffer, sizeof(buffer), 0, &saddr,(socklen_t *)&saddr_sz);
-    if(len < 0) break;
+    len = recvfrom(v_iface->fd,buffer, 65535, 0, &saddr,(socklen_t *)&saddr_sz);
+    printf("%d\n",len);
     pktmgr(v_iface->if_name,len,buffer);
     memset(&buffer,0,sizeof(buffer));
+    continue;
   }
-  // free(buffer);
+  free(buffer);
 }
