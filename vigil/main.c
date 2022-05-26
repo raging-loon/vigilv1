@@ -30,7 +30,7 @@
  *  - Start the capture process
  */
 #include <stdio.h>
-#include <pcap.h>
+
 #include <stdlib.h>
 #include <sys/resource.h>
 #include <string.h>
@@ -125,14 +125,7 @@ int main(int argc, char **argv){
   rule_processor();
   
   printf("VIGIL listening on interface %s\n",iface_name);
-  pcap_t *pcap_mgr;
   
-  char pkt_buffer[2046] = {0};
-  pcap_mgr = pcap_open_live(iface_name,1024,1,100,pkt_buffer);
-  if(pcap_mgr == NULL){
-    perror("pcap_mgr in pcap_open_live");
-    exit(EXIT_FAILURE);
-  };
   
   collect_scripts();
   start_vrmc_server();
