@@ -68,7 +68,6 @@ int main(int argc, char **argv){
   
   print_logo();
   print_cpu_info(); // purely for cosmetics
-  detect_interfaces();
   printf("Running as PID %d\n",getpid());
   is_running = 1;
   pps_monitor(); // to set a baseline on the file number
@@ -139,6 +138,8 @@ int main(int argc, char **argv){
   start_vrmc_server();
   printf("Unecrypted NSH config server started: 127.0.0.1:641\n");
     // pcap_loop(pcap_mgr,-1, pktmgr, NULL);
+  detect_interfaces();
+
   start_interface_cap(iface_name);
 }
 

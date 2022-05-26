@@ -6,7 +6,7 @@
 
 
 typedef struct{
-  char if_name[17];
+  char if_name[256];
   // pthread_t * thrd_id;
   unsigned long thrd_id;
   bool active;

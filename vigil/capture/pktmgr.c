@@ -28,7 +28,6 @@
 #include "ip6decode.h"
 #include "../monitoring/monitoring.h"
 void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt){
-  // printf("%s\n",user);
   // pps_monitor();
   if(packet_print) printf("\033[90m-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\033[m\n");
   /*
