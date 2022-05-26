@@ -12,6 +12,7 @@
 #include "../globals.h"
 #include <arpa/inet.h>
 #include <linux/if_ether.h>
+#include <linux/if.h>
 #include <netdb.h>
 #include <netinet/in.h>
 v_netif * net_interfaces;
@@ -83,7 +84,10 @@ void start_interface_cap_ex(void * __iface){
     perror("Socket error");
     return;
   }
-  if(setsockopt(v_iface->fd, SOL_SOCKET, 25, iface, strlen(iface) + 1) == -1){
+  struct ifreq ifr;
+  memset(&ifr, 0, sizeof(ifr));
+  snprintf(ifr.ifr_name,sizeof(ifr.ifr_name),iface);
+  if(setsockopt(v_iface->fd, SOL_SOCKET, 25, (void *)&ifr, sizeof(ifr)) < 0){
     perror("setsockopt");
     return;
   }
