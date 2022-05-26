@@ -46,13 +46,13 @@ void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt)
   switch(ethernet_header->h_proto){
     case L2_ARP:
     case L2_RARP:
-      arpdecode(pkt, pkt_hdr);
+      arpdecode(pkt, len);
       break;
     case L3_IPV6:
-      ip6decode(pkt, pkt_hdr);
+      ip6decode(pkt, len);
       break;
     case L3_IPV4:
-      ipv4pktmgr(pkt, pkt_hdr);
+      ipv4pktmgr(pkt, len);
       break;
     case 0x0090:
       loopback_ctp_decode(pkt);

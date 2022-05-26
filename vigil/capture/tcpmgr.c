@@ -45,7 +45,6 @@
 /*
   *-*-*-*- tcpmgr.c -*-*-*-*
   @purpose Provide decoding for TCP 
-  void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr *pkt_hdr);
     ==> Decode the TCP header in IPv4 Packets
     Data decoded:
       - Ports
@@ -185,12 +184,12 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const int
     }
   }
   if((IS_PORT_DEST_SRC(dest_port,src_port,443)) && PSH_ACK_SET(psh_set,ack_set)){
-    tls_decode(rdata->pkt,rdata,pkt_hdr);
+    tls_decode(rdata->pkt,rdata,len);
   }
   // if(packet_print)
   // ascii_hexdump(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + (tcp_hdr->doff * 4),
-                // pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4));
-  rdata->dsize = pkt_hdr->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4);
+                // ->len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4));
+  rdata->dsize = len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4);
   
   rulemgr(rdata);
 }

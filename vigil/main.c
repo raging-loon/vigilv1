@@ -34,6 +34,7 @@
 #include <stdlib.h>
 #include <sys/resource.h>
 #include <string.h>
+#include "netif/netif.h"
 #include "capture/pktmgr.h"
 #include <signal.h>
 #include "globals.h"
@@ -137,7 +138,8 @@ int main(int argc, char **argv){
   collect_scripts();
   start_vrmc_server();
   printf("Unecrypted NSH config server started: 127.0.0.1:641\n");
-    pcap_loop(pcap_mgr,-1, pktmgr, NULL);
+    // pcap_loop(pcap_mgr,-1, pktmgr, NULL);
+  start_interface_cap(iface_name);
 }
 
 

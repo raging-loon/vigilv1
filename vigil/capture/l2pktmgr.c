@@ -44,7 +44,6 @@
     - ARP
     - CTP
 
-  void arpdecode(const u_char * pkt, const struct pcap_pkthdr * pkthdr);
     ==> decode arp packets based on data in the /src/packets/arp-hdr.h struct
     Will also interact with the sqlite database if it is specified to do so 
     in the config file.

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "../capture/pktmgr.h"
 #include <sys/socket.h>
 #include <dirent.h>
 #include "../globals.h"
@@ -31,6 +32,7 @@ void detect_interfaces(){
       v_netif * iface = &net_interfaces[iface_detected];
       if(strcmp(dir->d_name,".") ==0 || strcmp(dir->d_name,"..") == 0)
         continue;
+      printf("%s\n",dir->d_name);
       strcpy(iface->if_name,dir->d_name);
       iface_detected++;
     }
@@ -81,9 +83,11 @@ void start_interface_cap_ex(void * __iface){
   struct sockaddr saddr;
   unsigned char * buffer = (unsigned char *)malloc(65535);
   
-  while((len == recvfrom(v_iface->fd,buffer, 65535, 0, &saddr,(socklen_t *)&saddr_sz)) < 0){
-    // pkt mgr
-    // at the end: memset
+  while(true){
+    len == recvfrom(v_iface->fd,buffer, 65535, 0, &saddr,(socklen_t *)&saddr_sz);
+    if(len < 0) break;
+    pktmgr(v_iface->if_name,len,buffer);
+    memset(buffer,0,sizeof(buffer));
   }
   free(buffer);
 

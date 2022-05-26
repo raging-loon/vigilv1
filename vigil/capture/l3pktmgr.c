@@ -81,11 +81,11 @@ void ipv4pktmgr(const unsigned char * pkt, const int len){
     rdata.flow = FLOW_EITHER;
   
 
-  rdata.pkt_len = pkt_hdr->len;
+  rdata.pkt_len = len;
   rdata.ip_header = ip_header;
 
   
-  int base_data_size = pkt_hdr->len 
+  int base_data_size = len 
                      - ETH_HDR_SZ
                      - (((struct iphdr *)(pkt + ETH_HDR_SZ))->ihl * 4);
 
@@ -141,11 +141,11 @@ void ipv4pktmgr(const unsigned char * pkt, const int len){
     case 6:
 
       rdata.__protocol = R_TCP; 
-      ip4_tcp_decode(pkt,&rdata,pkt_hdr);
+      ip4_tcp_decode(pkt,&rdata,len);
       break;
     case 17:
       rdata.__protocol = R_UDP;
-      ip4_udp_decode(pkt,&rdata,pkt_hdr);
+      ip4_udp_decode(pkt,&rdata,len);
       break;
     default:
       printf("IPv4 %s -> %s Protocol Number = %d\n",rdata.src_ip_addr,rdata.dest_ip_addr,ip_header->protocol);

@@ -21,7 +21,7 @@
 #include <pcap.h>
 #include "../globals.h"
 
-void tls_decode(const unsigned char * pkt ,struct rule_data * rdata,const struct pcap_pkthdr * pkt_hdr){
+void tls_decode(const unsigned char * pkt ,struct rule_data * rdata,const int len){
   struct tlsd * __tlsdata = (struct tlsd *)(pkt);
   // printf("0x%02x\n",__tlsdata->content_type);
   switch(__tlsdata->version){
@@ -49,7 +49,7 @@ void tls_decode(const unsigned char * pkt ,struct rule_data * rdata,const struct
       // alert
       break;
     case 0x16:
-      tlshandshake(pkt,rdata,pkt_hdr);
+      tlshandshake(pkt,rdata,len);
       break;
     case 0x17:
       // application data
@@ -60,7 +60,7 @@ void tls_decode(const unsigned char * pkt ,struct rule_data * rdata,const struct
   }
 }
 
-void tlshandshake(const unsigned char * pkt,struct rule_data * rdata,const struct pcap_pkthdr * pkt_hdr){
+void tlshandshake(const unsigned char * pkt,struct rule_data * rdata,const int len){
   struct tls_handshake * tlsh = (struct tls_handshake *)(pkt + sizeof(struct tlsd));
   // printf("0x%02x\n",tlsh->handshake_type);
   switch(tlsh->handshake_type){
