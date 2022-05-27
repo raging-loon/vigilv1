@@ -13,6 +13,7 @@ typedef struct{
   unsigned int a_family;
   char address[100];
   int fd;
+  int addr_set;
   // unsigned int function;
 } v_netif;
 
@@ -22,6 +23,8 @@ void start_interface_cap(const char *);
 void start_interface_cap_ex(void * );
 void detect_interfaces();
 void free_iface();
+bool interface_operational(const char *);
 int iface_exists(const char *);
+void gather_iface_addrs();
 
 #endif /* NET_IF_H */

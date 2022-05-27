@@ -36,6 +36,7 @@ void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt)
   */
   total_pkt_captured++;
   struct ethhdr * ethernet_header = (struct ethhdr*)pkt;
+  // printf("%s -> %s",uc_mac_ntoa(ethernet_header->h_source),uc_mac_ntoa(ethernet_header->h_dest));
   switch(ethernet_header->h_proto){
     case L2_ARP:
     case L2_RARP:

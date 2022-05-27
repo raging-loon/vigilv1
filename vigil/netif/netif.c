@@ -5,15 +5,19 @@
 #include <stdio.h>
 #include <string.h>
 #include "../capture/pktmgr.h"
+#include "../utils.h"
 #include <sys/socket.h>
 #include <dirent.h>
 #include <signal.h>
 #include "../backtrace/backtrace.h"
 #include "../globals.h"
 #include <arpa/inet.h>
+#include <linux/netlink.h>
 #include <linux/if_ether.h>
+#include <sys/ioctl.h>
 #include <linux/if.h>
 #include <netdb.h>
+#include <linux/if_packet.h>
 #include <netinet/in.h>
 v_netif * net_interfaces;
 int iface_detected = 0;
@@ -37,12 +41,47 @@ void detect_interfaces(){
         continue;
       
       strcpy(iface->if_name,dir->d_name);
+      iface->addr_set = 0;
       printf("Found %s\n",iface->if_name);
       iface_detected++;
     }
   }
   
   closedir(dr); 
+  gather_iface_addrs();
+}
+
+// TODO: Account for IPv6 networks
+void gather_iface_addrs(){
+  struct ifaddrs * addrs;
+  if(getifaddrs(&addrs) == -1){
+    perror("getifaddrs");
+    return;
+  }
+  struct ifaddrs * addr_ptr = addrs;
+  while(addr_ptr){
+    if(addr_ptr->ifa_addr->sa_family == AF_INET || addr_ptr->ifa_addr->sa_family == AF_INET6){
+      int loc;
+
+      if((loc = iface_exists(addr_ptr->ifa_name)) != -1){
+        v_netif * iface = &net_interfaces[loc];
+        if(iface->addr_set == 0){
+          const int f_size = addr_ptr->ifa_addr->sa_family == 
+                              AF_INET ? sizeof(struct sockaddr_in) :
+                                        sizeof(struct sockaddr_in6);
+          // vscode will give a syntax error for NI_NUMERICHOST, but there is none
+          char t_addr[100];
+          getnameinfo(addr_ptr->ifa_addr,f_size,t_addr, sizeof(t_addr),0, 0,NI_NUMERICHOST);
+
+          strcpy(iface->address,t_addr);
+          printf("%s -> %s\n", iface->if_name,t_addr);
+          iface->addr_set = 1;
+        }
+      }
+    }
+    addr_ptr = addr_ptr->ifa_next;
+  }
+  freeifaddrs(addrs);
 }
 
 void free_iface(){
@@ -77,17 +116,22 @@ void start_interface_cap_ex(void * __iface){
     return;
   }
   v_netif * v_iface = &net_interfaces[loc];
+  struct ifreq ifr;
+  memset(&ifr, 0, sizeof(ifr));
+  strncpy(ifr.ifr_name,iface,strlen(iface) + 1);
   
-
-  v_iface->fd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+  v_iface->fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+  // v_iface->fd = socket(PF_RAW, SOCK_RAW, RAWPROTO_SNOOP);
   if(v_iface->fd < 0){
     perror("Socket error");
     return;
   }
-  struct ifreq ifr;
-  memset(&ifr, 0, sizeof(ifr));
-  strncpy(ifr.ifr_name,iface,strlen(iface) + 1);
-  if(setsockopt(v_iface->fd, SOL_SOCKET, 25, (void *)&ifr, sizeof(ifr)) < 0){
+  if((ioctl(v_iface->fd,SIOCGIFINDEX, &ifr)) == -1){
+    perror("ioctl");
+    return;
+  }
+
+  if(setsockopt(v_iface->fd, SOL_SOCKET, SO_BINDTODEVICE, (void*)&ifr, sizeof(ifr)) < 0){
     perror("setsockopt");
     return;
   }
@@ -104,10 +148,32 @@ void start_interface_cap_ex(void * __iface){
 
   while(1){
     len = recvfrom(v_iface->fd,buffer, 65535, 0, &saddr,(socklen_t *)&saddr_sz);
-    // printf("%d\n",len);
+    printf("%d\n",len);
     pktmgr(v_iface->if_name,len,buffer);
     memset(buffer,0,sizeof(buffer));
     continue;
   }
+
   free(buffer);
 }
+
+bool interface_operational(const char * iface){
+  char filename[40 + 1];
+  sprintf(filename,"/sys/class/net/%s/operstate",iface);
+  FILE * fp = fopen(filename,"r");
+  if(fp == NULL){
+    printf("Failed to detect interface operational state\n");
+    fclose(fp);
+
+    return false;
+  }
+  char * state = NULL;
+  size_t len = 0;
+  getline(&state,&len,fp);
+  fclose(fp);
+
+  if(strcmp(state,"up") == 0)
+    return true;
+  return false;
+}  
+  
