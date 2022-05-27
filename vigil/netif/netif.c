@@ -86,7 +86,7 @@ void start_interface_cap_ex(void * __iface){
   }
   struct ifreq ifr;
   memset(&ifr, 0, sizeof(ifr));
-  snprintf(ifr.ifr_name,sizeof(ifr.ifr_name),iface);
+  strncpy(ifr.ifr_name,iface,strlen(iface) + 1);
   if(setsockopt(v_iface->fd, SOL_SOCKET, 25, (void *)&ifr, sizeof(ifr)) < 0){
     perror("setsockopt");
     return;
@@ -104,9 +104,9 @@ void start_interface_cap_ex(void * __iface){
 
   while(1){
     len = recvfrom(v_iface->fd,buffer, 65535, 0, &saddr,(socklen_t *)&saddr_sz);
-    printf("%d\n",len);
+    // printf("%d\n",len);
     pktmgr(v_iface->if_name,len,buffer);
-    memset(&buffer,0,sizeof(buffer));
+    memset(buffer,0,sizeof(buffer));
     continue;
   }
   free(buffer);
