@@ -29,7 +29,7 @@
 #define IS_PRINTABLE_ASCII(X)(X > 32 || X < 127)
 
 //! @brief same as ether_ntoa_r in glibc
-unsigned char * mac_ntoa(uint8_t * );
+unsigned char * mac_ntoa(const uint8_t * );
 
 unsigned char * uc_mac_ntoa(unsigned char *);
 //! @brief inet_ntoa but for raw bytes instead of a socket
@@ -47,4 +47,7 @@ void cb_get_formatted_time(char * );
 void fail(const char * , const char *);
 bool char_is_printable(const char );
 bool test_string_arr_print(const char * );
+
+void hw_addr_to_bytes(const char *, uint8_t *);
+
 #endif /* UTILS_H */

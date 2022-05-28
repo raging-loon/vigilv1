@@ -24,7 +24,7 @@
 #include <time.h>
 static __thread unsigned char buffer[128];
 
-unsigned char * mac_ntoa( uint8_t * hwaddr){
+unsigned char * mac_ntoa( const uint8_t * hwaddr){
   
   unsigned char * __hwaddr = (unsigned char *)hwaddr;
   snprintf((char *)buffer, sizeof(buffer), "%02x:%02x:%02x:%02x:%02x:%02x",
@@ -125,4 +125,13 @@ bool test_string_arr_print(const char * str){
     if(!char_is_printable(str[i])) return false;
   }
   return true;
+}
+
+void hw_addr_to_bytes(const char * hw_addr, uint8_t * dst){
+  char * p = strtok(hw_addr,":");
+  int times = 0;
+  while(p != NULL){
+    dst[times++] = (uint8_t)strtol(p,NULL,16);
+    p = strtok(NULL,":");
+  }
 }

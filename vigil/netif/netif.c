@@ -2,6 +2,7 @@
 #include <ifaddrs.h>
 #include <sys/types.h>
 #include <stdlib.h>
+
 #include <stdio.h>
 #include <string.h>
 #include "../capture/pktmgr.h"
@@ -33,7 +34,7 @@ void detect_interfaces(){
   } else {
     while((dir = readdir(dr)) != NULL){
       if(iface_detected != 0){
-        net_interfaces = (v_netif *)realloc(net_interfaces,sizeof(net_interfaces) * iface_detected);
+        net_interfaces = (v_netif *)realloc(net_interfaces,sizeof(v_netif) * iface_detected);
       }
       
       v_netif * iface = &net_interfaces[iface_detected];
@@ -49,6 +50,8 @@ void detect_interfaces(){
   
   closedir(dr); 
   gather_iface_addrs();
+  gather_iface_hw_addrs();
+  print_iface_summary();
 }
 
 // TODO: Account for IPv6 networks
@@ -84,8 +87,28 @@ void gather_iface_addrs(){
   freeifaddrs(addrs);
 }
 
+void gather_iface_hw_addrs(){
+  for(int i = 0; i < iface_detected; i++){
+    v_netif * net_if = &net_interfaces[i];
+    char filename[64 + 256];
+    char * temp_mac_addr = NULL;
+    size_t len;
+    sprintf(filename,"/sys/class/net/%s/address",net_if->if_name);
+    FILE * fp = fopen(filename,"r");
+    if(fp == NULL){
+      printf("Failed to get address of %s\n",net_if->if_name);
+      exit(EXIT_FAILURE);
+    }
+    getline(&temp_mac_addr,&len,fp);
+    hw_addr_to_bytes(temp_mac_addr,net_if->mac_addr);
+
+  }
+}
 void free_iface(){
   free(net_interfaces);
+  // for(int i = 0; i < iface_detected; i++)
+  //   free(&net_interfaces[i]);
+  
 }
 
 int iface_exists(const char * name){
@@ -148,7 +171,7 @@ void start_interface_cap_ex(void * __iface){
 
   while(1){
     len = recvfrom(v_iface->fd,buffer, 65535, 0, &saddr,(socklen_t *)&saddr_sz);
-    printf("%d\n",len);
+    // printf("%d\n",len);
     pktmgr(v_iface->if_name,len,buffer);
     memset(buffer,0,sizeof(buffer));
     continue;
@@ -176,4 +199,11 @@ bool interface_operational(const char * iface){
     return true;
   return false;
 }  
-  
+
+
+void print_iface_summary(){
+  for(int i = 0; i < iface_detected; i++){
+    v_netif * net_if = &net_interfaces[i];
+    printf("%s: %s %s",net_if->if_name,net_if->address,mac_ntoa(net_if->mac_addr));
+  }
+}
