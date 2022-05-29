@@ -33,7 +33,7 @@ unsigned char * mac_ntoa(const uint8_t * );
 
 unsigned char * uc_mac_ntoa(unsigned char *);
 //! @brief inet_ntoa but for raw bytes instead of a socket
-char * ipv4_ntoa( uint32_t );
+unsigned char * ipv4_ntoa( uint32_t );
 unsigned char * u8_ipv4_ntoa(uint8_t * );
 //! @brief see ipv4_ntoa but for ipv6
 unsigned char * inet6_ntoa(uint8_t * );

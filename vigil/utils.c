@@ -46,7 +46,7 @@ unsigned char * u8_ipv4_ntoa(uint8_t * ip_addr){
   );
   return buffer;
 }
-char * ipv4_ntoa( uint32_t  ip_addr){
+unsigned char * ipv4_ntoa( uint32_t  ip_addr){
   // char buffer[18];
   unsigned char * __ip_addr = (unsigned char *)&ip_addr;
   snprintf((char *)buffer,sizeof(buffer),"%d.%d.%d.%d",
@@ -130,6 +130,7 @@ bool test_string_arr_print(const char * str){
 void hw_addr_to_bytes(const char * hw_addr, uint8_t * dst){
   char * p = strtok(hw_addr,":");
   int times = 0;
+  
   while(p != NULL){
     dst[times++] = (uint8_t)strtol(p,NULL,16);
     p = strtok(NULL,":");

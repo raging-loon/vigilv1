@@ -84,13 +84,9 @@ void ipv4pktmgr(const unsigned char * pkt, const int len){
   rdata.pkt_len = len;
   rdata.ip_header = ip_header;
 
-  
-  int base_data_size = len 
-                     - ETH_HDR_SZ
-                     - (((struct iphdr *)(pkt + ETH_HDR_SZ))->ihl * 4);
 
-  strncpy(dest_ip, ipv4_ntoa(ip_header->daddr),sizeof(dest_ip));
-  strncpy(src_ip, ipv4_ntoa(ip_header->saddr),sizeof(src_ip));
+  strncpy(dest_ip, (char*)ipv4_ntoa(ip_header->daddr),sizeof(dest_ip));
+  strncpy(src_ip, (char*)ipv4_ntoa(ip_header->saddr),sizeof(src_ip));
    // init both addresses;
   
   // init_member((const char *)&dest_ip);
@@ -121,7 +117,6 @@ void ipv4pktmgr(const unsigned char * pkt, const int len){
     else 
       printf(" %s -> %s%s\n",src_ip,dest_ip,__END_COLOR_STREAM);
   }
-  int data_size;
   switch(ip_header->protocol){
     case 1:{
       // printf("ipv4pktmgr: icmp\n");

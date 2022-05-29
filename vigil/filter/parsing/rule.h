@@ -151,6 +151,6 @@ struct rule{
 
 
 bool r_engine(const struct rule *, const struct rule_data *);
-static bool test_tcp_session_status(const struct rule * r, const struct rule_data * rdata);
+bool test_tcp_session_status(const struct rule * r, const struct rule_data * rdata);
 
 #endif /* RULE_H */

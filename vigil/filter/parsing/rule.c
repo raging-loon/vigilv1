@@ -126,7 +126,7 @@ bool r_engine(const struct rule * r, const struct rule_data * rdata){
   return true;
 }
 
-static bool test_tcp_session_status(const struct rule * r, const struct rule_data * rdata){
+bool test_tcp_session_status(const struct rule * r, const struct rule_data * rdata){
   if(r->protocol == R_TCP && rdata->__protocol == R_TCP){
     if(r->is_established == true && rdata->is_established == false){
       return false;

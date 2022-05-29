@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 uint32_t homenet_toi(const char * ip_addr){
-  char num_str[9];
+  char num_str[9] = {0};
   
   char * octet = strtok(ip_addr,".");
   while(octet != NULL){

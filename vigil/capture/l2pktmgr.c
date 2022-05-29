@@ -64,8 +64,8 @@ void arpdecode(const unsigned char * pkt, const int len){
       // printf("arp request\n");
       char dest_ip[32];
       char src_ip[32];
-      strncpy(dest_ip,u8_ipv4_ntoa((uint8_t *)&arp->dst_ip),sizeof(dest_ip));
-      strncpy(src_ip,u8_ipv4_ntoa((uint8_t *)&arp->src_ip),sizeof(src_ip));
+      strncpy(dest_ip,(char *)u8_ipv4_ntoa((uint8_t *)&arp->dst_ip),sizeof(dest_ip));
+      strncpy(src_ip,(char *)u8_ipv4_ntoa((uint8_t *)&arp->src_ip),sizeof(src_ip));
 
       if(!strncmp(src_ip,"0.0.0.0",5) ){
         if(packet_print) printf("PROTO ARP: PROBE: Who has %s?\n",dest_ip);
@@ -82,8 +82,8 @@ void arpdecode(const unsigned char * pkt, const int len){
       char src_mac[64];
       char src_ip[32];
       // char * src_mac = mac_ntoa((uint8_t)*arp->src_mac);
-      strncpy(src_mac,mac_ntoa(arp->src_mac),sizeof(src_mac));
-      strncpy(src_ip,u8_ipv4_ntoa((uint8_t *)&arp->src_ip),sizeof(src_ip));
+      strncpy(src_mac,(char*)mac_ntoa(arp->src_mac),sizeof(src_mac));
+      strncpy(src_ip, (char*)u8_ipv4_ntoa((uint8_t *)&arp->src_ip),sizeof(src_ip));
 
 
       if(entry_exists((char *)&src_ip,(char *)&src_mac) != -1){
@@ -121,8 +121,8 @@ void loopback_ctp_decode(const unsigned char * pkt){
   struct ethhdr * ethernet_hdr = (struct ethhdr *)(pkt);
   char src_mac[24];
   char dest_mac[24];
-  strncpy(src_mac, uc_mac_ntoa(ethernet_hdr->h_source), sizeof(src_mac));
-  strncpy(dest_mac, uc_mac_ntoa(ethernet_hdr->h_dest),sizeof(dest_mac));
+  strncpy(src_mac, (char*)uc_mac_ntoa(ethernet_hdr->h_source), sizeof(src_mac));
+  strncpy(dest_mac,(char*)uc_mac_ntoa(ethernet_hdr->h_dest),sizeof(dest_mac));
   if(packet_print) printf("LOOP %s -> %s",src_mac,dest_mac);
   
   switch(ctp_data->relevant_func){

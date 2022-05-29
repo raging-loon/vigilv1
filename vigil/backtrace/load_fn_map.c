@@ -18,7 +18,7 @@ void load_fn_mem_map(){
           "Please re run gen_mem_map.py and copy memmap.txt to /usr/share/vigil\n");
     exit(-1);
   }
-  char * line = NULL;
+  char * line = (char *)malloc(sizeof(char) * 21);
   size_t pos, len = 0;
   while((pos = getline(&line,&len,fp)) != -1){
     line[strcspn(line,"\n")] = 0;
@@ -29,7 +29,7 @@ void load_fn_mem_map(){
 
 
     int num_parsed = 0;
-    char * token = strtok(line, " ");
+    char * token = strtok(line, "\x20");
     while(token != NULL){
       switch(num_parsed){
         case 0:
@@ -46,12 +46,13 @@ void load_fn_mem_map(){
         default:
           break;
       }
-      token = strtok(NULL," ");
+      token = strtok(NULL,"\x20");
       num_parsed++;
     }
 
     add_fn(name,start,end);
   }
+  free(line);
   fclose(fp);
 }
 

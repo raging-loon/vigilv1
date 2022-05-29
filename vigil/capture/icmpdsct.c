@@ -61,7 +61,7 @@ void ip6_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
     switch(icmpv6->icmp_type){
       case 0x85:{
         char src_mac[64];
-        strncpy(src_mac,mac_ntoa(icmpv6->addr),sizeof(src_mac));
+        strncpy(src_mac,(char *)mac_ntoa(icmpv6->addr),sizeof(src_mac));
         printf(" Router Solicitation from %s\n",src_mac);
         break;
       }
@@ -89,12 +89,12 @@ void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
   
   
   struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
+
   rdata->pkt = (pkt + ETH_HDR_SZ + sizeof(struct iphdr));
+
   rdata->icmp_header = icmp4;
-  int len = rdata->pkt_len;
   rdata->dsize = rdata->pkt_len - ETH_HDR_SZ - sizeof(struct iphdr) - 8;
-  
-  stop:;
+
   rdata->__protocol = R_ICMP;
   rulemgr(rdata);
 
