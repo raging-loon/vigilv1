@@ -30,7 +30,7 @@ unsigned int total_pkt_captured = 0;
 int blk_ipv4_len = -1;
 int num_rules = -1;
 int arp_entries = -1;
-int is_running;
+
 int spi_max = 200;
 unsigned long last_clean_time;
 unsigned long clean_delay;

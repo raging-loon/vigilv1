@@ -20,10 +20,17 @@
 #include <netdb.h>
 #include <linux/if_packet.h>
 #include <netinet/in.h>
+#define NI_NUMERICHOST 1
+#define SO_BINDTODEVICE 25
 v_netif * net_interfaces;
 int iface_detected = 0;
 void detect_interfaces(){
-  net_interfaces = (v_netif *)malloc(sizeof(v_netif));
+  int num_dirs = num_f_in_dir("/sys/class/net/");
+  if(num_dirs == -1){
+    perror("failed to open directory");
+    exit(-1);
+  }
+  net_interfaces = (v_netif *)malloc(sizeof(v_netif) * num_dirs);
   iface_detected = 0;
   struct dirent * dir;
   DIR * dr = opendir("/sys/class/net/");
@@ -33,9 +40,6 @@ void detect_interfaces(){
     exit(-1);
   } else {
     while((dir = readdir(dr)) != NULL){
-      if(iface_detected != 0){
-        net_interfaces = (v_netif *)realloc(net_interfaces,sizeof(v_netif) * iface_detected);
-      }
       
       v_netif * iface = &net_interfaces[iface_detected];
       if(dir->d_name[0] == '.')
@@ -206,4 +210,17 @@ void print_iface_summary(){
     v_netif * net_if = &net_interfaces[i];
     printf("%s: %s %s",net_if->if_name,net_if->address,mac_ntoa(net_if->mac_addr));
   }
+}
+
+
+int num_f_in_dir(const char * directory){
+  struct dirent * dir;
+  DIR * dr = opendir(directory);
+  if(dr == NULL) return -1;
+
+  int num_files = 0;
+  while((dir = readdir(dr)) != NULL) num_files++;
+
+  return num_files - 2;
+  
 }

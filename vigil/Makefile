@@ -46,8 +46,8 @@ packet_parser.o:
 #	$(CC) $(CFLAGS) -c filter/parsing/rule_parser.c
 rule.o:
 	$(CC) $(CFLAGS) -c filter/parsing/rule.c 
-vrmc.o:
-	$(CC) $(CFLAGS) -c vrmc/vrmc.c 
+# vrmc.o:
+# 	$(CC) $(CFLAGS) -c vrmc/vrmc.c 
 
 
 arpcache.o:
@@ -89,28 +89,28 @@ backtrace.o:
 	$(CC) $(CFLAGS) -c backtrace/backtrace.c
 load_fn_map.o:
 	$(CC) $(CFLAGS) -c backtrace/load_fn_map.c
-process_opcode.o:
-	$(CC) $(CFLAGS) -c vrmc/process_opcode.c
+# process_opcode.o:
+# 	$(CC) $(CFLAGS) -c vrmc/process_opcode.c
 pps_monitor.o:
 	$(CC) $(CFLAGS) -c monitoring/pps_monitor.c
-handle_client.o:
-	$(CC) $(CFLAGS) -c vrmc/handle_client.c
+# handle_client.o:
+# 	$(CC) $(CFLAGS) -c vrmc/handle_client.c
 monitoring.o:
 	$(CC) $(CFLAGS) -c monitoring/monitoring.c
-base64.o:
-	$(CC) $(CFLAGS) -c vrmc/base64.c
+# base64.o:
+# 	$(CC) $(CFLAGS) -c vrmc/base64.c
 
 netif.o:
 	$(CC) $(CFLAGS) -c netif/netif.c
 
 vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			tcpmgr.o udpmgr.o igmp_dsct.o print_utils.o\
-			alerts.o packet_parser.o rule_parser.o rule.o main.o vrmc.o\
-			arpcache.o tls.o process_opcode.o\
+			alerts.o packet_parser.o rule_parser.o rule.o main.o\
+			arpcache.o tls.o \
 			update_db.o http_disect.o dns_disect.o debug.o\
 			forward.o spi.o logging.o line_parser.o rule_init.o dp_size.o \
 			homenet.o tcp_chksum.o lua_engine.o ip6decode.o backtrace.o \
-			load_fn_map.o pps_monitor.o monitoring.o base64.o handle_client.o \
+			load_fn_map.o pps_monitor.o monitoring.o \
 			netif.o
 	set environment MALLOC_CHECK_ 2
 	$(CC) -g -o vigil.exe $^ -l pthread -l ssl -l crypto -l sqlite3 -l lua5.3
@@ -118,7 +118,7 @@ vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 	objdump -D vigil.exe -M intel > objdump.txt
 	python ../tools/gen_mem_map.py -f objdump.txt
 	mv memmap.txt /usr/share/vigil/memmap.txt
-	rm objdump.txt 
+	# rm objdump.txt 
 	# strip vigil.exe
 
 clean:

@@ -83,8 +83,8 @@ void ip6_icmp_decode(const unsigned char * pkt,const char * src_ip,const char * 
 void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
   // add_ip_addr_or_inc_counter(rdata->src_ip_addr,true,ICMP);
   // add_ip_addr_or_inc_counter(rdata->dest_ip_addr,false,ICMP);
-  const char * src_ip = rdata->src_ip_addr;
-  const char * dest_ip = rdata->dest_ip_addr;
+  const char * const src_ip = rdata->src_ip_addr;
+  const char * const dest_ip = rdata->dest_ip_addr;
   
   
   

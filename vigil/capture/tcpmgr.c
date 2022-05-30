@@ -72,7 +72,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const int
   // add_ip_addr_or_inc_counter(dest_ip,false, TCP);
   unsigned int dest_port,  src_port;
   int flags_set = 0;
-  bool rst_set = false;
+  // bool rst_set = false; // possible future use
   bool ack_set = false;
   bool syn_set = false;
   bool fin_set = false;
@@ -97,39 +97,39 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const int
   if((uint16_t)ntohs(tcp_hdr->ack) != 0){
     if(packet_print) printf("%s ACK ",__TCP_ACK);
     ack_set = true;
-    strcat(rdata->tcp_flags,"A");
+    strcat((char *)&rdata->tcp_flags,"A");
     flags_set++;
   }  
   if((uint16_t)ntohs(tcp_hdr->fin) != 0){
     if(packet_print) printf("%s FIN ",__TCP_FIN);
     fin_set = true;
-    strcat(rdata->tcp_flags,"F");
+    strcat((char *)&rdata->tcp_flags,"F");
     flags_set++;
   }
   if((uint16_t)ntohs(tcp_hdr->psh) != 0){
     if(packet_print) printf("%s PSH ",__TCP_PSH);
     flags_set++;
-    strcat(rdata->tcp_flags,"P");
+    strcat((char *)&rdata->tcp_flags,"P");
     psh_set = true;
   }
  
   if((uint16_t)ntohs(tcp_hdr->rst) != 0){
     if(packet_print) printf("%s RST ",__TCP_RST);
-    rst_set = true;
-    strcat(rdata->tcp_flags,"R");
+    // rst_set = true;
+    strcat((char *)&rdata->tcp_flags,"R");
     flags_set++;
   }
   if((uint16_t)ntohs(tcp_hdr->syn) != 0){
     if(packet_print) printf("%s SYN ", __TCP_SYN);
     syn_set = true;
-    strcat(rdata->tcp_flags,"S");
+    strcat((char *)&rdata->tcp_flags,"S");
     flags_set++;
   }
 
   if((uint16_t)ntohs(tcp_hdr->urg) != 0){
     if(packet_print) printf("%s URG ",__TCP_URG);
     flags_set++;
-    strcat(rdata->tcp_flags,"U");
+    strcat((char *)&rdata->tcp_flags,"U");
   } 
   
   if(packet_print) {

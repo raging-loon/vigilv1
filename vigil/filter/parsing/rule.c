@@ -110,7 +110,7 @@ bool r_engine(const struct rule * r, const struct rule_data * rdata){
       if(ntohl(rdata->tcp_header->ack_seq) != r->tcp_data.ack) return false;
     }
     if(r->tcp_data.flagset){
-      if(strcmp(rdata->tcp_flags, r->tcp_data.flags) != 0) return false;
+      if(strcmp((char *)rdata->tcp_flags, (char *)r->tcp_data.flags) != 0) return false;
       
 
     }

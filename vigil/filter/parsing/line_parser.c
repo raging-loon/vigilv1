@@ -27,7 +27,7 @@ static bool delimit(char c){
 }
 
 
-bool isdigit(const char * pos_num){
+bool str_isdigit(const char * pos_num){
   for(int i = 0; i < strlen(pos_num); i++){
     if(pos_num[i] != '0' && pos_num[i] != '1' && pos_num[i] != '2' &&
        pos_num[i] != '3' && pos_num[i] != '4' && pos_num[i] != '4' &&
@@ -40,14 +40,14 @@ bool isdigit(const char * pos_num){
 
 
 static void assign_port_number(const char * sub, struct rule * r){
-  if(isdigit(sub))
+  if(str_isdigit(sub))
     r->port = atoi(sub);
   else if(strcmp(sub,"any") == 0)
     r->port = -1;
   
 }
 static int check_port_number(const char * str){
-  if(isdigit(str))
+  if(str_isdigit(str))
     return atoi(str);
   else if(strcmp(str,"any") == 0)
     return -1;
@@ -81,7 +81,7 @@ static void get_ruletype(const char * __line, struct rule * __rule){
   
 }
 static int numeric_check(char * sub,unsigned int min,unsigned long  max){
-  if(isdigit(sub)){
+  if(str_isdigit(sub)){
     int tval = atoi(sub);
     if(tval >= min && tval <= max)
       return tval;
@@ -156,7 +156,7 @@ void line_parser(const char * line){
 
 
 
-        else if((isdigit(sub) || strcmp(sub,"any") == 0) && !parsing_msg_str && !parsing_target_str){
+        else if((str_isdigit(sub) || strcmp(sub,"any") == 0) && !parsing_msg_str && !parsing_target_str){
           assign_port_number(sub,rdata);
         }
           
@@ -276,7 +276,7 @@ void line_parser(const char * line){
           else if(strncmp(keysub,"sev:",4) == 0){
             // remove semicolon
             keysub[strcspn(keysub,";")] = 0x00;
-            if(isdigit(keysub + 4)){
+            if(str_isdigit(keysub + 4)){
               int r_sev = atoi(keysub + 4);
               if(r_sev > 0 && r_sev <= 10){
                 rdata->severity = r_sev;

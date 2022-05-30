@@ -28,11 +28,6 @@
 #include "homenet.h"
 #include "../actions/alerts.h"
 #include "../../utils.h"
-static bool is_rule(const char *);
-static bool is_comment(const char * line);
-static void rstrip(char * );
-static void syntax_error(const char * line, int line_no);
-static void get_action(const char * , struct rule *);
 
 
 /*
@@ -73,6 +68,22 @@ static void get_action(const char * , struct rule *);
     
 */
 
+static bool is_rule(const char * line){
+  return line[0] == '$' ? true : false;
+}
+
+static bool is_comment(const char * line){
+  return strstr(line,"#") != NULL ? true : false;
+}
+
+static void rstrip(char * line){
+  line[strcspn(line,"\n")] = 0;
+}
+
+// static void syntax_error(const char * line, int line_no){
+//   printf("Syntax error at line %d: %s\n",line_no,line);
+//   exit(EXIT_FAILURE);
+// }
  
 
 
@@ -187,28 +198,13 @@ void rule_library_parser(const char * alt_file){
       // printf("Parsing: %s\n",line);
       rule_parser(line);
     }
-    memset(line,0,sizeof(line)); 
+    // memset(line,0,sizeof(line)); 
   }
   if(VIGIL_MODE == 0xffff){
     VIGIL_MODE = IDS_PASSIVE;
   }
 }
-static bool is_rule(const char * line){
-  return line[0] == '$' ? true : false;
-}
 
-static bool is_comment(const char * line){
-  return strstr(line,"#") != NULL ? true : false;
-}
-
-static void rstrip(char * line){
-  line[strcspn(line,"\n")] = 0;
-}
-
-static void syntax_error(const char * line, int line_no){
-  printf("Syntax error at line %d: %s\n",line_no,line);
-  exit(EXIT_FAILURE);
-}
 
 void rule_parser(const char * __filename){
   // + 1 for the $ at the beggining

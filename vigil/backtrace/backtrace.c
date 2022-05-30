@@ -22,7 +22,6 @@
 #include <execinfo.h>
 #include "../netif/netif.h"
 #include "../utils.h"
-#include "../vrmc/vrmc.h"
 
 fn_mem_loc fn_mem_map[TOTAL_FN];
 int fn_num = 0;
@@ -45,7 +44,7 @@ void crash_handler(int sig){
   char ** strings;
   int size = backtrace(array, 20);
   strings = backtrace_symbols(array,size);
-  free_keys();
+  // free_keys();
   free_iface();
   printf("Segmentation fault at %s: application crashed\n",get_formated_time());
   printf("Function backtrace:\n");

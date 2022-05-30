@@ -8,7 +8,7 @@ void d_op_parser(struct rule * r, const char * ksub,int type){
   
 
 
-  if(isdigit(ksub)){  
+  if(str_isdigit(ksub)){  
    r->d_operator = D_OP_JE;
    r->dsize = atoi(ksub);
   } else if(strncmp(ksub,">",1) == 0){

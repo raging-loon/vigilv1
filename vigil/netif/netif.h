@@ -28,5 +28,6 @@ bool interface_operational(const char *);
 int iface_exists(const char *);
 void gather_iface_addrs();
 void gather_iface_hw_addrs();
+int num_f_in_dir(const char *);
 void print_iface_summary();
 #endif /* NET_IF_H */

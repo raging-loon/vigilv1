@@ -69,7 +69,6 @@ int main(int argc, char **argv){
   print_logo();
   print_cpu_info(); // purely for cosmetics
   printf("Running as PID %d\n",getpid());
-  is_running = 1;
   pps_monitor(); // to set a baseline on the file number
   last_clean_time = (unsigned long)time(NULL);
   if(argc == 1){
@@ -128,7 +127,7 @@ int main(int argc, char **argv){
   
   
   collect_scripts();
-  start_vrmc_server();
+  // start_vrmc_server();
   printf("Unecrypted NSH config server started: 127.0.0.1:641\n");
     // pcap_loop(pcap_mgr,-1, pktmgr, NULL);
   detect_interfaces();
@@ -138,7 +137,6 @@ int main(int argc, char **argv){
 
 void sigint_processor(int signal){
   free_iface();
-  int is_running = 0;
   // char * time = get_formated_time();
   char time[255];
   cb_get_formatted_time(time);
@@ -160,7 +158,7 @@ void sigint_processor(int signal){
   for(int i = 0; i < thread_count; i++){
     pthread_join(threads[i],NULL);
   }
-  free_keys();
+  // free_keys();
   __exit:
     exit(EXIT_SUCCESS);
 }
