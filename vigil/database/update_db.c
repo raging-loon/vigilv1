@@ -19,9 +19,6 @@
 
 
 
-static int callback(void *unused, int argc, char **argv, char **colname){
-  return 0 ;
-}
 void * update_db(void * args){
   update_db_t * update = args;
   printf("Updating db\n");

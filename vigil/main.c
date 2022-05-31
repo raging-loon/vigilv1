@@ -62,9 +62,7 @@ int main(int argc, char **argv){
   load_fn_mem_map();
   // print_mem_map();
   signal(SIGINT,sigint_processor);
-  signal(SIGSEGV,crash_handler); 
-  signal(SIGABRT,crash_handler);
-  signal(SIGALRM,crash_handler);
+  signal(SIGSEGV,crash_handler);
   
   print_logo();
   print_cpu_info(); // purely for cosmetics
@@ -74,7 +72,6 @@ int main(int argc, char **argv){
   if(argc == 1){
     print_help_and_exit();
   }
-  char error_buf[PCAP_ERRBUF_SIZE];
   char * iface_name;
   int opt;
   while((opt = getopt(argc,argv,"pdqhtei:")) != -1){
