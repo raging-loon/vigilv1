@@ -1,0 +1,2 @@
+# type:hash:alert
+sha256:cff90b784a4d787ed58ba030983d51461bef227357a91ede42fdffd3e58f4167:vigil.exe found
