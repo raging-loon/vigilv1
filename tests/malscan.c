@@ -25,12 +25,12 @@ int main(int argc, char ** argv){
   fseek(suspect_fp, 0L, SEEK_END);
   int sz = ftell(suspect_fp);
   rewind(suspect_fp);
-  unsigned char buffer[sz];
-
-  fread(&buffer,sizeof(buffer),sz,suspect_fp);
+  unsigned char * buffer = (unsigned char *)malloc(sz + 1);
+  memset(buffer,0,sizeof(buffer));
+  fread(buffer,sizeof(buffer),sz,suspect_fp);
   
   
-  SHA256((const unsigned char *)&buffer,sz,sha256_digest);
+  SHA256((const unsigned char *)buffer,sz,sha256_digest);
   int loc = 0;
   for(int i = 0; i < SHA256_DIGEST_LENGTH; i++){
     sprintf(digest_str + strlen(digest_str),"%02x",sha256_digest[i]);
@@ -46,6 +46,7 @@ int main(int argc, char ** argv){
 
   free(sha256_digest);
   free(digest_str);
+  free(buffer);
   fclose(suspect_fp);
 }
 
@@ -85,6 +86,6 @@ void load_hashes(){
 void def_alloc(vmal_def * def, const char * digest_type){
   if(strcmp(digest_type,"sha256") == 0){
     def->type = D_SHA256;
-    def->digest = (unsigned char *)malloc(SHA256_DIGEST_LENGTH * 2);
+    def->digest = (unsigned char *)malloc((SHA256_DIGEST_LENGTH * 2) + 1);
   }
 }
