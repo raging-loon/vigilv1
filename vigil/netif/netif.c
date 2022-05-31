@@ -170,18 +170,18 @@ void start_interface_cap_ex(void * __iface){
   int saddr_sz;
   struct sockaddr saddr;
   
-  unsigned char * buffer = (unsigned char *)malloc(65535);
+  unsigned char buffer[1600] = {0};
   signal(SIGSEGV,crash_handler);
 
   while(1){
-    len = recvfrom(v_iface->fd,buffer, 65535, 0, &saddr,(socklen_t *)&saddr_sz);
+    len = recvfrom(v_iface->fd,&buffer, 1600, 0, &saddr,(socklen_t *)&saddr_sz);
     // printf("%d\n",len);
-    pktmgr(v_iface->if_name,len,buffer);
-    memset(buffer,0,sizeof(buffer));
+    pktmgr(v_iface->if_name,len,&buffer);
+    memset(&buffer,0,sizeof(buffer));
     continue;
   }
 
-  free(buffer);
+  // free(buffer);
 }
 
 bool interface_operational(const char * iface){
