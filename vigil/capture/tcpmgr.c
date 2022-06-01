@@ -155,22 +155,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const int
   }
 
   if(use_spi){
-    if(PSH_ACK_SET(psh_set,ack_set) && flags_set == 2){
-      handle_data_pkt(rdata);
-    }
-    else if(FIN_ACK_SET(fin_set,ack_set)){
-      polite_end(rdata);
-    }
-
-    else if(syn_set && flags_set == 1){
-      add_new_conversation(rdata);
-    }
-    else if(SYN_ACK_SET(syn_set,ack_set) && flags_set == 2){
-      spi_ud_thw(rdata);
-    }
-    else if(ack_set && flags_set == 1){
-      update_table(rdata);
-    }
+    spi_handler(rdata);
   }
   
   if(PSH_ACK_SET(psh_set,ack_set) && flags_set == 2) rdata->is_established = true;

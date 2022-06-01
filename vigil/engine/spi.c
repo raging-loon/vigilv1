@@ -37,7 +37,7 @@ void spi_handler(struct rule_data * rdata){
 }
 void tcp_spi_handler(struct rule_data * rdata){
   struct spi_members * sm = get_conversation(rdata);
-
+  
 }
 
 int conversation_exists(struct rule_data * rdata){
