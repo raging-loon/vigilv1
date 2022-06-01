@@ -60,7 +60,7 @@ void crash_handler(int sig){
         temp_offset[strloc(temp_offset,')') ] = 0;
         offset = strtol(temp_offset,NULL,16);
         fn_mem_loc * fn = offset_search(offset);
-        if(offset != NULL){
+        if(offset != 0){
           printf("[N %s S 0x%02x E 0x%02x (./vigil.exe(+0x%02x))]\n",fn->fn_name, fn->start, fn->end, offset);
         } else {
           printf("Unknown function at memory offset 0x%02x\n",offset);

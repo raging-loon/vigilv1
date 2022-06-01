@@ -119,9 +119,7 @@ void line_parser(const char * line){
   rdata->dest = 0;
   void_rule(rdata);
   set_alert_method(rdata);
-  int chars_parsed = 0;
-  char * parser;
-  char * content;
+
 
   bool data = false;
   int left = 0, right = 0;
@@ -144,7 +142,6 @@ void line_parser(const char * line){
     
     } else if(delimit(line[right]) && (left != right) || (right == len && left != right)){
       char * sub = substr(line, left, right -1);
-      entry:
       
       if(data == false){
 
@@ -364,7 +361,7 @@ void line_parser(const char * line){
           else if(strncmp(keysub,"flags:\"",7) == 0){
             sc_strip(keysub);
             if(rdata->protocol == R_TCP){
-              strncpy(rdata->tcp_data.flags, keysub + 7, strlen(keysub) - 8);
+              strncpy((char *)&rdata->tcp_data.flags, keysub + 7, strlen(keysub) - 8);
               rdata->tcp_data.flagset = true;
             } else {
               printf("flags only applies to rules with tcp as protocol\n");
@@ -388,7 +385,7 @@ void line_parser(const char * line){
             // no sc_strip since it may contain a ';' in the regexp
             // char temp[128];
             //TODO: Make the init of pcre rule another function
-            strncpy(&rdata->pcrestr,keysub + 6,strlen(keysub) - 9);
+            strncpy(rdata->pcrestr,keysub + 6,strlen(keysub) - 9);
             if(regcomp(&rdata->pcre,rdata->pcrestr,0) != 0){
               printf("Failed to compile regular expression\n");
               exit(-1);

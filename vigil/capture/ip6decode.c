@@ -15,13 +15,13 @@ void ip6decode(const unsigned char * pkt,const  int len){
   char dest_ip6[41];
 
   char src_ip6[41];
-  strncpy(src_ip6,inet6_ntoa(ipv6_hdr->srcaddr),sizeof(src_ip6));
-  strncpy(dest_ip6,inet6_ntoa(ipv6_hdr->dstaddr),sizeof(dest_ip6));
+  strncpy(src_ip6, (char *)inet6_ntoa(ipv6_hdr->srcaddr),sizeof(src_ip6));
+  strncpy(dest_ip6,(char *)inet6_ntoa(ipv6_hdr->dstaddr),sizeof(dest_ip6));
   // printf("IPv6 ");
   // printf("src=%p dst=%p",ipv6_hdr->srcaddr,ipv6_hdr->dstaddr);
   // printf("src=%s dst=%s\n", 
                       // src_ip6,dest_ip6);
-  struct rule_data rdata;
+  // struct rule_data rdata;
   switch(ipv6_hdr->n_hdr){
     case 0:{
       ip6_icmp_decode(pkt,src_ip6,dest_ip6);

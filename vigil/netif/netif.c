@@ -176,7 +176,7 @@ void start_interface_cap_ex(void * __iface){
   while(1){
     len = recvfrom(v_iface->fd,&buffer, 1600, 0, &saddr,(socklen_t *)&saddr_sz);
     // printf("%d\n",len);
-    pktmgr(v_iface->if_name,len,&buffer);
+    pktmgr((unsigned char*)v_iface->if_name,len,(const unsigned char *)&buffer);
     memset(&buffer,0,sizeof(buffer));
     continue;
   }
