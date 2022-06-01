@@ -59,7 +59,7 @@ update_db.o:
 ftp-disect.o:
 	$(CC) $(CFLAGS) -c capture/protocols/ftp-disect.c 
 spi.o:
-	$(CC) $(CFLAGS) -c engine/spi.c 
+	$(CC) $(CFLAGS) -c engine/spi.c
 
 debug.o:
 	$(CC) $(CFLAGS) -c debug.c 
