@@ -29,7 +29,7 @@
 #define  __TCP_INIT           243 /* SYN */
 #define  __TCP_ACK_W          244 /* SYN/ACK */
 #define  __TCP_FIN_INIT       245 /* FIN/ACK */
-#define  __TCP_FIN_INIT2      246 /* ACK */
+#define  __TCP_FIN_INIT2      246 /* FIN/ACK */
 #define  __TCP_RST_COMP       247
 #define  __TCP_RST_INIT       248
 #define  __TCP_RST_INIT2      249
@@ -37,7 +37,7 @@
 #define  __TCP_CLOSED_RST     251
 #define  __UDP_FIRST_SEEN     252
 #define  __ICMP_FIRST_SEEN    253
-
+#define  __TCP_FIN_END        254 /* ACK */
 
 struct spi_members{
   unsigned char serv_addr[41];
