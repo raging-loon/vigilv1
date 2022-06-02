@@ -35,10 +35,6 @@ void spi_handler(struct rule_data * rdata){
       break;
   }
 }
-void tcp_spi_handler(struct rule_data * rdata){
-  struct spi_members * sm = get_conversation(rdata);
-  
-}
 
 int conversation_exists(struct rule_data * rdata){
   for(int i = 0; i < total_conversations + 1; i++){
@@ -60,3 +56,7 @@ int conversation_exists(struct rule_data * rdata){
   return -1;
 }
 
+void tcp_spi_handler(struct rule_data * rdata){
+  struct spi_members * sm = get_conversation(rdata);
+   
+}

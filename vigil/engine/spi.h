@@ -39,6 +39,17 @@
 #define  __ICMP_FIRST_SEEN    253
 #define  __TCP_FIN_END        254 /* ACK */
 
+enum tcp_flags{
+  TF_SYN = 0xdb,
+  TF_ACK,
+  TF_FIN_ACK,
+  TF_RST,
+  TF_FIN,
+  TF_RST_ACK
+};
+
+
+
 struct spi_members{
   unsigned char serv_addr[41];
   unsigned char cli_addr[41];
@@ -68,14 +79,6 @@ struct spi_members{
 extern unsigned int total_conversations;
 
 extern struct spi_members spi_table[1024];
-
-
-typedef struct{
-  int table_location;
-  int direction;
-#define DIR_CLIENT_TO_SERVER        100
-#define DIR_SERVER_TO_CLIENT        101
-} spi_info;
 
 
 void spi_handler(struct rule_data *);
