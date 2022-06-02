@@ -1,5 +1,5 @@
 # the installation file for the UTM 
-apt install libpcap-dev libssl-dev
+apt install libpcap-dev libssl-dev libsqlite3-dev liblua5.3-dev
 mkdir /usr/share/vigil
 mkdir /usr/share/vigil/rules
 cp src/rules/* /usr/share/vigil/rules/
