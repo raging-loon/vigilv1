@@ -6,7 +6,6 @@ Runs well on Debian based linux distributions
 Requires the following to run:
   - gcc 
   - make 
-  - libpcap-dev
   - sqlite3
   - libsqlite3-dev
   - liblua-5.3

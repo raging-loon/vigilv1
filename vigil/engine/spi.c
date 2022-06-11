@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "../globals.h"
-#include "../parsing/rule.h"
+#include "../filter/parsing/rule.h"
 #include "spi.h"
 #include <string.h>
 #include "../database/update_db.h"
