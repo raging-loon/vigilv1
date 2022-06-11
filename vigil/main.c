@@ -57,6 +57,11 @@
 #include "monitoring/monitoring.h"
 #include <unistd.h>
 
+// void arg_parser(int argc, const char ** argv){
+
+// }
+
+
 int main(int argc, char **argv){
   
   load_fn_mem_map();

@@ -20,53 +20,64 @@
 #include <pthread.h>
 // globals defined in @globals.h
 // config options
+
+
+
 unsigned int global_alert_method;
-bool demo_mode;
+unsigned int pkt_counter;
+unsigned int clean_delay_pkts = 0;
+unsigned int total_pkt_captured = 0;
+
+uint32_t homenet;
+uint32_t homenetmask;
+
+unsigned long last_clean_time;
+unsigned long clean_delay;
+
+int thread_count = 0;
 int strict_icmp_timestamp_req;
 int strict_nmap_host_alive_check;
-pthread_t threads[64];
-int thread_count = 0;
-unsigned int total_pkt_captured = 0;
 int blk_ipv4_len = -1;
 int num_rules = -1;
 int arp_entries = -1;
-
 int spi_max = 200;
-unsigned long last_clean_time;
-unsigned long clean_delay;
-unsigned int pkt_counter;
+int vigil_location;
+int VIGIL_MODE = 0xffff;
+int global_rule_action;
+
+
+bool demo_mode;
+bool quiet_exit = false;
+bool use_sqlite;
+bool packet_print;
+bool in_test_mode;
+bool debug_mode;
+bool use_spi;
+
+
+pthread_t threads[64];
 // info objects
 struct rule rules[MAX_RULES] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
 struct blocked_ipv4 blocked_ipv4_addrs[32];
 struct arp_entry arpcache[255];
+
+
 char ip_addr[32];
-bool debug_mode;
+char input_adapter[10];
+char output_adapter[10];
+char local_ip[18];
+char def_gw[18];
+char sqlite_db_path[32];
+
 // default files
 char * default_config = "/etc/vigil/vigil.conf";
 char * def_log_file = "/var/log/vigil/siglog.log";
 char * default_host_conf = "/etc/vigil/hosts.conf";
 
-bool use_sqlite;
-char sqlite_db_path[32];
-int global_rule_action;
-unsigned int clean_delay_pkts = 0;
-bool packet_print;
-bool quiet_exit = false;
 
 
 
-int vigil_location;
 
-int VIGIL_MODE = 0xffff;
-char input_adapter[10];
-char output_adapter[10];
-char local_ip[18];
-char def_gw[18];
-bool use_spi;
-
-uint32_t homenet;
-uint32_t homenetmask;
-bool in_test_mode;
 void add_thread(pthread_t * pthrd){
   threads[thread_count++] = *pthrd;
 }
