@@ -130,7 +130,7 @@ int main(int argc, char **argv){
   
   collect_scripts();
   // start_vrmc_server();
-  printf("Unecrypted NSH config server started: 127.0.0.1:641\n");
+  printf("Unecrypted VRMC config server started: 127.0.0.1:641\n");
     // pcap_loop(pcap_mgr,-1, pktmgr, NULL);
   detect_interfaces();
   start_interface_cap(iface_name);
