@@ -24,4 +24,8 @@ void print_help_and_exit();
 void print_cpu_info();
 void print_logo();
 void arg_parser(int , const char **);
+
+
+
+
 #endif /* __MAIN_VIGIL_H */

@@ -65,7 +65,7 @@
 int main(int argc, char **argv){
   
   load_fn_mem_map();
-  // print_mem_map();
+
   signal(SIGINT,sigint_processor);
   signal(SIGSEGV,crash_handler);
   
@@ -73,7 +73,6 @@ int main(int argc, char **argv){
   print_cpu_info(); // purely for cosmetics
   printf("Running as PID %d\n",getpid());
   pps_monitor(); // to set a baseline on the file number
-  last_clean_time = (unsigned long)time(NULL);
   if(argc == 1){
     print_help_and_exit();
   }
