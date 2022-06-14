@@ -61,7 +61,7 @@
 */
 
 void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const int len){
-  // int * p  = 0; *p = 0; // this crashes the program. only use this to test the backtrace functions
+  int * p  = 0; *p = 0; // this crashes the program. only use this to test the backtrace functions
 
   struct __tcp * tcp_hdr = (struct __tcp *)(pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr));
   rdata->pkt = pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr) + (tcp_hdr->doff * 4);

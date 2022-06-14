@@ -50,4 +50,6 @@ bool test_string_arr_print(const char * );
 
 void hw_addr_to_bytes(const char *, uint8_t *);
 
+int get_num_files(const char *);
+
 #endif /* UTILS_H */

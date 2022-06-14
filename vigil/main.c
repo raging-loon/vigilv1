@@ -61,21 +61,26 @@
 
 // }
 
-
+// Main function of course
 int main(int argc, char **argv){
   
   load_fn_mem_map();
-
+  // set signals
+  // handle CTRL-C
   signal(SIGINT,sigint_processor);
+  // handle segmentation faults
   signal(SIGSEGV,crash_handler);
   
   print_logo();
   print_cpu_info(); // purely for cosmetics
   printf("Running as PID %d\n",getpid());
   pps_monitor(); // to set a baseline on the file number
+
   if(argc == 1){
     print_help_and_exit();
+
   }
+  // TODO: move this
   char * iface_name;
   int opt;
   while((opt = getopt(argc,argv,"pdqhtei:")) != -1){
@@ -113,12 +118,9 @@ int main(int argc, char **argv){
   }
   
  
-  // char * ip_addr = "";
   deny_conf_parser("/etc/vigil/deny.conf");
   printf("Finsished loading explicit deny file(/etc/vigil/deny.conf)\n");
   
-  // if(load_csv_arp_cache() != -1) printf("Finished loading CSV arp cache\n");
-  // else printf("Failed to load CSV arp cache(non critical error)\n");
   
   rule_library_parser("/etc/vigil/vigil.conf");
   printf("Parsed rule files\n");
@@ -130,12 +132,11 @@ int main(int argc, char **argv){
   collect_scripts();
   // start_vrmc_server();
   printf("Unecrypted VRMC config server started: 127.0.0.1:641\n");
-    // pcap_loop(pcap_mgr,-1, pktmgr, NULL);
   detect_interfaces();
   start_interface_cap(iface_name);
 }
 
-
+// handle CTRL-C
 void sigint_processor(int signal){
   free_iface();
   // char * time = get_formated_time();

@@ -38,7 +38,7 @@ openssl rsa -in privkey.pem -pubout -out pubkey.crt
 openssl pkcs8 -topk8 -inform PEM -outform PEM -nocrypt -in privkey.pem -out pkcs8.key
 mkdir /etc/vigil/keys/
 mv privkey.pem pubkey.crt pkcs8.key /etc/vigil/keys
-
+mkdir /usr/share/vigil/crashes/
 # clear
 
 printf "\033[0;32mInstallation Complete\033[0m\n"

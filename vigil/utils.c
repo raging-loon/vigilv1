@@ -17,6 +17,7 @@
 #include "utils.h"
 #include <stdlib.h>
 #include <string.h>
+#include <dirent.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <uchar.h>
@@ -135,4 +136,18 @@ void hw_addr_to_bytes(const char * hw_addr, uint8_t * dst){
     dst[times++] = (uint8_t)strtol(p,NULL,16);
     p = strtok(NULL,":");
   }
+}
+
+int get_num_files(const char * path){
+  struct dirent* dir;
+  DIR * dr = opendir(path);
+  if(dr == NULL){
+    return -1;
+  }
+  int files_found = 0;
+  while((dir = readdir(dr)) != NULL) files_found++;
+  files_found -= 2; // account for . and ..
+
+  closedir(dr);
+  return files_found;
 }

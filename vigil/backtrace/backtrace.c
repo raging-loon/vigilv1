@@ -18,6 +18,7 @@
 #include "backtrace.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
 #include <string.h>
 #include <execinfo.h>
 #include "../netif/netif.h"
@@ -46,8 +47,29 @@ void crash_handler(int sig){
   strings = backtrace_symbols(array,size);
   // free_keys();
   free_iface();
-  printf("Segmentation fault at %s: application crashed\n",get_formated_time());
-  printf("Function backtrace:\n");
+
+  char * path = "/usr/share/vigil/crashes/";
+  int existing_files;
+  char filename[64];
+  if((existing_files = get_num_files(path)) == -1){
+    sprintf(filename,"%scrashdump.log.1",path);
+  } else {
+    sprintf(filename,"%scrashdump.log.%d",path,existing_files);
+  }
+
+  FILE * fp = fopen(filename,"w");
+  if(fp == NULL)
+    fp = stdout;
+  
+  if(fp == stdout)
+    fprintf(fp, "Segmentation fault at %s: application crashed\n",get_formated_time());
+  else
+    printf("Segmentation fault at %s: application crashed\n",get_formated_time());
+  if(fp != stdout)
+    printf("Please send an email to cxmacolley@gmail.com with this file attached: %s\n",filename);
+  else
+    printf("Please send and email to cxmacolley@gmail.com with the details of this crash report\n");
+  fprintf(fp, "Function backtrace:\n");
   if(strings != NULL){
     for(int i = 0; i < size; i++){
       if(strstr(strings[i],"lib") != NULL){
@@ -61,9 +83,9 @@ void crash_handler(int sig){
         offset = strtol(temp_offset,NULL,16);
         fn_mem_loc * fn = offset_search(offset);
         if(offset != 0){
-          printf("[N %s S 0x%02x E 0x%02x (./vigil.exe(+0x%02x))]\n",fn->fn_name, fn->start, fn->end, offset);
+          fprintf(fp, "[N %s S 0x%02x E 0x%02x (./vigil.exe(+0x%02x))]\n",fn->fn_name, fn->start, fn->end, offset);
         } else {
-          printf("Unknown function at memory offset 0x%02x\n",offset);
+          fprintf(fp, "Unknown function at memory offset 0x%02x\n",offset);
         }
       }
 
@@ -72,13 +94,13 @@ void crash_handler(int sig){
   free(strings);
   
   // print_mem_map();
-  printf("Register Dump:\n");
-  printf("[RAX] = 0x%02x\n",r_rax);
-  printf("[RBX] = 0x%02x\n",r_rbx);
-  printf("[RCX] = 0x%02x\n",r_rcx);
-  printf("[RDX] = 0x%02x\n",r_rdx);
-  printf("[RSP] = 0x%02x\n",r_rsp);
-  printf("[RBP] = 0x%02x\n",r_rbp);
+  fprintf(fp, "Register Dump:\n");
+  fprintf(fp, "[RAX] = 0x%02x\n",r_rax);
+  fprintf(fp, "[RBX] = 0x%02x\n",r_rbx);
+  fprintf(fp, "[RCX] = 0x%02x\n",r_rcx);
+  fprintf(fp, "[RDX] = 0x%02x\n",r_rdx);
+  fprintf(fp, "[RSP] = 0x%02x\n",r_rsp);
+  fprintf(fp, "[RBP] = 0x%02x\n",r_rbp);
 
   exit(EXIT_FAILURE); 
 
