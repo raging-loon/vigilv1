@@ -93,7 +93,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const int
   
 
   } 
-  
+  // AFPRSU
   if((uint16_t)ntohs(tcp_hdr->ack) != 0){
     if(packet_print) printf("%s ACK ",__TCP_ACK);
     ack_set = true;
@@ -134,6 +134,7 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const int
   
   if(packet_print) {
     printf("%s",__TCP_COLOR_NS);
+
     printf("]\n");
     printf("%s",__END_COLOR_STREAM);
   }

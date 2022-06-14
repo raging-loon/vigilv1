@@ -45,12 +45,14 @@ int conversation_exists(struct rule_data * rdata){
     if(!sm->conversation_active){
       if(rdata->dest_port == sm->cli_port && rdata->src_port == sm->serv_port){
         if(strcmp(rdata->src_ip_addr, (const char *)sm->serv_addr) == 0 && strcmp(rdata->dest_ip_addr,(const char *)sm->cli_addr)){
-          return i;
+          if(rdata->__protocol == sm->protocol)
+            return i;
         }     
       }
     } else if(rdata->src_port == sm->cli_port && rdata->dest_port == sm->serv_port){
         if(strcmp(rdata->dest_ip_addr,(const char *)sm->serv_addr) == 0 && strcmp(rdata->src_ip_addr, (const char *)sm->cli_addr) == 0){
-          return i;
+          if(rdata->__protocol == sm->protocol)
+            return i;
         }
     }
 
@@ -92,6 +94,8 @@ void add_new_conversation(struct rule_data * rdata){
 
 void tcp_spi_handler(struct rule_data * rdata){
   struct spi_members * sm = get_conversation(rdata);
-
+  if(sm->status == __TCP_INIT){
+    
+  }
 }
 

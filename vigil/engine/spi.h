@@ -38,15 +38,6 @@
 #define  __ICMP_FIRST_SEEN    253
 #define  __TCP_FIN_END        254 /* ACK */
 
-enum tcp_flags{
-  TF_SYN = 0xdb,
-  TF_ACK,
-  TF_FIN_ACK,
-  TF_RST,
-  TF_FIN,
-  TF_RST_ACK
-};
-
 
 
 struct spi_members{
@@ -84,4 +75,32 @@ void spi_handler(struct rule_data *);
 void tcp_spi_handler(struct rule_data *);
 int conversation_exists(struct rule_data *);
 void add_new_conversation(struct rule_data *);
+
+
+/* TCP Data/Functions */
+enum tcp_flags{
+  SYN_ACK = 0x02,
+  ACK,
+  RST_ACK,
+  RST,
+  TCP_ALL,
+  TCP_NONE,
+  FIN,
+  FIN_ACK,
+  PSH_ACK
+};
+
+enum tcp_flags get_tcp_flags(struct rule_data *);
+
+void tcp_syn_handler(struct spi_members *);
+
+void tcp_syn_ack_handler(struct spi_members *);
+void tcp_rst_handler(struct spi_members *);
+void tcp_ack_handler(struct spi_members *);
+void tcp_rst_ack_handler(struct spi_members *);
+void tcp_fin_handler(struct spi_members *);
+void tcp_fin_ack_handler(struct spi_members *);
+
+
+
 #endif /* SPI_H */

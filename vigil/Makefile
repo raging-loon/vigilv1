@@ -102,6 +102,8 @@ monitoring.o:
 
 netif.o:
 	$(CC) $(CFLAGS) -c netif/netif.c
+uptcp.o:
+	$(CC) $(CFLAGS) -c engine/uptcp.c
 
 vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			tcpmgr.o udpmgr.o igmp_dsct.o print_utils.o\
@@ -111,7 +113,7 @@ vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			forward.o spi.o logging.o line_parser.o rule_init.o dp_size.o \
 			homenet.o tcp_chksum.o lua_engine.o ip6decode.o backtrace.o \
 			load_fn_map.o pps_monitor.o monitoring.o \
-			netif.o
+			netif.o uptcp.o
 	set environment MALLOC_CHECK_ 2
 	$(CC) -g -o vigil.exe $^ -l pthread -l ssl -l crypto -l sqlite3 -l lua5.3
 
