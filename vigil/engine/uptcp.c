@@ -6,7 +6,10 @@
 #include <stdlib.h>
 
 
-void tcp_syn_handler(struct spi_members * sm);
+void tcp_syn_handler(struct spi_members * sm){
+  
+
+}
 
 void tcp_syn_ack_handler(struct spi_members * sm);
 void tcp_rst_handler(struct spi_members * sm);

@@ -22,9 +22,7 @@ static struct spi_members * get_conversation(struct rule_data * rdata){
   if((loc = conversation_exists(rdata)) != -1)
     return &spi_table[loc];
   else {
-    
-    return &spi_table[get_new_spi_loc()];
-
+    return NULL;
   }
 }
 
@@ -93,10 +91,10 @@ void add_new_conversation(struct rule_data * rdata){
 
 void tcp_spi_handler(struct rule_data * rdata){
   struct spi_members * sm = get_conversation(rdata);
-  if(strncmp((char *)rdata->tcp_flags,"AFPRSU",6) == 0){
-    // handle xmas scan
+  if(strncmp((char *)rdata->tcp_flags,"FPU",4) == 0){
+    printf("XMAS SCAN ALERT %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
   } else if(strlen((char *)rdata->tcp_flags) == 0){
-    // handle null scan
+    printf("NULL SCAN ALERT %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
   } else {
 
     rdata->tcp_flags[strcspn((char *)rdata->tcp_flags,"U")] = '\0';
@@ -113,7 +111,7 @@ void tcp_spi_handler(struct rule_data * rdata){
       // handle RST-ACK
     }
     else if(strcmp((char *)rdata->tcp_flags, "S") == 0){
-      // handle SYN
+      tcp_syn_handler(sm);
     }
   }
 
