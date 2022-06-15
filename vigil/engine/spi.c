@@ -94,8 +94,22 @@ void add_new_conversation(struct rule_data * rdata){
 
 void tcp_spi_handler(struct rule_data * rdata){
   struct spi_members * sm = get_conversation(rdata);
-  if(sm->status == __TCP_INIT){
-    
+  if(strncmp((char *)rdata->tcp_flags,"AFPRSU",6) == 0){
+    // handle xmas scan
+  } else if(strlen((char *)rdata->tcp_flags) == 0){
+    // handle null scan
+  } else {(
+
+    rdata->tcp_flags[strcspn((char *)rdata->tcp_flags,"U")] = '\0';
+    if(strcmp((char *)rdata->tcp_flags,"A") == 0){
+      // handle ACK
+    }
+    else if(strncmp((char * )rdata->tcp_flags,"AS") == 0){
+      
+    }
+
   }
+
+
 }
 

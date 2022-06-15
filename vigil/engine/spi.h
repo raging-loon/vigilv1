@@ -78,19 +78,6 @@ void add_new_conversation(struct rule_data *);
 
 
 /* TCP Data/Functions */
-enum tcp_flags{
-  SYN_ACK = 0x02,
-  ACK,
-  RST_ACK,
-  RST,
-  TCP_ALL,
-  TCP_NONE,
-  FIN,
-  FIN_ACK,
-  PSH_ACK
-};
-
-enum tcp_flags get_tcp_flags(struct rule_data *);
 
 void tcp_syn_handler(struct spi_members *);
 
