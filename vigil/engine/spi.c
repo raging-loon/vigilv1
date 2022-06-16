@@ -22,7 +22,7 @@ static struct spi_members * get_conversation(struct rule_data * rdata){
   if((loc = conversation_exists(rdata)) != -1)
     return &spi_table[loc];
   else {
-    return NULL;
+    return &spi_table[get_new_spi_loc()];
   }
 }
 
@@ -63,6 +63,7 @@ int conversation_exists(struct rule_data * rdata){
 
 void add_new_conversation(struct rule_data * rdata){
   struct spi_members * sm = get_conversation(rdata);
+  
   if(sm->initvar == 0xffff) return;
   memset(sm, 0, sizeof(sm));
   sm->initvar = 0xffff;

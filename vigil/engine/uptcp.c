@@ -7,8 +7,9 @@
 
 
 void tcp_syn_handler(struct spi_members * sm){
-  
-
+  printf("SPI New TCP Conversation: 1/3 %s:%d -> %s:%d\n",
+          sm->cli_addr,sm->cli_port,sm->serv_addr,sm->serv_port);
+  fflush(stdout);
 }
 
 void tcp_syn_ack_handler(struct spi_members * sm);

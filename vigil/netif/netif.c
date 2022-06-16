@@ -208,7 +208,8 @@ bool interface_operational(const char * iface){
 void print_iface_summary(){
   for(int i = 0; i < iface_detected; i++){
     v_netif * net_if = &net_interfaces[i];
-    printf("%s: %s %s",net_if->if_name,net_if->address,mac_ntoa(net_if->mac_addr));
+    printf("%s: %s %s\n",net_if->if_name,net_if->address,mac_ntoa(net_if->mac_addr));
+    fflush(stdout);
   }
 }
 
