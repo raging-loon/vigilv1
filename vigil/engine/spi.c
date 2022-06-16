@@ -70,7 +70,7 @@ void add_new_conversation(struct rule_data * rdata){
   sm->conversation_active = true;
   strcpy((char *)sm->cli_addr,rdata->src_ip_addr);
   strcpy((char *)sm->serv_addr, rdata->dest_ip_addr);
-
+  
   sm->cli_port = rdata->src_port;
   sm->serv_port = rdata->dest_port;
   
