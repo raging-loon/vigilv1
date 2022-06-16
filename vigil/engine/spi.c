@@ -22,7 +22,12 @@ static struct spi_members * get_conversation(struct rule_data * rdata){
   if((loc = conversation_exists(rdata)) != -1)
     return &spi_table[loc];
   else {
-    return &spi_table[get_new_spi_loc()];
+    loc = get_new_spi_loc();
+
+    struct spi_members * sm = &spi_table[loc];
+    sm->location = loc;
+    add_new_conversation(rdata, sm);
+    return sm;
   }
 }
 
@@ -40,29 +45,31 @@ void spi_handler(struct rule_data * rdata){
 int conversation_exists(struct rule_data * rdata){
   for(int i = 0; i < total_conversations + 1; i++){
     struct spi_members * sm = &spi_table[i];
-    if(!sm->conversation_active){
+    if(sm->conversation_active != false){
       if(rdata->dest_port == sm->cli_port && rdata->src_port == sm->serv_port){
         if(strcmp(rdata->src_ip_addr, (const char *)sm->serv_addr) == 0 && strcmp(rdata->dest_ip_addr,(const char *)sm->cli_addr)){
-          if(rdata->__protocol == sm->protocol)
+          // if(rdata->__protocol == sm->protocol)
             return i;
         }     
       }
     } else if(rdata->src_port == sm->cli_port && rdata->dest_port == sm->serv_port){
         if(strcmp(rdata->dest_ip_addr,(const char *)sm->serv_addr) == 0 && strcmp(rdata->src_ip_addr, (const char *)sm->cli_addr) == 0){
-          if(rdata->__protocol == sm->protocol)
+          // if(rdata->__protocol == sm->protocol)
             return i;
         }
     }
 
+    // if(strcmp((char *)sm->cli_addr,rdata->src_ip_addr) == 0 ){
 
+    // }
   }
   return -1;
 }
 
 
 
-void add_new_conversation(struct rule_data * rdata){
-  struct spi_members * sm = get_conversation(rdata);
+void add_new_conversation(struct rule_data * rdata, struct spi_members * sm){
+  // struct spi_members * sm = get_conversation(rdata);
   
   if(sm->initvar == 0xffff) return;
   memset(sm, 0, sizeof(sm));
@@ -73,7 +80,7 @@ void add_new_conversation(struct rule_data * rdata){
   
   sm->cli_port = rdata->src_port;
   sm->serv_port = rdata->dest_port;
-  
+  sm->status = __SPI_UNINIT;
   sm->data_pkt = 0;
   sm->cli_packet_recv = &sm->serv_packet_sent;
   sm->cli_packet_sent = &sm->serv_packet_recv;
@@ -82,16 +89,17 @@ void add_new_conversation(struct rule_data * rdata){
 
   sm->control_pkt++;
   sm->protocol = rdata->__protocol;
-  printf("SPI NEW CONVERSATION %s %d %s:%d -> %s:%d\n",
-            sm->protocol == R_TCP ? "TCP" : "UDP",
-            total_conversations,
-            sm->cli_addr, sm->cli_port, sm->serv_addr, sm->serv_port);
+  // printf("SPI NEW CONVERSATION %s %d %s:%d -> %s:%d\n",
+            // sm->protocol == R_TCP ? "TCP" : "UDP",
+            // total_conversations,
+            // sm->cli_addr, sm->cli_port, sm->serv_addr, sm->serv_port);
 }
 
 
 
 void tcp_spi_handler(struct rule_data * rdata){
   struct spi_members * sm = get_conversation(rdata);
+  // printf(":%s ", rdata->tcp_flags);
   if(strncmp((char *)rdata->tcp_flags,"FPU",4) == 0){
     printf("XMAS SCAN ALERT %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
   } else if(strlen((char *)rdata->tcp_flags) == 0){
@@ -103,7 +111,7 @@ void tcp_spi_handler(struct rule_data * rdata){
       // handle ACK
     }
     else if(strcmp((char * )rdata->tcp_flags,"AS") == 0){
-      // handle SYN-ACK
+      tcp_syn_ack_handler(sm);
     }
     else if(strcmp((char *)rdata->tcp_flags, "R") == 0){
       // handle RST 

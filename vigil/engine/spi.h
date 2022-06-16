@@ -22,7 +22,7 @@
 #include <stdbool.h>
 
 
-#define __TCP_LISTENING       240
+#define  __TCP_LISTENING      240
 #define  __TCP_ESTABLISHED    241 /* ACK - end of twh*/
 #define  __TCP_FINISHED       242      
 #define  __TCP_INIT           243 /* SYN */
@@ -37,7 +37,7 @@
 #define  __UDP_FIRST_SEEN     252
 #define  __ICMP_FIRST_SEEN    253
 #define  __TCP_FIN_END        254 /* ACK */
-
+#define  __SPI_UNINIT         255
 
 
 struct spi_members{
@@ -54,6 +54,7 @@ struct spi_members{
   bool session_encrypted;
   unsigned int data_pkt, control_pkt;
   unsigned int initvar;
+  int location;
   int num_cli_rules;
   int num_srv_rules;
   unsigned int status;
@@ -74,7 +75,7 @@ extern struct spi_members spi_table[1024];
 void spi_handler(struct rule_data *);
 void tcp_spi_handler(struct rule_data *);
 int conversation_exists(struct rule_data *);
-void add_new_conversation(struct rule_data *);
+void add_new_conversation(struct rule_data *, struct spi_members * );
 
 
 /* TCP Data/Functions */
