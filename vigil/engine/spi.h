@@ -41,8 +41,8 @@
 
 
 struct spi_members{
-  unsigned char serv_addr[41];
-  unsigned char cli_addr[41];
+  char serv_addr[41];
+  char cli_addr[41];
   unsigned int serv_port;
   unsigned int cli_port;
   int serv_packet_sent;

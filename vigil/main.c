@@ -57,6 +57,8 @@
 #include "monitoring/monitoring.h"
 #include <unistd.h>
 
+#include <pcap.h>
+
 // void arg_parser(int argc, const char ** argv){
 
 // }
@@ -132,8 +134,23 @@ int main(int argc, char **argv){
   collect_scripts();
   // start_vrmc_server();
   printf("Unecrypted VRMC config server started: 127.0.0.1:641\n");
+  // detect_interfaces();
+  // start_interface_cap(iface_name);
+#ifdef USELIBPCAP
+  printf("Use libpcap\n");
+  pcap_t * lo_mgr;
+  char lo_pkt_buffer[2046] = {0};
+  lo_mgr = pcap_open_live("lo",1024,1,100,lo_pkt_buffer);
+  if(lo_mgr == NULL){
+    printf("failed in pcap_open_live\n");
+    exit(-1);
+  }
+
+  pcap_loop(lo_mgr,-1,pktmgr, NULL);
+#else
   detect_interfaces();
   start_interface_cap(iface_name);
+#endif
 }
 
 // handle CTRL-C

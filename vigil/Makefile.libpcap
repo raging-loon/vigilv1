@@ -1,5 +1,5 @@
 CC = gcc 
-CFLAGS = -Wall
+CFLAGS = -Wall -D USELIBPCAP
 all: vigil clean
 
 print_utils.o:
@@ -115,7 +115,7 @@ vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			load_fn_map.o pps_monitor.o monitoring.o \
 			netif.o uptcp.o
 	set environment MALLOC_CHECK_ 2
-	$(CC) -g -o vigil.exe $^ -l pthread -l ssl -l crypto -l sqlite3 -l lua5.3 
+	$(CC) -g -o vigil.exe $^ -l pthread -l ssl -l crypto -l sqlite3 -l lua5.3 -l pcap
 
 	objdump -D vigil.exe -M intel > objdump.txt
 	python ../tools/gen_mem_map.py -f objdump.txt

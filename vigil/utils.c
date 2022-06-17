@@ -129,7 +129,7 @@ bool test_string_arr_print(const char * str){
 }
 
 void hw_addr_to_bytes(const char * hw_addr, uint8_t * dst){
-  char * p = strtok(hw_addr,":");
+  char * p = strtok((char *)hw_addr,":");
   int times = 0;
   
   while(p != NULL){
