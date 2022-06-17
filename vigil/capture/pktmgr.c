@@ -27,11 +27,13 @@
 #include "l3pktmgr.h"
 #include "ip6decode.h"
 #include "../monitoring/monitoring.h"
-// void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt){
- ;
+#ifndef USELIBPCAP
+void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt){
+#else
 void pktmgr(unsigned char * user, struct  pcap_pkthdr * pkt_hdr, const unsigned char * pkt){ 
   // pps_monitor();
   int len = pkt_hdr->len;
+#endif
   if(packet_print) printf("\033[90m-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\033[m\n");
   /*
     pktmgr -> ethernet header -> protocol number -> protocol number header -> data
