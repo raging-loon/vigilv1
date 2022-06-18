@@ -75,7 +75,7 @@ extern struct spi_members spi_table[1024];
 void spi_handler(struct rule_data *);
 void tcp_spi_handler(struct rule_data *);
 int conversation_exists(struct rule_data *);
-void add_new_conversation(struct rule_data *, struct spi_members * );
+struct spi_members * add_new_conversation(struct rule_data * );
 
 
 /* TCP Data/Functions */
