@@ -59,6 +59,32 @@
 
 #include <pcap.h>
 
+// #define USELIBPCAP
+#ifdef USELIBPCAP
+
+struct lpcap_args{
+  pcap_t * ex;
+  char * iface_name;
+  char * buffer;
+};
+
+void lp_thread(struct lpcap_args * args){
+  pthread_t pthrd;
+  pthread_create(&pthrd,NULL,lp_thread_start,args);
+  
+}
+
+void lp_thread_start(void * args){
+  struct lpcap_args * lp = (struct lpcap_args *)args;
+  if((lp->ex =  pcap_open_live(lp->iface_name,1024,1,100,lp->buffer)) == NULL){
+    printf("Pcap loop failed\n");
+    return;
+  }
+  pcap_loop(lp->ex, -1, pktmgr, NULL);
+}
+
+#endif
+
 // void arg_parser(int argc, const char ** argv){
 
 // }
@@ -140,13 +166,12 @@ int main(int argc, char **argv){
   printf("Use libpcap\n");
   pcap_t * lo_mgr;
   char lo_pkt_buffer[2046] = {0};
-  lo_mgr = pcap_open_live("lo",1024,1,100,lo_pkt_buffer);
-  if(lo_mgr == NULL){
-    printf("failed in pcap_open_live\n");
-    exit(-1);
-  }
-
-  pcap_loop(lo_mgr,-1,pktmgr, NULL);
+  struct lpcap_args lp;
+  lp.iface_name = "lo";
+  lp.buffer = &lo_pkt_buffer;
+  lp.ex = lo_mgr;
+  lp_thread(&lp);
+  printf("here\n");
 #else
   detect_interfaces();
   start_interface_cap(iface_name);
