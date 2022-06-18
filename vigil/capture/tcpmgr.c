@@ -64,7 +64,12 @@ void ip4_tcp_decode(const unsigned char * pkt,struct rule_data * rdata,const int
   // int * p  = 0; *p = 0; // this crashes the program. only use this to test the backtrace functions
 
   struct __tcp * tcp_hdr = (struct __tcp *)(pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr));
-  rdata->pkt = pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr) + (tcp_hdr->doff * 4);
+  
+  
+  rdata->pkt = (unsigned char *)(pkt + ETH_HDR_SZ +  sizeof(struct ip_hdr) + (tcp_hdr->doff * 4));
+  
+
+  
   rdata->pkt_len = rdata->pkt_len - ETH_HDR_SZ - sizeof(struct ip_hdr) - (tcp_hdr->doff * 4);
   const char * src_ip = rdata->src_ip_addr;
   const char * dest_ip = rdata->dest_ip_addr;

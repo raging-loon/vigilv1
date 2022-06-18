@@ -20,7 +20,7 @@
 
 
 void * update_db(void * args){
-  update_db_t * update = args;
+  update_db_t * update = (update_db_t*)args;
   printf("Updating db\n");
   char * err = 0;
   sqlite3* database; 
@@ -49,7 +49,7 @@ void * update_db(void * args){
 
 void * update_spi_db(void * spi_data){
   sqlite3 * db;
-  struct spi_members * sm = spi_data;
+  struct spi_members * sm = (struct spi_members*)spi_data;
   if(sqlite3_open("/usr/share/vigil/spi.db",&db)){
     printf("SQLite error %s\n",sqlite3_errmsg(db));
     sqlite3_close(db);

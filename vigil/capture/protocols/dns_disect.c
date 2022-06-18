@@ -8,7 +8,7 @@
 #include "../../globals.h"
 void dns_disect(const unsigned char * pkt, const struct rule_data * rdata){
   struct dns_pkt_data * dns_data = (struct dns_pkt_data*)(pkt);
-  char * query = pkt + sizeof(struct dns_pkt_data);
+  unsigned char * query = (unsigned char *)(pkt + sizeof(struct dns_pkt_data));
   if(dns_data->flags == 0){
 
     char * real_query = (char *)malloc(1024);
@@ -22,11 +22,11 @@ void dns_disect(const unsigned char * pkt, const struct rule_data * rdata){
 
 
 
-void get_dns_name(const char * qry, char * output){
+void get_dns_name(const unsigned char * qry, char * output){
   
-  for(int i = 0; i < strlen(qry); i++){
+  for(int i = 0; i < strlen((char *)qry); i++){
     
-      if(qry[i] > 32)strncat(output,&qry[i],1);
+      if(qry[i] > 32) strncat(output,(char *)&qry[i],1);
       else strcat(output,".");
     
   }

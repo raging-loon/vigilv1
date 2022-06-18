@@ -25,9 +25,10 @@
 void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata, const int len){
 
   struct udphdr * udp_header = (struct udphdr*)(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr));
-  rdata->pkt = pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(udp_header);
-  // add_ip_addr_or_inc_counter(rdata->src_ip_addr,true,UDP);
-  // add_ip_addr_or_inc_counter(rdata->dest_ip_addr,false, UDP);
+  
+  rdata->pkt = (unsigned char *)(pkt + ETH_HDR_SZ + sizeof(struct ip_hdr) + sizeof(udp_header));
+  
+  
   unsigned int src_port, dest_port;
   src_port = (unsigned int)ntohs(udp_header->uh_sport);
   dest_port = (unsigned int)ntohs(udp_header->uh_dport);

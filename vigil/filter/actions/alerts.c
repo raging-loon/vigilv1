@@ -16,7 +16,7 @@
     - Email
   
 */
-void format_msg(const struct rule_data* rdata, const struct rule * r, char * restrict buf){
+void format_msg(const struct rule_data* rdata, const struct rule * r, char * buf){
   time_t t = time(NULL);
   struct tm __time = *localtime(&t);
   char time[64];

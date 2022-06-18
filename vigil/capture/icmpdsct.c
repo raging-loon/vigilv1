@@ -90,7 +90,7 @@ void ip4_icmp_decode(const unsigned char * pkt,struct rule_data * rdata){
   
   struct __icmp4 * icmp4 = (struct __icmp4 *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
 
-  rdata->pkt = (pkt + ETH_HDR_SZ + sizeof(struct iphdr));
+  rdata->pkt = (unsigned char *)(pkt + ETH_HDR_SZ + sizeof(struct iphdr));
 
   rdata->icmp_header = icmp4;
   rdata->dsize = rdata->pkt_len - ETH_HDR_SZ - sizeof(struct iphdr) - 8;
