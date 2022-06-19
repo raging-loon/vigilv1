@@ -30,7 +30,7 @@
 #ifndef USELIBPCAP
 void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt){
 #else
-void pktmgr(unsigned char * user, struct  pcap_pkthdr * pkt_hdr, const unsigned char * pkt){ 
+void pktmgr(unsigned char * user, const struct  pcap_pkthdr * pkt_hdr, const unsigned char * pkt){ 
   // pps_monitor();
   int len = pkt_hdr->len;
 #endif
