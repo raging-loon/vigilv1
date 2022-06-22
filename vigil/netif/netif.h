@@ -30,4 +30,9 @@ void gather_iface_addrs();
 void gather_iface_hw_addrs();
 int num_f_in_dir(const char *);
 void print_iface_summary();
+
+int set_active_interface(const char *);
+
+int start_global_cap();
+
 #endif /* NET_IF_H */

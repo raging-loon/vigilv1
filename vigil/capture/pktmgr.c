@@ -27,21 +27,20 @@
 #include "l3pktmgr.h"
 #include "ip6decode.h"
 #include "../monitoring/monitoring.h"
-#ifndef USELIBPCAP
 void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt){
-#else
-void pktmgr(unsigned char * user, const struct  pcap_pkthdr * pkt_hdr, const unsigned char * pkt){ 
-  // pps_monitor();
-  int len = pkt_hdr->len;
-#endif
   if(packet_print) printf("\033[90m-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\033[m\n");
+  
+  
+  
   /*
     pktmgr -> ethernet header -> protocol number -> protocol number header -> data
     pktmgr -> ethernet header -> protocol number -> ipv4 -> protocol number -> tcp -> data
   */
   total_pkt_captured++;
   struct ethhdr * ethernet_header = (struct ethhdr*)pkt;
-  // printf("%s -> %s",uc_mac_ntoa(ethernet_header->h_source),uc_mac_ntoa(ethernet_header->h_dest));
+  
+  
+  
   switch(ethernet_header->h_proto){
     case L2_ARP:
     case L2_RARP:

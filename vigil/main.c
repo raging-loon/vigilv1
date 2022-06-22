@@ -57,34 +57,6 @@
 #include "monitoring/monitoring.h"
 #include <unistd.h>
 
-#include <pcap.h>
-
-// #define USELIBPCAP
-#ifdef USELIBPCAP
-
-
-void lp_thread(struct lpcap_args * args){
-  pthread_t pthrd;
-  pthread_create(&pthrd,NULL,&lp_thread_start,args);
-  pthread_detach(pthrd);
-  pthread_join(pthrd,NULL); 
-}
-
-void lp_thread_start(void * args){
-  
-  struct lpcap_args * lp = (struct lpcap_args *)args;
-  if((lp->ex =  pcap_open_live(lp->iface_name,1024,1,100,lp->buffer)) == NULL){
-    printf("Pcap loop failed\n");
-    return;
-  }
-  pcap_loop(lp->ex, 0, pktmgr, NULL);
-}
-
-#endif
-
-// void arg_parser(int argc, const char ** argv){
-
-// }
 
 // Main function of course
 int main(int argc, char **argv){
@@ -159,22 +131,10 @@ int main(int argc, char **argv){
   printf("Unecrypted VRMC config server started: 127.0.0.1:641\n");
   // detect_interfaces();
   // start_interface_cap(iface_name);
-  // #define USELIBPCAP
-#ifdef USELIBPCAP
-  printf("Use libpcap\n");
-  pcap_t * lo_mgr;
-  char lo_pkt_buffer[2046] = {0};
-  struct lpcap_args lp;
-  lp.iface_name = "lo";
-  lp.buffer = &lo_pkt_buffer;
-  lp.ex = lo_mgr;
-  lp_thread(&lp);
-  
-  printf("here\n");
-#else
+
   detect_interfaces();
   start_interface_cap(iface_name);
-#endif
+  printf("here\n");
 }
 
 // handle CTRL-C

@@ -17,15 +17,7 @@
 #ifndef __MAIN_VIGIL_H
 #define __MAIN_VIGIL_H
 
-#ifdef USELIBPCAP
-struct lpcap_args{
-  pcap_t * ex;
-  char * iface_name;
-  char * buffer;
-};
-void lp_thread(struct lpcap_args * );
-void lp_thread_start(void * );
-#endif
+
 
 int main(int, char **);
 
@@ -33,7 +25,6 @@ void sigint_processor(int);
 void print_help_and_exit();
 void print_cpu_info();
 void print_logo();
-void arg_parser(int , const char **);
 
 
 

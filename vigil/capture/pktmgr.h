@@ -18,12 +18,8 @@
 #ifndef PKTMGR_H
 #define PKTMGR_H
 #include <pcap.h>
-#ifndef USELIBPCAP
 
 void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt);
 
-#else
 
-void pktmgr(unsigned char * user, const struct  pcap_pkthdr *, const unsigned char * );
-#endif
 #endif /* PKTMGR_H */

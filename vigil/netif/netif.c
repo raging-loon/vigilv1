@@ -225,3 +225,14 @@ int num_f_in_dir(const char * directory){
   return num_files - 2;
   
 }
+
+
+int set_active_interface(const char * iface){
+  int loc;
+  if((loc = iface_exists(iface)) != -1){
+    net_interfaces[loc].active = true;
+    return loc;
+  }
+  return -1;
+  
+}
