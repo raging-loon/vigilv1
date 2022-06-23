@@ -45,7 +45,7 @@ int vigil_location;
 int VIGIL_MODE = 0xffff;
 int global_rule_action;
 
-
+pid_t ipc_router_pid;;
 bool demo_mode;
 bool quiet_exit = false;
 bool use_sqlite;

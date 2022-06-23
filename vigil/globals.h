@@ -100,4 +100,7 @@ extern uint32_t homenetmask;
 
 extern bool in_test_mode;
 extern unsigned int global_alert_method;
+
+extern pid_t ipc_router_pid;
+
 #endif /* GLOBALS_H */
