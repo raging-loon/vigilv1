@@ -19,7 +19,7 @@
 #define PKTMGR_H
 #include <pcap.h>
 
-void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt);
+void pktmgr(const int len, const unsigned char * pkt);
 
 
 #endif /* PKTMGR_H */

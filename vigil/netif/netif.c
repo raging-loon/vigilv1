@@ -130,42 +130,18 @@ void start_interface_cap(const char * iface){
   // sigemptyset(&set);
   // sigaddset(&set,SIGSEGV);
   // pthread_sigmask(SIG_BLOCK,&set,NULL);
-  pthread_create(&pthrd,NULL,(void*)&start_interface_cap_ex,(void*)iface);
+  pthread_create(&pthrd,NULL,(void*)&start_interface_cap_ex,NULL);
   pthread_join(pthrd,NULL);
 }
 
-void start_interface_cap_ex(void * __iface){
-  char * iface = (char *)__iface;
-  int loc;
-
-  if((loc = iface_exists(iface)) == -1){
-    printf("Interface %s does not exist\n",iface);
-    return;
-  }
-  v_netif * v_iface = &net_interfaces[loc];
-  struct ifreq ifr;
-  memset(&ifr, 0, sizeof(ifr));
-  strncpy(ifr.ifr_name,iface,strlen(iface) + 1);
-  
-  v_iface->fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
-  // v_iface->fd = socket(PF_RAW, SOCK_RAW, RAWPROTO_SNOOP);
-  if(v_iface->fd < 0){
+void start_interface_cap_ex(){
+    
+  int fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+  if(fd < 0){
     perror("Socket error");
     return;
   }
-  if((ioctl(v_iface->fd,SIOCGIFINDEX, &ifr)) == -1){
-    perror("ioctl");
-    return;
-  }
 
-  if(setsockopt(v_iface->fd, SOL_SOCKET, SO_BINDTODEVICE, (void*)&ifr, sizeof(ifr)) < 0){
-    perror("setsockopt");
-    return;
-  }
-    
-  
-  v_iface->thrd_id = pthread_self();
-  
   int len;
   int saddr_sz;
   struct sockaddr saddr;
@@ -174,9 +150,8 @@ void start_interface_cap_ex(void * __iface){
   signal(SIGSEGV,crash_handler);
 
   while(1){
-    len = recvfrom(v_iface->fd,&buffer, 1600, 0, &saddr,(socklen_t *)&saddr_sz);
-    // printf("%d\n",len);
-    pktmgr((unsigned char*)v_iface->if_name,len,(const unsigned char *)&buffer);
+    len = recvfrom(fd,&buffer, 1600, 0, &saddr,(socklen_t *)&saddr_sz);
+    pktmgr(len,(const unsigned char *)&buffer);
     memset(&buffer,0,sizeof(buffer));
     continue;
   }

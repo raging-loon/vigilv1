@@ -27,18 +27,15 @@
 #include "l3pktmgr.h"
 #include "ip6decode.h"
 #include "../monitoring/monitoring.h"
-void pktmgr(unsigned char * interface, const int len, const unsigned char * pkt){
-  if(packet_print) printf("\033[90m-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\033[m\n");
-  
-  
-  
+#include "../netif/netif.h"
+void pktmgr(const int len, const unsigned char * pkt){
   /*
     pktmgr -> ethernet header -> protocol number -> protocol number header -> data
     pktmgr -> ethernet header -> protocol number -> ipv4 -> protocol number -> tcp -> data
   */
+  if(packet_print) printf("\033[90m-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\033[m\n");
   total_pkt_captured++;
   struct ethhdr * ethernet_header = (struct ethhdr*)pkt;
-  
   
   
   switch(ethernet_header->h_proto){

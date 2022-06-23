@@ -21,7 +21,7 @@ typedef struct{
 extern v_netif * net_interfaces;
 extern int iface_detected;
 void start_interface_cap(const char *);
-void start_interface_cap_ex(void * );
+void start_interface_cap_ex();
 void detect_interfaces();
 void free_iface();
 bool interface_operational(const char *);
