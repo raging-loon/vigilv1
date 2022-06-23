@@ -1,9 +1,13 @@
 #ifndef LOAD_PCAP_H
 #define LOAD_PCAP_H
-
+// #define PRE_RELEASE_TEST
 #ifdef PRE_RELEASE_TEST
 
 #include <inttypes.h>
+extern int time_type;
+
+#define TIME_TYPE_MS        0x01
+#define TIME_TYPE_NS        0x02
 typedef struct {
   uint32_t ts_seconds;
   uint32_t ts_var_sec;
@@ -23,6 +27,7 @@ struct pcap_filehdr{
   unsigned int linktype:  28;
 };
 
+void loadpcap(const char *);
 
 #endif
 

@@ -56,7 +56,9 @@
 #include "backtrace/backtrace.h"
 #include "monitoring/monitoring.h"
 #include <unistd.h>
-
+#ifdef PRE_RELEASE_TEST
+# include "capture/loadpcap.h"
+#endif
 
 // Main function of course
 int main(int argc, char **argv){
@@ -68,6 +70,12 @@ int main(int argc, char **argv){
   // handle segmentation faults
   signal(SIGSEGV,crash_handler);
   
+  #ifdef PRE_RELEASE_TEST
+    char * filename;
+    printf("Vigil prelease testing. "
+           "If you see this and are in a production environment, "
+           "please download the final release of Vigil found here: <url when applicable>\n");
+  #endif
   print_logo();
   print_cpu_info(); // purely for cosmetics
   printf("Running as PID %d\n",getpid());
@@ -80,7 +88,13 @@ int main(int argc, char **argv){
   // TODO: move this
   char * iface_name;
   int opt;
-  while((opt = getopt(argc,argv,"pdqhtei:")) != -1){
+  const char * optstring;
+  #ifdef PRE_RELEASE_TEST
+    optstring = "pdqhtei:f:";
+  #else
+    optstring = "pdqhtei:";
+  #endif
+  while((opt = getopt(argc,argv,optstring)) != -1){
     switch(opt){
       case 'd':
         debug_mode = true;
@@ -107,6 +121,12 @@ int main(int argc, char **argv){
         sleep(10);
         in_test_mode = true;  
         break;
+      #ifdef PRE_RELEASE_TEST
+      case 'f':
+        printf("Got file\n");
+        filename = optarg;
+        break;
+      #endif
       default:
         printf("Unknown argument -%c\n",opt);
         print_help_and_exit();
@@ -122,19 +142,23 @@ int main(int argc, char **argv){
   rule_library_parser("/etc/vigil/vigil.conf");
   printf("Parsed rule files\n");
   rule_processor();
-  
+  #ifdef PRE_RELEASE_TEST
+
+    loadpcap(filename);
+    return 0;
+  #endif
+
+
   printf("VIGIL listening on interface %s\n",iface_name);
   
   
   collect_scripts();
+  
   // start_vrmc_server();
   printf("Unecrypted VRMC config server started: 127.0.0.1:641\n");
-  // detect_interfaces();
-  // start_interface_cap(iface_name);
-
+  
   detect_interfaces();
   start_interface_cap(iface_name);
-  printf("here\n");
 }
 
 // handle CTRL-C
