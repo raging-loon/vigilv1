@@ -4,3 +4,4 @@ alert TCP $externalnet:any -> $homenet:25 (name:"smtp-battle-mail"; msg:"INFO ba
 alert TCP $externalnet:any -> $homenet:23 (name:"info-telnet-fail-login"; msg:"INFO TELNET login failed"; type:str_match; target:"Login failed";)
 alert ANY $externalnet:any -> $homenet:any (name:"info-psybnc-bouncer"; msg:"INFO psyBNC access"; type:str_match; target:"Welcome!psyBNC@lam3rz.de";)
 alert TCP $externalnet:any -> $homenet:any (msg:"Java executable download"; type:str_match; target:"|cafebabe|";)
+alert ANY $externalnet:any -> $homenet:any (msg:"Linux ELF Executable Download"; type:str_match; target:"|7f454c46|";)
