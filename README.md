@@ -59,5 +59,5 @@ Nlease note that the database comes preconfigured and empty with the package. It
 - [ ] Testing with NAGIOS and Rsyslog
 
 ## Credits
-Conner Macolley - Writing most of the code
+Conner Macolley - Writing most of the code<br>
 @TheSecAtlas - Conceptual help and logo design
