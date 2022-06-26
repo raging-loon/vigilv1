@@ -60,4 +60,4 @@ Nlease note that the database comes preconfigured and empty with the package. It
 
 ## Credits
 Conner Macolley - Writing most of the code<br>
-@TheSecAtlas - Conceptual help and logo design
+[TheSecAtlas](https://github.com/) - Conceptual help and logo design
