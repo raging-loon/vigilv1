@@ -1,4 +1,17 @@
-
+#   
+#   This file is part of Vigil
+#   
+#   Vigil is free software: you can redistribute it and/or modify it under the terms of the 
+#   GNU General Public License as published by the Free Software Foundation, either version 3 
+#   of the License, or (at your option) any later version
+#   
+#   Vigil is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+#   without  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#   See the GNU General Public License for more details
+#   You should have received a copy of the GNU General Public License along with Vigil. 
+#   If not, see <https://www.gnu.org/licenses/>.
+#
+# 
 alert TCP $externalnet:27374 -> $homenet:any (msg:"BACKDOOR subseven 22"; flow:to_server,established; content:"|0D 0A|[RPL]002|0D 0A|"; reference:arachnids,485; reference:url,www.hackfix.org/subseven/; classtype:misc-activity; sid:103; rev:7;)
 alert TCP $homenet:16959 -> $externalnet:any (msg:"BACKDOOR subseven DEFCON8 2.1 access"; flow:from_server,established; content:"PWD"; classtype:trojan-activity; sid:107; rev:6;)
 

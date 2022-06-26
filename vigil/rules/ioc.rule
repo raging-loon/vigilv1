@@ -3,6 +3,20 @@ alert ANY $externalnet:any <> $homenet:any (name:"ioc-dir-list"; msg:"IOC direct
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-cmd-comp"; msg:"IOC Command completed"; type:str_match; target:"Command completed";)
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-cmd-err1"; msg:"IOC Command Error"; type:str_match; target:"Bad command or filename";)
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-root-uid"; msg:"IOC Root UID returned"; type:str_match; target:"uid=0(root)";)
+#   
+#   This file is part of Vigil
+#   
+#   Vigil is free software: you can redistribute it and/or modify it under the terms of the 
+#   GNU General Public License as published by the Free Software Foundation, either version 3 
+#   of the License, or (at your option) any later version
+#   
+#   Vigil is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+#   without  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#   See the GNU General Public License for more details
+#   You should have received a copy of the GNU General Public License along with Vigil. 
+#   If not, see <https://www.gnu.org/licenses/>.
+#
+# 
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-zsh-shell"; msg:"IOC ZSH Access"; type:str_match; target:"/bin/zsh";)
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-sh-shell"; msg:"IOC SH Access"; type:str_match; target:"/bin/sh";)
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-bash-shell"; msg:"IOC BASH Access"; type:str_match; target:"/bin/bash";)

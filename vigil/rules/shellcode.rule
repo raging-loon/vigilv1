@@ -1,3 +1,17 @@
+#   
+#   This file is part of Vigil
+#   
+#   Vigil is free software: you can redistribute it and/or modify it under the terms of the 
+#   GNU General Public License as published by the Free Software Foundation, either version 3 
+#   of the License, or (at your option) any later version
+#   
+#   Vigil is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+#   without  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#   See the GNU General Public License for more details
+#   You should have received a copy of the GNU General Public License along with Vigil. 
+#   If not, see <https://www.gnu.org/licenses/>.
+#
+# 
 # Shellcodes in TCP ports
 #alert UDP $externalnet:any -> $homenet:any (name:"untitled"; msg:"SHELLCODE sparc setuid 0"; type:str_match; target:"|82 10| |17 91 d0| |08|"; reference:arachnids,282; classtype:system-call-detect; sid:647; rev:6;)
 alert TCP $externalnet:any -> $homenet:any (name:"untitled"; msg:"SHELLCODE x86 setgid 0"; type:str_match; target:"|b0b5cd80|";)

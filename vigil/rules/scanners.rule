@@ -1,3 +1,17 @@
+#   
+#   This file is part of Vigil
+#   
+#   Vigil is free software: you can redistribute it and/or modify it under the terms of the 
+#   GNU General Public License as published by the Free Software Foundation, either version 3 
+#   of the License, or (at your option) any later version
+#   
+#   Vigil is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+#   without  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#   See the GNU General Public License for more details
+#   You should have received a copy of the GNU General Public License along with Vigil. 
+#   If not, see <https://www.gnu.org/licenses/>.
+#
+# 
 alert TCP $externalnet:any -> $homenet:80 (name:"nmap_ua"; msg:"Nmap User Agent Detected"; type:str_match; target:"Nmap Scripting Engine;";) 
 alert TCP $externalnet:any -> $homenet:80 (name:"bashrc_retr"; msg:"Information disclosure: GET request for .bashrc"; type:str_match; target:"GET /.bashrc";) 
 alert TCP $externalnet:any -> $homenet:22 (name:"nmap_ssh_probe"; msg:"NMap SSH Probing detected"; type:str_match; target:"SSH-2.0-Nmap-SSH2-Hostkey";)

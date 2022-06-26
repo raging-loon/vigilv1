@@ -1,3 +1,17 @@
+#   
+#   This file is part of Vigil
+#   
+#   Vigil is free software: you can redistribute it and/or modify it under the terms of the 
+#   GNU General Public License as published by the Free Software Foundation, either version 3 
+#   of the License, or (at your option) any later version
+#   
+#   Vigil is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+#   without  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#   See the GNU General Public License for more details
+#   You should have received a copy of the GNU General Public License along with Vigil. 
+#   If not, see <https://www.gnu.org/licenses/>.
+#
+# 
 alert TCP $externalnet:any -> $homenet:25 (msg:"SMTP RCPT TO overflow"; flow:to_server,established; content:"rcpt to|3A|"; nocase; isdataat:300,relative; pcre:"/^RCPT TO\x3a\s[^\n]{300}/ism"; reference:bugtraq,2283; reference:bugtraq,9696; reference:cve,2001-0260; classtype:attempted-admin; sid:654; rev:14;)
 alert TCP $externalnet:any -> $homenet:25 (msg:"SMTP chameleon overflow"; flow:to_server,established; content:"HELP"; nocase; isdataat:500,relative; pcre:"/^HELP\s[^\n]{500}/ism"; reference:arachnids,266; reference:bugtraq,2387; reference:cve,1999-0261; classtype:attempted-admin; sid:657; rev:12;)
 alert TCP $externalnet:113 -> $homenet:25 (msg:"SMTP sendmail 8.6.9 exploit"; flow:to_server,established; content:"|0A|D/"; reference:arachnids,140; reference:bugtraq,2311; reference:cve,1999-0204; classtype:attempted-admin; sid:655; rev:8;)
