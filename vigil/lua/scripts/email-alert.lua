@@ -1,8 +1,22 @@
+--    This file is part of Vigil.
+--
+--    Vigil is free software: you can redistribute it and/or modify it under the terms of the 
+--    GNU General Public License as published by the Free Software Foundation, either version 3 
+--    of the License, or (at your option) any later version.
+--
+--    Vigil is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+--    without  even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+--    See the GNU General Public License for more details.
+--
+--    You should have received a copy of the GNU General Public License along with Vigil. 
+--    If not, see <https://www.gnu.org/licenses/>. 
+
 -- Modified version of the script writting by Michal Kottman
 
 -- this script includes everything to send an email about a rule alert
 
 -- email pushed as an argument
+
 local socket = require("socket")
 local smtp = require("socket.smtp")
 local ssl = require("ssl")
