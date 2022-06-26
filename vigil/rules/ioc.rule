@@ -8,7 +8,6 @@ alert ANY $externalnet:any <> $homenet:any (name:"ioc-sh-shell"; msg:"IOC SH Acc
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-bash-shell"; msg:"IOC BASH Access"; type:str_match; target:"/bin/bash";)
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-ash-shell"; msg:"IOC ASH Access"; type:str_match; target:"/bin/ash";)
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-dash-shell"; msg:"IOC DASH Access"; type:str_match; target:"/bin/dash";)
-alert ANY $externalnet:any <> $homenet:any (name:"ioc-pe-exe"; msg:"IOC Windows Portable Executable detected"; type:str_match; target:"This program cannot be run in DOS mode.";)
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-file-copy"; msg:"IOC file copoed ok"; type:str_match; target:"1 file(s) copied";)
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-invalid-url"; msg:"IOC Invalid URL"; type:str_match; target:"Invalid URL";)
 alert ANY $externalnet:any <> $homenet:any (name:"ioc-index-cgi"; msg:"IOC Index of /cgi-bin/ response"; type:str_match; target:"Index of /cgi-bin/";)
