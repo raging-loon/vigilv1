@@ -26,11 +26,6 @@ Recommened stats for machine running:
 You just need to run install.sh and make
 Nlease note that the database comes preconfigured and empty with the package. It is in the file "/vigil.db".
 
-<<<<<<< HEAD
-## Copyright
-See the LICENSE file for more information about Copyright<br>
-VIGIL Logo designed by Andrew Heishman
-=======
 ## Plans
  - [x] Add monitoring for total amount of packets sent and recieved
  - [x] Add monitoring for some layer 3 protocols for IPv4
@@ -62,4 +57,7 @@ VIGIL Logo designed by Andrew Heishman
 - [ ] SPI for UDP
 - [ ] SNMP 
 - [ ] Testing with NAGIOS and Rsyslog
->>>>>>> origin/testing
+
+## Credits
+Conner Macolley - Writing most of the code
+@TheSecAtlas - Conceptual help and logo design
