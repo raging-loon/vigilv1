@@ -41,7 +41,6 @@ static bool ttl_check(const struct rule *r, const struct rule_data * rdata){
 }*/
 
 static void rule_app(struct rule * r, const struct rule_data * rdata){
-    // printf("%s\n",r->rulename);
 
   bool e_stat = r_engine(r,rdata);    
   bool d_stat = d_engine(r, rdata);

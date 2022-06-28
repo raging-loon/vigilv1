@@ -129,7 +129,7 @@ int main(int argc, char **argv){
     }
   }
   
- 
+  init_globals();
   deny_conf_parser("/etc/vigil/deny.conf");
   printf("Finsished loading explicit deny file(/etc/vigil/deny.conf)\n");
   
@@ -158,6 +158,8 @@ int main(int argc, char **argv){
 
 // handle CTRL-C
 void sigint_processor(int signal){
+  free_globals();
+
   free_iface();
   // char * time = get_formated_time();
   char time[255];

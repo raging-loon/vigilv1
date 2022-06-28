@@ -21,7 +21,7 @@
 // globals defined in @globals.h
 // config options
 
-
+struct rule * rules = {0};
 
 unsigned int global_alert_method;
 unsigned int pkt_counter;
@@ -57,7 +57,6 @@ bool use_spi;
 
 pthread_t threads[64];
 // info objects
-struct rule rules[MAX_RULES] = {0};// = (struct rule *)malloc(sizeof(struct rule) * 128);
 struct blocked_ipv4 blocked_ipv4_addrs[32];
 struct arp_entry arpcache[255];
 
@@ -80,4 +79,12 @@ char * default_host_conf = "/etc/vigil/hosts.conf";
 
 void add_thread(pthread_t * pthrd){
   threads[thread_count++] = *pthrd;
+}
+
+void init_globals(){
+  rules = (struct rule *)malloc(sizeof(struct rule) * MAX_RULES);
+}
+
+void free_globals(){
+  free(rules);
 }

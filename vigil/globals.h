@@ -29,10 +29,13 @@
 #define MAX_RULES               1024   
 #define INTERNAL                3
 #define EXTERNAL                4
+void init_globals();
+void free_globals();
+
 
 extern unsigned int total_pkt_captured;
 //! @brief array of all of the rules
-extern struct rule rules[MAX_RULES];
+extern struct rule * rules;
 //! @brief counter for all of the rules
 extern int num_rules;
 //! @brief list of threads for thread management. 
