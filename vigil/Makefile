@@ -95,8 +95,8 @@ dp_size.o:
 homenet.o:
 	$(CC) $(CFLAGS) -c filter/parsing/homenet.c 
 
-lua_engine.o:
-	$(CC) $(CFLAGS) -c lua/lua_engine.c
+# lua_engine.o:
+# 	$(CC) $(CFLAGS) -c lua/lua_engine.c
 ip6decode.o:
 	$(CC) $(CFLAGS) -c capture/ip6decode.c
 backtrace.o:
@@ -125,11 +125,11 @@ vigil: globals.o pktmgr.o l2pktmgr.o utils.o l3pktmgr.o icmpdsct.o\
 			arpcache.o tls.o \
 			update_db.o http_disect.o dns_disect.o debug.o\
 			forward.o spi.o logging.o line_parser.o rule_init.o dp_size.o \
-			homenet.o tcp_chksum.o lua_engine.o ip6decode.o backtrace.o \
+			homenet.o tcp_chksum.o ip6decode.o backtrace.o \
 			load_fn_map.o pps_monitor.o monitoring.o \
 			netif.o uptcp.o
 	set environment MALLOC_CHECK_ 2
-	$(CC) -g -o vigil.exe $^ -l pthread -l ssl -l crypto -l sqlite3 -l lua5.3 
+	$(CC) -g -o vigil.exe $^ -l pthread -l ssl -l crypto -l sqlite3 
 
 	objdump -D vigil.exe -M intel > objdump.txt
 	python ../tools/gen_mem_map.py -f objdump.txt

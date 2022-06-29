@@ -20,7 +20,6 @@
    - Gather ip addresses from the blacklist
    - Parse and store all of the rules
    - Initialize all of the rules
-   - Collect Lua Scripts
    - Start the VRMC server
    - Start the capture process
  */
@@ -45,7 +44,6 @@
 #include "netif/netif.h"
 #include "filter/parsing/rule_init.h"
 #include "debug.h"
-#include "lua/lua_engine.h"
 #include <execinfo.h>
 #include "capture/tcpmgr.h"
 #include "backtrace/backtrace.h"
@@ -114,13 +112,17 @@ int main(int argc, char **argv){
         quiet_exit = true;
         break;
       case 'e':
-        printf("RUNNING IN DEMONSTRATION MODE. YOU HAVE 10 SECONDS TO ABORT.\n");
-        sleep(10);
+        #ifndef PRE_RELEASE_TEST
+          printf("RUNNING IN DEMONSTRATION MODE. YOU HAVE 10 SECONDS TO ABORT.\n");
+          sleep(10);
+        #endif
         demo_mode = true;
         break;
       case 't':
-        printf("RUNNING IN TEST MODE. YOU HAVE 10 SECONDS TO ABORT.\n");
-        sleep(10);
+        #ifndef PRE_RELEASE_TEST
+          printf("RUNNING IN TEST MODE. YOU HAVE 10 SECONDS TO ABORT.\n");
+          sleep(10);
+        #endif
         in_test_mode = true;  
         break;
       #ifdef PRE_RELEASE_TEST
@@ -148,16 +150,15 @@ int main(int argc, char **argv){
   rule_processor();
 
   #ifdef PRE_RELEASE_TEST
-
-    loadpcap(filename);
-    return 0;
+    if(!filename){
+      loadpcap(filename);
+      return 0;
+    }
   #endif
 
 
   printf("VIGIL listening on interface %s\n",iface_name);
   
-  // probably be removed in the future
-  collect_scripts();
   
   // get our interfaces
   detect_interfaces();
