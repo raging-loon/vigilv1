@@ -51,6 +51,7 @@
 #include "backtrace/backtrace.h"
 #include "monitoring/monitoring.h"
 #include <unistd.h>
+
 #ifdef PRE_RELEASE_TEST
 # include "capture/loadpcap.h"
 #endif
@@ -58,21 +59,23 @@
 // Main function of course
 int main(int argc, char **argv){
   
-  load_fn_mem_map();
+  load_fn_mem_map(); // load the functions in case crash happens early
+
   // set signals
-  // handle CTRL-C
-  signal(SIGINT,sigint_processor);
-  // handle segmentation faults
-  signal(SIGSEGV,crash_handler);
-  
+  signal(SIGINT,sigint_processor);  // handle CTRL-C
+  signal(SIGSEGV,crash_handler);    // handle segmentation faults
+  signal(SIGKILL,sigint_processor); // handle killing
+
   #ifdef PRE_RELEASE_TEST
     char * filename;
     printf("Vigil prelease testing. "
            "If you see this and are in a production environment, "
            "please download the final release of Vigil found here: <url when applicable>\n");
   #endif
+
   print_logo();
   print_cpu_info(); // purely for cosmetics
+  
   printf("Running as PID %d\n",getpid());
   pps_monitor(); // to set a baseline on the file number
 
@@ -82,6 +85,8 @@ int main(int argc, char **argv){
   }
   // TODO: move this
   char * iface_name;
+
+  // handle cmd args
   int opt;
   const char * optstring;
   #ifdef PRE_RELEASE_TEST
@@ -98,6 +103,8 @@ int main(int argc, char **argv){
         print_help_and_exit();
         break;
       case 'i':
+        // TODO: Move or add default interfaces into 
+        //       installation or configuration
         iface_name = optarg;
         break;
       case 'p':
@@ -128,15 +135,18 @@ int main(int argc, char **argv){
         break;
     }
   }
-  
   init_globals();
+ 
   deny_conf_parser("/etc/vigil/deny.conf");
-  printf("Finsished loading explicit deny file(/etc/vigil/deny.conf)\n");
+  if(debug_mode)
+    printf("Finsished loading explicit deny file(/etc/vigil/deny.conf)\n");
   
-  
+  // find the rules and store/parse them
   rule_library_parser("/etc/vigil/vigil.conf");
   printf("Parsed rule files\n");
+  // preprocess rules by parsing regex/pcre/string
   rule_processor();
+
   #ifdef PRE_RELEASE_TEST
 
     loadpcap(filename);
@@ -146,17 +156,16 @@ int main(int argc, char **argv){
 
   printf("VIGIL listening on interface %s\n",iface_name);
   
-  
+  // probably be removed in the future
   collect_scripts();
   
-  // start_vrmc_server();
-  printf("Unecrypted VRMC config server started: 127.0.0.1:641\n");
-  
+  // get our interfaces
   detect_interfaces();
+  // start capture, will print error and exit if "iface_name" doesn't exist
   start_interface_cap(iface_name);
 }
 
-// handle CTRL-C
+// handle CTRL-C nad kill
 void sigint_processor(int signal){
   free_globals();
 
