@@ -123,7 +123,7 @@ void tcp_spi_handler(struct rule_data * rdata){
   struct spi_members * sm = get_conversation(rdata);
 
   // printf(":%s ", rdata->tcp_flags);
-  if(strncmp((char *)rdata->tcp_flags,"FPU",4) == 0){
+  if(strncmp((char *)rdata->tcp_flags,"UPF",4) == 0){
     printf("XMAS SCAN ALERT %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
   } else if(strlen((char *)rdata->tcp_flags) == 0){
     printf("NULL SCAN ALERT %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
@@ -135,7 +135,7 @@ void tcp_spi_handler(struct rule_data * rdata){
       tcp_ack_handler(sm);
       return;
     }
-    else if(strcmp((char * )rdata->tcp_flags,"AS") == 0){
+    else if(strcmp((char * )rdata->tcp_flags,"SA") == 0){
       // printf("SYN-ACK: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
       tcp_syn_ack_handler(sm);
       return;
@@ -145,7 +145,7 @@ void tcp_spi_handler(struct rule_data * rdata){
       tcp_rst_handler(sm);
       return;
     }
-    else if(strcmp((char *)rdata->tcp_flags, "AR") == 0){
+    else if(strcmp((char *)rdata->tcp_flags, "RA") == 0){
       tcp_rst_ack_handler(sm);
       return;
     }
@@ -157,7 +157,7 @@ void tcp_spi_handler(struct rule_data * rdata){
       tcp_syn_handler(sm);
       return;
     }
-    else if(strcmp((char *)rdata->tcp_flags,"AF") == 0){
+    else if(strcmp((char *)rdata->tcp_flags,"FA") == 0){
       tcp_fin_ack_handler(sm);
     }
   }
