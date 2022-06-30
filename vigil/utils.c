@@ -150,3 +150,12 @@ int get_num_files(const char * path){
   closedir(dr);
   return files_found;
 }
+
+bool is_loopback(uint8_t * addr){
+  int no = 0;
+  for(int i = 0; i < 6; i++){
+    if(addr[i] == 0) no++;
+  }
+  if(no == 6) return true;
+  return false;
+}

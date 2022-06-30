@@ -51,5 +51,5 @@ bool test_string_arr_print(const char * );
 void hw_addr_to_bytes(const char *, uint8_t *);
 
 int get_num_files(const char *);
-
+bool is_loopback(uint8_t *);
 #endif /* UTILS_H */

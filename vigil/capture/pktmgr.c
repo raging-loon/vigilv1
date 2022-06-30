@@ -14,7 +14,8 @@
 
 */
 #include <pcap.h>
-#include <netinet/ether.h>
+// #include <netinet/ether.h>
+#include "../packets/ethhdr.h"
 #include "pktmgr.h"
 #include "protocols.h"
 #include "l2pktmgr.h"
@@ -31,10 +32,10 @@ void pktmgr(const int len, const unsigned char * pkt){
     pktmgr -> ethernet header -> protocol number -> protocol number header -> data
     pktmgr -> ethernet header -> protocol number -> ipv4 -> protocol number -> tcp -> data
   */
-  struct ethhdr * ethernet_header = (struct ethhdr*)pkt;
+  struct eth_hdr * ethernet_header = (struct eth_hdr*)pkt;
   #ifndef PRE_RELEASE_TEST
     // if this is compiled as an actual release, ignore loopback traffic
-    if((unsigned int )ethernet_header->h_dest | 0x0){
+    if(is_loopback(ethernet_header->h_dest) && is_loopback(ethernet_header->h_source)){
       return;
     }
   #endif
@@ -56,6 +57,7 @@ void pktmgr(const int len, const unsigned char * pkt){
       loopback_ctp_decode(pkt);
       break;
     default:
+      printf("Unknown protocol number: %d\n",ethernet_header->h_proto);
       // lfprintf("/var/log/vigil/siglog.log","BAD-TRAFFIC Unknown Ethernt Frame Protocol Number",
               //  uc_mac_ntoa(ethernet_header->h_source),uc_mac_ntoa(ethernet_header->h_dest),-1,-1);
       break;
