@@ -20,7 +20,7 @@
 #include "../filter/parsing/rule.h"
 #include "spi.h"
 #include <string.h>
-#include <stdbool.h>false
+#include <stdbool.h>
 #include "../database/update_db.h"
 
 struct spi_members spi_table[1024];
@@ -127,6 +127,7 @@ void tcp_spi_handler(struct rule_data * rdata){
     rdata->tcp_flags[strcspn((char *)rdata->tcp_flags,"U")] = '\0';
     if(strcmp((char *)rdata->tcp_flags,"A") == 0){
       tcp_ack_handler(sm);
+      return;
     }
     else if(strcmp((char * )rdata->tcp_flags,"AS") == 0){
       tcp_syn_ack_handler(sm);
@@ -134,9 +135,11 @@ void tcp_spi_handler(struct rule_data * rdata){
     }
     else if(strcmp((char *)rdata->tcp_flags, "R") == 0){
       tcp_rst_handler(sm);
+      return;
     }
     else if(strcmp((char *)rdata->tcp_flags, "AR") == 0){
-      // handle RST-ACK
+      tcp_rst_ack_handler(sm);
+      return;
     }
     else if(strcmp((char *)rdata->tcp_flags, "S") == 0){
       sm = add_new_conversation(rdata);

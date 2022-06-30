@@ -36,13 +36,16 @@ void tcp_syn_ack_handler(struct spi_members * sm){
   
   if(sm->status == __TCP_INIT){
     sm->status = __TCP_ACK_W;
-     printf("SPI TCP Conversation: 2/3 3WH %s:%d -> %s:%d\n",
+    printf("SPI TCP Conversation: 2/3 3WH %s:%d -> %s:%d\n",
           sm->cli_addr,sm->cli_port,sm->serv_addr,sm->serv_port);
     fflush(stdout); 
   }
 }
 void tcp_ack_handler(struct spi_members * sm){
-  if(sm == NULL) return;
+  if(sm == NULL) {
+    printf("Possible NMap Host Alive check\n");
+    return;
+  }
 
   if(sm->status == __TCP_ACK_W){
     printf("SPI TCP Conversation 3WH complete: %s:%d -> %s:%d\n", 
@@ -55,16 +58,27 @@ void tcp_ack_handler(struct spi_members * sm){
 
 void tcp_rst_handler(struct spi_members * sm){
   if(sm == NULL){
-    // printf("sm == null\n");
+    printf("sm == null\n");
     return;
   }
   if(sm->status == __TCP_ACK_W){
-    printf("Possible syn scan detected %s:%d -> %s:%d",sm->cli_addr,sm->cli_port,sm->serv_addr, sm->serv_port);
+    printf("Possible syn scan detected %s:%d -> %s:%d\n",sm->cli_addr,sm->cli_port,sm->serv_addr, sm->serv_port);
     fflush(stdout);
     sm->conversation_active = false;
   }
 }
 
-void tcp_rst_ack_handler(struct spi_members * sm);
+void tcp_rst_ack_handler(struct spi_members * sm){
+  if(sm == NULL){
+    printf("sm == null\n");
+    fflush(stdout);
+    return;
+  }
+  if(sm->status == __TCP_INIT){
+    printf("Interaction with closed port: %s:%d -> %s:%d\n",sm->cli_addr,sm->cli_port,sm->serv_addr, sm->serv_port);
+    fflush(stdout);
+    sm->conversation_active = false;
+  }
+}
 void tcp_fin_handler(struct spi_members * sm);
 void tcp_fin_ack_handler(struct spi_members * sm);
