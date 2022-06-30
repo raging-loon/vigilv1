@@ -1,0 +1,13 @@
+
+
+load rule data as argument
+
+for i = 0; i < all conversations + 1;i++) do
+  iterate through table
+  sm = spi_table[i];
+  if sm is active do
+    if rdata.destport == sm.client_port and rdata.srcport == sm.serv_port do
+
+    end
+  end
+end

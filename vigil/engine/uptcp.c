@@ -35,23 +35,27 @@ void tcp_syn_ack_handler(struct spi_members * sm){
   }
   
   if(sm->status == __TCP_INIT){
-    sm->status = __TCP_ACK_W;
-    printf("SPI TCP Conversation: 2/3 3WH %s:%d -> %s:%d\n",
-          sm->cli_addr,sm->cli_port,sm->serv_addr,sm->serv_port);
+    printf("SPI TCP Conversation: 2/3 3WH %d %s:%d -> %s:%d\n",
+          sm->location, sm->cli_addr,sm->cli_port,sm->serv_addr,sm->serv_port);
     fflush(stdout); 
+    sm->status = __TCP_ACK_W;
   }
 }
 void tcp_ack_handler(struct spi_members * sm){
   if(sm == NULL) {
-    printf("Possible NMap Host Alive check\n");
     return;
   }
 
   if(sm->status == __TCP_ACK_W){
-    printf("SPI TCP Conversation 3WH complete: %s:%d -> %s:%d\n", 
-    sm->cli_addr, sm->cli_port, sm->serv_addr, sm->serv_port);
+    printf("SPI TCP Conversation 3WH complete: %d %s:%d -> %s:%d\n", 
+    sm->location,sm->cli_addr, sm->cli_port, sm->serv_addr, sm->serv_port);
     fflush(stdout);
     sm->status = __TCP_ESTABLISHED;
+  } else if(sm->status == __TCP_FIN_INIT2){
+    printf("SPI TCP Conversation closed: %d %s:%d -> %s:%d\n", 
+    sm->location,sm->cli_addr, sm->cli_port, sm->serv_addr, sm->serv_port);
+    fflush(stdout);
+    sm->conversation_active = false;
   }
 }
 
@@ -70,7 +74,6 @@ void tcp_rst_handler(struct spi_members * sm){
 
 void tcp_rst_ack_handler(struct spi_members * sm){
   if(sm == NULL){
-    printf("sm == null\n");
     fflush(stdout);
     return;
   }
@@ -81,4 +84,15 @@ void tcp_rst_ack_handler(struct spi_members * sm){
   }
 }
 void tcp_fin_handler(struct spi_members * sm);
-void tcp_fin_ack_handler(struct spi_members * sm);
+
+void tcp_fin_ack_handler(struct spi_members * sm){
+  if(sm->status == __TCP_ESTABLISHED){
+      printf("SPI TCP Conversation FIN END 1/3 %d %s:%d -> %s:%d\n", 
+      sm->location,sm->cli_addr, sm->cli_port, sm->serv_addr, sm->serv_port);
+      sm->status = __TCP_FIN_INIT;
+  } else if(sm->status == __TCP_FIN_INIT){
+      printf("SPI TCP Conversation FIN END 2/3 %d %s:%d -> %s:%d\n", 
+      sm->location,sm->serv_addr, sm->serv_port, sm->cli_addr, sm->cli_port);
+      sm->status = __TCP_FIN_INIT2;
+  }
+}

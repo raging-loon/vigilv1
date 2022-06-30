@@ -47,7 +47,6 @@ static struct spi_members * get_conversation(struct rule_data * rdata){
 void spi_handler(struct rule_data * rdata){
   switch(rdata->__protocol){
     case R_TCP:
-      printf("here\n");
       tcp_spi_handler(rdata);
       break;
     default:
@@ -57,30 +56,29 @@ void spi_handler(struct rule_data * rdata){
 }
 
 int conversation_exists(struct rule_data * rdata){
-  // printf("%s:%d -> %s:%d\n",rdata->src_ip_addr,rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
+  // printf("r: %s:%d -> %s:%d\n",rdata->src_ip_addr,rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
 
   for(int i = 0; i < total_conversations + 1; i++){
     struct spi_members * sm = &spi_table[i];
-    // printf("%s:%d -> %s:%d\n",sm->cli_addr,sm->cli_port,sm->serv_addr,sm->serv_port);
     if(sm->conversation_active){
-      if(rdata->dest_port == sm->cli_port && rdata->src_port == sm->serv_port){
-        if(strcmp(rdata->src_ip_addr, sm->serv_addr) == 0 && 
-           strcmp(rdata->dest_ip_addr,sm->cli_addr) == 0){
-          if(rdata->__protocol == sm->protocol)
-            return i;
-        }     
+      // printf("s: %s:%d -> %s:%d\n",sm->cli_addr,sm->cli_port,sm->serv_addr,sm->serv_port);
+      if(rdata->dest_port == sm->serv_port &&
+        // rdata->__protocol == sm->protocol&&
+        rdata->src_port  == sm->cli_port &&
+        strcmp(rdata->dest_ip_addr,sm->serv_addr) == 0 &&
+        strcmp(rdata->src_ip_addr,sm->cli_addr) == 0){
+          sm->flow = SPI_FLOW_CLIENT_TO_SERVER;
+          return i;
       }
-    } else if(rdata->src_port == sm->cli_port && rdata->dest_port == sm->serv_port){
-        if(strcmp(rdata->dest_ip_addr,sm->serv_addr) == 0 && 
-           strcmp(rdata->src_ip_addr, sm->cli_addr) == 0){
-          if(rdata->__protocol == sm->protocol)
-            return i;
-        }
-    }
-
-    // if(strcmp((char *)sm->cli_addr,rdata->src_ip_addr) == 0 ){
-
-    // }
+      else if(rdata->dest_port == sm->cli_port &&
+              rdata->src_port  == sm->serv_port &&
+              // rdata->__protocol == sm->protocol &&
+              strcmp(rdata->src_ip_addr,sm->serv_addr) == 0&&
+              strcmp(rdata->dest_ip_addr,sm->cli_addr) == 0 ){
+                sm->flow = SPI_FLOW_SERVER_TO_CLIENT;
+                return i;
+      }
+    } 
   }
   return -1;
 }
@@ -133,17 +131,17 @@ void tcp_spi_handler(struct rule_data * rdata){
 
     rdata->tcp_flags[strcspn((char *)rdata->tcp_flags,"U")] = '\0';
     if(strcmp((char *)rdata->tcp_flags,"A") == 0){
-      printf("ACK: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
+      // printf("ACK: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
       tcp_ack_handler(sm);
       return;
     }
     else if(strcmp((char * )rdata->tcp_flags,"AS") == 0){
-      printf("SYN-ACK: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
+      // printf("SYN-ACK: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
       tcp_syn_ack_handler(sm);
       return;
     }
     else if(strcmp((char *)rdata->tcp_flags, "R") == 0){
-      printf("RST: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
+      // printf("RST: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
       tcp_rst_handler(sm);
       return;
     }
@@ -152,12 +150,15 @@ void tcp_spi_handler(struct rule_data * rdata){
       return;
     }
     else if(strcmp((char *)rdata->tcp_flags, "S") == 0){
-      printf("SYN: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
+      // printf("SYN: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
       sm = add_new_conversation(rdata);
 
 
       tcp_syn_handler(sm);
       return;
+    }
+    else if(strcmp((char *)rdata->tcp_flags,"AF") == 0){
+      tcp_fin_ack_handler(sm);
     }
   }
 

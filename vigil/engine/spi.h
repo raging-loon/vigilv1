@@ -39,6 +39,9 @@
 #define  __TCP_FIN_END        254 /* ACK */
 #define  __SPI_UNINIT         255
 
+#define SPI_FLOW_CLIENT_TO_SERVER         0xfe
+#define SPI_FLOW_SERVER_TO_CLIENT         0xff
+
 
 struct spi_members{
   char serv_addr[41];
@@ -55,6 +58,7 @@ struct spi_members{
   unsigned int data_pkt, control_pkt;
   unsigned int initvar;
   int location;
+  unsigned int flow;
   int num_cli_rules;
   int num_srv_rules;
   unsigned int status;
