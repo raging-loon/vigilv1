@@ -140,7 +140,7 @@ int iface_exists(const char * name){
 }
 void start_interface_cap(const char * iface){
   pthread_t pthrd;
-  add_thread(&pthrd);
+  // add_thread(&pthrd);
   // sigset_t set;
   // sigemptyset(&set);
   // sigaddset(&set,SIGSEGV);

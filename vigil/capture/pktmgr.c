@@ -31,11 +31,16 @@ void pktmgr(const int len, const unsigned char * pkt){
     pktmgr -> ethernet header -> protocol number -> protocol number header -> data
     pktmgr -> ethernet header -> protocol number -> ipv4 -> protocol number -> tcp -> data
   */
+  struct ethhdr * ethernet_header = (struct ethhdr*)pkt;
+  #ifndef PRE_RELEASE_TEST
+    // if this is compiled as an actual release, ignore loopback traffic
+    if((unsigned int )ethernet_header->h_dest | 0x0){
+      return;
+    }
+  #endif
+  
   if(packet_print) printf("\033[90m-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\033[m\n");
   total_pkt_captured++;
-  struct ethhdr * ethernet_header = (struct ethhdr*)pkt;
-  
-  
   switch(ethernet_header->h_proto){
     case L2_ARP:
     case L2_RARP:

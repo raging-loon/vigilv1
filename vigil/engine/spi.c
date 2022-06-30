@@ -47,6 +47,7 @@ static struct spi_members * get_conversation(struct rule_data * rdata){
 void spi_handler(struct rule_data * rdata){
   switch(rdata->__protocol){
     case R_TCP:
+      printf("here\n");
       tcp_spi_handler(rdata);
       break;
     default:
@@ -87,10 +88,13 @@ int conversation_exists(struct rule_data * rdata){
 
 
 struct spi_members * add_new_conversation(struct rule_data * rdata){
-  struct spi_members * sm = &spi_table[get_new_spi_loc()];
+  int loc = get_new_spi_loc();
+  struct spi_members *sm = &spi_table[loc];
+  sm->location = loc;
   memset(sm, 0, sizeof(sm));
   sm->initvar = 0xffff;
   sm->conversation_active = true;
+  
   strcpy((char *)sm->cli_addr,rdata->src_ip_addr);
   strcpy((char *)sm->serv_addr, rdata->dest_ip_addr);
   
@@ -115,6 +119,9 @@ struct spi_members * add_new_conversation(struct rule_data * rdata){
 
 
 void tcp_spi_handler(struct rule_data * rdata){
+  if(rdata == NULL){
+    printf("rdata == null\n");
+  }
   struct spi_members * sm = get_conversation(rdata);
 
   // printf(":%s ", rdata->tcp_flags);
@@ -126,14 +133,17 @@ void tcp_spi_handler(struct rule_data * rdata){
 
     rdata->tcp_flags[strcspn((char *)rdata->tcp_flags,"U")] = '\0';
     if(strcmp((char *)rdata->tcp_flags,"A") == 0){
+      printf("ACK: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
       tcp_ack_handler(sm);
       return;
     }
     else if(strcmp((char * )rdata->tcp_flags,"AS") == 0){
+      printf("SYN-ACK: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
       tcp_syn_ack_handler(sm);
       return;
     }
     else if(strcmp((char *)rdata->tcp_flags, "R") == 0){
+      printf("RST: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
       tcp_rst_handler(sm);
       return;
     }
@@ -142,6 +152,7 @@ void tcp_spi_handler(struct rule_data * rdata){
       return;
     }
     else if(strcmp((char *)rdata->tcp_flags, "S") == 0){
+      printf("SYN: %s:%d -> %s:%d\n", rdata->src_ip_addr, rdata->src_port, rdata->dest_ip_addr, rdata->dest_port);
       sm = add_new_conversation(rdata);
 
 

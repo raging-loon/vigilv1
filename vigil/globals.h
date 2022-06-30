@@ -26,7 +26,7 @@
 #define VERSION_NUM 0x010000
 #define IDS_PASSIVE             1
 #define IPS_ACTIVE              2    
-#define MAX_RULES               1024   
+#define MAX_RULES               160   
 #define INTERNAL                3
 #define EXTERNAL                4
 void init_globals();
