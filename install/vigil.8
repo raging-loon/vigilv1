@@ -1,0 +1,147 @@
+.TH "VIGIL IDS" "1" "Jan 2 2022" ""
+.SH NAME
+VIGIL \- UTM/IDS/Firewall Software
+.SH SYNOPSIS
+.sp
+\fBVIGIL\fR [ \fB -i <capture interface> \fR] [ \fB -qpd \fR]
+.sp
+.SH "DESCRIPTION"
+The Vigil IDS is a Network Intrusion Detection System that monitors network traffic going through various interfaces and classifies as malicious or benign based on a set of rules.
+.PP
+Vigil can use several protocols in conjunction with rule based analysis to determine traffic safety. If traffic is determiend to be malicious, an alert can be logged to either to the terminal(usually for testing), log files, or to the IPC Router program via IPC message queues(you must have this installed).
+.PP
+Stateful Packet Inspection(SPI) is also a prominent feature that is used to keep track of TCP and UDP conversations and log them to a sqlite3 database(optional). The main purpose of this set of functions is to keep track of TCP conversations to check for port scans or malicious/anomalous traffic and report them as such.
+.PP
+The main configuration file is located below.
+.PP
+.IR /etc/vigil/vigil.conf.
+
+.SH "RULES"
+Rules are located in /usr/share/vigil/rules/. 
+.nf
+The following is an example of a rule used to detect NMap(c) scans:
+.if
+.PP
+.PP
+\fB  alert TCP $externalnet:any -> $homenet:80 (name:"nmap_ua"; msg:"Nmap User Agent Detected"; type:str_match; target:"Nmap Scripting Engine;";) \fR
+.nf
+.PP
+  "\fBalert\fR" is a standard rule header, when parsed it sets the global alert method found in /etc/vigil/vigil.conf.
+.PP
+  "\fBTCP\fR" is the protocol type that the rule is mapped to. Only TCP packets will be tested against this rule. The other protocols are "UDP", "ICMP", and "ANY". 
+.PP
+  "\fB$externalnet:port\fR" helps define the flow and destination of traffic. $externalnet is any traffic that is from the outside(from another network or the Internet) to the internal network or vice versa if the positions of $externalnet and $homenet are reversed. The port must be set to either a single port or "any" for all ports. Multi-port support is still in development. 
+.PP
+  "\fB->\fR" Defines the actual flow of traffic. "->" is literally pointing to where the traffic is going. If you are not concerned with the flow of traffic or want to monitor both flows you can use "<>".
+.PP
+  "\fB$homenet:any\fR" is the home network and port. You must define HOME_NET and HOME_NET_MASK in the configuration otherwise the program will not be able to accurately determine the flow of traffic.
+.PP
+  The "\fBname\fR" directive is completely optional. It is mainly used for debugging.
+.PP
+  qThe "\fBmsg\fR" directive is to specify exactly what should be output when a rule is matched.
+.PP
+  The "\fBtype\fR" directive is used to specify what parser should be used against the packets. The following is all of the types supported:
+.nf
+    str_match - Raw string matching
+    none - No type, look at the other directives present
+    pcre - Use PCRE Regular Expressions to parse the packet
+.fi
+.PP
+  "\fBtarget\fR" is used when the "str_match" type is used. This is used to specify what the parser should look for.
+.PP
+  "\fBpcre\fR" is used when the "pcre" type is used. This is used to define the regular expression used to parse the packet.
+.PP
+  "\fBdsize\fR" is used to match the size of a packet. You can use the ">", "<", "!", ">=", and "<=" operators to assist. These are optional however, you can simply present a number.
+.PP
+  "\fBdepth\fR" is used to determine where the parser should stop.
+.PP
+  "\fBoffset\fR" is used to determine where the parser should start.
+.if
+.SH "PROTOCOL SPECIFIC DIRECTIVES"
+.PP
+\fBICMP Rules\fR
+.nf
+  \fBicode\fR - Match the ICMP Code
+  \fBitype\fR - Match the ICMP Type
+  \fBicmp_id\fR - Match the ICMP ID
+  \fBicmp_seq\fR - Match the ICMP sequence number
+.if
+.PP
+\fBIP Rules\fR
+.nf 
+  \fBttl\fR - Match the IP TTL
+.if
+.PP
+\fBTCP Rules\fR
+.nf
+ \fBack\fR - Match the ACK Number
+ \fBflags\fR - Match the TCP Flags, must be presented in reverse alphabetical order
+.if
+.PP
+.SH "FILES"
+All files are located in either /etc/vigil/ or /usr/share/vigil/
+.PP
+.nf
+  \fB/etc/vigil/vigil.conf\fR - main configuration file, most of what you need to get started.
+  \fB/etc/vigil/deny.conf\fR - IPv[4|6] blacklist entries
+  \fB/etc/vigil/domainm.conf\fR - (For future use) DNS blacklist
+  \fB/etc/vigil/passwd\fR - Password file for configured users
+  \fB/usr/share/vigil/memmap.txt\fR - Memory map used when Vigil crashes(hopefully won't happen).
+  \fB/usr/share/vigil/spi.db\fR - SQLite3 database for SPI conversations
+  \fB/usr/share/vigil/rules/*\fR - Rule files location
+  \fB/usr/share/vigil/crashes/*\fR - Crash files for upload to our website(not up yet please see the upcoming "crashes" section)
+.if
+.PP
+.SH "CRASHES"
+.PP
+If there is a crash and administrator will be alerted right away and the function backtrace will be written to a file located in /usr/share/vigil/crashes. Please look at the file with the highest number at the end.
+.nf
+If this happens PLEASE EMAIL ME AT <cxmacolley@gmail.com>!
+The Dev team will work on this right away, until then please restart the program and be vigilant about threats on your network.
+.if
+.PP
+.SH "BUGS"
+.PP
+If you find a bug that does NOT crash the program please report it to me at <cxmacolley@gmail.com>. Please be extremely detailed and provide screenshots if company policy permits it. We will try to respond quickly with either a fix on your end or a patch that will be pushed out.
+.PP
+.SH "AUTHORS"
+.nf  
+  Conner Macolley <cxmacolley@gmail> is the primary contributer and intellectual owner of the Vigil Network Security Software Suite(VNS3).
+
+  Andrew Heishman helped immensely with conceptual functionality and testing.
+.if
+.PP
+.SH "LEGAL NOTICES"
+.SS "Vigil Copyright and Licensing"
+The Vigil IDS is (C) 2021-2022 Conner Macolley under the Gnu General Public License version 3(GPLv3).
+.PP
+The Vigil IDS has permission to use the sqlite3, ssl, and lua libraries under their various licenses.
+.PP
+.nf
+Vigil is free software: you can redistribute it and/or modify it under the terms of the 
+GNU General Public License as published by the Free Software Foundation, 
+either version 3 of the License, or (at your option) any later version.
+Vigil is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+  
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with Vigil. 
+If not, see <https://www.gnu.org/licenses/>.
+.if
+.SS "Third\-Party Software Notices"
+This product includes the \fBOpenSSL cryptography toolkit\fR[2] for various encryption schemes. The embedded version of the \fBLua programming language\fR[3] is used with in the various products of VNS3.
+
+.PP
+.SH "NOTES"
+.nf
+
+  1. The Vigil IDS
+     https://github.com/Vigil-Network-Security-Software-Suite/Vigil
+
+  2. OpenSSL cryptography toolkit
+     https://www.openssl.org
+      
+  3. Lua programming language
+     https://www.lua.org
+.if

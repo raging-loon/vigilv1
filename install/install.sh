@@ -1,5 +1,6 @@
 # the installation file for the UTM 
-apt install libpcap-dev libssl-dev libsqlite3-dev liblua5.3-dev gcc make sqlite3
+printf "\033[0;32mInstalling required packages\033[0m\n"
+apt install -y libssl-dev libsqlite3-dev liblua5.3-dev gcc make sqlite3
 mkdir /usr/share/vigil
 mkdir /usr/share/vigil/rules
 cp ../vigil/rules/* /usr/share/vigil/rules/
@@ -40,5 +41,8 @@ mkdir /etc/vigil/keys/
 mv privkey.pem pubkey.crt pkcs8.key /etc/vigil/keys
 mkdir /usr/share/vigil/crashes/
 # clear
+gzip ./vigil.8
+mv vigil.8.gz /usr/share/man/man8/
+
 
 printf "\033[0;32mInstallation Complete\033[0m\n"
