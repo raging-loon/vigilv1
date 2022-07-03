@@ -48,8 +48,15 @@ void fail(const char * , const char *);
 bool char_is_printable(const char );
 bool test_string_arr_print(const char * );
 
+// Turns a string MAC address e.g. "ab:cd:de:ef:ff"
+// into raw bytes: 0xabcdefff
 void hw_addr_to_bytes(const char *, uint8_t *);
 
+// Gets the number of files in a directory
 int get_num_files(const char *);
+
+// Checks if a MAC address is the loopback MAC address
+// It itereates through each byte and if they are all 0
+// then it will return true
 bool is_loopback(uint8_t *);
 #endif /* UTILS_H */

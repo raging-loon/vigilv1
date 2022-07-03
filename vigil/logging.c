@@ -31,7 +31,7 @@ void lfprintf(const char * filename, const char * msg, const char * src, const c
   FILE * fp = fopen(filename,"a");
   if(fp == NULL){
     printf("CRITICAL FAILED TO OPEN FILE FOR LOGGING: %s\n",msg);
-    return;
+    // return;
   }
 
   char message[2048];
