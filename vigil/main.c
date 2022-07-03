@@ -56,7 +56,10 @@
 
 // Main function of course
 int main(int argc, char **argv){
-  
+  if(getuid()){
+    printf("Root priviles required to run this program\n");
+    exit(-1);
+  } 
   load_fn_mem_map(); // load the functions in case crash happens early
 
   // set signals
