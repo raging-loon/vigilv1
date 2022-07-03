@@ -41,8 +41,7 @@ mkdir /etc/vigil/keys/
 mv privkey.pem pubkey.crt pkcs8.key /etc/vigil/keys
 mkdir /usr/share/vigil/crashes/
 # clear
-gzip ./vigil.8
-mv vigil.8.gz /usr/share/man/man8/
+cp vigil.8 /usr/share/man/man8/
 
 
 printf "\033[0;32mInstallation Complete\033[0m\n"
