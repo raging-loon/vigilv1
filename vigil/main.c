@@ -54,13 +54,35 @@
 #ifdef PRE_RELEASE_TEST
 # include "capture/loadpcap.h"
 #endif
-
-// Main function of course
+/**
+ * Main function of course
+ * Handles all of the following:
+ *  - Check if user running is root
+ *  - Check if the program name is correct
+ *  - Load the function map for crashes/backtracing
+ *  - Set signals for kill, segv, and ctrl-c
+ *  - Print some cosmetics
+ *  - Parse command line options
+ *  - Initialize globals
+ *  - Initialize Lua State
+ *  - Parse black list
+ *  - Parse main config file and all of the rules
+ *  - Preprocess rules
+ *  - Detect network interfaces
+ *  - Start capture
+ * 
+ * @author Conner Macolley
+ *
+ */
 int main(int argc, char **argv){
   if(getuid()){
     printf("Root priviles required to run this program\n");
     exit(-1);
   } 
+  if(strcmp(argv[0],PROG_NAME) != 0 ){
+    printf("Incorrect program name %s. Please rename it to %s.\n",argv[0],PROG_NAME);
+    exit(-1);
+  }
   load_fn_mem_map(); // load the functions in case crash happens early
 
   // set signals

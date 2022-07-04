@@ -23,6 +23,7 @@
 #include "statistics/arpcache.h"
 //    major.minor.patch
 #define VERSION "1.0.0"
+#define PROG_NAME "/bin/vigil"
 #define VERSION_NUM 0x010000
 #define IDS_PASSIVE             1
 #define IPS_ACTIVE              2    
