@@ -70,7 +70,7 @@ void detect_interfaces(){
   closedir(dr); 
   gather_iface_addrs();
   gather_iface_hw_addrs();
-  print_iface_summary();
+  // print_iface_summary();
 }
 
 // TODO: Account for IPv6 networks

@@ -22,46 +22,50 @@
 #include <string.h>
 #include <stdio.h>
 #include <regex.h>
-struct l_script lua_scripts[MAX_LUA_SCRIPTS];
+#include "../utils.h"
+lua_State * l;
+char * l_script;
 
-
-void run_hello_script(){
-  lua_State * l = luaL_newstate();
-  
+void l_init(){
+  l = luaL_newstate();
   luaL_openlibs(l);
-  // lua_setglobal(l,"y");
+}
+void set_script_file_size(int flen){
+  l_script = (char *)malloc(sizeof(char) * flen);
+}
+void l_destroy(){
+  if(l_script)
+    free(l_script);
 
-  if(luaL_dofile(l,"src/lua/scripts/hellotest.lua") == LUA_OK){
-    lua_pop(l,lua_gettop(l));
-  }
   lua_close(l);
 }
 
-void collect_scripts(){
-  FILE * fp = fopen("/etc/vigil/lscript.conf","r");
+void l_rule_alert(const struct rule_data * rdata, const struct rule * r, int x){
+
+  lua_pushstring(l,rdata->src_ip_addr);
+  lua_setglobal(l,"src_ip_addr");
+
+  lua_pushstring(l,rdata->dest_ip_addr);
+  lua_setglobal(l,"dest_ip_addr");
   
-  if(fp == NULL){
-    printf("Failed to collect Lua scripts: /etc/vigil/lscript.conf not found.\n");
-    exit(-1); // the engineer should fix this
-  }  
+  lua_pushstring(l,r->message);
+  lua_setglobal( l,"message");
   
-  size_t pos, len;
-  char * line = NULL;
-  char lscript_root[40];
+  lua_pushinteger(l,(int)rdata->dest_port);
+  lua_setglobal(l,"dest_port");
 
-  regex_t lua_rgx;
-  regcomp(&lua_rgx,".*\.lua:.*",0);
+  lua_pushinteger(l,(int)rdata->src_port);
+  lua_setglobal(l,"src_port");
 
+  lua_pushstring(l,get_formated_time());
+  lua_setglobal(l,"time");
 
-  while((pos = getline(&line,&len,fp)) != -1){
-    if(line[0] == '#') continue;
-    if(strncmp(line,"l_script_root=",14) == 0){
-      strcpy(lscript_root,line+14);
-      lscript_root[strcspn(lscript_root,"\n")] = 0;
-    } 
-    else if(regexec(&lua_rgx,line,0,NULL,0) == 0){
-      // printf("Lua script found: %s",line);
-      
-    }
-  } 
+  lua_pushinteger(l,rdata->__protocol);
+  lua_setglobal(l,"protocol");
+
+  if(luaL_dofile(l,l_script) == LUA_OK){
+    lua_pop(l,lua_gettop(l));
+  }
+  // clear the stack so old alerts don't cause problems
+  lua_settop(l, 0);
 }

@@ -49,6 +49,7 @@
 #include "backtrace/backtrace.h"
 #include "monitoring/monitoring.h"
 #include <unistd.h>
+#include "lua/lua_engine.h"
 
 #ifdef PRE_RELEASE_TEST
 # include "capture/loadpcap.h"
@@ -141,7 +142,7 @@ int main(int argc, char **argv){
     }
   }
   init_globals();
- 
+  l_init();
   deny_conf_parser("/etc/vigil/deny.conf");
   if(debug_mode)
     printf("Finsished loading explicit deny file(/etc/vigil/deny.conf)\n");
@@ -172,7 +173,7 @@ int main(int argc, char **argv){
 // handle CTRL-C nad kill
 void sigint_processor(int signal){
   free_globals();
-
+  l_destroy();
   free_iface();
   // char * time = get_formated_time();
   char time[255];

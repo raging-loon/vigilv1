@@ -16,18 +16,16 @@
 
 #ifndef LUA_ENGINE_H
 #define LUA_ENGINE_H
-#include "l_run_condition.h"
-#define MAX_LUA_SCRIPTS             20 // for now
-struct l_script{
-  char filename[64];
-  struct l_run_condition conditions;
-};
 
-extern struct l_script lua_scripts[MAX_LUA_SCRIPTS];
+#include "../filter/parsing/rule.h"
+#include <lua5.3/lua.h>
+#include <lua5.3/lauxlib.h>
+#include <lua5.3/lualib.h>
+extern char * l_script;
+extern lua_State * l;
 
-void collect_scripts();
-
-
-void run_hello_script();
-
+void l_init();
+void l_destroy();
+void set_script_file_size(int);
+void l_rule_alert(const struct rule_data *, const struct rule *, int);
 #endif /* LUA_ENGINE_H */

@@ -28,6 +28,7 @@
 #include "homenet.h"
 #include "../actions/alerts.h"
 #include "../../utils.h"
+#include "../../lua/lua_engine.h"
 
 
 /*
@@ -285,6 +286,11 @@ void set_gam(const char * val){
     global_alert_method = GAM_STDOUT;
   else if(strcmp(val,"log") == 0)
     global_alert_method = GAM_LOG;
+  else if(strncmp(val,"lua:",4) == 0){
+    set_script_file_size(strlen(val + 4));
+    memcpy(l_script,val + 4, strlen(val + 4));
+    global_alert_method = GAM_LUA;
+  }
   else{
     printf("Unknown global alert method: %s\n",val);
     exit(-1);

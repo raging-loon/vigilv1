@@ -30,6 +30,7 @@ typedef struct{
 #define GAM_IPC             0x34
 #define GAM_STDOUT          0x35
 #define GAM_LOG             0x36
+#define GAM_LUA             0x37
 
 
 void format_msg(const struct rule_data*, const struct rule *, char * restrict);

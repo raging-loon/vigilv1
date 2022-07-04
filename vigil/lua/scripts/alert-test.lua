@@ -1,0 +1,1 @@
+print("Lua Alert: "..time.." "..message.." "..src_ip_addr..":"..src_port.." -> "..dest_ip_addr..":"..dest_port)

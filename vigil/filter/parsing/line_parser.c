@@ -27,7 +27,7 @@
 
 #include "../../utils.h"
 #include <stdio.h>
-
+#include "../../lua/lua_engine.h"
 #include <stdlib.h>
 #include <string.h>
 /* alert stdout any TCP (name:"ioc-root-uid"; msg:"IOC Root UID returned"; type:str_match; target:"uid=0(root)";); */
@@ -453,7 +453,12 @@ void set_alert_method(struct rule * r){
     case GAM_LOG:
       r->action = log_alert;
       break;
+    case GAM_LUA:
+      r->action = l_rule_alert;
+      
+      break;
     default:
+
       printf("Unknown alert type: please submit a report. Defaulting to log_alert");
       r->action = log_alert;
   }

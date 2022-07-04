@@ -25,6 +25,7 @@
 #include "../netif/netif.h"
 #include "../utils.h"
 #include "../globals.h"
+#include "../lua/lua_engine.h"
 
 fn_mem_loc fn_mem_map[TOTAL_FN];
 int fn_num = 0;
@@ -95,6 +96,7 @@ void crash_handler(int sig){
   }
   free(strings);
   free_globals();
+  l_destroy();
   // print_mem_map();
   fprintf(fp, "Register Dump:\n");
   fprintf(fp, "[RAX] = 0x%02x\n",r_rax);
