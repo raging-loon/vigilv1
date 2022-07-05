@@ -27,5 +27,4 @@
 | /scripts  | Some random scripts |
 | /ssh      | Needs to be deleted |
 | /statistics | various statistics, will probably be replaced with functions in /monitoring |
-| /tasks    | Tasks, in dev |
 | /vrmc     | Vigil Remote Monitoring and Configuration Server |
