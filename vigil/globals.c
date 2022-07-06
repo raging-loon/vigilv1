@@ -87,5 +87,6 @@ void init_globals(){
 }
 
 void free_globals(){
+  free_rules(); // frees prange if applicable
   free(rules);
 }

@@ -31,6 +31,11 @@
 #include <stdlib.h>
 #include <string.h>
 /* alert stdout any TCP (name:"ioc-root-uid"; msg:"IOC Root UID returned"; type:str_match; target:"uid=0(root)";); */
+
+/**
+ * Get a substring  
+ */
+
 static char * substr(char * str, int left, int right){
   char * sub = (char *)malloc(sizeof(char) * (right - left + 2));
   for(int i = left; i <= right; i++){
@@ -39,6 +44,8 @@ static char * substr(char * str, int left, int right){
   sub[right - left + 1] = '\0';
   return sub;
 }
+
+
 static bool delimit(char c){
   return c == ' ';
 }
@@ -63,6 +70,7 @@ static void assign_port_number(const char * sub, struct rule * r){
     r->port = -1;
   
 }
+
 static int check_port_number(const char * str){
   if(str_isdigit(str))
     return atoi(str);
@@ -111,18 +119,21 @@ static void sc_strip(char * sub){
 }
 
 
-
+// Overwrite allocated space with 0s
 static void void_rule(struct rule * r){
   memset(&r->icmp_data, 0,sizeof(r->icmp_data));
   memset(&r->ip_data,   0,sizeof(r->ip_data));
   memset(&r->tcp_data,  0,sizeof(r->tcp_data));
 }
 
+/**
+ * 
+ * Parse rules
+ * 
+ * 
+*/
 
 
-
-
-// handles rules
 void line_parser(const char * line){
   struct rule * rdata = &rules[++num_rules];
   memset(rdata,0,sizeof(rdata));
@@ -159,21 +170,23 @@ void line_parser(const char * line){
     
     } else if(delimit(line[right]) && (left != right) || (right == len && left != right)){
       char * sub = substr(line, left, right -1);
-      
       if(data == false){
 
         if(strcmp(sub,"alert") == 0 && !parsing_msg_str && !parsing_target_str)
-          __asm__("nop"); // do nothing
-        else if((strcmp(sub,"ICMP") == 0 || strcmp(sub,"ANY") == 0 || 
-                 strcmp(sub,"TCP") == 0 || strcmp(sub,"UDP") == 0) && !parsing_target_str && !parsing_msg_str)
+          ; // do nothing
+        else if((strcmp(sub,"ICMP") == 0 || 
+                 strcmp(sub,"ANY") == 0 || 
+                 strcmp(sub,"TCP") == 0 || 
+                 strcmp(sub,"UDP") == 0) && 
+                 !parsing_target_str && !parsing_msg_str){
           assign_protocol(sub,rdata);
+        }
 
 
-        
         else if((str_isdigit(sub) || strcmp(sub,"any") == 0) && !parsing_msg_str && !parsing_target_str){
           assign_port_number(sub,rdata);
         } 
-        else if(strchr(sub,",") != NULL){
+        else if(strchr(sub,',') != NULL){
           get_ports(sub,rdata);
         }
           
@@ -210,6 +223,7 @@ void line_parser(const char * line){
           strcpy(portno,sub + 12);
           if(rdata->dest == 0 && rdata->src == homenet){
             rdata->dest = -1;
+            // if(strchr(portno,',') != NULL){}
             rdata->dest_port = check_port_number(portno + 1);
 
           }
@@ -466,7 +480,13 @@ void set_alert_method(struct rule * r){
       r->action = log_alert;
   }
 }
-
+/**
+ * Gets the Ports
+ * Ideally, a port range will look something like this: 
+ *   80,443,800-900
+ * 
+ * 
+*/
 void get_ports(char * line, struct rule * rdata){
   rdata->prange = (int *)malloc(sizeof(int) * MAX_PORTS_P_RANGE);
   char * tok = strtok(line, ",");
@@ -475,7 +495,7 @@ void get_ports(char * line, struct rule * rdata){
       if(atoi(tok) > 0)
         rdata->prange[rdata->prange_len++] = atoi(tok);
     } else {
-
+        handle_port_ranges(tok,rdata);
     }
     tok = strtok(NULL,",");
   }
@@ -498,5 +518,8 @@ void handle_port_ranges(char * line, struct rule * rdata){
   } else {
     printf("Port ranges require both a start port and a stop port.\n");
     exit(-1);
+  }
+  for(int i = start; i < end + 1; i++){
+    rdata->prange[rdata->prange_len++] = i;
   }
 }

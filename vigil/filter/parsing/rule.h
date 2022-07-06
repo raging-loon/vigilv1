@@ -144,7 +144,7 @@ struct rule{
   void(*action)(const struct rule_data *, const struct rule *, int);
 };
 
-
+bool p_engine(const struct rule *, const struct rule_data *);
 bool r_engine(const struct rule *, const struct rule_data *);
 bool test_tcp_session_status(const struct rule * r, const struct rule_data * rdata);
 void free_rules();
