@@ -169,9 +169,12 @@ void line_parser(const char * line){
           assign_protocol(sub,rdata);
 
 
-
+        
         else if((str_isdigit(sub) || strcmp(sub,"any") == 0) && !parsing_msg_str && !parsing_target_str){
           assign_port_number(sub,rdata);
+        } 
+        else if(strchr(sub,",") != NULL){
+          get_ports(sub,rdata);
         }
           
         else if(strncmp(sub,"$homenet",8) == 0){
@@ -461,5 +464,39 @@ void set_alert_method(struct rule * r){
 
       printf("Unknown alert type: please submit a report. Defaulting to log_alert");
       r->action = log_alert;
+  }
+}
+
+void get_ports(char * line, struct rule * rdata){
+  rdata->prange = (int *)malloc(sizeof(int) * MAX_PORTS_P_RANGE);
+  char * tok = strtok(line, ",");
+  while(tok != NULL){
+    if(strchr(tok,'-') == NULL){
+      if(atoi(tok) > 0)
+        rdata->prange[rdata->prange_len++] = atoi(tok);
+    } else {
+
+    }
+    tok = strtok(NULL,",");
+  }
+}
+
+void handle_port_ranges(char * line, struct rule * rdata){
+  int start, end;
+  char temp_arr[strlen(line) + 1];
+  strcpy(temp_arr, line);
+  char * tok = strtok(line,"-");
+  if((start = atoi(tok)) < 0){
+    printf("Invalid port start: %s\n",tok);
+    exit(-1);
+  } 
+  if((tok = strtok(NULL,"-")) != NULL){
+    if((end = atoi(tok)) < 0){
+      printf("Invalid port end: %s\n",tok);
+      exit(-1);
+    }
+  } else {
+    printf("Port ranges require both a start port and a stop port.\n");
+    exit(-1);
   }
 }

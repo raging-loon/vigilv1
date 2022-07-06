@@ -137,6 +137,8 @@ struct rule{
   struct r_raw_ip_data ip_data;
   struct r_icmp_dataset icmp_data;
 
+  int * prange;
+  int prange_len;
   
   bool(*pkt_parser)(const struct rule_data *, const struct rule *);
   void(*action)(const struct rule_data *, const struct rule *, int);
@@ -145,5 +147,5 @@ struct rule{
 
 bool r_engine(const struct rule *, const struct rule_data *);
 bool test_tcp_session_status(const struct rule * r, const struct rule_data * rdata);
-
+void free_rules();
 #endif /* RULE_H */

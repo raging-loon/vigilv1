@@ -15,6 +15,9 @@
 */
 #ifndef LINE_PARSER_H
 #define LINE_PARSER_H
+
+#define MAX_PORTS_P_RANGE           128
+
 #include <stdbool.h>
 #include "rule.h"
 void line_parser(const char *);
@@ -22,4 +25,6 @@ void line_parser(const char *);
 bool str_isdigit(const char * );
 
 void set_alert_method(struct rule *);
+void get_ports(char *,  struct rule *);
+void handle_port_ranges(char * line, struct rule *);
 #endif /* LINE_PARSER_H */ 

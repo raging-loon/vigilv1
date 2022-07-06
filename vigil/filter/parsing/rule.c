@@ -151,3 +151,10 @@ bool test_tcp_session_status(const struct rule * r, const struct rule_data * rda
     return true;
   }
 }
+
+
+void free_rules(){
+  for(int i = 0; i < num_rules; i++){
+    free(rules[i].prange);
+  }
+}
