@@ -79,10 +79,10 @@ int main(int argc, char **argv){
     printf("Root priviles required to run this program\n");
     exit(-1);
   } 
-  if(strcmp(argv[0],PROG_NAME) != 0 ){
-    printf("Incorrect program name %s. Please rename it to %s.\n",argv[0],PROG_NAME);
-    exit(-1);
-  }
+  // if(strcmp(argv[0],PROG_NAME) != 0 ){
+  //   printf("Incorrect program name %s. Please rename it to %s.\n",argv[0],PROG_NAME);
+  //   exit(-1);
+  // }
   load_fn_mem_map(); // load the functions in case crash happens early
 
   // set signals
