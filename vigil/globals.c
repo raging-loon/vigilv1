@@ -19,8 +19,13 @@
 #include "filter/parsing/rule.h"
 #include <pthread.h>
 #include <stdlib.h>
-// globals defined in @globals.h
-// config options
+/*****************************************
+ *                                       *
+ * All of these are the global varialbes *
+ * use through out the program.          *
+ *                                       *
+ *                                       *
+ *****************************************/
 
 struct rule * rules = {0};
 
@@ -81,8 +86,11 @@ char * default_host_conf = "/etc/vigil/hosts.conf";
 void add_thread(pthread_t * pthrd){
   threads[thread_count++] = *pthrd;
 }
-
+/**
+ * Allocate memory for global arrays
+ */
 void init_globals(){
+  
   rules = (struct rule *)malloc(sizeof(struct rule) * MAX_RULES);
 }
 

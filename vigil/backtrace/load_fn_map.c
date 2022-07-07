@@ -18,6 +18,11 @@
 #include <stdlib.h>
 #include <string.h>
 // #include "../../main.h"
+
+/**
+ * Adds a function to the in memory memory map
+ * after all necessary information is obtained.
+*/
 void add_fn(char * name, unsigned int start, unsigned int end){
   fn_mem_loc * fn = &fn_mem_map[fn_num++];
   strcpy(fn->fn_name,name);
@@ -25,8 +30,20 @@ void add_fn(char * name, unsigned int start, unsigned int end){
   fn->end = end;
 }
 
-
+/**
+ * This function SHOULD load the memmap.txt memory map.
+ * 
+ * The format of this map is as follows:
+ *    function-name start-offset end-offset
+ * The latter two should be hex numbers
+ * 
+ * This is parsed and stored in the fn_mem_map struct using add_fn
+ * 
+ * @author Conner Macolley
+ * 
+ */
 void load_fn_mem_map(){
+  
   FILE * fp = fopen("/usr/share/vigil/memmap.txt","r");
   if(fp == NULL){
     printf("FATAL ERROR: memmap.txt not found."
