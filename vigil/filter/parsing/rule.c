@@ -53,6 +53,7 @@ static void rule_app(struct rule * r, const struct rule_data * rdata){
     if(VIGIL_MODE == IPS_ACTIVE) forward_packet(rdata);
   }
 }
+
 void rulemgr(const struct rule_data * __rule_data){
   // printf("In rulemgr\n");
   for(int i = 0; i < num_rules + 1;){
@@ -76,12 +77,15 @@ void rulemgr(const struct rule_data * __rule_data){
 
       else if((temp_rule->flow == FLOW_EITHER || __rule_data->flow == temp_rule->flow)){
         // printf("%s: %d|%d <-----> %d|%d hellos\n",temp_rule->rulename,temp_rule->src_port,temp_rule->dest_port,__rule_data->src_port,__rule_data->dest_port);
-        if(temp_rule->protocol == R_ICMP)
+        if(temp_rule->protocol == R_ICMP){
+          printf("ICMP\n");
           rule_app(temp_rule,__rule_data);
+        }
         else {
           if(temp_rule->flow == FLOW_EITHER){
             if((temp_rule->src_port == R_ALL || IS_PORT_DEST_SRC(__rule_data->src_port,__rule_data->dest_port,temp_rule->src_port)) &&
               (temp_rule->dest_port == R_ALL || IS_PORT_DEST_SRC(__rule_data->src_port,__rule_data->dest_port,temp_rule->dest_port))){
+                printf("Here2\n");
                 rule_app(temp_rule,__rule_data);
               }
 
@@ -89,6 +93,7 @@ void rulemgr(const struct rule_data * __rule_data){
           else if((temp_rule->src_port == R_ALL || (temp_rule->src_port == __rule_data->src_port)) &&
                   (temp_rule->dest_port == R_ALL || (temp_rule->dest_port == __rule_data->dest_port))){
                     // if(test_tcp_session_status(temp_rule,__rule_data))
+                    printf("Here\n");
                     if(test_tcp_session_status(temp_rule,__rule_data) && test_encrypt(temp_rule,__rule_data))
                       rule_app(temp_rule,__rule_data);
                     
@@ -157,5 +162,35 @@ void free_rules(){
   for(int i = 0; i < num_rules; i++){
     if(rules[i].prange)
       free(rules[i].prange);
+  }
+}
+
+
+bool p_engine(const struct rule * r, const struct rule_data * rdata){
+  // if(in_test_mode){
+  //   if(r->flow == FLOW_INWARD) r->flow = FLOW_OUTWARD;
+  //   else if(r->flow == FLOW_OUTWARD) r->flow = FLOW
+  // }
+
+  // if the direction of traffic matches or the rule doesn't
+  // requires specific flows(i.e. interneal)
+  if((r->flow == FLOW_EITHER) || r->flow == rdata->flow || vigil_location == INTERNAL){
+    // if the protocols match or rule doesn't care about protocols
+    if((r->protocol == R_ALL) || (r->protocol == rdata->__protocol)){
+      
+      // if its ICMP skip port checks
+      if(rdata->__protocol == R_ICMP){
+        rule_app(r,rdata);
+      }
+      // otherwise its TCP or UDP
+      else {
+        if(r->flow == FLOW_EITHER || vigil_location == INTERNAL){
+
+        }
+      }
+
+
+
+    }
   }
 }

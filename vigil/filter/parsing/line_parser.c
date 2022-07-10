@@ -145,6 +145,7 @@ void line_parser(const char * line){
   rdata->depth =0;
   rdata->src = 0;
   rdata->dest = 0;
+  rdata->prange_len = 0;
   void_rule(rdata);
   set_alert_method(rdata);
 

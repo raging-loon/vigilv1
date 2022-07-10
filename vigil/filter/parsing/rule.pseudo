@@ -1,0 +1,6 @@
+
+
+if flows match OR flow for rule is either then 
+
+if protocol == ICMP do
+  rule app
