@@ -15,14 +15,14 @@
 */
 
 #include "rule.h"
-#include "../../globals.h"
+#include "../globals.h"
 #include <stdio.h>
-#include "../../utils.h"
+#include "../utils.h"
 #include <stdlib.h>
 #include <string.h>
 #include <arpa/inet.h>
-#include "../../engine/firewall/forward.h"
-#include "dp_size.h"
+#include "../engine/firewall/forward.h"
+#include "../filter/parsing/dp_size.h"
 /*
   *-*-*-*- rule.c -*-*-*-*
   @purpose Apply rules located in "rules" in /globals.h

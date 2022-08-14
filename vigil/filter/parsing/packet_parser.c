@@ -16,7 +16,7 @@
 
 #include "../actions/alerts.h"
 #include "packet_parser.h"
-#include "rule.h"
+#include "../../config/rule.h"
 #include <stdio.h>
 #include <string.h>
 #include "../../globals.h"

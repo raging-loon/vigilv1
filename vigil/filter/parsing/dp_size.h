@@ -17,7 +17,7 @@
 
 #ifndef DPSIZE_H
 #define DPSIZE_H
-#include "rule.h"
+#include "../../config/rule.h"
 
 
 #define D_OP_JE                 0xa1

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "forward.h"
-#include "../../filter/parsing/rule.h"
+#include "../../config/rule.h"
 #include <arpa/inet.h>
 #include <netinet/ip.h>
 #include <netinet/ether.h>

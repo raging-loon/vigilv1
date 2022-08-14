@@ -16,11 +16,11 @@
 
 
 #include "dp_size.h"
-#include "rule.h"
+#include "../../config/rule.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "line_parser.h"
+#include "../../config/line_parser.h"
 void d_op_parser(struct rule * r, const char * ksub,int type){
   
 

@@ -20,14 +20,14 @@
 #include <stdbool.h>
 #include "rule_parser.h"
 #include "rule.h"
-#include "packet_parser.h"
-#include "../actions/alerts.h"
-#include "../../globals.h"
-#include "../../debug.h"
+#include "../filter/parsing/packet_parser.h"
+#include "../filter/actions/alerts.h"
+#include "../globals.h"
+#include "../debug.h"
 #include "line_parser.h"
 #include "homenet.h"
-#include "../actions/alerts.h"
-#include "../../utils.h"
+#include "../filter/actions/alerts.h"
+#include "../utils.h"
 #include "../lua/lua_engine.h"
 
 

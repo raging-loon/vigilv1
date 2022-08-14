@@ -16,7 +16,7 @@
 #include "globals.h"
 #include "statistics/arpcache.h"
 #include "engine/spi.h"
-#include "filter/parsing/rule.h"
+#include "config/rule.h"
 #include <pthread.h>
 #include <stdlib.h>
 /*****************************************

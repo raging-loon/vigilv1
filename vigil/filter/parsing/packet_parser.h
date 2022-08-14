@@ -17,7 +17,7 @@
 #ifndef PACKET_PARSER_H
 #define PACKET_PARSER_H
 #include <stdbool.h>
-#include "rule.h"
+#include "../../config/rule.h"
 
 bool str_match_parser(const struct rule_data *, const struct rule *);
 
