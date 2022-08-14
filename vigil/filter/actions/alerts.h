@@ -43,9 +43,7 @@ void log_alert(const struct rule_data*,const struct rule*, int);
 void raw_socket_alert(const struct rule_data *, const struct rule *, int);
 // write to ipc pipe
 void ipc_msg_alrt(const struct rule_data *, const struct rule *, int);
-// write to shared memory
-// void ipc_shmem_alert(const struct rule_data *, const struct rule *, int);
-// write to sqlite db
-// void sqlite_alert(const struct rule_data *, const struct rule *, int);
+// Remote Alert Listener
 
+void ral_alert(const struct rule_data *, const struct rule *, int);
 #endif /* ALERTS_H */

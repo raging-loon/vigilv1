@@ -28,27 +28,27 @@
 #include <stdlib.h>
 #include <sys/resource.h>
 #include <string.h>
+#include <signal.h>
+#include <getopt.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <time.h>
+#include <execinfo.h>
+#include <unistd.h>
 #include "netif/netif.h"
 #include "capture/pktmgr.h"
-#include <signal.h>
 #include "globals.h"
-#include <getopt.h>
 #include "main.h"
 #include "filter/parsing/rule_parser.h"
 #include "vrmc/vrmc.h"
 #include "utils.h"
-#include <pthread.h>
-#include <unistd.h>
-#include "statistics/arpcache.h"
-#include <time.h>
 #include "netif/netif.h"
 #include "filter/parsing/rule_init.h"
-#include "debug.h"
-#include <execinfo.h>
 #include "capture/tcpmgr.h"
+#include "debug.h"
 #include "backtrace/backtrace.h"
 #include "monitoring/monitoring.h"
-#include <unistd.h>
+#include "statistics/arpcache.h"
 #include "lua/lua_engine.h"
 
 #ifdef PRE_RELEASE_TEST
@@ -75,14 +75,6 @@
  *
  */
 int main(int argc, char **argv){
-  if(getuid()){
-    printf("Root priviles required to run this program\n");
-    exit(-1);
-  } 
-  // if(strcmp(argv[0],PROG_NAME) != 0 ){
-  //   printf("Incorrect program name %s. Please rename it to %s.\n",argv[0],PROG_NAME);
-  //   exit(-1);
-  // }
   load_fn_mem_map(); // load the functions in case crash happens early
 
   // set signals
@@ -104,7 +96,6 @@ int main(int argc, char **argv){
 
   if(argc == 1){
     print_help_and_exit();
-
   }
   // TODO: move this
   char * iface_name;
