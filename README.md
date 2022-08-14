@@ -1,6 +1,6 @@
 <!--[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/raging-loon/vigil.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/raging-loon/vigil/context:cpp) -->
-# Vigil
-Vigil IDS: This branch is used for testing only
+# Nsense 
+Nsense IDS sensor: This branch is used for testing only
 ## Requirements
 Runs well on Debian based linux distributions
 Requires the following to run:
@@ -24,7 +24,7 @@ Recommened stats for machine running:
  
 ## Installation
 You just need to run install.sh and make
-Nlease note that the database comes preconfigured and empty with the package. It is in the file "/vigil.db".
+Please note that the database comes preconfigured and empty with the package. It is in the file "/vigil.db".
 
 ## Plans
  - [x] Add monitoring for total amount of packets sent and recieved

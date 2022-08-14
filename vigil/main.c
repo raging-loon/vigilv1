@@ -165,13 +165,6 @@ int main(int argc, char **argv){
   // preprocess rules by parsing regex/pcre/string
   rule_processor();
 
-  #ifdef PRE_RELEASE_TEST
-    if(!filename){
-      loadpcap(filename);
-      return 0;
-    }
-  #endif
-
 
   printf("VIGIL listening on interface %s\n",iface_name);
   
