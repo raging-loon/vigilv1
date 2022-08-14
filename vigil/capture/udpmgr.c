@@ -16,17 +16,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "udpmgr.h"
+#include "decode/udpmgr.h"
 #include <netinet/udp.h>
 #include "protocols.h"
-#include "../colors.h"
+#include "colors.h"
 #include <arpa/inet.h>
-#include "../globals.h"
-#include "../packets/ip_hdr.h"
-#include "../config/rule.h"
-#include "../utils.h"
-#include "protocols/dns_disect.h"
-#include "../debug.h"
+#include "globals.h"
+#include "nethdr/ip_hdr.h"
+#include "engine/rule/rule.h"
+#include "utils.h"
+#include "decode/dns_disect.h"
+#include "debug.h"
 
 /*
   *-*-*-*- udpmgr.c -*-*-*-*

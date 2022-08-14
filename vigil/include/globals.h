@@ -19,8 +19,8 @@
 #include <stdbool.h>
 #include <pthread.h>
 #include "engine/spi.h"
-#include "config/rule.h"
-#include "statistics/arpcache.h"
+#include "engine/rule/rule.h"
+#include "arpcache.h"
 //    major.minor.patch
 #define VERSION "1.0.0"
 #define PROG_NAME "/bin/vigil"

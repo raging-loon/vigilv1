@@ -14,27 +14,27 @@
 
 */
 
-#include "../engine/checksum/tcp_chksum.h"
+#include "decode/tcp_chksum.h"
 
-#include "../config/rule.h"
-#include "protocols/http_disect.h"
-#include "protocols/ftp-disect.h"
-#include "../packets/ip_hdr.h"
-#include "../engine/flags.h"
-#include "../print_utils.h"
-#include "../packets/tcp.h"
-#include "../globals.h"
-#include "../engine/spi.h"
+#include "engine/rule/rule.h"
+#include "decode/http_disect.h"
+#include "decode/ftp-disect.h"
+#include "nethdr/ip_hdr.h"
+#include "engine/rule/flags.h"
+#include "print_utils.h"
+#include "nethdr/tcp.h"
+#include "globals.h"
+#include "engine/spi.h"
 #include <netinet/tcp.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include "protocols.h"
-#include "../colors.h"
-#include "../utils.h"
-#include "../debug.h"
+#include "colors.h"
+#include "utils.h"
+#include "debug.h"
 #include <stdbool.h>
 #include <stdint.h>
-#include "tcpmgr.h"
+#include "decode/tcpmgr.h"
 #include <stdint.h>
 #include <string.h>
 #include <stdio.h>

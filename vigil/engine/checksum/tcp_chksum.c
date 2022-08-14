@@ -13,9 +13,9 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
-#include "tcp_chksum.h"
-#include "../../packets/tcp.h"
-#include "../../packets/ip_hdr.h"
+#include "decode/tcp_chksum.h"
+#include "nethdr/tcp.h"
+#include "nethdr/ip_hdr.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

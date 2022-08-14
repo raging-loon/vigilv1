@@ -13,11 +13,19 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
-#ifndef UDPMGR_H
-#define UDPMGR_H
-#include <pcap.h>
-#include "../config/rule.h"
-void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata, const int len);
 
+#ifndef LUA_ENGINE_H
+#define LUA_ENGINE_H
 
-#endif /* UDPMGR_H */
+#include "engine/rule/rule.h"
+#include <lua5.3/lua.h>
+#include <lua5.3/lauxlib.h>
+#include <lua5.3/lualib.h>
+extern char * l_script;
+extern lua_State * l;
+
+void l_init();
+void l_destroy();
+void set_script_file_size(int);
+void l_rule_alert(const struct rule_data *, const struct rule *, int);
+#endif /* LUA_ENGINE_H */

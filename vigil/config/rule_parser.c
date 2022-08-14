@@ -18,17 +18,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "rule_parser.h"
-#include "rule.h"
-#include "../filter/parsing/packet_parser.h"
-#include "../filter/actions/alerts.h"
-#include "../globals.h"
-#include "../debug.h"
+#include "engine/rule/rule_parser.h"
+#include "engine/rule/rule.h"
+#include "engine/rule/packet_parser.h"
+#include "engine/rule/alerts.h"
+#include "globals.h"
+#include "debug.h"
 #include "line_parser.h"
 #include "homenet.h"
-#include "../filter/actions/alerts.h"
-#include "../utils.h"
-#include "../lua/lua_engine.h"
+#include "engine/rule/alerts.h"
+#include "utils.h"
+#include "plugin/lua/lua_engine.h"
 
 
 /*

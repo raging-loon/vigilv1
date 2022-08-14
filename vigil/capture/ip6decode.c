@@ -13,17 +13,17 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
-#include "ip6decode.h"
-#include "../packets/ip6hdr.h"
+#include "decode/ip6decode.h"
+#include "nethdr/ip6hdr.h"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../config/rule.h"
+#include "engine/rule/rule.h"
 #include <netinet/ether.h>
-#include "icmpdsct.h"
+#include "decode/icmpdsct.h"
 #include <arpa/inet.h>
-#include "../globals.h"
-#include "../utils.h"
+#include "globals.h"
+#include "utils.h"
 
 void ip6decode(const unsigned char * pkt,const  int len){
   struct ip6hdr * ipv6_hdr = (struct ip6hdr *)(pkt + sizeof(struct ethhdr) );

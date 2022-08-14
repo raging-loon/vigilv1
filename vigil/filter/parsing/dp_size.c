@@ -15,12 +15,12 @@
 */
 
 
-#include "dp_size.h"
-#include "../../config/rule.h"
+#include "engine/rule/dp_size.h"
+#include "engine/rule/rule.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "../../config/line_parser.h"
+#include "engine/rule/line_parser.h"
 void d_op_parser(struct rule * r, const char * ksub,int type){
   
 

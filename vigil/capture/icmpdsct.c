@@ -16,20 +16,20 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "../packets/icmp6.h"
-#include "../packets/ip6hdr.h"
+#include "nethdr/icmp6.h"
+#include "nethdr/ip6hdr.h"
+#include "nethdr/icmp4.h"
 
 #include <netinet/ip.h>
 #include <netinet/icmp6.h>
-#include "../packets/icmp4.h"
 #include "protocols.h"
-#include "../utils.h"
+#include "utils.h"
 #include <time.h>
-#include "../colors.h"
-#include "icmpdsct.h"
-#include "../globals.h"
-#include "../config/rule.h"
-#include "../engine/spi.h"
+#include "colors.h"
+#include "decode/icmpdsct.h"
+#include "globals.h"
+#include "engine/rule/rule.h"
+#include "engine/spi.h"
 /*
   *-*-*-*- icmpdsct.c -*-*-*-*
   @purpose to decode ICMP packets

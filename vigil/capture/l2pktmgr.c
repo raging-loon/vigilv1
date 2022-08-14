@@ -21,14 +21,14 @@
 #include <string.h>
 #include "l2pktmgr.h"
 #include "protocols.h"
-#include "../utils.h"
+#include "utils.h"
 #include <pthread.h>
-#include "../colors.h"
-#include "../database/update_db.h"
-#include "../packets/arp-hdr.h"
-#include "../statistics/arpcache.h"
-#include "../packets/ctp.h"
-#include "../globals.h"
+#include "colors.h"
+#include "database/update_db.h"
+#include "nethdr/arp-hdr.h"
+#include "arpcache.h"
+#include "nethdr/ctp.h"
+#include "globals.h"
 
 
 /*

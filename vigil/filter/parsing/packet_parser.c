@@ -14,12 +14,12 @@
 
 */
 
-#include "../actions/alerts.h"
-#include "packet_parser.h"
-#include "../../config/rule.h"
+#include "engine/rule/alerts.h"
+#include "engine/rule/packet_parser.h"
+#include "engine/rule/rule.h"
 #include <stdio.h>
 #include <string.h>
-#include "../../globals.h"
+#include "globals.h"
 #include <regex.h>
 
 /*

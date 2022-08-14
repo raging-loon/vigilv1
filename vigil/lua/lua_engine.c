@@ -22,7 +22,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <regex.h>
-#include "../utils.h"
+#include "utils.h"
 lua_State * l;
 char * l_script;
 

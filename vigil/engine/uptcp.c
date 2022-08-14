@@ -13,8 +13,8 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
-#include "spi.h"
-#include "../config/rule.h"
+#include "engine/spi.h"
+#include "engine/rule/rule.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

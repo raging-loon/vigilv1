@@ -13,15 +13,12 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
-#ifndef TLS_H
-#define TLS_H
-#include "../config/rule.h"
+#ifndef TCP_CHKSUM_H
+#define TCP_CHKSUM_H
+#include "nethdr/tcp.h"
+#include "nethdr/ip_hdr.h"
 #include <stdbool.h>
-#include <pcap.h>
-
-void tls_decode(const unsigned char * pkt, struct rule_data * rdata, const int len);
-
-void tlshandshake(const unsigned char * pkt, struct rule_data * rdata, const int len);
+bool tcp_check_sum_passed(struct ip_hdr *, struct __tcp *tcp_hdr);
 
 
-#endif /* TLS_H */
+#endif /* TCP_CHKSUM_H */

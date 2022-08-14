@@ -20,13 +20,13 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "../capture/pktmgr.h"
-#include "../utils.h"
+#include "decode/pktmgr.h"
+#include "utils.h"
 #include <sys/socket.h>
 #include <dirent.h>
 #include <signal.h>
-#include "../backtrace/backtrace.h"
-#include "../globals.h"
+#include "backtrace.h"
+#include "globals.h"
 #include <arpa/inet.h>
 #include <linux/netlink.h>
 #include <linux/if_ether.h>

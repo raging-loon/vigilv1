@@ -35,20 +35,20 @@
 #include <time.h>
 #include <execinfo.h>
 #include <unistd.h>
-#include "netif/netif.h"
-#include "capture/pktmgr.h"
+#include "capture/netif.h"
+#include "decode/pktmgr.h"
 #include "globals.h"
 #include "main.h"
-#include "config/rule_parser.h"
+#include "engine/rule/rule_parser.h"
 #include "utils.h"
-#include "netif/netif.h"
-#include "config/rule_init.h"
-#include "capture/tcpmgr.h"
+#include "netif.h"
+#include "engine/rule/rule_init.h"
+#include "decode/tcpmgr.h"
 #include "debug.h"
-#include "backtrace/backtrace.h"
-#include "monitoring/monitoring.h"
-#include "statistics/arpcache.h"
-#include "lua/lua_engine.h"
+#include "backtrace.h"
+#include "monitoring.h"
+#include "arpcache.h"
+#include "plugin/lua/lua_engine.h"
 
 #ifdef PRE_RELEASE_TEST
 # include "capture/loadpcap.h"

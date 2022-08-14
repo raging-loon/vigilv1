@@ -13,12 +13,11 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
+#ifndef UDPMGR_H
+#define UDPMGR_H
+#include <pcap.h>
+#include "rule.h"
+void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata, const int len);
 
-#ifndef DNS_DISECT_H
-#define DNS_DISECT_H
-#include "../../config/rule.h"
-void dns_disect(const unsigned char *, const struct rule_data *);
 
-void get_dns_name(const unsigned char *,char *);
-
-#endif /* DNS_DISECT_H */
+#endif /* UDPMGR_H */

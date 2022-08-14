@@ -13,9 +13,12 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
-#ifndef FTP_DISECT_H
-#define FTP_DISECT_H
-#include "../../config/rule.h"
-void ftp_disect(const char *, const struct rule_data * );
 
-#endif /* FTP_DISECT_H */ 
+#ifndef DNS_DISECT_H
+#define DNS_DISECT_H
+#include "engine/rule/rule.h"
+void dns_disect(const unsigned char *, const struct rule_data *);
+
+void get_dns_name(const unsigned char *,char *);
+
+#endif /* DNS_DISECT_H */

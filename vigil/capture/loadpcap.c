@@ -13,8 +13,8 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
-#include "loadpcap.h"
-#include "pktmgr.h"
+#include "decode/loadpcap.h"
+#include "decode/pktmgr.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

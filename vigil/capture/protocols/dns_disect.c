@@ -15,14 +15,14 @@
 */
 
 
-#include "../../config/rule.h"
+#include "rule.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../../packets/dns.h"
-#include "dns_disect.h"
-#include "../../utils.h"
-#include "../../globals.h"
+#include "nethdr/dns.h"
+#include "decode/dns_disect.h"
+#include "utils.h"
+#include "globals.h"
 void dns_disect(const unsigned char * pkt, const struct rule_data * rdata){
   struct dns_pkt_data * dns_data = (struct dns_pkt_data*)(pkt);
   unsigned char * query = (unsigned char *)(pkt + sizeof(struct dns_pkt_data));

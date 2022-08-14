@@ -16,12 +16,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "../globals.h"
-#include "../config/rule.h"
+#include "globals.h"
+#include "engine/rule/rule.h"
 #include "spi.h"
 #include <string.h>
 #include <stdbool.h>
-#include "../database/update_db.h"
+#include "database/update_db.h"
 
 struct spi_members spi_table[1024];
 unsigned int total_conversations = -1;

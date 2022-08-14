@@ -13,19 +13,12 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
+#ifndef ICMPDSCT_H
+#define ICMPDSCT_H
+#include "engine/rule/rule.h"
+void ip6_icmp_decode(const unsigned char *, const char *,const char *);
+ 
+void ip4_icmp_decode(const unsigned char * const,struct rule_data *);
 
-#ifndef LUA_ENGINE_H
-#define LUA_ENGINE_H
 
-#include "../config/rule.h"
-#include <lua5.3/lua.h>
-#include <lua5.3/lauxlib.h>
-#include <lua5.3/lualib.h>
-extern char * l_script;
-extern lua_State * l;
-
-void l_init();
-void l_destroy();
-void set_script_file_size(int);
-void l_rule_alert(const struct rule_data *, const struct rule *, int);
-#endif /* LUA_ENGINE_H */
+#endif /* ICMPDSCT_H */

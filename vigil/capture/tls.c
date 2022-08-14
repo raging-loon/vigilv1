@@ -15,11 +15,11 @@
 */
 
 
-#include "../packets/tlsdata.h"
-#include "tls.h"
-#include "../config/rule.h"
+#include "nethdr/tlsdata.h"
+#include "decode/tls.h"
+#include "engine/rule/rule.h"
 #include <pcap.h>
-#include "../globals.h"
+#include "globals.h"
 
 void tls_decode(const unsigned char * pkt ,struct rule_data * rdata,const int len){
   struct tlsd * __tlsdata = (struct tlsd *)(pkt);

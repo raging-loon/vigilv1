@@ -13,19 +13,15 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
-
-#ifndef PACKET_PARSER_H
-#define PACKET_PARSER_H
+#ifndef TLS_H
+#define TLS_H
+#include "rule.h"
 #include <stdbool.h>
-#include "../../config/rule.h"
+#include <pcap.h>
 
-bool str_match_parser(const struct rule_data *, const struct rule *);
+void tls_decode(const unsigned char * pkt, struct rule_data * rdata, const int len);
 
-// not necessarily a packet parser but belongs here
-bool is_blocked_ipv4(const char *);
+void tlshandshake(const unsigned char * pkt, struct rule_data * rdata, const int len);
 
-bool none(const struct rule_data * , const struct rule *);
 
-bool pcre_match(const struct rule_data *, const struct rule *);
-
-#endif /* PACKET_PARSER_H */
+#endif /* TLS_H */

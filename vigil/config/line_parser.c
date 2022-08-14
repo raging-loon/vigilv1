@@ -17,16 +17,16 @@
 
 #include "line_parser.h"
 #include "rule.h"
-#include "../filter/actions/alerts.h"
-#include "../filter/parsing/packet_parser.h"
+#include "engine/rule/alerts.h"
+#include "engine/rule/packet_parser.h"
 #include "rule_parser.h"
 #include <regex.h>
-#include "../globals.h"
-#include "../filter/parsing/dp_size.h"
+#include "globals.h"
+#include "engine/rule/dp_size.h"
 
-#include "../utils.h"
+#include "utils.h"
 #include <stdio.h>
-#include "../lua/lua_engine.h"
+#include "plugin/lua/lua_engine.h"
 #include <stdlib.h>
 #include <string.h>
 /* alert stdout any TCP (name:"ioc-root-uid"; msg:"IOC Root UID returned"; type:str_match; target:"uid=0(root)";); */

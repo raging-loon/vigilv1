@@ -17,8 +17,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../utils.h"
-#include "../../config/rule.h"
+#include "utils.h"
+#include "engine/rule/rule.h"
 
 
 

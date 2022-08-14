@@ -17,7 +17,7 @@
 
 #ifndef ALERTS_H
 #define ALERTS_H
-#include "../../config/rule.h"
+#include "engine/rule/rule.h"
 #include <unistd.h>
 
 typedef struct{

@@ -18,8 +18,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../globals.h"
-#include "../utils.h"
+#include "globals.h"
+#include "utils.h"
 
 
 

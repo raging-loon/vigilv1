@@ -20,10 +20,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/socket.h>
-#include "../packets/ip_hdr.h"
-#include "../packets/tcp.h"
+#include "nethdr/ip_hdr.h"
+#include "nethdr/tcp.h"
 #include <regex.h>
-#include "../packets/icmp4.h"
+#include "nethdr/icmp4.h"
 
 /*
   *-*-*-*- rule.h -*-*-*-*

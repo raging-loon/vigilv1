@@ -15,7 +15,7 @@
 */
 
 
-#include "homenet.h"
+#include "engine/rule/homenet.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>

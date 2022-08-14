@@ -25,27 +25,27 @@
 #include <netinet/ip.h>
 #include <netinet/udp.h>
 #include <netinet/tcp.h>
-#include "../packets/ip_hdr.h"
 // #include <netinet/ip_icmp.h>
 #include "l3pktmgr.h"
 #include <time.h>
-#include "../colors.h"
-#include "protocols/igmp_dsct.h"
+#include "colors.h"
+#include "decode/igmp_dsct.h"
 #include "protocols.h"
-#include "../packets/ip6hdr.h"
-#include "../utils.h"
-#include "tcpmgr.h"
-#include "../logging.h"
-#include "udpmgr.h"
-#include "../packets/icmp4.h"
-#include "icmpdsct.h"
-#include "../print_utils.h"
-#include "../config/rule.h"
-#include "../filter/parsing/packet_parser.h"
-#include "../globals.h"
-#include "../debug.h"
-#include "../engine/flags.h"
-#include "../engine/spi.h"
+#include "utils.h"
+#include "decode/tcpmgr.h"
+#include "logging.h"
+#include "decode/udpmgr.h"
+#include "nethdr/ip_hdr.h"
+#include "nethdr/ip6hdr.h"
+#include "nethdr/icmp4.h"
+#include "decode/icmpdsct.h"
+#include "print_utils.h"
+#include "engine/rule/rule.h"
+#include "engine/rule/packet_parser.h"
+#include "globals.h"
+#include "debug.h"
+#include "engine/rule/flags.h"
+#include "engine/spi.h"
 
 
 //! @brief handle decoding for ipv6

@@ -15,18 +15,18 @@
 */
 #include <pcap.h>
 // #include <netinet/ether.h>
-#include "../packets/ethhdr.h"
-#include "pktmgr.h"
+#include "nethdr/ethhdr.h"
+#include "decode/pktmgr.h"
 #include "protocols.h"
 #include "l2pktmgr.h"
 #include <stdio.h>
-#include "../globals.h"
-#include "../utils.h"
-#include "../logging.h"
-#include "l3pktmgr.h"
-#include "ip6decode.h"
-#include "../monitoring/monitoring.h"
-#include "../netif/netif.h"
+#include "globals.h"
+#include "utils.h"
+#include "logging.h"
+#include "decode/l3pktmgr.h"
+#include "decode/ip6decode.h"
+#include "monitoring.h"
+#include "capture/netif.h"
 void pktmgr(const int len, const unsigned char * pkt){
   /*
     pktmgr -> ethernet header -> protocol number -> protocol number header -> data

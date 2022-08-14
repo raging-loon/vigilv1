@@ -14,22 +14,18 @@
 
 */
 
+#ifndef PACKET_PARSER_H
+#define PACKET_PARSER_H
+#include <stdbool.h>
+#include "engine/rule/rule.h"
 
-#ifndef DPSIZE_H
-#define DPSIZE_H
-#include "../../config/rule.h"
+bool str_match_parser(const struct rule_data *, const struct rule *);
 
+// not necessarily a packet parser but belongs here
+bool is_blocked_ipv4(const char *);
 
-#define D_OP_JE                 0xa1
-#define D_OP_JL                 0xa2
-#define D_OP_JLE                0xa3
-#define D_OP_JG                 0xa4
-#define D_OP_JGE                0xa5
-#define D_OP_NE                 0xa6
+bool none(const struct rule_data * , const struct rule *);
 
-void d_op_parser(struct rule *, const char *, int );
+bool pcre_match(const struct rule_data *, const struct rule *);
 
-bool d_engine(const struct rule*, const struct rule_data *);
-
-
-#endif /*DPSIZE_H */
+#endif /* PACKET_PARSER_H */
