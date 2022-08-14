@@ -16,8 +16,7 @@
 
 #include "../engine/checksum/tcp_chksum.h"
 
-#include "../filter/parsing/rule.h"
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 #include "protocols/http_disect.h"
 #include "protocols/ftp-disect.h"
 #include "../packets/ip_hdr.h"

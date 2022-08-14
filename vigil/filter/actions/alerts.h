@@ -17,7 +17,7 @@
 
 #ifndef ALERTS_H
 #define ALERTS_H
-#include "../parsing/rule.h"
+#include "../../config/rule.h"
 #include <unistd.h>
 
 typedef struct{

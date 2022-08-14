@@ -39,7 +39,7 @@
 #include "capture/pktmgr.h"
 #include "globals.h"
 #include "main.h"
-#include "filter/parsing/rule_parser.h"
+#include "config/rule_parser.h"
 #include "vrmc/vrmc.h"
 #include "utils.h"
 #include "netif/netif.h"
@@ -166,13 +166,13 @@ int main(int argc, char **argv){
   rule_processor();
 
 
-  printf("VIGIL listening on interface %s\n",iface_name);
+  // printf("VIGIL listening on interface %s\n",iface_name);
   
   
   // get our interfaces
-  detect_interfaces();
+  // detect_interfaces();
   // start capture, will print error and exit if "iface_name" doesn't exist
-  start_interface_cap(iface_name);
+  // start_interface_cap(iface_name);
 }
 
 // handle CTRL-C nad kill

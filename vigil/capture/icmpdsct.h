@@ -15,7 +15,7 @@
 */
 #ifndef ICMPDSCT_H
 #define ICMPDSCT_H
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 void ip6_icmp_decode(const unsigned char *, const char *,const char *);
  
 void ip4_icmp_decode(const unsigned char * const,struct rule_data *);

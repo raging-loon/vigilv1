@@ -23,7 +23,7 @@
 #include <arpa/inet.h>
 #include "../globals.h"
 #include "../packets/ip_hdr.h"
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 #include "../utils.h"
 #include "protocols/dns_disect.h"
 #include "../debug.h"

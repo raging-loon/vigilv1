@@ -28,7 +28,7 @@
 #include "homenet.h"
 #include "../actions/alerts.h"
 #include "../../utils.h"
-#include "../../lua/lua_engine.h"
+#include "../lua/lua_engine.h"
 
 
 /*

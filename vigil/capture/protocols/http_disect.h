@@ -17,7 +17,7 @@
 
 #ifndef HTTP_DISECT_H
 #define HTTP_DISECT_H
-#include "../../filter/parsing/rule.h"
+#include "../../config/rule.h"
 
 void http_disect(const unsigned char *, const struct rule_data *);
 

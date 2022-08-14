@@ -28,7 +28,7 @@
 #include "../colors.h"
 #include "icmpdsct.h"
 #include "../globals.h"
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 #include "../engine/spi.h"
 /*
   *-*-*-*- icmpdsct.c -*-*-*-*

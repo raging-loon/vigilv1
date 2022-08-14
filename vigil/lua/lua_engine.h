@@ -17,7 +17,7 @@
 #ifndef LUA_ENGINE_H
 #define LUA_ENGINE_H
 
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 #include <lua5.3/lua.h>
 #include <lua5.3/lauxlib.h>
 #include <lua5.3/lualib.h>

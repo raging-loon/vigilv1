@@ -16,7 +16,7 @@
 #ifndef TCPMGR_H
 #define TCPMGR_H
 #include <pcap.h>
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 
 #define PSH_ACK_SET(X,Y) (X && Y)
 #define FIN_ACK_SET(X,Y) (X && Y)

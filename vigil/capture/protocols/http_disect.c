@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../../utils.h"
-#include "../../filter/parsing/rule.h"
+#include "../../config/rule.h"
 
 
 

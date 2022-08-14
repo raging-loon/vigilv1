@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "../globals.h"
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 #include "spi.h"
 #include <string.h>
 #include <stdbool.h>

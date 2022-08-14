@@ -18,7 +18,7 @@
 
 
 
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 #include <stdbool.h>
 
 

@@ -15,7 +15,7 @@
 */
 #ifndef TLS_H
 #define TLS_H
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 #include <stdbool.h>
 #include <pcap.h>
 

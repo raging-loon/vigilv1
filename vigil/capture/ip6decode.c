@@ -18,7 +18,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 #include <netinet/ether.h>
 #include "icmpdsct.h"
 #include <arpa/inet.h>

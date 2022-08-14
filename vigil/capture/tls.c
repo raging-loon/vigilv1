@@ -17,7 +17,7 @@
 
 #include "../packets/tlsdata.h"
 #include "tls.h"
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 #include <pcap.h>
 #include "../globals.h"
 

@@ -19,7 +19,7 @@
 #include <stdbool.h>
 #include <pthread.h>
 #include "engine/spi.h"
-#include "filter/parsing/rule.h"
+#include "config/rule.h"
 #include "statistics/arpcache.h"
 //    major.minor.patch
 #define VERSION "1.0.0"

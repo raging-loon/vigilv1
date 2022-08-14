@@ -40,7 +40,7 @@
 #include "../packets/icmp4.h"
 #include "icmpdsct.h"
 #include "../print_utils.h"
-#include "../filter/parsing/rule.h"
+#include "../config/rule.h"
 #include "../filter/parsing/packet_parser.h"
 #include "../globals.h"
 #include "../debug.h"

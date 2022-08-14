@@ -17,7 +17,7 @@
 
 #include "line_parser.h"
 #include "rule.h"
-#include "../actions/alerts.h"
+#include "../filter/actions/alerts.h"
 #include "packet_parser.h"
 #include "rule_parser.h"
 #include <regex.h>
