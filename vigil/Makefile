@@ -26,7 +26,7 @@ vigil: gets
 
 	objdump -D vigil.exe -M intel > objdump.txt
 	python ../tools/gen_mem_map.py -f objdump.txt
-	mv memmap.txt /usr/share/vigil/memmap.txt
+	mv memmap.txt /usr/share/nsense/memmap.txt
 	# rm objdump.txt 
 	# strip vigil.exe
 
