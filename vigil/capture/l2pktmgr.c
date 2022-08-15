@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
-#include "l2pktmgr.h"
+#include "decode/l2pktmgr.h"
 #include "protocols.h"
 #include "utils.h"
 #include <pthread.h>

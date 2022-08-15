@@ -39,7 +39,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
-#include "tls.h"
+#include "decode/tls.h"
 
 /*
   *-*-*-*- tcpmgr.c -*-*-*-*

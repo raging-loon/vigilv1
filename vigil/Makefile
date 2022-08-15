@@ -13,7 +13,7 @@
 
 
 CC = gcc
-CFLAGS = -Wall
+CFLAGS = -Wall -I ./include
 all: vigil clean
 
 

@@ -18,7 +18,7 @@
 #include <time.h>
 #include "globals.h"
 #include "engine/rule/rule.h"
-#include "spi.h"
+#include "engine/spi.h"
 #include <string.h>
 #include <stdbool.h>
 #include "database/update_db.h"

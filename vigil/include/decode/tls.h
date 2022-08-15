@@ -15,7 +15,7 @@
 */
 #ifndef TLS_H
 #define TLS_H
-#include "rule.h"
+#include "engine/rule/rule.h"
 #include <stdbool.h>
 #include <pcap.h>
 

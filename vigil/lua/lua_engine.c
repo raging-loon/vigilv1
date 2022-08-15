@@ -13,7 +13,7 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
-#include "lua_engine.h"
+#include "plugin/lua/lua_engine.h"
 //TODO: vvvvv make this work with more versions of lua
 #include <lua5.3/lua.h>
 #include <lua5.3/lauxlib.h>

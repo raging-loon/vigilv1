@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "globals.h"
-#include "rule_init.h"
+#include "engine/rule/rule_init.h"
 
 void rule_processor(){
 

@@ -44,10 +44,10 @@ void add_fn(char * name, unsigned int start, unsigned int end){
  */
 void load_fn_mem_map(){
   
-  FILE * fp = fopen("/usr/share/vigil/memmap.txt","r");
+  FILE * fp = fopen("/usr/share/nsense/memmap.txt","r");
   if(fp == NULL){
     printf("FATAL ERROR: memmap.txt not found."
-          "Please re run gen_mem_map.py and copy memmap.txt to /usr/share/vigil\n");
+          "Please re run gen_mem_map.py and copy memmap.txt to /usr/share/nsense\n");
     exit(-1);
   }
   char * line = (char *)malloc(sizeof(char) * 21);

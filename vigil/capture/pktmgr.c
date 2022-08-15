@@ -18,7 +18,7 @@
 #include "nethdr/ethhdr.h"
 #include "decode/pktmgr.h"
 #include "protocols.h"
-#include "l2pktmgr.h"
+#include "decode/l2pktmgr.h"
 #include <stdio.h>
 #include "globals.h"
 #include "utils.h"

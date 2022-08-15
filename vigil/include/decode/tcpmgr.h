@@ -16,7 +16,7 @@
 #ifndef TCPMGR_H
 #define TCPMGR_H
 #include <pcap.h>
-#include "rule.h"
+#include "engine/rule/rule.h"
 
 #define PSH_ACK_SET(X,Y) (X && Y)
 #define FIN_ACK_SET(X,Y) (X && Y)

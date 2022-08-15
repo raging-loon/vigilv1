@@ -16,7 +16,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "alerts.h"
+#include "engine/rule/alerts.h"
 #include "globals.h"
 #include "print_utils.h"
 #include <time.h>

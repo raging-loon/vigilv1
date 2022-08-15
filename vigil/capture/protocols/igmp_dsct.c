@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../protocols.h"
+#include "protocols.h"
 #include <netinet/ip.h>
 #include "utils.h"
 #include <netinet/ether.h>

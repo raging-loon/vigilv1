@@ -14,7 +14,7 @@
 
 */
 
-#include "rule.h"
+#include "engine/rule/rule.h"
 #include "globals.h"
 #include <stdio.h>
 #include "utils.h"

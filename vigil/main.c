@@ -41,7 +41,7 @@
 #include "main.h"
 #include "engine/rule/rule_parser.h"
 #include "utils.h"
-#include "netif.h"
+#include "capture/netif.h"
 #include "engine/rule/rule_init.h"
 #include "decode/tcpmgr.h"
 #include "debug.h"

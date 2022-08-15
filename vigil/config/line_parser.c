@@ -15,11 +15,11 @@
 */
 
 
-#include "line_parser.h"
-#include "rule.h"
+#include "engine/rule/line_parser.h"
+#include "engine/rule/rule.h"
 #include "engine/rule/alerts.h"
 #include "engine/rule/packet_parser.h"
-#include "rule_parser.h"
+#include "engine/rule/rule_parser.h"
 #include <regex.h>
 #include "globals.h"
 #include "engine/rule/dp_size.h"

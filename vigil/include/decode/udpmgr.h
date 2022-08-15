@@ -16,7 +16,7 @@
 #ifndef UDPMGR_H
 #define UDPMGR_H
 #include <pcap.h>
-#include "rule.h"
+#include "engine/rule/rule.h"
 void ip4_udp_decode(const unsigned char * pkt, struct rule_data * rdata, const int len);
 
 

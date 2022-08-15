@@ -13,7 +13,7 @@
     If not, see <https://www.gnu.org/licenses/>. 
 
 */
-#include "netif.h"
+#include "capture/netif.h"
 #include <ifaddrs.h>
 #include <sys/types.h>
 #include <stdlib.h>
@@ -35,6 +35,9 @@
 #include <netdb.h>
 #include <linux/if_packet.h>
 #include <netinet/in.h>
+
+
+
 #define NI_NUMERICHOST 1
 #define SO_BINDTODEVICE 25
 v_netif * net_interfaces;

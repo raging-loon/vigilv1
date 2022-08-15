@@ -22,10 +22,10 @@
 #include <dirent.h>
 #include <string.h>
 #include <execinfo.h>
-#include "../netif/netif.h"
-#include "../utils.h"
-#include "../globals.h"
-#include "../lua/lua_engine.h"
+#include "capture/netif.h"
+#include "utils.h"
+#include "globals.h"
+#include "plugin/lua/lua_engine.h"
 
 fn_mem_loc fn_mem_map[TOTAL_FN];
 int fn_num = 0;
