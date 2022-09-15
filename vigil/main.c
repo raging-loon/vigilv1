@@ -169,9 +169,9 @@ int main(int argc, char **argv){
   
   
   // get our interfaces
-  // detect_interfaces();
+  detect_interfaces();
   // start capture, will print error and exit if "iface_name" doesn't exist
-  // start_interface_cap(iface_name);
+  start_interface_cap(iface_name);
 }
 
 // handle CTRL-C nad kill
@@ -209,7 +209,7 @@ void sigint_processor(int signal){
 
 
 void print_help_and_exit(){
-  printf("VIGIL UTM %s\n"
+  printf("NSENSE IDS %s\n"
          "\t-d: debug mode\n"
          "\t-h: display this message\n"
          "\t-i <iface>: set the interface to listen on\n"
@@ -246,12 +246,12 @@ void print_cpu_info(){
 
 void print_logo(){
   printf(
-    "██    ██ ██  ██████  ██ ██\n"     
-    "██    ██ ██ ██       ██ ██\n"     
-    "██    ██ ██ ██   ███ ██ ██\n"     
-    " ██  ██  ██ ██    ██ ██ ██\n"     
-    "  ████   ██  ██████  ██ ███████\n"
-
-
+  "███╗   ██╗███████╗███████╗███╗   ██╗███████╗███████╗\n"
+  "████╗  ██║██╔════╝██╔════╝████╗  ██║██╔════╝██╔════╝\n"
+  "██╔██╗ ██║███████╗█████╗  ██╔██╗ ██║███████╗█████╗  \n"
+  "██║╚██╗██║╚════██║██╔══╝  ██║╚██╗██║╚════██║██╔══╝  \n"
+  "██║ ╚████║███████║███████╗██║ ╚████║███████║███████╗\n"
+  "╚═╝  ╚═══╝╚══════╝╚══════╝╚═╝  ╚═══╝╚══════╝╚══════╝\n"
+                                                    
   );
 }

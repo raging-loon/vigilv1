@@ -22,11 +22,11 @@ gets:
 
 vigil: gets
 	set environment MALLOC_CHECK_ 2
-	$(CC) -g -o vigil.exe *.o -l pthread -l ssl -l crypto -l sqlite3  -l lua5.3
+	$(CC) -g -o nsense *.o -l pthread -l ssl -l crypto -l sqlite3  -l lua5.3
 
 	objdump -D vigil.exe -M intel > objdump.txt
 	python ../tools/gen_mem_map.py -f objdump.txt
-	mv memmap.txt /usr/share/nsense/memmap.txt
+	mv memmap.txt /usr/share/vigil/memmap.txt
 	# rm objdump.txt 
 	# strip vigil.exe
 
